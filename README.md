@@ -12,8 +12,8 @@ Welcome to GuideMe! The purpose of our software application is to serve directio
 | Alain Job Uzamara Uwe | alainjobs |
 | Badreddine Loulidi | badred123 |
 | Kenza Boulisfane | bkenza |
-| Firas Sawan |  |
-| Shirwa Warsame |  |
+| Firas Sawan | firassawan |
+| Shirwa Warsame | shirwarsame |
 | Jérémie Chouteau |  |
 
 ## Technologies 💻
