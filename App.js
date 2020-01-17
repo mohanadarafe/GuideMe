@@ -1,11 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import MapView, {PROVIDER_GOOGLE, Marker, Polygon} from 'react-native-maps';
+import { Buildings } from './components/Buildings';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <MapView 
+      style= {styles.map} 
+      provider={PROVIDER_GOOGLE}
+      region = {{
+        latitude: 45.497247, 
+        longitude: -73.578958,
+        latitudeDelta: 0.1,
+        longitudeDelta: 0.1
+      }}
+    >
+    <Buildings/>
+  </MapView>
   );
 }
 
@@ -16,4 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  map: {
+    height: '100%'
+  }
 });
