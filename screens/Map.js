@@ -33,22 +33,36 @@ export default class Map extends React.Component{
                 style= {styles.map} 
                 provider={PROVIDER_GOOGLE}
                 region={this.state.switchValue ? mapPosition.sgwCoord : mapPosition.loyCoord}
+                showsUserLocation={true}
             >
                 <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>   
                 <Buildings/>
             </MapView>
         );
     }
+
+    
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+export const styles = StyleSheet.create({
     map: {
-      height: '100%'
+      height: '100%',
+      flex: 1,
+      //Main axis
+      flexDirection:"row",
+      //Describes how to align children along the cross axis of their container
+      alignItems: "flex-end",
+      //Describes how to align children within the main axis of their container
+      justifyContent: "flex-end",
+    },
+    buildingIdentification: {
+        color: "blue",
+        opacity: 0.5,	
+       fontSize: 10,
+       fontWeight: "bold"
+    },
+    switch: {
+        height: 70,
+        width: 70
     }
 });
