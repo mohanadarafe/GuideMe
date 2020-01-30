@@ -20,6 +20,14 @@ const mapPosition = {
 }
 
 export default class Map extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            latitude: null,
+            longitude: null
+        };       
+    }
     state = { switchValue: false }
     toggleSwitch = (val) => {
         this.setState({
@@ -34,6 +42,9 @@ export default class Map extends React.Component {
                 provider={PROVIDER_GOOGLE}
                 region={this.state.switchValue ? mapPosition.sgwCoord : mapPosition.loyCoord}
                 showsUserLocation={true}
+                showsMyLocationButton={true}
+                showsCompass={true}
+                showsBuildings={true}
             >
                 <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch} />
                 <Buildings />
