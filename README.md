@@ -14,7 +14,7 @@ Welcome to GuideMe! The purpose of our software application is to serve directio
 | Kenza Boulisfane | bkenza |
 | Firas Sawan | firassawan |
 | Shirwa Warsame | shirwarsame |
-| Jérémie Chouteau |  |
+| Jérémie Chouteau | JayChouteau |
 
 ## Technologies 💻
 * React Native
