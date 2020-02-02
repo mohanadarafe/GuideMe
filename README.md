@@ -18,3 +18,21 @@ Welcome to GuideMe! The purpose of our software application is to serve directio
 
 ## Technologies 💻
 * React Native
+* Jest
+* Travis CI
+* Google Maps API
+
+### Initial Environment Setup
+`$ cd directory/of/git/repo`  
+`$ npm init` # follow instructions  
+`$ npm install`  
+`$ expo start` 
+
+## Running the Project Locally
+`$ cd into/git/repo/`  
+`$ expo start`
+The project can be found at [http://localhost:3000](http://localhost:3000) 
+
+## Help
+For a more detailed description of how to get the project up and running, please visit the [Getting Started](https://github.com/mohanadarafe/GuideMe/wiki/Getting-started) page of our wiki!
+
