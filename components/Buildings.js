@@ -4,15 +4,15 @@ import { Polygon } from 'react-native-maps';
 import coord from '../constants/buildingCoordinates'
 
 const Buildings = () => {
-    return(
+    return (
         <View>
             <Polygon
-                coordinates = {coord.h.coordinates}
+                coordinates={coord.h.coordinates}
                 fillColor="rgba(76, 79, 98, 0.7)"
-           />
+            />
 
             <Polygon
-                coordinates= {coord.lb.coordinates}
+                coordinates={coord.lb.coordinates}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -50,7 +50,6 @@ const Buildings = () => {
                 coordinates={coord.ad.coordinates}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
-            
         </View>
     )
 }
