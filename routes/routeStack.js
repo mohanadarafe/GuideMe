@@ -8,7 +8,7 @@ const screens = {
     Map: {
         screen: Map,
         navigationOptions: {
-            header: null
+            headerShown: false
         },
     }
 }

@@ -8,9 +8,9 @@ import { styles } from '../screens/Map'
  * Prop2: onChange | change value of switch
  * <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>
  */
-export default class ToggleCampus extends React.Component{
-    render() {
-        return(
+export default class ToggleCampus extends React.Component {
+    render () {
+        return (
             <Switch
                 style={styles.switch}
                 value={this.props.val}

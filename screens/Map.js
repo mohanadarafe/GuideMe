@@ -16,19 +16,23 @@ const mapPosition = {
         longitudeDelta: 0.01,
     },
     loyCoord: {
-        latitude: 45.457841, 
+        latitude: 45.457841,
         longitude: -73.640307,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
     }
 }
 
-export default class Map extends React.Component{    
-    state = {
-        switchValue:false,
-        location: null
-    }
+export default class Map extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            latitude: null,
+            longitude: null
+        };       
+    }
+    state = { switchValue: false }
     toggleSwitch = (val) => {
         this.setState({
             switchValue: val
