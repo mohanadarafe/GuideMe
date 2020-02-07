@@ -6,7 +6,8 @@ export default {
             { latitude: 45.497378, longitude: -73.578340 },
             { latitude: 45.496830, longitude: -73.578853 },
             { latitude: 45.497167, longitude: -73.579543 }
-        ]
+        ],
+        name: "Hall Building"
     },
     "lb": {
         coordinates: [
@@ -30,8 +31,10 @@ export default {
         coordinates:[
             { latitude: 45.495574, longitude: -73.578653 },
             { latitude: 45.495908, longitude: -73.578445 },
-            { latitude: 45.495416, longitude: -73.577551 },
-            { latitude: 45.495172, longitude: -73.577854 },
+            { latitude: 45.495697, longitude: -73.578048 },
+            { latitude: 45.496039, longitude: -73.577710 },
+            { latitude: 45.495825, longitude: -73.577260 },
+            { latitude: 45.495175, longitude: -73.577859 },
             { latitude: 45.495574, longitude: -73.578653 }
         ]
     },
