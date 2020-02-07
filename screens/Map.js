@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { Buildings } from '../components/Buildings';
+import { BuildingHighlight } from '../components/BuildingHighlight';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
-
+import { CurrentBuilding } from '../components/CurrentBuilding';
 
 
 const mapPosition = {
@@ -23,21 +23,34 @@ const mapPosition = {
 }
 
 export default class Map extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            latitude: null,
-            longitude: null
-        };       
+    state = { 
+        switchValue: false, 
+        curLongitude: null,
+        curLatitude: null
     }
-    state = { switchValue: false }
+
     toggleSwitch = (val) => {
         this.setState({
             switchValue: val
         })
     }
+
+    getCoordinates(){
+        navigator.geolocation.watchPosition(
+            (position) => {
+                let point = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                };
+                // this.setState({curLongitude: point.longitude})
+                // this.setState({curLatitude: point.latitude})
+            },
+            {enableHighAccuracy: true, timeout: 20000, maximumAge: 0}
+        );
+    }
+
     render(){
+        //this.getCoordinates();
         return (
             <MapView 
                 style={styles.map} 
@@ -47,10 +60,10 @@ export default class Map extends React.Component {
                 showsMyLocationButton={true}
                 showsCompass={true}
                 showsBuildings={true}
-                minZoomLevel={16}
+                minZoomLevel={17}
             >
             <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>   
-            <Buildings/>
+            <BuildingHighlight/>
             <BuildingIdentification/>
             </MapView>
         );

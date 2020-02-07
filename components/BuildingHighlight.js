@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Polygon } from 'react-native-maps';
 import coord from '../constants/buildingCoordinates';
 
-const Buildings = () => {
+const BuildingHighlight = () => {
     return (
         <View>
             <Polygon
@@ -54,4 +54,4 @@ const Buildings = () => {
     )
 }
 
-export { Buildings };
+export { BuildingHighlight };
