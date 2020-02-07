@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, StyleSheet } from 'react-native';
+import { Switch } from 'react-native';
+import { styles } from '../screens/Map'
 
 /**
  * Toggle Switch between Campus
@@ -13,18 +14,11 @@ export default class ToggleCampus extends React.Component {
             <Switch
                 style={styles.switch}
                 value={this.props.val}
-                onValueChange={(val) => this.props.onChange(val)}
+                onValueChange = {(val) => this.props.onChange(val)}
+                trackColor={{true: "green", false: "red"}}
             ></Switch>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    switch: {
-        alignItems: 'center',
-        flex: 1,
-        justifyContent: 'center'
-    }
-})
 
 export { ToggleCampus };

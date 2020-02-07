@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Polygon } from 'react-native-maps';
-import coord from '../constants/buildingCoordinates'
+import coord from '../constants/buildingCoordinates';
 
 const Buildings = () => {
     return (
