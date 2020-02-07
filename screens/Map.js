@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, View,  ActionSheetIOS } from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Callout} from 'react-native-maps';
+import { StyleSheet } from 'react-native';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import { Buildings } from '../components/Buildings';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
-import GeoFencing from 'react-native-geo-fencing';
 
 
 
@@ -26,7 +25,6 @@ const mapPosition = {
 export default class Map extends React.Component{    
     state = {
         switchValue:false,
-        location: null
     }
 
     toggleSwitch = (val) => {
@@ -34,38 +32,7 @@ export default class Map extends React.Component{
             switchValue: val
         })
     }
-
-	findCoordinates = () => {
-        let polygon = [
-            { latitude: 45.545140, longitude: -73.566827 },
-            { latitude: 45.544366, longitude: -73.563919 },
-            { latitude: 45.546057, longitude: -73.562503 },
-            { latitude: 45.550340, longitude: -73.565317 },
-            { latitude: 45.545140, longitude: -73.566827 }
-          ];
-    
-        //Watch position is working
-		navigator.geolocation.watchPosition(
-            (position) => {
-                let point = {
-                  lat: position.coords.latitude,
-                  lng: position.coords.longitude
-                };
-                console.log(position)
-                
-                //TODO Find a way to compare the current location "position" with the polygon inside of buildings.js
-                //Point is within polygon but it returns NOT within
-                GeoFencing.containsLocation(point, polygon)
-                  .then(() => console.log('point is within polygon'))
-                  .catch(() => console.log('point is NOT within polygon'))
-              },
-              (error) => alert(error.message),
-              { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-            );
-          }
-
     render(){
-        this.findCoordinates();
         return (
             <MapView 
                 style={styles.map} 
@@ -94,10 +61,12 @@ export const styles = StyleSheet.create({
       justifyContent: "flex-end",
     },
     buildingIdentification: {
-        color: "blue",
-        opacity: 0.5,	
-       fontSize: 10,
-       fontWeight: "bold",
+        color: "white",
+        fontSize: 30,
+        fontWeight: "bold",
+        textShadowColor: '#000000',
+        textShadowOffset: { width: 1, height: 4 },
+        textShadowRadius: 5
     },
     switch: {
         height: 70,
