@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Buildings } from '../components/Buildings';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
@@ -15,18 +15,23 @@ const mapPosition = {
         longitudeDelta: 0.01,
     },
     loyCoord: {
-        latitude: 45.457841, 
+        latitude: 45.457841,
         longitude: -73.640307,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
     }
 }
 
-export default class Map extends React.Component{    
-    state = {
-        switchValue:false,
-    }
+export default class Map extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            latitude: null,
+            longitude: null
+        };       
+    }
+    state = { switchValue: false }
     toggleSwitch = (val) => {
         this.setState({
             switchValue: val
@@ -39,6 +44,9 @@ export default class Map extends React.Component{
                 provider={PROVIDER_GOOGLE}
                 region={this.state.switchValue ? mapPosition.sgwCoord : mapPosition.loyCoord}
                 showsUserLocation={true}
+                showsMyLocationButton={true}
+                showsCompass={true}
+                showsBuildings={true}
                 minZoomLevel={16}
             >
             <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>   
@@ -69,7 +77,7 @@ export const styles = StyleSheet.create({
         textShadowRadius: 5
     },
     switch: {
-        height: 70,
+        height: 140,
         width: 70
     },
 });
