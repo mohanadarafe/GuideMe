@@ -4,9 +4,11 @@ node_js:
   - lts/*
 cache:
   directories:
-    - ~/.npm
+    - ~/.npm\
+    - .jest
 before_script:
   - npm install -g npm@latest
 script:
   - npm ci
   - npx jest --ci
+  - npm test -- --coverage --updateSnapshot
