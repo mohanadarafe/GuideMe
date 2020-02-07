@@ -12,14 +12,21 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
-    ]
+    ],
+    "collectCoverage": true,
+  "collectCoverageFrom": [
+    "**/*.{js,jsx}",
+    "!**/coverage/**",
+    "!**/node_modules/**",
+    "!**/babel.config.js",
+    "!**/jest.setup.js"
+  ]
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",
     "expo": "~36.0.0",
     "galio-framework": "^0.6.3",
     "native-base": "^2.13.8",
-    "prettier": "^1.19.1",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
@@ -40,6 +47,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
     "jest-expo": "^36.0.1",
+    "prettier": "1.19.1",
     "react-test-renderer": "^16.12.0"
   },
   "private": true
