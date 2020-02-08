@@ -1,4 +1,4 @@
-# GuideMe
+# GuideMe 🗺️
 
 [![Build Status](https://travis-ci.com/mohanadarafe/GuideMe.svg?branch=master)](https://travis-ci.com/mohanadarafe/GuideMe)
 
@@ -30,11 +30,11 @@ Welcome to GuideMe! The purpose of our software application is to serve directio
 `$ npm install`  
 `$ expo start` 
 
-## Running the Project Locally
+## Running the Project Locally 🏠
 `$ cd into/git/repo/`  
 `$ expo start`
 The project can be found at [http://localhost:19002/](http://localhost:19002/)
 
-## Help
+## Help ℹ️
 For a more detailed description of how to get the project up and running, please visit the [Getting Started](https://github.com/mohanadarafe/GuideMe/wiki/Getting-started) page of our wiki!
 
