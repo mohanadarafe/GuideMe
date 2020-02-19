@@ -47,6 +47,16 @@ export default {
             { latitude: 45.495523, longitude: -73.579198 }
         ]
     },
+    "gn": {
+        coordinates:[
+            { latitude: 45.493397, longitude: -73.578002 },
+            { latitude: 45.494382, longitude: -73.577081 },
+            { latitude: 45.493848, longitude: -73.575558 },
+            { latitude: 45.492615 , longitude: -73.576567},
+            { latitude: 45.493397, longitude: -73.578002 }
+        ],
+        name: "Grey Nuns"
+    },
     "sp":{
         coordinates:[
             { latitude: 45.457464, longitude: -73.642074 },

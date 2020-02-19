@@ -1,56 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text } from 'react-native';
 import coord from '../constants/buildingCoordinates';
 import { isPointInPolygon } from 'geolib'
 
 // US5 - As a user, I would like to know which building im currently in.
 // Currently working on this, will be moved to sprint 2 (Mohanad)
-class CurrentBuilding extends React.Component{
+function CurrentBuilding(){
+    const [currentBuilding, setcurrentBuilding] = React.useState("")
+    const [lastLat, setlastLat] = React.useState(45.494382)
+    const [lastLong, setlastLong] = React.useState(-73.577081)
 
-    state = {
-        currentBuilding: '',
-        lastLat: null,
-        lastLong: null,
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         this.watchID = navigator.geolocation.watchPosition((position) => {
-            this.coordChange(position.coords.latitude, position.coords.longitude);
+            setlastLat(position.coords.latitude);
+            setlastLong(position.coords.longitude);
         });
-    }
 
-    componentWillUnmount() {
-        navigator.geolocation.clearWatch(this.watchID);
-    }
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.gn.coordinates[0].latitude, longitude: coord.gn.coordinates[0].longitude},
+            {latitude: coord.gn.coordinates[1].latitude, longitude: coord.gn.coordinates[1].longitude},
+            {latitude: coord.gn.coordinates[2].latitude, longitude: coord.gn.coordinates[2].longitude},
+            {latitude: coord.gn.coordinates[3].latitude, longitude: coord.gn.coordinates[3].longitude},
+            {latitude: coord.gn.coordinates[4].latitude, longitude: coord.gn.coordinates[4].longitude}])){
 
-    componentDidUpdate() {
-        if (isPointInPolygon({latitude: this.state.lastLat, longitude: this.state.lastLong}, [coord.h.coordinates])){
-            this.insideBuilding(coord.h.name);
+            setcurrentBuilding(coord.gn.name)
+
+        } else {
+            console.log("nop")
         }
-    }
+    })
 
-    insideBuilding(name) {
-        this.setState({
-            currentBuilding: name
-        })
-    }
-
-    coordChange(lastLat, lastLong) {
-        if (lastLat && lastLong) {
-            this.setState({
-                lastLat: lastLat || this.state.lastLat,
-                lastLong: lastLong || this.state.lastLong
-            });
-        }
-    }
-
-    render(){
-        console.log("latitude: "+this.state.lastLat);
-        console.log("longitude: "+this.state.lastLong);
+    if (currentBuilding !== "") {
         return(
-            <Text>Latitude: {this.state.lastLat}</Text>
+            <View>
+            </View>
         )
     }
+    
 }
 
 export { CurrentBuilding };

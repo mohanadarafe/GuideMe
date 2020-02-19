@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
+import { CurrentBuilding } from '../components/CurrentBuilding';
 
 
 const mapPosition = {
@@ -42,7 +43,8 @@ export default class Map extends React.Component {
                 showsCompass={true}
                 showsBuildings={true}
             >
-            <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>   
+            <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>
+            <CurrentBuilding/>  
             <BuildingHighlight/>
             <BuildingIdentification/>
             </MapView>

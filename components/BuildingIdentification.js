@@ -60,6 +60,12 @@ class BuildingIdentification extends React.Component {
                     title={'CC'}>
                         <Text style={styles.buildingIdentification}>CC</Text>
                     </Marker>
+
+                    <Marker
+                    coordinate={{ latitude: 45.493450, longitude: -73.576814}}
+                    title={'GN'}>
+                        <Text style={styles.buildingIdentification}>GN</Text>
+                    </Marker>
             </View>
             );
     }
