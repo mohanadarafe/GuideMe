@@ -6,25 +6,49 @@ import { isPointInPolygon } from 'geolib'
 // US5 - As a user, I would like to know which building im currently in.
 // Currently working on this, will be moved to sprint 2 (Mohanad)
 class CurrentBuilding extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = { longitude: undefined, latitude: undefined } ;
+
+    state = {
+        currentBuilding: '',
+        lastLat: null,
+        lastLong: null,
     }
 
-    componentWillMount() {
-        let latitude = this.props.lat;
-        let longitude = this.props.long;
-        this.setState({ longitude: longitude, latitude: latitude })
+    componentDidMount() {
+        this.watchID = navigator.geolocation.watchPosition((position) => {
+            this.coordChange(position.coords.latitude, position.coords.longitude);
+        });
+    }
+
+    componentWillUnmount() {
+        navigator.geolocation.clearWatch(this.watchID);
+    }
+
+    componentDidUpdate() {
+        if (isPointInPolygon({latitude: this.state.lastLat, longitude: this.state.lastLong}, [coord.h.coordinates])){
+            this.insideBuilding(coord.h.name);
+        }
+    }
+
+    insideBuilding(name) {
+        this.setState({
+            currentBuilding: name
+        })
+    }
+
+    coordChange(lastLat, lastLong) {
+        if (lastLat && lastLong) {
+            this.setState({
+                lastLat: lastLat || this.state.lastLat,
+                lastLong: lastLong || this.state.lastLong
+            });
+        }
     }
 
     render(){
-        if (isPointInPolygon({}, coord.h.coordinates)){
-            return(
-                <Text>{coord.h.name}</Text>   
-            )
-        }
+        console.log("latitude: "+this.state.lastLat);
+        console.log("longitude: "+this.state.lastLong);
         return(
-            <View></View>
+            <Text>Latitude: {this.state.lastLat}</Text>
         )
     }
 }

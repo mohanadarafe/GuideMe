@@ -4,7 +4,6 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
-import { CurrentBuilding } from '../components/CurrentBuilding';
 
 
 const mapPosition = {
@@ -24,9 +23,7 @@ const mapPosition = {
 
 export default class Map extends React.Component {
     state = { 
-        switchValue: false, 
-        curLongitude: null,
-        curLatitude: null
+        switchValue: false
     }
 
     toggleSwitch = (val) => {
@@ -34,33 +31,16 @@ export default class Map extends React.Component {
             switchValue: val
         })
     }
-
-    getCoordinates(){
-        navigator.geolocation.watchPosition(
-            (position) => {
-                let point = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                };
-                // this.setState({curLongitude: point.longitude})
-                // this.setState({curLatitude: point.latitude})
-            },
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 0}
-        );
-    }
-
+    
     render(){
-        //this.getCoordinates();
         return (
             <MapView 
                 style={styles.map} 
                 provider={PROVIDER_GOOGLE}
                 region={this.state.switchValue ? mapPosition.sgwCoord : mapPosition.loyCoord}
                 showsUserLocation={true}
-                showsMyLocationButton={true}
                 showsCompass={true}
                 showsBuildings={true}
-                minZoomLevel={17}
             >
             <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>   
             <BuildingHighlight/>
