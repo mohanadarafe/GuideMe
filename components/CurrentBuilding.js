@@ -57,7 +57,18 @@ export function CurrentBuilding(){
 
         }
 
-        //Check for change every 5 seconds.
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.lb.coordinates[0].latitude, longitude: coord.lb.coordinates[0].longitude},
+            {latitude: coord.lb.coordinates[1].latitude, longitude: coord.lb.coordinates[1].longitude},
+            {latitude: coord.lb.coordinates[2].latitude, longitude: coord.lb.coordinates[2].longitude},
+            {latitude: coord.lb.coordinates[3].latitude, longitude: coord.lb.coordinates[3].longitude},
+            {latitude: coord.lb.coordinates[4].latitude, longitude: coord.lb.coordinates[4].longitude}])){
+
+            setcurrentBuilding(coord.lb.name)
+
+        }
+
+        //Check for change every 2.5 seconds.
         const interval = setInterval(() => {}, 2500);
         return () => clearInterval(interval)
     },  [])
