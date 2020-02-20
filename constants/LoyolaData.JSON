@@ -225,13 +225,19 @@
     "VE": {
         "name": "Vanier Extension",
         "address": "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-        "departments": ["Applied Human Sciences"],
-        "services": ["Library"]
+        "departments": [
+            "Applied Human Sciences"
+        ],
+        "services": [
+            "Library"
+        ]
     },
     "VL": {
         "name": "Vanier Library Building",
         "address": "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
         "departments": null,
-        "services": ["Library"]
+        "services": [
+            "Library"
+        ]
     }
 }
