@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
-import { CurrentBuilding } from '../components/CurrentBuilding';
+import { BottomMenu } from '../components/BottomMenu';
 
 
 const mapPosition = {
@@ -24,7 +24,6 @@ const mapPosition = {
 
 function Map() {
     const [switchVal, setswitchVal] = React.useState(true);
-    const currentBuilding = CurrentBuilding();
     
     return (
         <MapView 
