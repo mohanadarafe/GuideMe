@@ -291,5 +291,69 @@
             "Department of Philosophy"
         ],
         "services": null
+    },
+    "SB": {
+        "name": "Samuel Bronfman Building",
+        "address": "1590 Rue Docteur Penfield, Montreal, QC, H3G 1C5",
+        "departments": null,
+        "services": [
+            "Arts and Services Research Groups"
+        ]
+    },
+    "T": {
+        "name": "T Annex",
+        "address": "2030 Rue Mackay, Montreal, QC, H3G 1C5",
+        "departments": null,
+        "services": [
+            "Graduate Students Association"
+        ]
+    },
+    "TD": {
+        "name": "Toronto Dominion Building",
+        "address": "1410 Rue Guy, Montreal, QC, H3H 2L7",
+        "departments": null,
+        "services": [
+            "CUSP"
+        ]
+    },
+    "V": {
+        "name": "V Annex",
+        "address": "1410 Rue Guy, Montreal, QC, H3H 2L7",
+        "departments": null,
+        "services": [
+            "CUTV",
+            "Centre 2110"
+        ]
+    },
+    "VA": {
+        "name": "Visual Arts Building",
+        "address": "1395 Rene-Levesque Blvd. O. Montreal, QC, H3G 2M5",
+        "departments": [
+            "Studio Arts",
+            "Art History",
+            "Art Education",
+            "Creative Arts Therapies"
+        ],
+        "services": [
+            "VAV Art Gallery",
+            "Art Supply Store"
+        ]
+    },
+    "X": {
+        "name": "X Annex",
+        "address": "2080 Rue Mackay, Montreal, QC, H3G 2J1",
+        "departments": null,
+        "services": [
+            "Concordia Internation"
+        ]
+    },
+
+    "Z": {
+        "name": "Z Annex",
+        "address": "2090 Rue Mackay, Montreal, QC, H3G 2J1",
+        "departments": null,
+        "services": [
+            "Concordia Internation"
+        ]
     }
 }
