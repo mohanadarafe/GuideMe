@@ -67,11 +67,7 @@ export function CurrentBuilding(){
             setcurrentBuilding(coord.lb.name)
 
         }
-
-        //Check for change every 2.5 seconds.
-        const interval = setInterval(() => {}, 2500);
-        return () => clearInterval(interval)
-    },  [])
+    })
 
     if (currentBuilding === ""){
         return ("Not in a building");
