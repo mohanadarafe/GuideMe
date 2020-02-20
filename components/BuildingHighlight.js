@@ -50,6 +50,11 @@ const BuildingHighlight = () => {
                 coordinates={coord.ad.coordinates}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
+
+            <Polygon
+                coordinates={coord.gn.coordinates}
+                fillColor="rgba(76, 79, 98, 0.7)"
+            />
         </View>
     )
 }

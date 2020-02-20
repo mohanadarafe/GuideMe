@@ -1,32 +1,80 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, {useEffect, useState} from 'react';
 import coord from '../constants/buildingCoordinates';
 import { isPointInPolygon } from 'geolib'
 
-// US5 - As a user, I would like to know which building im currently in.
-// Currently working on this, will be moved to sprint 2 (Mohanad)
-class CurrentBuilding extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = { longitude: undefined, latitude: undefined } ;
-    }
+export function CurrentBuilding(){
+    const [currentBuilding, setcurrentBuilding] = React.useState("")
+    const [lastLat, setlastLat] = React.useState(0)
+    const [lastLong, setlastLong] = React.useState(0)
 
-    componentWillMount() {
-        let latitude = this.props.lat;
-        let longitude = this.props.long;
-        this.setState({ longitude: longitude, latitude: latitude })
-    }
+    useEffect(() => {
+        this.watchID = navigator.geolocation.watchPosition((position) => {
+            setlastLat(position.coords.latitude);
+            setlastLong(position.coords.longitude);
+        });
 
-    render(){
-        if (isPointInPolygon({}, coord.h.coordinates)){
-            return(
-                <Text>{coord.h.name}</Text>   
-            )
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.gn.coordinates[0].latitude, longitude: coord.gn.coordinates[0].longitude},
+            {latitude: coord.gn.coordinates[1].latitude, longitude: coord.gn.coordinates[1].longitude},
+            {latitude: coord.gn.coordinates[2].latitude, longitude: coord.gn.coordinates[2].longitude},
+            {latitude: coord.gn.coordinates[3].latitude, longitude: coord.gn.coordinates[3].longitude},
+            {latitude: coord.gn.coordinates[4].latitude, longitude: coord.gn.coordinates[4].longitude}])){
+
+            setcurrentBuilding(coord.gn.name)
+
         }
-        return(
-            <View></View>
-        )
-    }
-}
 
-export { CurrentBuilding };
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.h.coordinates[0].latitude, longitude: coord.h.coordinates[0].longitude},
+            {latitude: coord.h.coordinates[1].latitude, longitude: coord.h.coordinates[1].longitude},
+            {latitude: coord.h.coordinates[2].latitude, longitude: coord.h.coordinates[2].longitude},
+            {latitude: coord.h.coordinates[3].latitude, longitude: coord.h.coordinates[3].longitude},
+            {latitude: coord.h.coordinates[4].latitude, longitude: coord.h.coordinates[4].longitude}])){
+
+            setcurrentBuilding(coord.h.name)
+
+        }
+
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.mb.coordinates[0].latitude, longitude: coord.mb.coordinates[0].longitude},
+            {latitude: coord.mb.coordinates[1].latitude, longitude: coord.mb.coordinates[1].longitude},
+            {latitude: coord.mb.coordinates[2].latitude, longitude: coord.mb.coordinates[2].longitude},
+            {latitude: coord.mb.coordinates[3].latitude, longitude: coord.mb.coordinates[3].longitude},
+            {latitude: coord.mb.coordinates[4].latitude, longitude: coord.mb.coordinates[4].longitude}])){
+
+            setcurrentBuilding(coord.mb.name)
+
+        }
+
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.ev.coordinates[0].latitude, longitude: coord.ev.coordinates[0].longitude},
+            {latitude: coord.ev.coordinates[1].latitude, longitude: coord.ev.coordinates[1].longitude},
+            {latitude: coord.ev.coordinates[2].latitude, longitude: coord.ev.coordinates[2].longitude},
+            {latitude: coord.ev.coordinates[3].latitude, longitude: coord.ev.coordinates[3].longitude},
+            {latitude: coord.ev.coordinates[4].latitude, longitude: coord.ev.coordinates[4].longitude}])){
+
+            setcurrentBuilding(coord.ev.name)
+
+        }
+
+        if (isPointInPolygon({latitude: lastLat, longitude: lastLong}, 
+            [{latitude: coord.lb.coordinates[0].latitude, longitude: coord.lb.coordinates[0].longitude},
+            {latitude: coord.lb.coordinates[1].latitude, longitude: coord.lb.coordinates[1].longitude},
+            {latitude: coord.lb.coordinates[2].latitude, longitude: coord.lb.coordinates[2].longitude},
+            {latitude: coord.lb.coordinates[3].latitude, longitude: coord.lb.coordinates[3].longitude},
+            {latitude: coord.lb.coordinates[4].latitude, longitude: coord.lb.coordinates[4].longitude}])){
+
+            setcurrentBuilding(coord.lb.name)
+
+        }
+
+        //Check for change every 2.5 seconds.
+        const interval = setInterval(() => {}, 2500);
+        return () => clearInterval(interval)
+    },  [])
+
+    if (currentBuilding === ""){
+        return ("Not in a building");
+    }
+    return(currentBuilding);
+}
