@@ -16,7 +16,8 @@ export default {
             { latitude: 45.496896, longitude: -73.577102 },
             { latitude: 45.496255, longitude: -73.577700 },
             { latitude: 45.496708, longitude: -73.578525 }
-        ]
+        ],
+        name: "LB"
     },
     "gm":{
         coordinates:[
@@ -36,7 +37,8 @@ export default {
             { latitude: 45.495825, longitude: -73.577260 },
             { latitude: 45.495175, longitude: -73.577859 },
             { latitude: 45.495574, longitude: -73.578653 }
-        ]
+        ],
+        name: "EV Building"
     },
     "mb":{
         coordinates:[
@@ -45,7 +47,18 @@ export default {
             { latitude: 45.495014, longitude: -73.578734 },
             { latitude: 45.495200, longitude: -73.578530 },
             { latitude: 45.495523, longitude: -73.579198 }
-        ]
+        ],
+        name: "JMSB"
+    },
+    "gn": {
+        coordinates:[
+            { latitude: 45.493397, longitude: -73.578002 },
+            { latitude: 45.494382, longitude: -73.577081 },
+            { latitude: 45.493848, longitude: -73.575558 },
+            { latitude: 45.492615 , longitude: -73.576567},
+            { latitude: 45.493397, longitude: -73.578002 }
+        ],
+        name: "Grey Nuns"
     },
     "sp":{
         coordinates:[
