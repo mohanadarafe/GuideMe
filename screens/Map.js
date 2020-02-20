@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
@@ -22,34 +22,24 @@ const mapPosition = {
     }
 }
 
-export default class Map extends React.Component {
-    state = { 
-        switchValue: false
-    }
-
-    toggleSwitch = (val) => {
-        this.setState({
-            switchValue: val
-        })
-    }
+function Map() {
+    const [switchVal, setswitchVal] = React.useState(true);
+    const currentBuilding = CurrentBuilding();
     
-    render(){
-        return (
-            <MapView 
-                style={styles.map} 
-                provider={PROVIDER_GOOGLE}
-                region={this.state.switchValue ? mapPosition.sgwCoord : mapPosition.loyCoord}
-                showsUserLocation={true}
-                showsCompass={true}
-                showsBuildings={true}
-            >
-            <ToggleCampus val={this.state.switchValue} onChange={this.toggleSwitch}/>
-            <CurrentBuilding/>  
+    return (
+        <MapView 
+            style={styles.map} 
+            provider={PROVIDER_GOOGLE}
+            region={switchVal ? mapPosition.sgwCoord : mapPosition.loyCoord}
+            showsUserLocation={true}
+            showsCompass={true}
+            showsBuildings={true}
+        >
             <BuildingHighlight/>
             <BuildingIdentification/>
-            </MapView>
-        );
-    }
+            <ToggleCampus val={switchVal} onChange={setswitchVal}/>
+        </MapView>
+    );
 }
 
 export const styles = StyleSheet.create({
@@ -58,9 +48,7 @@ export const styles = StyleSheet.create({
       flex: 1,
       //Main axis
       flexDirection:"row",
-      //Describes how to align children along the cross axis of their container
       alignItems: "flex-end",
-      //Describes how to align children within the main axis of their container
       justifyContent: "flex-end",
     },
     buildingIdentification: {
@@ -76,3 +64,5 @@ export const styles = StyleSheet.create({
         width: 70
     },
 });
+
+export default Map;
