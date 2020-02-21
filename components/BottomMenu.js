@@ -5,7 +5,7 @@ import { ToggleCampus } from './ToggleCampus';
 
 function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    var currentBuilding = CurrentBuilding();
+    //var currentBuilding = CurrentBuilding();
 
     buildingSelected = async() => {
         let name = await AsyncStorage.getItem('buildingSelected');
@@ -21,7 +21,7 @@ function BottomMenu () {
 
     return (
         <View style={styles.rectangle}>
-            <Text style={styles.mainLabel}>Hall Building</Text>
+            <Text style={styles.mainLabel}>{selectedBuilding}</Text>
             <View style={styles.toggle}>
                 <ToggleCampus />
             </View>

@@ -26,41 +26,57 @@ function BuildingHighlight(){
 
             <Polygon
                 coordinates={coord.gm.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("GM Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.ev.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("EV Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.mb.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("JMSB")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.sp.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("SP Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.cj.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("CJ Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.cc.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("CC Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.ad.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("AD Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.gn.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("Grey Nuns")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
         </View>
