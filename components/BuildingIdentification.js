@@ -1,6 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { styles } from '../screens/Map'
+import { Text, View, StyleSheet } from 'react-native';
 import { Marker } from 'react-native-maps';
 
 function BuildingIdentification () {
@@ -68,5 +67,16 @@ function BuildingIdentification () {
         </View>
     );
 }
+
+export const styles = StyleSheet.create({
+    buildingIdentification: {
+        color: "white",
+        fontSize: 30,
+        fontWeight: "bold",
+        textShadowColor: '#000000',
+        textShadowOffset: { width: 1, height: 4 },
+        textShadowRadius: 5
+    }
+})
 
 export { BuildingIdentification };

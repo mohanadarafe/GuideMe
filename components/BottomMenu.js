@@ -15,7 +15,7 @@ function BottomMenu () {
     useEffect(() => {
         const intervalId = setInterval(() => {
             buildingSelected();
-        }, 100)
+        }, 1)
         return () => clearInterval(intervalId);
     })
 
@@ -29,7 +29,7 @@ function BottomMenu () {
     )
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     rectangle: {
         width: '100%',
         height: 150,
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
         color: '#FFFFFF',
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: 'encodeSansExpanded'
     }
   });
 

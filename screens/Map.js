@@ -43,6 +43,7 @@ function Map () {
             showsUserLocation={true}
             showsCompass={true}
             showsBuildings={true}
+            showsMyLocationButton={true}
         >
             <BottomMenu />
             <BuildingHighlight />
@@ -59,19 +60,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         justifyContent: "flex-end",
-    },
-    buildingIdentification: {
-        color: "white",
-        fontSize: 30,
-        fontWeight: "bold",
-        textShadowColor: '#000000',
-        textShadowOffset: { width: 1, height: 4 },
-        textShadowRadius: 5
-    },
-    switch: {
-        height: 140,
-        width: 70
-    },
+    }
 });
 
 export default Map;

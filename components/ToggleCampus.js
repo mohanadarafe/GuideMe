@@ -1,6 +1,5 @@
 import React from 'react';
-import { Switch, AsyncStorage } from 'react-native';
-import { styles } from '../screens/Map'
+import { StyleSheet, Switch, AsyncStorage } from 'react-native';
 
 
 function ToggleCampus () {
@@ -21,5 +20,12 @@ function ToggleCampus () {
         ></Switch>
     );
 }
+
+const styles = StyleSheet.create({
+    switch: {
+        height: 140,
+        width: 70
+    },
+})
 
 export { ToggleCampus };

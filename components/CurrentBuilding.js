@@ -68,7 +68,7 @@ export function CurrentBuilding () {
                 setcurrentBuilding(coord.lb.name)
     
             }
-        }, 6000)
+        }, 10000)
         return () => clearInterval(intervalId);
     })
 
