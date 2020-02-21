@@ -3,6 +3,7 @@ import coord from '../constants/buildingCoordinates';
 import { isPointInPolygon } from 'geolib'
 
 export function CurrentBuilding () {
+
     const [currentBuilding, setcurrentBuilding] = React.useState("")
     const [lastLat, setlastLat] = React.useState(0)
     const [lastLong, setlastLong] = React.useState(0)

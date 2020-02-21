@@ -1,18 +1,26 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, AsyncStorage } from 'react-native';
 import { Polygon } from 'react-native-maps';
 import coord from '../constants/buildingCoordinates';
 
-const BuildingHighlight = () => {
+
+function BuildingHighlight(){
+    const [buildingName, setBuildingName] = React.useState("");
+    AsyncStorage.setItem("buildingSelected", buildingName);
+    
     return (
         <View>
             <Polygon
                 coordinates={coord.h.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("Hall Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
             <Polygon
                 coordinates={coord.lb.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName("LB Building")}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 

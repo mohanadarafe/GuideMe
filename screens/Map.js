@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
-import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
 
@@ -22,20 +21,32 @@ const mapPosition = {
 }
 
 function Map () {
-    const [switchVal, setswitchVal] = React.useState(true);
+    const [switchVal, setswitchVal] = React.useState("true");
+
+    campusSelected = async() => {
+        let val = await AsyncStorage.getItem("toggle");
+        setswitchVal(val);
+    }    
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            campusSelected();
+        }, 1)
+        return () => clearInterval(intervalId);
+    })
 
     return (
         <MapView
             style={styles.map}
             provider={PROVIDER_GOOGLE}
-            region={switchVal ? mapPosition.sgwCoord : mapPosition.loyCoord}
+            region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
             showsUserLocation={true}
             showsCompass={true}
             showsBuildings={true}
         >
+            <BottomMenu />
             <BuildingHighlight />
             <BuildingIdentification />
-            <ToggleCampus val={switchVal} onChange={setswitchVal} />
         </MapView>
     );
 }
