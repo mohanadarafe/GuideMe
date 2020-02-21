@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
-
 
 const mapPosition = {
     sgwCoord: {
@@ -22,33 +21,33 @@ const mapPosition = {
     }
 }
 
-function Map() {
+function Map () {
     const [switchVal, setswitchVal] = React.useState(true);
-    
+
     return (
-        <MapView 
-            style={styles.map} 
+        <MapView
+            style={styles.map}
             provider={PROVIDER_GOOGLE}
             region={switchVal ? mapPosition.sgwCoord : mapPosition.loyCoord}
             showsUserLocation={true}
             showsCompass={true}
             showsBuildings={true}
         >
-            <BuildingHighlight/>
-            <BuildingIdentification/>
-            <ToggleCampus val={switchVal} onChange={setswitchVal}/>
+            <BuildingHighlight />
+            <BuildingIdentification />
+            <ToggleCampus val={switchVal} onChange={setswitchVal} />
         </MapView>
     );
 }
 
 export const styles = StyleSheet.create({
     map: {
-      height: '100%',
-      flex: 1,
-      //Main axis
-      flexDirection:"row",
-      alignItems: "flex-end",
-      justifyContent: "flex-end",
+        height: '100%',
+        flex: 1,
+        //Main axis
+        flexDirection: "row",
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
     },
     buildingIdentification: {
         color: "white",

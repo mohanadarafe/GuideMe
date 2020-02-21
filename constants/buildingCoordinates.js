@@ -19,8 +19,8 @@ export default {
         ],
         name: "LB"
     },
-    "gm":{
-        coordinates:[
+    "gm": {
+        coordinates: [
             { latitude: 45.495782, longitude: -73.579149 },
             { latitude: 45.496129, longitude: -73.578806 },
             { latitude: 45.495945, longitude: -73.578429 },
@@ -28,8 +28,8 @@ export default {
             { latitude: 45.495782, longitude: -73.579149 }
         ]
     },
-    "ev":{
-        coordinates:[
+    "ev": {
+        coordinates: [
             { latitude: 45.495574, longitude: -73.578653 },
             { latitude: 45.495908, longitude: -73.578445 },
             { latitude: 45.495697, longitude: -73.578048 },
@@ -40,8 +40,8 @@ export default {
         ],
         name: "EV Building"
     },
-    "mb":{
-        coordinates:[
+    "mb": {
+        coordinates: [
             { latitude: 45.495523, longitude: -73.579198 },
             { latitude: 45.495358, longitude: -73.579356 },
             { latitude: 45.495014, longitude: -73.578734 },
@@ -51,17 +51,17 @@ export default {
         name: "JMSB"
     },
     "gn": {
-        coordinates:[
+        coordinates: [
             { latitude: 45.493397, longitude: -73.578002 },
             { latitude: 45.494382, longitude: -73.577081 },
             { latitude: 45.493848, longitude: -73.575558 },
-            { latitude: 45.492615 , longitude: -73.576567},
+            { latitude: 45.492615, longitude: -73.576567 },
             { latitude: 45.493397, longitude: -73.578002 }
         ],
         name: "Grey Nuns"
     },
-    "sp":{
-        coordinates:[
+    "sp": {
+        coordinates: [
             { latitude: 45.457464, longitude: -73.642074 },
             { latitude: 45.458325, longitude: -73.641411 },
             { latitude: 45.458165, longitude: -73.640985 },
@@ -71,8 +71,8 @@ export default {
             { latitude: 45.457464, longitude: -73.642074 }
         ]
     },
-    "cj":{
-        coordinates:[
+    "cj": {
+        coordinates: [
             { latitude: 45.457335, longitude: -73.640715 },
             { latitude: 45.457179, longitude: -73.640400 },
             { latitude: 45.457617, longitude: -73.640051 },
@@ -80,17 +80,17 @@ export default {
             { latitude: 45.457335, longitude: -73.640715 }
         ]
     },
-    "cc":{
-        coordinates:[
+    "cc": {
+        coordinates: [
             { latitude: 45.458521, longitude: -73.640679 },
             { latitude: 45.458377, longitude: -73.640794 },
             { latitude: 45.458076, longitude: -73.639997 },
             { latitude: 45.458221, longitude: -73.639898 },
-            { latitude: 45.458521, longitude: -73.640679}
+            { latitude: 45.458521, longitude: -73.640679 }
         ]
     },
-    "ad":{
-        coordinates:[
+    "ad": {
+        coordinates: [
             { latitude: 45.457901, longitude: -73.640113 },
             { latitude: 45.458378, longitude: -73.639742 },
             { latitude: 45.458243, longitude: -73.639460 },
@@ -98,8 +98,8 @@ export default {
             { latitude: 45.457901, longitude: -73.640113 }
         ]
     }
-    
-    
+
+
 
 
 }

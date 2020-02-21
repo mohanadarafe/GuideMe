@@ -7,10 +7,10 @@ import { View } from "react-native";
 // variable to test. 
 
 // Don't forget to add <BottomMenu/> inside Map.js to test!
-function BottomMenu() {
+function BottomMenu () {
     var currentBuilding = CurrentBuilding();
 
-    return(
+    return (
         <View>
 
         </View>
