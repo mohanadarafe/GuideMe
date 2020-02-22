@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { CurrentBuilding } from "./CurrentBuilding";
 import { View, AsyncStorage, Text, StyleSheet } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
 import { AppLoading } from 'expo';
+import { Icon } from 'native-base';
 
 function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    //var currentBuilding = CurrentBuilding();
 
     buildingSelected = async() => {
         let name = await AsyncStorage.getItem('buildingSelected');
@@ -20,22 +19,16 @@ function BottomMenu () {
         return () => clearInterval(intervalId);
     })
 
-    if (styles) {
-        return (
-            <View style={styles.rectangle}>
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-                <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.toggle}>
-                    <ToggleCampus />
-                </View>
+    return (
+        <View style={styles.rectangle}>
+            <Icon name="ios-arrow-up" style={styles.arrow}></Icon>
+            <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+            <Text style={styles.shortLabel}>More info</Text>
+            <View style={styles.toggle}>
+                <ToggleCampus />
             </View>
-        )
-    } else {
-        return(
-            <AppLoading />
-        )
-    }
-    
+        </View>
+    )    
 }
 
 export const styles = StyleSheet.create({
@@ -48,11 +41,16 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         bottom: -40
     },
+    arrow: {
+        color: '#ffffff',
+        left: '6%',
+        bottom: '15%'
+    },
     toggle: {
         position: 'absolute', 
         justifyContent: 'center', 
         alignItems: 'center',
-        left: "75%",
+        left: "80%",
         top: "25%"
     },
     mainLabel: {
