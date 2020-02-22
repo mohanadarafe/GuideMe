@@ -1,12 +1,17 @@
+<<<<<<< HEAD
 import React from 'react';
 import { StyleSheet, View,  ActionSheetIOS } from 'react-native';
 import MapView, {PROVIDER_GOOGLE, Callout} from 'react-native-maps';
 import { Buildings } from '../components/Buildings';
+=======
+import React, { useState, useEffect } from 'react';
+import { StyleSheet } from 'react-native';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import { BuildingHighlight } from '../components/BuildingHighlight';
+>>>>>>> a2f585f4e900a93b5be5584f849f0b0adc578e55
 import { ToggleCampus } from '../components/ToggleCampus';
 import { BuildingIdentification } from '../components/BuildingIdentification';
-import GeoFencing from 'react-native-geo-fencing';
-
-
+import { BottomMenu } from '../components/BottomMenu';
 
 const mapPosition = {
     sgwCoord: {
@@ -23,6 +28,7 @@ const mapPosition = {
     }
 }
 
+<<<<<<< HEAD
 export default class Map extends React.Component {
 
     constructor(props) {
@@ -84,10 +90,30 @@ export default class Map extends React.Component {
             </MapView>
         );
     }
+=======
+function Map () {
+    const [switchVal, setswitchVal] = React.useState(true);
+
+    return (
+        <MapView
+            style={styles.map}
+            provider={PROVIDER_GOOGLE}
+            region={switchVal ? mapPosition.sgwCoord : mapPosition.loyCoord}
+            showsUserLocation={true}
+            showsCompass={true}
+            showsBuildings={true}
+        >
+            <BuildingHighlight />
+            <BuildingIdentification />
+            <ToggleCampus val={switchVal} onChange={setswitchVal} />
+        </MapView>
+    );
+>>>>>>> a2f585f4e900a93b5be5584f849f0b0adc578e55
 }
 
 export const styles = StyleSheet.create({
     map: {
+<<<<<<< HEAD
       height: '100%',
       flex: 1,
       //Main axis
@@ -102,9 +128,31 @@ export const styles = StyleSheet.create({
         opacity: 0.5,	
        fontSize: 10,
        fontWeight: "bold",
+=======
+        height: '100%',
+        flex: 1,
+        //Main axis
+        flexDirection: "row",
+        alignItems: "flex-end",
+        justifyContent: "flex-end",
+    },
+    buildingIdentification: {
+        color: "white",
+        fontSize: 30,
+        fontWeight: "bold",
+        textShadowColor: '#000000',
+        textShadowOffset: { width: 1, height: 4 },
+        textShadowRadius: 5
+>>>>>>> a2f585f4e900a93b5be5584f849f0b0adc578e55
     },
     switch: {
-        height: 70,
+        height: 140,
         width: 70
     },
+<<<<<<< HEAD
 });
+=======
+});
+
+export default Map;
+>>>>>>> a2f585f4e900a93b5be5584f849f0b0adc578e55
