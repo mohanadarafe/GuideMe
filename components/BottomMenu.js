@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { CurrentBuilding } from "./CurrentBuilding";
 import { View, AsyncStorage, Text, StyleSheet } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
+import { AppLoading } from 'expo';
 
 function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
@@ -10,23 +11,31 @@ function BottomMenu () {
     buildingSelected = async() => {
         let name = await AsyncStorage.getItem('buildingSelected');
         setSelectedBuilding(name);
-    }    
+    }
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             buildingSelected();
-        }, 1)
+        }, 100)
         return () => clearInterval(intervalId);
     })
 
-    return (
-        <View style={styles.rectangle}>
-            <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-            <View style={styles.toggle}>
-                <ToggleCampus />
+    if (styles) {
+        return (
+            <View style={styles.rectangle}>
+                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.toggle}>
+                    <ToggleCampus />
+                </View>
             </View>
-        </View>
-    )
+        )
+    } else {
+        return(
+            <AppLoading />
+        )
+    }
+    
 }
 
 export const styles = StyleSheet.create({
@@ -41,12 +50,10 @@ export const styles = StyleSheet.create({
     },
     toggle: {
         position: 'absolute', 
-        top: '50%', 
-        left: '70%', 
-        right: 0, 
-        bottom: 0, 
         justifyContent: 'center', 
-        alignItems: 'center'
+        alignItems: 'center',
+        left: "75%",
+        top: "25%"
     },
     mainLabel: {
         position: 'absolute', 
@@ -57,9 +64,21 @@ export const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
         color: '#FFFFFF',
-        fontSize: 20,
+        fontSize: 18,
+        fontFamily: 'encodeSansExpanded'
+    },
+    shortLabel: {
+        position: 'absolute', 
+        top: '40%', 
+        left: '15%', 
+        right: 0, 
+        bottom: 0, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        color: '#80828D',
+        fontSize: 12,
         fontFamily: 'encodeSansExpanded'
     }
-  });
+});
 
 export { BottomMenu };
