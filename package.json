@@ -14,16 +14,17 @@
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
     ],
     "collectCoverage": true,
-  "collectCoverageFrom": [
-    "**/*.{js,jsx}",
-    "!**/coverage/**",
-    "!**/node_modules/**",
-    "!**/babel.config.js",
-    "!**/jest.setup.js"
-  ]
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/babel.config.js",
+      "!**/jest.setup.js"
+    ]
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",
+    "acorn": "^7.1.0",
     "expo": "~36.0.0",
     "galio-framework": "^0.6.3",
     "geolib": "^3.2.1",
@@ -37,6 +38,7 @@
     "react-native-paper": "^3.5.1",
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "^0.6.2",
+    "react-native-search-header": "^0.3.5",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^2.0.15"
