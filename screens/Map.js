@@ -43,7 +43,6 @@ function Map () {
             showsUserLocation={true}
             showsCompass={true}
             showsBuildings={true}
-            showsMyLocationButton={true}
         >
             <BottomMenu />
             <BuildingHighlight />
@@ -59,7 +58,7 @@ export const styles = StyleSheet.create({
         //Main axis
         flexDirection: "row",
         alignItems: "flex-end",
-        justifyContent: "flex-end",
+        justifyContent: "flex-end"
     }
 });
 

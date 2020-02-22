@@ -6,62 +6,52 @@ function BuildingIdentification () {
     return (
         <View>
             <Marker
-                coordinate={{ latitude: 45.497222, longitude: -73.578809 }}
-                title={'H building'}>
+                coordinate={{ latitude: 45.497222, longitude: -73.578809 }}>
                 <Text style={styles.buildingIdentification}>H</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.496537, longitude: -73.577755 }}
-                title={'LB building'}>
+                coordinate={{ latitude: 45.496537, longitude: -73.577755 }}>
                 <Text style={styles.buildingIdentification}>LB</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.495804, longitude: -73.578764 }}
-                title={'HM building'}>
+                coordinate={{ latitude: 45.495804, longitude: -73.578764 }}>
                 <Text style={styles.buildingIdentification}>HM</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.495431, longitude: -73.578133 }}
-                title={'EV building'}>
+                coordinate={{ latitude: 45.495431, longitude: -73.578133 }}>
                 <Text style={styles.buildingIdentification}>EV</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.495306, longitude: -73.579011 }}
-                title={'JMSB building'}>
+                coordinate={{ latitude: 45.495306, longitude: -73.579011 }}>
                 <Text style={styles.buildingIdentification}>JMSB</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.457825, longitude: -73.641458 }}
-                title={'SP'}>
+                coordinate={{ latitude: 45.457825, longitude: -73.641458 }}>
                 <Text style={styles.buildingIdentification}>SP</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.457516, longitude: -73.640327 }}
-                title={'CJ'}>
+                coordinate={{ latitude: 45.457516, longitude: -73.640327 }}>
                 <Text style={styles.buildingIdentification}>CJ</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.458094, longitude: -73.639768 }}
-                title={'AP'}>
+                coordinate={{ latitude: 45.458094, longitude: -73.639768 }}>
                 <Text style={styles.buildingIdentification}>AP</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.458314, longitude: -73.640409 }}
-                title={'CC'}>
+                coordinate={{ latitude: 45.458314, longitude: -73.640409 }}>
                 <Text style={styles.buildingIdentification}>CC</Text>
             </Marker>
 
             <Marker
-                coordinate={{ latitude: 45.493450, longitude: -73.576814 }}
-                title={'GN'}>
+                coordinate={{ latitude: 45.493450, longitude: -73.576814 }}>
                 <Text style={styles.buildingIdentification}>GN</Text>
             </Marker>
         </View>
