@@ -5,25 +5,26 @@ import { ToggleCampus } from './ToggleCampus';
 import { AppLoading } from 'expo';
 
 function BottomMenu () {
+    
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     //var currentBuilding = CurrentBuilding();
 
-    buildingSelected = async() => {
-        let name = await AsyncStorage.getItem('buildingSelected');
-        setSelectedBuilding(name);
-    }
+    // buildingSelected = async() => {
+    //     let name = await AsyncStorage.getItem('buildingSelected');
+    //     setSelectedBuilding(name);
+    // }
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            buildingSelected();
-        }, 100)
-        return () => clearInterval(intervalId);
-    })
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         buildingSelected();
+    //     }, 100)
+    //     return () => clearInterval(intervalId);
+    // })
 
     if (styles) {
         return (
-            <View style={styles.rectangle}>
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+            <View style={styles.container}>
+                {/* <Text style={styles.mainLabel}>{selectedBuilding}</Text> */}
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.toggle}>
                     <ToggleCampus />
@@ -39,25 +40,23 @@ function BottomMenu () {
 }
 
 export const styles = StyleSheet.create({
-    rectangle: {
+    container: {
         width: '100%',
-        height: 150,
+        height: 350,
         position: 'absolute',
         borderRadius: 30.5,
         backgroundColor: '#2A2E43',
+        flexDirection: 'row',
         justifyContent: 'center',
-        bottom: -40
+        bottom: -275
     },
     toggle: {
-        position: 'absolute', 
-        justifyContent: 'center', 
-        alignItems: 'center',
-        left: "75%",
-        top: "25%"
+        left: "30%",
+        top: "6.5%"
     },
     mainLabel: {
         position: 'absolute', 
-        top: '20%', 
+        top: '5%', 
         left: '15%', 
         right: 0, 
         bottom: 0, 
@@ -68,15 +67,10 @@ export const styles = StyleSheet.create({
         fontFamily: 'encodeSansExpanded'
     },
     shortLabel: {
-        position: 'absolute', 
-        top: '40%', 
-        left: '15%', 
-        right: 0, 
-        bottom: 0, 
-        justifyContent: 'center', 
-        alignItems: 'center',
+        top: '8%', 
+        right: '30%', 
         color: '#80828D',
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'encodeSansExpanded'
     }
 });
