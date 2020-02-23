@@ -23,8 +23,9 @@ function BottomMenu () {
     if (!selectedBuilding) {
         return (
             <View style={styles.container}>
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-                <Text style={styles.shortLabel}>More info</Text>
+                <Icon name="ios-arrow-up" style={styles.arrow} />
+                <Text style={styles.mainLabel}>Nearby</Text>
+                <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View style={styles.toggle}>
                     <ToggleCampus />
                 </View>
