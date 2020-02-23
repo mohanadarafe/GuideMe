@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { View, AsyncStorage, Text, StyleSheet } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
-import { AppLoading } from 'expo';
 import { Icon } from 'native-base';
+import { MoreDetails } from '../screens/MoreDetails';
 
 function BottomMenu () {
-    
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
+    const [iconSelected, setIconSelected] = React.useState(false);
 
     const buildingSelected = async() => {
         let name = await AsyncStorage.getItem('buildingSelected');
@@ -20,10 +20,19 @@ function BottomMenu () {
         return () => clearInterval(intervalId);
     })
 
+    if(iconSelected) {
+        return(
+                <View style={styles.moreDetails}>
+                    <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => {setIconSelected(false)}} />
+                    <MoreDetails name={selectedBuilding}/>
+                </View>
+        );
+    }
+
     if (!selectedBuilding) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrow} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {setIconSelected(true)}} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View style={styles.toggle}>
@@ -31,10 +40,11 @@ function BottomMenu () {
                 </View>
             </View>
         )
-    } else {
+    }
+    else {
         return(
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrow} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {setIconSelected(true)}} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.toggle}>
@@ -55,10 +65,25 @@ export const styles = StyleSheet.create({
         backgroundColor: '#2A2E43',
         bottom: -275
     },
-    arrow: {
+    moreDetails: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        backgroundColor: '#2A2E43'
+    },
+    arrowUp: {
         color: '#ffffff',
         left: '5%',
         top: '7%'
+    },
+    arrowDown: {
+        color: '#ffffff',
+        top: '5%',
+        left: '25.5%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        fontSize: 54
     },
     toggle: {
         position: 'absolute',
