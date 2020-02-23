@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
+import { View } from 'native-base';
 
 const mapPosition = {
     sgwCoord: {
@@ -36,30 +37,34 @@ function Map () {
     })
 
     return (
-        <MapView
-            style={styles.map}
-            provider={PROVIDER_GOOGLE}
-            region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
-            showsUserLocation={true}
-            showsCompass={true}
-            showsBuildings={true}
-        >
-            <BottomMenu />
+    
+        <View>
+            <MapView
+                style={styles.map}
+                provider={PROVIDER_GOOGLE}
+                region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
+                showsUserLocation={true}
+                showsCompass={true}
+                showsBuildings={true}
+            />
             <BuildingHighlight />
             <BuildingIdentification />
-        </MapView>
+            <BottomMenu />
+        </View>
+    
     );
 }
 
 export const styles = StyleSheet.create({
     map: {
-        height: '100%',
-        flex: 1,
+        height: '100%'
+        //flex: 1,
         //Main axis
-        flexDirection: "row",
-        alignItems: "flex-end",
-        justifyContent: "flex-end"
+        //flexDirection: "row",
+        // alignItems: "flex-end"
+        //justifyContent: "flex-end"
     }
+
 });
 
 export default Map;
