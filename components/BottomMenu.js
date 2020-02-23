@@ -9,22 +9,22 @@ function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     //var currentBuilding = CurrentBuilding();
 
-    // buildingSelected = async() => {
-    //     let name = await AsyncStorage.getItem('buildingSelected');
-    //     setSelectedBuilding(name);
-    // }
+    const buildingSelected = async() => {
+        let name = await AsyncStorage.getItem('buildingSelected');
+        setSelectedBuilding(name);
+    }
 
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         buildingSelected();
-    //     }, 100)
-    //     return () => clearInterval(intervalId);
-    // })
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            buildingSelected();
+        }, 100)
+        return () => clearInterval(intervalId);
+    })
 
     if (styles) {
         return (
             <View style={styles.container}>
-                {/* <Text style={styles.mainLabel}>{selectedBuilding}</Text> */}
+                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.toggle}>
                     <ToggleCampus />
