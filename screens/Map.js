@@ -5,6 +5,7 @@ import { BuildingHighlight } from '../components/BuildingHighlight';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
 import { View } from 'native-base';
+import { sgwData } from '../constants/sgwData';
 
 const mapPosition = {
     sgwCoord: {
@@ -35,7 +36,8 @@ function Map () {
         }, 1)
         return () => clearInterval(intervalId);
     })
-
+    var building = sgwData();
+    console.log(building["Hall Building"]);
     return (
     
         <View>
