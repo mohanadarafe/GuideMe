@@ -5,9 +5,10 @@ import { AppLoading } from 'expo';
 import { Icon } from 'native-base';
 
 function BottomMenu () {
+    
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
 
-    buildingSelected = async() => {
+    const buildingSelected = async() => {
         let name = await AsyncStorage.getItem('buildingSelected');
         setSelectedBuilding(name);
     }
@@ -19,27 +20,37 @@ function BottomMenu () {
         return () => clearInterval(intervalId);
     })
 
-    return (
-        <View style={styles.rectangle}>
-            <Icon name="ios-arrow-up" style={styles.arrow}></Icon>
-            <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-            <Text style={styles.shortLabel}>More info</Text>
-            <View style={styles.toggle}>
-                <ToggleCampus />
+    if (styles) {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.toggle}>
+                    <ToggleCampus />
+                </View>
             </View>
-        </View>
-    )    
+        )
+    } else {
+        return(
+            <AppLoading />
+        )
+    }
+  
 }
 
 export const styles = StyleSheet.create({
-    rectangle: {
+    container: {
         width: '100%',
-        height: 150,
+        height: 350,
         position: 'absolute',
         borderRadius: 30.5,
         backgroundColor: '#2A2E43',
-        justifyContent: 'center',
-        bottom: -40
+        // flexDirection: 'row',
+        // flex: 1,
+        // alignContent: 'stretch',
+        // justifyContent: 'center',
+        // flexWrap: 'wrap',
+        bottom: -275
     },
     arrow: {
         color: '#ffffff',
@@ -47,34 +58,24 @@ export const styles = StyleSheet.create({
         bottom: '15%'
     },
     toggle: {
-        position: 'absolute', 
-        justifyContent: 'center', 
-        alignItems: 'center',
+        position: 'absolute',
         left: "80%",
-        top: "25%"
+        top: "6.5%"
     },
     mainLabel: {
         position: 'absolute', 
-        top: '20%', 
-        left: '15%', 
-        right: 0, 
-        bottom: 0, 
-        justifyContent: 'center', 
-        alignItems: 'center',
+        top: '5%', 
+        left: '10%', 
         color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: 'encodeSansExpanded'
     },
     shortLabel: {
         position: 'absolute', 
-        top: '40%', 
-        left: '15%', 
-        right: 0, 
-        bottom: 0, 
-        justifyContent: 'center', 
-        alignItems: 'center',
+        top: '12%',
+        left: '10%', 
         color: '#80828D',
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'encodeSansExpanded'
     }
 });
