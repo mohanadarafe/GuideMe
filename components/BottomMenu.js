@@ -20,7 +20,7 @@ function BottomMenu () {
         return () => clearInterval(intervalId);
     })
 
-    if (styles) {
+    if (!selectedBuilding) {
         return (
             <View style={styles.container}>
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
@@ -32,7 +32,14 @@ function BottomMenu () {
         )
     } else {
         return(
-            <AppLoading />
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrow} />
+                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.toggle}>
+                    <ToggleCampus />
+                </View>
+            </View>
         )
     }
   
@@ -45,17 +52,12 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         borderRadius: 30.5,
         backgroundColor: '#2A2E43',
-        // flexDirection: 'row',
-        // flex: 1,
-        // alignContent: 'stretch',
-        // justifyContent: 'center',
-        // flexWrap: 'wrap',
         bottom: -275
     },
     arrow: {
         color: '#ffffff',
-        left: '6%',
-        bottom: '15%'
+        left: '5%',
+        top: '7%'
     },
     toggle: {
         position: 'absolute',
@@ -65,7 +67,7 @@ export const styles = StyleSheet.create({
     mainLabel: {
         position: 'absolute', 
         top: '5%', 
-        left: '10%', 
+        left: '12.5%', 
         color: '#FFFFFF',
         fontSize: 20,
         fontFamily: 'encodeSansExpanded'
@@ -73,7 +75,7 @@ export const styles = StyleSheet.create({
     shortLabel: {
         position: 'absolute', 
         top: '12%',
-        left: '10%', 
+        left: '12.5%', 
         color: '#80828D',
         fontSize: 16,
         fontFamily: 'encodeSansExpanded'
