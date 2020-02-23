@@ -46,9 +46,10 @@ function Map () {
                 showsUserLocation={true}
                 showsCompass={true}
                 showsBuildings={true}
-            />
+            >
             <BuildingHighlight />
             <BuildingIdentification />
+            </MapView>
             <BottomMenu />
         </View>
     
