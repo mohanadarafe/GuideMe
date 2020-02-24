@@ -1,9 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Icon, Button, Right, Separator } from 'native-base';
+import { sgwData } from '../constants/sgwData';
 
 
 function MoreDetails(props) {
+
+
+
+    const getBuildingInfo = sgwData();
+    const dept = getBuildingInfo[props.name].departments;
+    const services = getBuildingInfo[props.name].services;
+
+
+
     return (
 
         <View style={styles.container}>
@@ -12,11 +22,16 @@ function MoreDetails(props) {
                 <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
             </View>
 
-
             <Text style={styles.mainLabel}>{props.name}</Text>
             <Text style={styles.reviewLabel}>19 Reviews</Text>
             <View style={styles.scrollTextContainer}></View>
             <Text style={styles.shortLabel}>Description</Text>
+            <Text style={styles.departmentTitle}>Departments:</Text>
+            <Text style={styles.servicesTitle}>Services:</Text>
+            {/* <Text styles={styles.accessibilitiesTitle}>Accessibilities</Text> */}
+            <Text style={styles.departmentText}>{dept}</Text>
+            <Text style={styles.servicesText}>{services}</Text>
+            {/* <Text style={styles.accessibilitiesText}>Test</Text> */}
 
             <Button style={styles.mapButton}>
                 <View style={styles.iconContainer}>
@@ -24,10 +39,8 @@ function MoreDetails(props) {
                     </Icon></View>
                 <View style={styles.separator}></View>
                 <View style={styles.buttonTextContainer}>
-                    <Text style={styles.mapPinLabel}>
-                        1455 Boulevard de Maisonneuve  O,  Montreal, QCH3G 1M8</Text>
+                    <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
                 </View>
-
             </Button>
 
             <Button style={styles.phoneButton}>
@@ -185,9 +198,66 @@ export const styles = StyleSheet.create({
         width: '4%',
         backgroundColor: '#522759',
         justifyContent: 'center',
-    }
+    },
+
+    departmentTitle: {
+        position: 'absolute',
+        top: '35%',
+        left: '10%',
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontFamily: 'encodeSansExpanded'
+    },
+
+    servicesTitle: {
+        position: 'absolute',
+        top: '45%',
+        left: '10%',
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontFamily: 'encodeSansExpanded'
+    },
+
+    departmentText: {
+        position: 'absolute',
+        top: '40%',
+        left: '10%',
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontFamily: 'encodeSansExpanded'
+
+    },
+
+    servicesText: {
+        position: 'absolute',
+        top: '50%',
+        left: '10%',
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontFamily: 'encodeSansExpanded'
+    },
+
+    accessibilitiesTitle: {
+        position: 'absolute',
+        top: '55%',
+        left: '10%',
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontFamily: 'encodeSansExpanded'
+    },
+
+    accessibilitiesText: {
+        position: 'absolute',
+        top: '60%',
+        left: '10%',
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontFamily: 'encodeSansExpanded'
+    },
 
 });
+
+
 
 
 export { MoreDetails }

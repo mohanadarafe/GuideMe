@@ -11,6 +11,7 @@ function BottomMenu() {
     const buildingSelected = async () => {
         let name = await AsyncStorage.getItem('buildingSelected');
         setSelectedBuilding(name);
+        
     }
 
     useEffect(() => {
