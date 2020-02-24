@@ -52,7 +52,7 @@ function MoreDetails(props) {
             </View>
             <Text style={styles.shortLabel}>Description</Text>
 
-            <Button style={styles.mapButton}>
+            <Button transparent style={styles.mapButton}>
                 <View style={styles.iconContainer}>
                     <Icon type="Feather" name="map-pin" style={styles.mapPin}>
                     </Icon></View>
@@ -62,7 +62,7 @@ function MoreDetails(props) {
                 </View>
             </Button>
 
-            <Button style={styles.phoneButton}>
+            <Button transparent style={styles.phoneButton}>
                 <View style={styles.iconContainer}>
                     <Icon type="Feather" name="phone" style={styles.phone}>
                     </Icon></View>
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
 
     mainLabel: {
         color: '#FFFFFF',
-        left: '10%',
+        left: '5%',
         position: 'absolute',
         fontSize: 30,
         fontWeight: 'bold',
@@ -97,27 +97,29 @@ export const styles = StyleSheet.create({
 
     shortLabel: {
         position: 'absolute',
+        left: '5%',
         top: '26%',
-        left: '10%',
         color: '#FFFFFF',
-        fontSize: 18,
-        fontFamily: 'encodeSansExpanded'
+        fontSize: 20,
+        fontWeight: 'bold',
+        fontFamily: 'encodeSansExpanded',
+        opacity: 0.3
     },
 
     reviewLabel: {
         position: 'absolute',
         top: '21%',
-        left: '10%',
+        left: '5%',
         color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 20,
         fontFamily: 'encodeSansExpanded'
     },
 
     scrollTextContainer: {
-        backgroundColor: '#ff7878',
+        //backgroundColor: '#ff7878',
         width: '100%',
         height: '37%',
-        top: '30%',
+        top: '32%',
         position: 'absolute',
         justifyContent: 'space-around',
         flexDirection: 'column'
@@ -138,7 +140,7 @@ export const styles = StyleSheet.create({
         height: '25%',
         top: '0%',
         position: 'absolute',
-        backgroundColor: '#000000',
+        //backgroundColor: '#000000',
         opacity: 0.3
     },
 
@@ -151,7 +153,7 @@ export const styles = StyleSheet.create({
 
     mapButton: {
         top: '150%',
-        backgroundColor: '#74d2b3',
+        //backgroundColor: '#74d2b3',
         height: '8%',
         width: "85%"
     },
@@ -170,7 +172,7 @@ export const styles = StyleSheet.create({
 
     phoneButton: {
         top: '70%',
-        backgroundColor: '#074e67',
+        //backgroundColor: '#074e67',
         height: '8%',
         width: '85%',
 
@@ -201,7 +203,7 @@ export const styles = StyleSheet.create({
     buttonTextContainer: {
         height: '100%',
         width: '80%',
-        backgroundColor: '#b39a2d',
+        //backgroundColor: '#b39a2d',
         justifyContent: 'center',
         alignSelf: 'flex-end'
     },
@@ -209,14 +211,14 @@ export const styles = StyleSheet.create({
     separator: {
         height: '100%',
         width: '4%',
-        backgroundColor: '#522759',
+        //backgroundColor: '#522759',
         justifyContent: 'center',
     },
 
     departmentTitle: {
         position: 'absolute',
         color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: 'encodeSansExpanded'
     },
 
@@ -229,7 +231,7 @@ export const styles = StyleSheet.create({
     servicesTitle: {
         position: 'absolute',
         color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: 'encodeSansExpanded'
     },
 
@@ -243,7 +245,7 @@ export const styles = StyleSheet.create({
     accessibilitiesTitle: {
         position: 'absolute',
         color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: 'encodeSansExpanded'
     },
 
@@ -255,14 +257,14 @@ export const styles = StyleSheet.create({
     },
 
     textContainer: {
-        backgroundColor: '#864f8c',
+        //backgroundColor: '#864f8c',
         width: '90%',
         height: '100%',
         alignSelf: 'center'
     },
 
     scrollSeperator: {
-        backgroundColor: '#3ACCE1',
+        //backgroundColor: '#3ACCE1',
         width: '90%',
         height: '100%',
         alignSelf: 'center'
