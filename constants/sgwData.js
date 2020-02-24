@@ -61,17 +61,7 @@ export function sgwData() {
         ],
         services: null
     }
-    buildings["FG"]={
-        name: "Faubourg Ste-Catherine Building",
-        address: "1610 Rue St. Catherine O. Montreal, QC, H3H 1L9",
-        departments: [
-            "Education"
-        ],
-        services: [
-            "Classrooms"
-        ]
-    }
-    ​buildings["FG Building"]={
+    buildings["FG Building"]={
         name: "Faubourg Building",
         address: "1250 Rue Guy, QC, H3G 2T4",
         departments: [
@@ -86,7 +76,7 @@ export function sgwData() {
             "Examinations Office",
             "Senior Non-Credit Program"
         ]
-    }   
+    } 
     buildings["GM Building"]={
         name: "Guy-De Maisonneuve Building",
         address: "1550 Rue de Maisonneuve O., Montreal, QC, H3G 1N1",
