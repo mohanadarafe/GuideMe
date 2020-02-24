@@ -23,11 +23,7 @@ function BottomMenu() {
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
-                </View>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
-
+               
 
                 <MoreDetails name={selectedBuilding} />
 
@@ -84,22 +80,15 @@ export const styles = StyleSheet.create({
         height: '100%',
         position:'absolute',
         backgroundColor: '#2A2E43',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     arrowUp: {
         color: '#ffffff',
         left: '5%',
         top: '7%'
     },
-    arrowDown: {
-        color: '#ffffff',
-        top: '5%',
-        left: '25.5%',
-        flex: 1,
-        flexDirection: 'row',
-        // alignItems: 'center',
-        // justifyContent: 'flex-start',
-        fontSize: 54
-    },
+   
     toggle: {
         position: 'absolute',
         left: "80%",
@@ -124,7 +113,7 @@ export const styles = StyleSheet.create({
 
     imageContainer: {
         width: '100%',
-        height: 280,
+        height: '30%',
         top: '0%',
         position: 'absolute',
         backgroundColor: '#000000',
@@ -134,7 +123,7 @@ export const styles = StyleSheet.create({
 
     buildingImage: {
         width: '100%',
-        height: 300,
+        height: '100%',
         top: '0%',
         position: 'relative'
     },
