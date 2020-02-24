@@ -80,9 +80,7 @@ export const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     maxHeight: 44,
-    borderBottomStartRadius: 20,
-    // borderBottomRightRadius: 20
-    borderBottomLeftRadius: 20
+    borderBottomStartRadius: 20
 
   },
   test: {
