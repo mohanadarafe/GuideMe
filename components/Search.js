@@ -1,25 +1,44 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Searchbar } from 'react-native-paper';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import { Icon } from 'native-base';
+import { sgwData } from '../constants/sgwData';
 
-var items = [
-    //name key is must.It is to show the text in front
-    { id: 1, name: 'H801' },
-    { id: 2, name: 'H937' },
-    { id: 3, name: 'H425' },
-    { id: 4, name: 'MB3.356' },
-    { id: 5, name: 'MB7.701' },
-    { id: 6, name: 'Hall Building' },
-    { id: 7, name: 'EV Building' },
-    { id: 8, name: 'Bathroom' },
-    { id: 9, name: 'School of Community and Public Affairs' },
-    { id: 10, name: 'Le Gym' },
-];
+const buildingInfo = sgwData();
+let idCount = 1;
+var items = [];
+
+function getData() {
+    for (var key in buildingInfo) {
+        var value = buildingInfo[key].name;
+        items.push({id: idCount, name: value})
+        idCount++;
+    }
+    for (var key in buildingInfo) {
+        var value = buildingInfo[key].departments;
+        if (value != null) {
+            value.forEach(element => {
+                items.push({id: idCount, name: element})
+                idCount++;
+            });
+        }
+    }
+    for (var key in buildingInfo) {
+        var value = buildingInfo[key].services;
+        if (value != null) {
+            value.forEach(element => {
+                items.push({id: idCount, name: element})
+                idCount++;
+            });
+        } 
+    }
+}
 
 function Search() {
     const [destination, setDestination] = React.useState("");
+
+    useEffect(() => {
+        getData();
+    }, [])
 
     return (
         <View style={styles.container}>
