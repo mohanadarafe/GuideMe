@@ -38,8 +38,9 @@ function Map () {
 
     return (
     
-        <View>
-            <MapView
+        <View data-test ="MapComponent">
+            <MapView 
+                className = "MapViewImage"
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
                 region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}

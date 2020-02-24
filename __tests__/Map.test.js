@@ -1,16 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Map from '../screens/Map';
+import {findByTestAtrr} from '../Utils';
 
 const setUp = (props={}) => {
     const component = shallow(<Map {...props} />);
     return component;
 };
 
-const findByTestAtrr = (component, attr) => {
-    const wrapper  = component.find(`[data-test='${attr}']`)
-    return wrapper;
-};
+
 
 describe('Map Component', () => {
 
@@ -21,7 +19,7 @@ describe('Map Component', () => {
 
     it('Should render without errors', () => {
         const wrapper = findByTestAtrr(component, 'MapComponent');
-        expect(wrapper.length).toBe(2);
+        expect(wrapper.length).toBe(1);
     });
 
     // it('Should render a logo', () => {
