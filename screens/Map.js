@@ -4,6 +4,8 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
+import { InfoPage } from '../components/InfoPage';
+
 import { View } from 'native-base';
 
 const mapPosition = {
@@ -51,6 +53,7 @@ function Map () {
             <BuildingIdentification />
             </MapView>
             <BottomMenu />
+           <InfoPage/>
         </View>
     
     );
