@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { Icon, Button, Right, Separator } from 'native-base';
 import { sgwData } from '../constants/sgwData';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 function MoreDetails(props) {
@@ -24,14 +25,32 @@ function MoreDetails(props) {
 
             <Text style={styles.mainLabel}>{props.name}</Text>
             <Text style={styles.reviewLabel}>19 Reviews</Text>
-            <View style={styles.scrollTextContainer}></View>
+            <View style={styles.scrollTextContainer}>
+                <ScrollView>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.departmentTitle}>Departments:</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.departmentText}>{dept}</Text>
+                    </View>
+                    <View style={styles.scrollSeperator}></View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.servicesTitle}>Services:</Text>
+                    </View>
+                    <View style={styles.textContainer}>
+                        <Text style={styles.servicesText}>{services}</Text>
+                    </View>
+                    <View style={styles.scrollSeperator}></View>
+                    <View style={styles.textContainer}>
+                    <Text style={styles.accessibilitiesTitle}>Accessibilities</Text> 
+                    </View>
+                    <View style={styles.textContainer}>
+                    {/* <Text style={styles.accessibilitiesText}>Test</Text> */}
+                    </View>
+                </ScrollView>
+
+            </View>
             <Text style={styles.shortLabel}>Description</Text>
-            <Text style={styles.departmentTitle}>Departments:</Text>
-            <Text style={styles.servicesTitle}>Services:</Text>
-            {/* <Text styles={styles.accessibilitiesTitle}>Accessibilities</Text> */}
-            <Text style={styles.departmentText}>{dept}</Text>
-            <Text style={styles.servicesText}>{services}</Text>
-            {/* <Text style={styles.accessibilitiesText}>Test</Text> */}
 
             <Button style={styles.mapButton}>
                 <View style={styles.iconContainer}>
@@ -78,7 +97,7 @@ export const styles = StyleSheet.create({
 
     shortLabel: {
         position: 'absolute',
-        top: '30%',
+        top: '26%',
         left: '10%',
         color: '#FFFFFF',
         fontSize: 18,
@@ -96,10 +115,12 @@ export const styles = StyleSheet.create({
 
     scrollTextContainer: {
         backgroundColor: '#ff7878',
-        width: '85%',
-        height: '40%',
-        top: '27%',
-        position: 'absolute'
+        width: '100%',
+        height: '37%',
+        top: '30%',
+        position: 'absolute',
+        justifyContent: 'space-around',
+        flexDirection: 'column'
     },
 
     directionButton: {
@@ -119,7 +140,6 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: '#000000',
         opacity: 0.3
-
     },
 
     buildingImage: {
@@ -129,20 +149,16 @@ export const styles = StyleSheet.create({
         position: 'relative'
     },
 
-
     mapButton: {
         top: '150%',
         backgroundColor: '#74d2b3',
         height: '8%',
         width: "85%"
-
     },
 
     mapPin: {
         color: '#FFFFFF',
         position: 'absolute',
-
-
     },
 
     mapPinLabel: {
@@ -150,8 +166,6 @@ export const styles = StyleSheet.create({
         fontSize: 13,
         fontFamily: 'encodeSansExpanded',
         position: 'absolute',
-
-
     },
 
     phoneButton: {
@@ -173,7 +187,6 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 13,
         fontFamily: 'encodeSansExpanded'
-
     },
 
     iconContainer: {
@@ -202,36 +215,26 @@ export const styles = StyleSheet.create({
 
     departmentTitle: {
         position: 'absolute',
-        top: '35%',
-        left: '10%',
-        color: '#FFFFFF',
-        fontSize: 18,
-        fontFamily: 'encodeSansExpanded'
-    },
-
-    servicesTitle: {
-        position: 'absolute',
-        top: '45%',
-        left: '10%',
         color: '#FFFFFF',
         fontSize: 18,
         fontFamily: 'encodeSansExpanded'
     },
 
     departmentText: {
-        position: 'absolute',
-        top: '40%',
-        left: '10%',
         color: '#FFFFFF',
         fontSize: 12,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: 'encodeSansExpanded',
+    },
 
+    servicesTitle: {
+        position: 'absolute',
+        color: '#FFFFFF',
+        fontSize: 18,
+        fontFamily: 'encodeSansExpanded'
     },
 
     servicesText: {
         position: 'absolute',
-        top: '50%',
-        left: '10%',
         color: '#FFFFFF',
         fontSize: 12,
         fontFamily: 'encodeSansExpanded'
@@ -239,8 +242,6 @@ export const styles = StyleSheet.create({
 
     accessibilitiesTitle: {
         position: 'absolute',
-        top: '55%',
-        left: '10%',
         color: '#FFFFFF',
         fontSize: 18,
         fontFamily: 'encodeSansExpanded'
@@ -248,14 +249,26 @@ export const styles = StyleSheet.create({
 
     accessibilitiesText: {
         position: 'absolute',
-        top: '60%',
-        left: '10%',
         color: '#FFFFFF',
         fontSize: 12,
         fontFamily: 'encodeSansExpanded'
     },
 
-});
+    textContainer: {
+        backgroundColor: '#864f8c',
+        width: '90%',
+        height: '100%',
+        alignSelf: 'center'
+    },
+
+    scrollSeperator: {
+        backgroundColor: '#3ACCE1',
+        width: '90%',
+        height: '100%',
+        alignSelf: 'center'
+    }
+}
+);
 
 
 
