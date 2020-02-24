@@ -53,7 +53,6 @@ function Map () {
             <BuildingIdentification />
             </MapView>
             <BottomMenu />
-           
         </View>
     
     );

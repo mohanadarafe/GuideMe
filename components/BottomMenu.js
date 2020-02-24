@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, AsyncStorage, Text, StyleSheet } from "react-native";
+import { View, AsyncStorage, Text, StyleSheet, Image } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
-import { Icon } from 'native-base';
+import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
 
-function BottomMenu () {
+function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
 
-    const buildingSelected = async() => {
+    const buildingSelected = async () => {
         let name = await AsyncStorage.getItem('buildingSelected');
         setSelectedBuilding(name);
     }
@@ -20,19 +20,33 @@ function BottomMenu () {
         return () => clearInterval(intervalId);
     })
 
-    if(iconSelected) {
-        return(
-                <View style={styles.moreDetails}>
-                    <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => {setIconSelected(false)}} />
-                    <MoreDetails name={selectedBuilding}/>
+    if (iconSelected && selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                <View style={styles.imageContainer}>
+                    <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
                 </View>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
+
+
+                <MoreDetails name={selectedBuilding} />
+
+            </View>
+        );
+    }
+
+    else if (iconSelected && !selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
+        </View>
         );
     }
 
     if (!selectedBuilding) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {setIconSelected(true)}} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true) }} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View style={styles.toggle}>
@@ -42,9 +56,9 @@ function BottomMenu () {
         )
     }
     else {
-        return(
+        return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {setIconSelected(true)}} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true) }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.toggle}>
@@ -53,7 +67,7 @@ function BottomMenu () {
             </View>
         )
     }
-  
+
 }
 
 export const styles = StyleSheet.create({
@@ -68,8 +82,8 @@ export const styles = StyleSheet.create({
     moreDetails: {
         width: '100%',
         height: '100%',
-        position: 'absolute',
-        backgroundColor: '#2A2E43'
+        position:'absolute',
+        backgroundColor: '#2A2E43',
     },
     arrowUp: {
         color: '#ffffff',
@@ -80,9 +94,10 @@ export const styles = StyleSheet.create({
         color: '#ffffff',
         top: '5%',
         left: '25.5%',
+        flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        // alignItems: 'center',
+        // justifyContent: 'flex-start',
         fontSize: 54
     },
     toggle: {
@@ -91,21 +106,41 @@ export const styles = StyleSheet.create({
         top: "6.5%"
     },
     mainLabel: {
-        position: 'absolute', 
-        top: '5%', 
-        left: '12.5%', 
+        position: 'absolute',
+        top: '5%',
+        left: '12.5%',
         color: '#FFFFFF',
         fontSize: 20,
         fontFamily: 'encodeSansExpanded'
     },
     shortLabel: {
-        position: 'absolute', 
+        position: 'absolute',
         top: '12%',
-        left: '12.5%', 
+        left: '12.5%',
         color: '#80828D',
         fontSize: 16,
         fontFamily: 'encodeSansExpanded'
-    }
+    },
+
+    imageContainer: {
+        width: '100%',
+        height: 280,
+        top: '0%',
+        position: 'absolute',
+        backgroundColor: '#000000',
+        opacity: 0.3
+
+    },
+
+    buildingImage: {
+        width: '100%',
+        height: 300,
+        top: '0%',
+        position: 'relative'
+    },
+
+
+
 });
 
 export { BottomMenu };
