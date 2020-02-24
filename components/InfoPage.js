@@ -101,9 +101,9 @@ export const styles = StyleSheet.create({
     },
 
     mapButton: {
-        top: '2%',
+        top: '80%',
         backgroundColor: '#74d2b3',
-        height: "50%"
+        width: "80%"
 
     },
 

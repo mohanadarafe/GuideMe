@@ -23,10 +23,8 @@ function BottomMenu() {
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-               
-
                 <MoreDetails name={selectedBuilding} />
-
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
             </View>
         );
     }
@@ -35,7 +33,7 @@ function BottomMenu() {
         return (
             <View style={styles.moreDetails}>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
-        </View>
+            </View>
         );
     }
 
@@ -78,7 +76,7 @@ export const styles = StyleSheet.create({
     moreDetails: {
         width: '100%',
         height: '100%',
-        position:'absolute',
+        position: 'absolute',
         backgroundColor: '#2A2E43',
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -88,7 +86,7 @@ export const styles = StyleSheet.create({
         left: '5%',
         top: '7%'
     },
-   
+
     toggle: {
         position: 'absolute',
         left: "80%",
@@ -126,6 +124,13 @@ export const styles = StyleSheet.create({
         height: '100%',
         top: '0%',
         position: 'relative'
+    },
+
+    arrowDown: {
+        color: '#ffffff',
+        top: '5%',
+        fontSize: 54,
+        position: 'absolute'
     },
 
 
