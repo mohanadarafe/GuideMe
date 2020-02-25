@@ -95,7 +95,7 @@ export function sgwData() {
     ],
     services: [
       "Human Resources",
-      "Enrolment Services / Office of the Registrar / Student Recruitment",
+      "Office of the Registrar",
       "Examinations Office",
       "Senior Non-Credit Program"
     ],
