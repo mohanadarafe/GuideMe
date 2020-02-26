@@ -1,8 +1,7 @@
 export function sgwRooms() {
-  var sgwCampus = [
-    {
-      buildingName: "Hall Building",
-      floor5: [
+  var rooms = [];
+  rooms["Hall Building"] = {
+      room: [
         "H-501",
         "H-507",
         "H-509",
@@ -23,8 +22,6 @@ export function sgwRooms() {
         "H-562",
         "H-564",
         "H-565"
-      ],
-      floor8: ["H-820"]
-    }
-  ];
+      ]
+  }
 }
