@@ -3,8 +3,10 @@ import { View, StyleSheet, TouchableOpacity  } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { sgwData } from '../constants/sgwData';
 import { Icon } from 'react-native-elements'
+import { sgwRooms } from '../constants/sgwRooms';
 
 const buildingInfo = sgwData();
+const rooms = sgwRooms();
 let idCount = 1;
 var items = [];
 
@@ -31,6 +33,13 @@ function getData() {
                 idCount++;
             });
         } 
+    }
+    for (var key in rooms) {
+      var value = rooms[key].room;
+      value.forEach(element => {
+          items.push({id: idCount, name: element})
+          idCount++;
+      });
     }
 }
 
