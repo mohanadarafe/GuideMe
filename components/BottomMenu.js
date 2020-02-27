@@ -23,7 +23,6 @@ function BottomMenu() {
     })
 
     if (iconSelected && selectedBuilding) {
-        console.log(selectedBuilding);
         return (
             <View style={styles.moreDetails}>
                 <MoreDetails name={selectedBuilding} />

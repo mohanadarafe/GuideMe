@@ -1,21 +1,45 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from 'react-native'
 import { Icon, Button, Right, Separator } from 'native-base';
 import { sgwData } from '../constants/sgwData';
 import { ScrollView } from 'react-native-gesture-handler';
- import { LoyolaData } from '../constants/LoyolaData';
+import { LoyolaData } from '../constants/LoyolaData';
+
+const getBuildingInfo = sgwData();
+var departmentsArray = [];
+var serviceArray = [];
+var accessibilityArray = ['Credit Card: Yes', 'Bicycle Parking: Yes', 'Wheelchair Accessible: Yes', 'Info center: Yes','Parking: Yes'];
+id = 1;
+
+renderSeparator = () => {  
+    return (  
+        <View  
+            style={{  
+                height: 1,  
+                width: "100%",  
+                backgroundColor: '#353A50', 
+            }}  
+        />  
+    );  
+}; 
 
 function MoreDetails(props) {
 
-    const getBuildingInfo = LoyolaData();
-    
-// if (getBuildingInfo[props.name] === "undefined"){
-//     getBuildingInfo = LoyolaData();
-// }
-    console.log(props.name);
-     const dept = getBuildingInfo[props.name].departments;
-     const services = getBuildingInfo[props.name].services;
+    var dept = getBuildingInfo[props.name].departments;
+    if (dept != null) {
+        dept.forEach(element => {
+            departmentsArray.push(element)
+        });
+    }
 
+    var services = getBuildingInfo[props.name].services;
+    if (services != null) {
+        services.forEach(element => {
+            serviceArray.push(element)
+        });
+    }
+
+    
     return (
 
         <View style={styles.container}>
@@ -26,9 +50,20 @@ function MoreDetails(props) {
 
             <Text style={styles.mainLabel}>{props.name}</Text>
             <Text style={styles.reviewLabel}>19 Reviews</Text>
-            
-          
-            
+            <SafeAreaView style={styles.scrollTextContainer}>
+                <SectionList
+                    sections = {[
+                        { title: 'Departments ', data: departmentsArray },
+                        { title: 'Services', data: serviceArray},
+                        { title: 'Accessibility', data: accessibilityArray },
+                    ]}
+                    renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
+                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                    keyExtractor={(item, index) => index}
+                    ItemSeparatorComponent={renderSeparator}  
+                />
+            </SafeAreaView>
+
             <Text style={styles.shortLabel}>Description</Text>
 
             <Button transparent style={styles.mapButton}>
@@ -80,7 +115,7 @@ export const styles = StyleSheet.create({
         left: '5%',
         top: '26%',
         color: '#FFFFFF',
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
         fontFamily: 'encodeSansExpanded',
         opacity: 0.3
@@ -96,13 +131,12 @@ export const styles = StyleSheet.create({
     },
 
     scrollTextContainer: {
-        //backgroundColor: '#ff7878',
         width: '100%',
         height: '37%',
-        top: '32%',
+        top: '31%',
         position: 'absolute',
-        justifyContent: 'space-around',
-        flexDirection: 'column'
+        // justifyContent: 'space-around',
+        // flexDirection: 'column'
     },
 
     directionButton: {
@@ -248,7 +282,31 @@ export const styles = StyleSheet.create({
         width: '90%',
         height: '100%',
         alignSelf: 'center'
-    }
+    },
+
+    listContainer: {  
+        flex: 1,  
+        backgroundColor: "#5ead97"  
+    },  
+    sectionHeader: {  
+        paddingTop: 2,  
+        paddingLeft: 22,  
+        paddingRight: 10,  
+        paddingBottom: 2,  
+        fontSize: 18,  
+        fontWeight: 'bold',  
+        color: "#ffffff",  
+        backgroundColor: '#353A50',
+        fontFamily: 'encodeSansExpanded'
+    },  
+    listItem: {  
+        padding: 10,  
+        fontSize: 12,  
+        height: 44,
+        paddingLeft: 22, 
+        fontFamily: 'encodeSansExpanded',
+        color: "#ffffff", 
+    }  
 }
 );
 
