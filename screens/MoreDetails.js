@@ -1,19 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native'
 import { Icon, Button, Right, Separator } from 'native-base';
 import { sgwData } from '../constants/sgwData';
 import { ScrollView } from 'react-native-gesture-handler';
-
+ import { LoyolaData } from '../constants/LoyolaData';
 
 function MoreDetails(props) {
 
-
-
-    const getBuildingInfo = sgwData();
-    const dept = getBuildingInfo[props.name].departments;
-    const services = getBuildingInfo[props.name].services;
-
-
+    const getBuildingInfo = LoyolaData();
+    
+// if (getBuildingInfo[props.name] === "undefined"){
+//     getBuildingInfo = LoyolaData();
+// }
+    console.log(props.name);
+     const dept = getBuildingInfo[props.name].departments;
+     const services = getBuildingInfo[props.name].services;
 
     return (
 
@@ -25,31 +26,9 @@ function MoreDetails(props) {
 
             <Text style={styles.mainLabel}>{props.name}</Text>
             <Text style={styles.reviewLabel}>19 Reviews</Text>
-            <View style={styles.scrollTextContainer}>
-                <ScrollView>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.departmentTitle}>Departments:</Text>
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.departmentText}>{dept}</Text>
-                    </View>
-                    <View style={styles.scrollSeperator}></View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.servicesTitle}>Services:</Text>
-                    </View>
-                    <View style={styles.textContainer}>
-                        <Text style={styles.servicesText}>{services}</Text>
-                    </View>
-                    <View style={styles.scrollSeperator}></View>
-                    <View style={styles.textContainer}>
-                    <Text style={styles.accessibilitiesTitle}>Accessibilities</Text> 
-                    </View>
-                    <View style={styles.textContainer}>
-                    {/* <Text style={styles.accessibilitiesText}>Test</Text> */}
-                    </View>
-                </ScrollView>
-
-            </View>
+            
+          
+            
             <Text style={styles.shortLabel}>Description</Text>
 
             <Button transparent style={styles.mapButton}>
@@ -66,11 +45,12 @@ function MoreDetails(props) {
                 <View style={styles.iconContainer}>
                     <Icon type="Feather" name="phone" style={styles.phone}>
                     </Icon></View>
-                <View style={styles.separator}></View>
+                <SafeAreaView style={styles.separator}></SafeAreaView>
                 <View style={styles.buttonTextContainer}>
                     <Text style={styles.phoneLabel}>+1(514)-848-2424</Text>
                 </View>
             </Button>
+
             <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
         </View>
     );

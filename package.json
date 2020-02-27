@@ -7,7 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --forceExit"
-    },
+  },
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [

@@ -3,6 +3,7 @@ import { View, AsyncStorage, Text, StyleSheet, Image } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
 import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
+// import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
 
 function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
@@ -22,6 +23,7 @@ function BottomMenu() {
     })
 
     if (iconSelected && selectedBuilding) {
+        console.log(selectedBuilding);
         return (
             <View style={styles.moreDetails}>
                 <MoreDetails name={selectedBuilding} />
@@ -33,6 +35,7 @@ function BottomMenu() {
     else if (iconSelected && !selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
+                {/* <pointOfInterestInfo/> */}
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
             </View>
         );

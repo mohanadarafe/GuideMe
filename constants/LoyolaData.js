@@ -1,6 +1,6 @@
-export function loyolaData() {
+export function LoyolaData() {
   var buildings = [];
-  (buildings[AD] = {
+  (buildings["AD Building"] = {
     name: "Administration Building",
     address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
     departments: ["Faculty of Arts and Science"],
@@ -18,7 +18,7 @@ export function loyolaData() {
     hasInfocenter: true,
     hasParking: true
   }),
-    (buildings[BB] = {
+    (buildings["BB Building"] = {
       name: "BB Annex",
       address: "3502 Avenue Belmore, Montréal, QC, H4B 2B9",
       departments: null,
@@ -29,7 +29,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[BH] = {
+    (buildings["BH Building"] = {
       name: "BH Annex",
       address: "3500 Avenue Belmore, Montréal, QC, H4B 2B9",
       departments: null,
@@ -40,7 +40,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[CC] = {
+    (buildings["CC Bulding"] = {
       name: "Central Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -54,7 +54,7 @@ export function loyolaData() {
       hasInfocenter: true,
       hasParking: false
     }),
-    (buildings[CJ] = {
+    (buildings["CJ Building"] = {
       name: "Communication Studies and Journalism Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Communication Studies", "Journalism"],
@@ -65,7 +65,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[DO] = {
+    (buildings["DO Building"] = {
       name: "Stinger Dome (Seasonal)",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Stingers Team"],
@@ -77,7 +77,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[FC] = {
+    (buildings["FC Building"] = {
       name: "F.C. Smith Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -92,7 +92,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[GE] = {
+    (buildings["GE Building"] = {
       name: "Centre for Structural and Functional Genomics",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -103,7 +103,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[HA] = {
+    (buildings["HA Building"] = {
       name: "Hingston Hall, Wing HA",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -114,7 +114,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[HB] = {
+    (buildings["HB Building"] = {
       name: "Hingston Hall, Wing HB",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -125,7 +125,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[HC] = {
+    (buildings["HC Building"] = {
       name: "Hingston Hall, Wing HC",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -136,7 +136,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[HU] = {
+    (buildings["HU Building"] = {
       name: "Applied Science Hub",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -147,7 +147,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[JR] = {
+    (buildings["JR Building"] = {
       name: "Jetsuit Residence",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -158,7 +158,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[PC] = {
+    (buildings["PC Building"] = {
       name: "Perform Centre",
       address: "7200 Sherbrooke St WMontreal, QC, H4B 1R2",
       departments: null,
@@ -169,7 +169,7 @@ export function loyolaData() {
       hasInfocenter: true,
       hasParking: true
     }),
-    (buildings[PS] = {
+    (buildings["PS Building"] = {
       name: "Physical Services Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -180,7 +180,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[PT] = {
+    (buildings["PT Building"] = {
       name: "Oscar Peterson Concert Hall",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Oscar Peterson Concert Hall"],
@@ -191,7 +191,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[PY] = {
+    (buildings["PY Building"] = {
       name: "Psychology Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [
@@ -205,7 +205,7 @@ export function loyolaData() {
       hasInfocenter: true,
       hasParking: false
     }),
-    (buildings[QA] = {
+    (buildings["QA Building"] = {
       name: "Quadrangle",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -216,7 +216,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[RA] = {
+    (buildings["RA Building"] = {
       name: "Recreation and Athletics Complex",
       address: "7200 Sherbrooke St WMontreal, QC, H4B 1R2",
       departments: null,
@@ -227,7 +227,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[RF] = {
+    (buildings["RF Building"] = {
       name: "Loyola Jesuit Hall and Conference Centre",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -241,7 +241,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[SC] = {
+    (buildings["SC Building"] = {
       name: "Student Centre",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -252,7 +252,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[SH] = {
+    (buildings["SH Building"] = {
       name: "Solar House",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
@@ -263,7 +263,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[SI] = {
+    (buildings["SI Building"] = {
       name: "St. Ignatius of Loyola Church",
       address: "4455 Rue West Broadway, Montréal, QC H4B 2A7",
       departments: null,
@@ -274,7 +274,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[SP] = {
+    (buildings["SP Building"] = {
       name: "Richard J. Renaud Science Complex",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [
@@ -298,7 +298,7 @@ export function loyolaData() {
       hasInfocenter: true,
       hasParking: false
     }),
-    (buildings[TA] = {
+    (buildings["TA Building"] = {
       name: "Terrebonne Building",
       address: "7079 Terrebonne, Montreal, QC, H4B 1E1",
       departments: null,
@@ -309,7 +309,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: true
     }),
-    (buildings[VE] = {
+    (buildings["VE Building"] = {
       name: "Vanier Extension",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Applied Human Sciences"],
@@ -320,7 +320,7 @@ export function loyolaData() {
       hasInfocenter: false,
       hasParking: false
     }),
-    (buildings[VL] = {
+    (buildings["VL Building"] = {
       name: "Vanier Library Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
