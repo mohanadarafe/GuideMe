@@ -8,20 +8,20 @@ import { LoyolaData } from '../constants/LoyolaData';
 const getBuildingInfo = sgwData();
 var departmentsArray = [];
 var serviceArray = [];
-var accessibilityArray = ['Credit Card: Yes', 'Bicycle Parking: Yes', 'Wheelchair Accessible: Yes', 'Info center: Yes','Parking: Yes'];
+var accessibilityArray = [];
 id = 1;
 
-renderSeparator = () => {  
-    return (  
-        <View  
-            style={{  
-                height: 1,  
-                width: "100%",  
-                backgroundColor: '#353A50', 
-            }}  
-        />  
-    );  
-}; 
+renderSeparator = () => {
+    return (
+        <View
+            style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: '#353A50',
+            }}
+        />
+    );
+};
 
 function MoreDetails(props) {
 
@@ -39,33 +39,50 @@ function MoreDetails(props) {
         });
     }
 
-    
+    var hasCredit = getBuildingInfo[props.name].hasCredit;
+    if (hasCredit != null && hasCredit == true) {
+        accessibilityArray.push("Credit Card: Yes");
+    }
+    else {
+        accessibilityArray.push("Credit Card: No");
+    } 
+
+    var hasBicycle = getBuildingInfo[props.name].hasBicycle;
+    if (hasBicycle != null && hasBicycle == true) {
+        accessibilityArray.push("Bicycle Parking: Yes");
+    }
+    else {
+        accessibilityArray.push("Bicycle Parking: No");
+    }
+
+    var hasHandicap = getBuildingInfo[props.name].hasHandicap;
+    if (hasHandicap != null && hasHandicap == true) {
+        accessibilityArray.push("Wheelchair Accessibility: Yes");
+    }
+    else {
+        accessibilityArray.push("Wheelchair Accessibilty: No");
+    }
+
+    var hasInfocenter = getBuildingInfo[props.name].hasInfocenter;
+    if (hasInfocenter != null && hasInfocenter == true) {
+        accessibilityArray.push("Info Center: Yes");
+    }
+    else {
+        accessibilityArray.push("Info Center: No");
+    }
+
+    var hasParking = getBuildingInfo[props.name].hasParking;
+    if (hasParking != null && hasParking == true) {
+        accessibilityArray.push("Parking: Yes");
+    }
+    else {
+        accessibilityArray.push("Parking: No");
+    }
+
     return (
 
         <View style={styles.container}>
-            <View style={styles.imageContainer}>
-
-                <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
-            </View>
-
-            <Text style={styles.mainLabel}>{props.name}</Text>
-            <Text style={styles.reviewLabel}>19 Reviews</Text>
-            <SafeAreaView style={styles.scrollTextContainer}>
-                <SectionList
-                    sections = {[
-                        { title: 'Departments ', data: departmentsArray },
-                        { title: 'Services', data: serviceArray},
-                        { title: 'Accessibility', data: accessibilityArray },
-                    ]}
-                    renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
-                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                    ItemSeparatorComponent={renderSeparator}  
-                />
-            </SafeAreaView>
-
-            <Text style={styles.shortLabel}>Description</Text>
-
+         <SafeAreaView style={styles.buttonContainer}>
             <Button transparent style={styles.mapButton}>
                 <View style={styles.iconContainer}>
                     <Icon type="Feather" name="map-pin" style={styles.mapPin}>
@@ -75,7 +92,7 @@ function MoreDetails(props) {
                     <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
                 </View>
             </Button>
-
+    
             <Button transparent style={styles.phoneButton}>
                 <View style={styles.iconContainer}>
                     <Icon type="Feather" name="phone" style={styles.phone}>
@@ -83,10 +100,35 @@ function MoreDetails(props) {
                 <SafeAreaView style={styles.separator}></SafeAreaView>
                 <View style={styles.buttonTextContainer}>
                     <Text style={styles.phoneLabel}>+1(514)-848-2424</Text>
-                </View>
+                </View> 
             </Button>
-
             <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
+            </SafeAreaView>
+
+            <View style={styles.imageContainer}>
+
+                <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
+            </View>
+
+            <Text style={styles.mainLabel}>{props.name}</Text>
+            <Text style={styles.reviewLabel}>19 Reviews</Text>
+            <SafeAreaView style={styles.scrollTextContainer}>
+                <SectionList
+                    sections={[
+                        { title: 'Departments ', data: departmentsArray },
+                        { title: 'Services', data: serviceArray },
+                        { title: 'Accessibility', data: accessibilityArray },
+                    ]}
+                    renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
+                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                    keyExtractor={(item, index) => index}
+                    ItemSeparatorComponent={renderSeparator}
+                />
+            </SafeAreaView>
+
+            <Text style={styles.shortLabel}>Description</Text>
+
+
         </View>
     );
 }
@@ -132,7 +174,7 @@ export const styles = StyleSheet.create({
 
     scrollTextContainer: {
         width: '100%',
-        height: '37%',
+        height: '30%',
         top: '31%',
         position: 'absolute',
         // justifyContent: 'space-around',
@@ -140,10 +182,10 @@ export const styles = StyleSheet.create({
     },
 
     directionButton: {
-        width: '85%',
+        width: '90%',
         height: '8%',
         fontSize: 25,
-        bottom: '10%',
+        // bottom: '10%',
         justifyContent: 'center',
         backgroundColor: '#3ACCE1',
         borderRadius: 10,
@@ -166,10 +208,11 @@ export const styles = StyleSheet.create({
     },
 
     mapButton: {
-        top: '150%',
+        // top: '150%',
         //backgroundColor: '#74d2b3',
         height: '8%',
-        width: "85%"
+        width: "90%"
+
     },
 
     mapPin: {
@@ -185,10 +228,11 @@ export const styles = StyleSheet.create({
     },
 
     phoneButton: {
-        top: '70%',
+        // top: '70%',
         //backgroundColor: '#074e67',
         height: '8%',
-        width: '85%',
+        width: '90%',
+        
 
     },
 
@@ -284,33 +328,34 @@ export const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
-    listContainer: {  
-        flex: 1,  
-        backgroundColor: "#5ead97"  
-    },  
-    sectionHeader: {  
-        paddingTop: 2,  
-        paddingLeft: 22,  
-        paddingRight: 10,  
-        paddingBottom: 2,  
-        fontSize: 18,  
-        fontWeight: 'bold',  
-        color: "#ffffff",  
+
+    sectionHeader: {
+        paddingTop: 2,
+        paddingLeft: 22,
+        paddingRight: 10,
+        paddingBottom: 2,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: "#ffffff",
         backgroundColor: '#353A50',
         fontFamily: 'encodeSansExpanded'
-    },  
-    listItem: {  
-        padding: 10,  
-        fontSize: 12,  
+    },
+    listItem: {
+        padding: 10,
+        fontSize: 12,
         height: 44,
-        paddingLeft: 22, 
+        paddingLeft: 22,
         fontFamily: 'encodeSansExpanded',
-        color: "#ffffff", 
-    }  
-}
-);
+        color: "#ffffff",
+    },
 
-
-
+    buttonContainer: {
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        height: '100%',
+        width: '90%',
+        alignItems: 'center',
+    }
+});
 
 export { MoreDetails }
