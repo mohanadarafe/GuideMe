@@ -332,4 +332,5 @@ export function loyolaData() {
       hasInfocenter: true,
       hasParking: false
     });
+  return buildings;
 }
