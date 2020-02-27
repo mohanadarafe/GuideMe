@@ -7,6 +7,7 @@ import { BottomMenu } from '../components/BottomMenu';
 
 
 import { View } from 'native-base';
+import { Search } from '../components/Search';
 
 const mapPosition = {
     sgwCoord: {
@@ -49,9 +50,10 @@ function Map () {
                 showsCompass={true}
                 showsBuildings={true}
             >
-            <BuildingHighlight />
-            <BuildingIdentification />
+                <BuildingHighlight />
+                <BuildingIdentification />
             </MapView>
+            <Search/>
             <BottomMenu />
         </View>
     
