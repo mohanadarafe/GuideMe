@@ -3,7 +3,6 @@ import { View, AsyncStorage, Text, StyleSheet } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
 import { Icon } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
-import { CurrentLocation } from './CurrentLocation';
 
 
 function BottomMenu () {

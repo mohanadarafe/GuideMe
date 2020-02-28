@@ -3,7 +3,7 @@ import coord from '../constants/buildingCoordinates';
 import { isPointInPolygon } from 'geolib'
 import {AsyncStorage} from 'react-native';
 
-export function CurrentLocation () {
+export function CurrentLocation() {
     const [currentBuilding, setcurrentBuilding] = React.useState("")
     const [lastLat, setlastLat] = React.useState(0)
     const [lastLong, setlastLong] = React.useState(0)
@@ -14,8 +14,8 @@ export function CurrentLocation () {
     let currentFloor = 0;
 
     useEffect(() => {
-
-            this.watchID = navigator.geolocation.watchPosition((position) => {
+        const intervalId = setInterval(() => {
+            navigator.geolocation.getCurrentPosition((position) => {
                 setlastLat(position.coords.latitude);
                 setlastLong(position.coords.longitude);
                 setAltitude(position.coords.altitude.toString());
@@ -79,17 +79,19 @@ export function CurrentLocation () {
     
             }
 
+        }, 1000)
+        return () => clearInterval(intervalId);
     })
 
-    
     currentFloor = (altitude - baseAltitude)/floorHeight;
 
     if(currentFloor > 0){
-        RoundedCurrentFloor = "This is the " + (Math.round(currentFloor * 100) / 100).toFixed(0) + "rd floor";
+        roundedCurrentFloor = "This is the " + (Math.round(currentFloor * 100) / 100).toFixed(0) + "rd floor";
     }
 
     if (currentBuilding === "") {
         return ("");
     }
-    return (currentBuilding + " - " + RoundedCurrentFloor);
+    return (currentBuilding + " - " + roundedCurrentFloor);
+
 }
