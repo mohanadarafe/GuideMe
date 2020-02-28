@@ -1,21 +1,23 @@
-import { buildingData } from '../constants/buildingData';
-import { sgwRooms } from '../constants/sgwRooms';
-
 /**
  * The following HOC is used to extract data from buildingData.js
  * following a strategy pattern.
  * 
- * Props is consisted of the following parameters
- * @param accesibility
- * @param buildingName
- * @param classRooms
- * @param departments
- * @param number
- * @param passBuildingName boolean if we receive specific building
- * @param services
+ * Props passed
+ * @param accesibility | bool: child requires accesibility
+ * @param buildingName | bool: child requires building name
+ * @param classRooms | bool: child requires class rooms
+ * @param departments | bool: child requires departments
+ * @param number | bool: child requires phone numbers
+ * @param services | bool: child requires services
+ * @param flatten | bool: return a flat list
+ * @param passBuildingName | bool: child requires specific building
+ * 
+ * Functions passed
+ * @param rooms function that returns a list of rooms
+ * @param buildingInfo function that returns a list of information on buildings
  */
 
-export function MapData(props, rooms, buildingInfo) {
+export function MapData(props, rooms, buildingInfo){ 
     let idCount = 1;
 
     var buildingName = [];
@@ -60,7 +62,7 @@ export function MapData(props, rooms, buildingInfo) {
 
     //Get services
     if (props.passBuildingName != "" && props.services == true) {
-        var value = buildingInfo[key].services;
+        var value = buildingInfo[props.passBuildingName].services;
         if (value != null) {
             value.forEach(element => {
                 serviceArray.push({id: idCount, name: element})
@@ -84,13 +86,11 @@ export function MapData(props, rooms, buildingInfo) {
     
 
     //Get phone number
-    if (props.phoneNumber) {
-        for (var key in buildingInfo) {
-            var value = buildingInfo[key].phone;
-            if (value) {
-                phoneNumber.push({id: idCount, name: value})
-                idCount++;
-            }
+    if (props.number && props.passBuildingName != "") {
+        var value = buildingInfo[props.passBuildingName].phone;
+        if (value) {
+            phoneNumber.push({id: idCount, name: value})
+            idCount++;
         }
     }
 
@@ -98,35 +98,50 @@ export function MapData(props, rooms, buildingInfo) {
     if (props.passBuildingName != "" && props.accesibility == true) {
         var hasCredit = buildingInfo[props.passBuildingName].hasCredit;
         if (hasCredit && hasCredit == true) {
-            accessibilityArray.push({id: idCount, name: hasCredit})
+            accessibilityArray.push({id: idCount, name: "Credit Card: Yes"})
+            idCount++;
+        } else {
+            accessibilityArray.push({id: idCount, name: "Credit Card: No"})
             idCount++;
         }
 
         //Bicycle
         var hasBicycle = buildingInfo[props.passBuildingName].hasBicycle;
         if (hasBicycle && hasBicycle == true) {
-            accessibilityArray.push({id: idCount, name: hasBicycle})
+            accessibilityArray.push({id: idCount, name: "Bicycle Parking: Yes"})
+            idCount++;
+        } else {
+            accessibilityArray.push({id: idCount, name: "Bicycle Parking: No"})
             idCount++;
         }
 
         //Handicap
         var hasHandicap = buildingInfo[props.passBuildingName].hasHandicap;
         if (hasHandicap && hasHandicap == true) {
-            accessibilityArray.push({id: idCount, name: hasHandicap})
+            accessibilityArray.push({id: idCount, name: "Wheelchair Accessibility: Yes"})
+            idCount++;
+        } else {
+            accessibilityArray.push({id: idCount, name: "Wheelchair Accessibility: No"})
             idCount++;
         }
 
         //Information center
         var hasInfocenter = buildingInfo[props.passBuildingName].hasInfocenter;
         if (hasInfocenter && hasInfocenter == true) {
-            accessibilityArray.push({id: idCount, name: hasInfocenter})
+            accessibilityArray.push({id: idCount, name: "Info Center: Yes"})
+            idCount++;
+        } else {
+            accessibilityArray.push({id: idCount, name: "Info Center: No"})
             idCount++;
         }
 
         //Parking
         var hasParking = buildingInfo[props.passBuildingName].hasParking;
         if (hasParking && hasParking == true) {
-            accessibilityArray.push({id: idCount, name: hasParking})
+            accessibilityArray.push({id: idCount, name: "Parking: Yes"})
+            idCount++;
+        } else {
+            accessibilityArray.push({id: idCount, name: "Parking: No"})
             idCount++;
         }
     }
@@ -148,14 +163,20 @@ export function MapData(props, rooms, buildingInfo) {
 
     if(departmentsArray.length > 0) {
         items.push(departmentsArray);
+    } else {
+        items.push(["None"])
     }
 
     if(serviceArray.length > 0) {
         items.push(serviceArray);
+    } else {
+        items.push(["None"])
     }
 
     if(accessibilityArray.length > 0) {
         items.push(accessibilityArray);
+    } else {
+        items.push(["None"])
     }
 
     if(classRooms.length > 0) {
@@ -164,6 +185,12 @@ export function MapData(props, rooms, buildingInfo) {
 
     if(phoneNumber.length > 0) {
         items.push(phoneNumber);
+    } else {
+        items.push(["N/A"])
     }
-    return items.flat();
+
+    if (props.flatten) {
+        return items.flat();
+    }
+    return items;
 }

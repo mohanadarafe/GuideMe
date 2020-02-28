@@ -233,7 +233,7 @@ export function buildingData() {
       "Birks Student Centre",
       "Campus Stores"
     ],
-    phone: 51484824248777, //has an extension
+    phone: "+1 (514) 848-2424 #8777", //has an extension
     hasCredit: true,
     hasBicycle: true,
     hasHandicap: true,

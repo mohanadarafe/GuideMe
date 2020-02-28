@@ -7,7 +7,7 @@ import { sgwRooms } from '../constants/sgwRooms';
 import { buildingData } from '../constants/buildingData';
 
 function fetchData() {
-  const searchInfo = MapData({passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, number: false}, sgwRooms(), buildingData());
+  const searchInfo = MapData({passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, number: false, flatten: true}, sgwRooms(), buildingData());
   return searchInfo;
 }
 
@@ -16,11 +16,8 @@ function Search() {
     const [data, setData] = React.useState();
 
     useEffect(() => {
-      const intervalId = setInterval(() => {
-        setData(fetchData())
-      }, 1000)
-      return () => clearInterval(intervalId);
-    })
+      setData(fetchData())
+    }, [])
     
     return (
       
