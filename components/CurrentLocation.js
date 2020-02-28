@@ -15,12 +15,13 @@ export function CurrentLocation() {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            this.watchID = navigator.geolocation.watchPosition((position) => {
+            this.watchID = geolocation.watchPosition((position) => {
                 setlastLat(position.coords.latitude);
                 setlastLong(position.coords.longitude);
                 setAltitude(position.coords.altitude.toString());
                 console.log(altitude);
-            }, error => Alert.alert(error.message), { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 });
+            });
+            // }, error => Alert.alert(error.message), { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 });
         
             
             AsyncStorage.setItem("altitude", altitude);
