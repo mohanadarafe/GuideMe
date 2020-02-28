@@ -17,7 +17,7 @@ function BuildingIdentification () {
 
             <Marker
                 coordinate={{ latitude: 45.495804, longitude: -73.578764 }}>
-                <Text style={styles.buildingIdentification}>HM</Text>
+                <Text style={styles.buildingIdentification}>GM</Text>
             </Marker>
 
             <Marker
@@ -27,7 +27,7 @@ function BuildingIdentification () {
 
             <Marker
                 coordinate={{ latitude: 45.495306, longitude: -73.579011 }}>
-                <Text style={styles.buildingIdentification}>JMSB</Text>
+                <Text style={styles.buildingIdentification}>MB</Text>
             </Marker>
 
             <Marker
@@ -42,7 +42,7 @@ function BuildingIdentification () {
 
             <Marker
                 coordinate={{ latitude: 45.458094, longitude: -73.639768 }}>
-                <Text style={styles.buildingIdentification}>AP</Text>
+                <Text style={styles.buildingIdentification}>AD</Text>
             </Marker>
 
             <Marker
