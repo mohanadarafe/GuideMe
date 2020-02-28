@@ -6,5 +6,5 @@ describe("Toggle Campus component", () => {
     test('renders correctly', () => {
         const tree = renderer.create(<ToggleCampus />).toJSON();
         expect(tree).toMatchSnapshot();
-      });
+    });
 });
