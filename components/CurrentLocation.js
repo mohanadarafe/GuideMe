@@ -15,7 +15,7 @@ export function CurrentLocation() {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            navigator.geolocation.getCurrentPosition((position) => {
+            this.watchID = navigator.geolocation.watchPosition((position) => {
                 setlastLat(position.coords.latitude);
                 setlastLong(position.coords.longitude);
                 setAltitude(position.coords.altitude.toString());
