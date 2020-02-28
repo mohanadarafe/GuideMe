@@ -6,5 +6,5 @@ describe("Building Identification component", () => {
     test('renders correctly', () => {
         const tree = renderer.create(<BuildingIdentification />).toJSON();
         expect(tree).toMatchSnapshot();
-      });
+    });
 });
