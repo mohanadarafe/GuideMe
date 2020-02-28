@@ -28,7 +28,7 @@ const mapPosition = {
 function Map () {
     const [switchVal, setswitchVal] = React.useState("true");
 
-    CurrentLocation();
+    //CurrentLocation();
 
     campusSelected = async() => {
         let val = await AsyncStorage.getItem("toggle");
