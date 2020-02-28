@@ -1,10 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from 'react-native'
-import { Icon, Button, Right, Separator } from 'native-base';
+import { Icon, Button} from 'native-base';
 import { buildingData } from '../constants/buildingData';
-
-
-id = 1;
 
 renderSeparator = () => {
     return (
@@ -141,7 +138,6 @@ function MoreDetails(props) {
         </View>
     );
 }
-
 export const styles = StyleSheet.create({
 
     container: {
@@ -343,5 +339,4 @@ export const styles = StyleSheet.create({
     },
 
 });
-
 export { MoreDetails }
