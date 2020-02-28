@@ -7,7 +7,6 @@
  * @param buildingName | bool: child requires building name
  * @param classRooms | bool: child requires class rooms
  * @param departments | bool: child requires departments
- * @param number | bool: child requires phone numbers
  * @param services | bool: child requires services
  * @param flatten | bool: return a flat list
  * @param passBuildingName | bool: child requires specific building
@@ -25,7 +24,6 @@ export function MapData(props, rooms, buildingInfo){
     var serviceArray = [];
     var accessibilityArray = [];
     var classRooms = [];
-    var phoneNumber = [];
     var items = [];
 
     //Get building name
@@ -84,16 +82,6 @@ export function MapData(props, rooms, buildingInfo){
         }
     }
     
-
-    //Get phone number
-    if (props.number && props.passBuildingName != "") {
-        var value = buildingInfo[props.passBuildingName].phone;
-        if (value) {
-            phoneNumber.push({id: idCount, name: value})
-            idCount++;
-        }
-    }
-
     //Get accesibility
     if (props.passBuildingName != "" && props.accesibility == true) {
         var hasCredit = buildingInfo[props.passBuildingName].hasCredit;
@@ -163,30 +151,26 @@ export function MapData(props, rooms, buildingInfo){
 
     if(departmentsArray.length > 0) {
         items.push(departmentsArray);
-    } else {
+    }
+
+    if (departmentsArray.length == 0 && props.passBuildingName !== "") {
         items.push(["None"])
     }
 
     if(serviceArray.length > 0) {
         items.push(serviceArray);
-    } else {
+    }
+
+    if (serviceArray.length == 0 && props.passBuildingName !== "") {
         items.push(["None"])
     }
 
     if(accessibilityArray.length > 0) {
         items.push(accessibilityArray);
-    } else {
-        items.push(["None"])
     }
 
     if(classRooms.length > 0) {
         items.push(classRooms);
-    }
-
-    if(phoneNumber.length > 0) {
-        items.push(phoneNumber);
-    } else {
-        items.push(["N/A"])
     }
 
     if (props.flatten) {

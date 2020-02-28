@@ -7,7 +7,7 @@ import { sgwRooms } from '../constants/sgwRooms';
 import { buildingData } from '../constants/buildingData';
 
 function fetchData() {
-  const searchInfo = MapData({passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, number: false, flatten: true}, sgwRooms(), buildingData());
+  const searchInfo = MapData({passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true}, sgwRooms(), buildingData());
   return searchInfo;
 }
 
@@ -18,7 +18,7 @@ function Search() {
     useEffect(() => {
       setData(fetchData())
     }, [])
-    
+
     return (
       
         <View style={styles.container}>

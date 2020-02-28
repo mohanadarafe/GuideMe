@@ -19,7 +19,7 @@ renderSeparator = () => {
 };
 
 function fetchData(buildingName) {
-    const modeDetailsInfo = MapData({passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, number: true, flatten: false}, sgwRooms(), buildingData());
+    const modeDetailsInfo = MapData({passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false}, sgwRooms(), buildingData());
     return modeDetailsInfo;
 }
 
@@ -46,13 +46,6 @@ function createLists(data, departments, services, accesibility, number) {
                         accesibility.push("None");
                     } else {
                         accesibility.push(data[i][j].name);
-                    }
-                }
-                if (i === 3) {
-                    if (data[i][j] === "N/A") {
-                        number = "N/A";
-                    } else {
-                        number = data[i][j].name;
                     }
                 }
             }
