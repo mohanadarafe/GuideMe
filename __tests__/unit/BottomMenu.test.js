@@ -1,10 +1,10 @@
 import React from "react";
-import { Search } from '../components/Search';
+import { BottomMenu } from '../../components/BottomMenu';
 import renderer from 'react-test-renderer';
 
-describe("Search component", () => {
+describe("Bottom Menu component", () => {
     test('renders correctly', () => {
-        const tree = renderer.create(<Search />).toJSON();
+        const tree = renderer.create(<BottomMenu />).toJSON();
         expect(tree).toMatchSnapshot();
       });
 });

@@ -1,0 +1,376 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Building Identification component renders correctly 1`] = `
+<View>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.497222,
+        "longitude": -73.578809,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      H
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.496537,
+        "longitude": -73.577755,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      LB
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.495804,
+        "longitude": -73.578764,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      GM
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.495431,
+        "longitude": -73.578133,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      EV
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.495306,
+        "longitude": -73.579011,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      MB
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.457825,
+        "longitude": -73.641458,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      SP
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.457516,
+        "longitude": -73.640327,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      CJ
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.458094,
+        "longitude": -73.639768,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      AD
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.458314,
+        "longitude": -73.640409,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      CC
+    </Text>
+  </AIRMapMarker>
+  <AIRMapMarker
+    coordinate={
+      Object {
+        "latitude": 45.49345,
+        "longitude": -73.576814,
+      }
+    }
+    onPress={[Function]}
+    stopPropagation={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "position": "absolute",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "white",
+          "fontSize": 30,
+          "fontWeight": "bold",
+          "textShadowColor": "#000000",
+          "textShadowOffset": Object {
+            "height": 4,
+            "width": 1,
+          },
+          "textShadowRadius": 5,
+        }
+      }
+    >
+      GN
+    </Text>
+  </AIRMapMarker>
+</View>
+`;

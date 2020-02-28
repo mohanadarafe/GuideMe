@@ -1,5 +1,5 @@
 import React from "react";
-import { CurrentLocation } from '../components/CurrentLocation';
+import { CurrentLocation } from '../../components/CurrentLocation';
 import renderer from 'react-test-renderer';
 
 afterAll((done) => {

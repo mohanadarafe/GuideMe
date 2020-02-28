@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bottom Menu component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#2A2E43",
+      "borderRadius": 30.5,
+      "bottom": -275,
+      "height": 350,
+      "position": "absolute",
+      "width": "100%",
+    }
+  }
+>
+  <Text />
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 20,
+        "left": "12.5%",
+        "position": "absolute",
+        "top": "5%",
+      }
+    }
+  >
+    Nearby
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#80828D",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 16,
+        "left": "12.5%",
+        "position": "absolute",
+        "top": "12%",
+      }
+    }
+  >
+    Food, drinks & more
+  </Text>
+  <View
+    style={
+      Object {
+        "left": "80%",
+        "position": "absolute",
+        "top": "6.5%",
+      }
+    }
+  >
+    <RCTSwitch
+      accessibilityRole="button"
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onTintColor="green"
+      style={
+        Object {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      tintColor="red"
+      value={true}
+    />
+  </View>
+</View>
+`;
