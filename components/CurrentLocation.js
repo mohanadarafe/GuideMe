@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import coord from '../constants/buildingCoordinates';
 import { isPointInPolygon } from 'geolib'
 import {AsyncStorage} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+
 
 export function CurrentLocation() {
-    const [currentBuilding, setcurrentBuilding] = React.useState("")
-    const [lastLat, setlastLat] = React.useState(0)
-    const [lastLong, setlastLong] = React.useState(0)
-    const [altitude, setAltitude] = React.useState("0") 
+
+    const [currentBuilding, setcurrentBuilding] = React.useState("");
+    const [lastLat, setlastLat] = React.useState(0);
+    const [lastLong, setlastLong] = React.useState(0);
+    const [altitude, setAltitude] = React.useState("0");
+    // navigator.geolocation = require('@react-native-community/geolocation'); //check :  https://github.com/react-native-community/react-native-geolocation
+
 
     let baseAltitude = 35;
     let floorHeight = 5;
@@ -15,7 +20,7 @@ export function CurrentLocation() {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            this.watchID = geolocation.watchPosition((position) => {
+            this.watchID = Geolocation.getCurrentPosition((position) => {
                 setlastLat(position.coords.latitude);
                 setlastLong(position.coords.longitude);
                 setAltitude(position.coords.altitude.toString());
