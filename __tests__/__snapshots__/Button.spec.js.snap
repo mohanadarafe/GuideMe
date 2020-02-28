@@ -5,9 +5,3 @@ exports[`Button component Matches the snapshot 1`] = `
   Nothing to do for now
 </button>
 `;
-
-exports[`Button component Matches the snapshot 2`] = `
-<button>
-  Nothing to do for now
-</button>
-`;
