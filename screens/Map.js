@@ -46,6 +46,7 @@ function Map () {
     
         <View data-test ="MapComponent">
             <MapView 
+                data-test ="MapViewComponent"
                 className = "MapViewImage"
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}

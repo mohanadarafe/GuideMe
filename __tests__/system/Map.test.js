@@ -22,6 +22,13 @@ describe('Map Component', () => {
         expect(wrapper.length).toBe(1);
     });
 
+    it('Should show a mapview', () => {
+        const wrapper = findByTestAtrr(component, 'MapViewComponent');
+        expect(wrapper.length).toBe(1);
+    });
+
+
+
     // it('Should render a logo', () => {
     //     const logo = findByTestAtrr(component, 'logoIMG');
     //     expect(logo.length).toBe(1);
