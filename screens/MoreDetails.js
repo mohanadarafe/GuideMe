@@ -1,14 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from 'react-native'
 import { Icon, Button, Right, Separator } from 'native-base';
-import { sgwData } from '../constants/sgwData';
-import { ScrollView } from 'react-native-gesture-handler';
-import { LoyolaData } from '../constants/LoyolaData';
+import { buildingData } from '../constants/buildingData';
 
-const getBuildingInfo = sgwData();
-var departmentsArray = [];
-var serviceArray = [];
-var accessibilityArray = [];
+
 id = 1;
 
 renderSeparator = () => {
@@ -25,11 +20,20 @@ renderSeparator = () => {
 
 function MoreDetails(props) {
 
+    const getBuildingInfo = buildingData();
+
+    var departmentsArray = [];
+    var serviceArray = [];
+    var accessibilityArray = [];
+
     var dept = getBuildingInfo[props.name].departments;
     if (dept != null) {
         dept.forEach(element => {
             departmentsArray.push(element)
         });
+    }
+    else{
+        departmentsArray.push("None")
     }
 
     var services = getBuildingInfo[props.name].services;
@@ -38,6 +42,9 @@ function MoreDetails(props) {
             serviceArray.push(element)
         });
     }
+    else{
+        servicesArray.push("None")
+    }
 
     var hasCredit = getBuildingInfo[props.name].hasCredit;
     if (hasCredit != null && hasCredit == true) {
@@ -45,7 +52,7 @@ function MoreDetails(props) {
     }
     else {
         accessibilityArray.push("Credit Card: No");
-    } 
+    }
 
     var hasBicycle = getBuildingInfo[props.name].hasBicycle;
     if (hasBicycle != null && hasBicycle == true) {
@@ -79,14 +86,18 @@ function MoreDetails(props) {
         accessibilityArray.push("Parking: No");
     }
 
+
+
     return (
 
         <View style={styles.container}>
-         <SafeAreaView style={styles.buttonContainer}>
+
+            <SafeAreaView style={styles.buttonContainer}>
+
             <Button transparent style={styles.mapButton}>
                 <View style={styles.iconContainer}>
-                    <Icon type="Feather" name="map-pin" style={styles.mapPin}>
-                    </Icon></View>
+                    <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
+                    </View>
                 <View style={styles.separator}></View>
                 <View style={styles.buttonTextContainer}>
                     <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
@@ -95,23 +106,25 @@ function MoreDetails(props) {
     
             <Button transparent style={styles.phoneButton}>
                 <View style={styles.iconContainer}>
-                    <Icon type="Feather" name="phone" style={styles.phone}>
-                    </Icon></View>
+                    <Icon type="Feather" name="phone" style={styles.phone}></Icon>
+                    </View>
                 <SafeAreaView style={styles.separator}></SafeAreaView>
                 <View style={styles.buttonTextContainer}>
                     <Text style={styles.phoneLabel}>+1(514)-848-2424</Text>
                 </View> 
             </Button>
+
             <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
-            </SafeAreaView>
+
+        </SafeAreaView>
 
             <View style={styles.imageContainer}>
-
                 <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
             </View>
 
             <Text style={styles.mainLabel}>{props.name}</Text>
             <Text style={styles.reviewLabel}>19 Reviews</Text>
+
             <SafeAreaView style={styles.scrollTextContainer}>
                 <SectionList
                     sections={[
@@ -127,8 +140,6 @@ function MoreDetails(props) {
             </SafeAreaView>
 
             <Text style={styles.shortLabel}>Description</Text>
-
-
         </View>
     );
 }
@@ -155,7 +166,7 @@ export const styles = StyleSheet.create({
     shortLabel: {
         position: 'absolute',
         left: '5%',
-        top: '26%',
+        top: '27%',
         color: '#FFFFFF',
         fontSize: 22,
         fontWeight: 'bold',
@@ -174,18 +185,16 @@ export const styles = StyleSheet.create({
 
     scrollTextContainer: {
         width: '100%',
-        height: '30%',
-        top: '31%',
+        height: '32%',
+        top: '32%',
         position: 'absolute',
-        // justifyContent: 'space-around',
-        // flexDirection: 'column'
     },
 
     directionButton: {
         width: '90%',
         height: '8%',
         fontSize: 25,
-        // bottom: '10%',
+        bottom: '8%',
         justifyContent: 'center',
         backgroundColor: '#3ACCE1',
         borderRadius: 10,
@@ -196,7 +205,6 @@ export const styles = StyleSheet.create({
         height: '25%',
         top: '0%',
         position: 'absolute',
-        //backgroundColor: '#000000',
         opacity: 0.3
     },
 
@@ -208,10 +216,9 @@ export const styles = StyleSheet.create({
     },
 
     mapButton: {
-        // top: '150%',
-        //backgroundColor: '#74d2b3',
+        bottom:'19%',
         height: '8%',
-        width: "90%"
+        width: "100%"
 
     },
 
@@ -228,18 +235,15 @@ export const styles = StyleSheet.create({
     },
 
     phoneButton: {
-        // top: '70%',
-        //backgroundColor: '#074e67',
+        bottom: '17%',
         height: '8%',
-        width: '90%',
-        
-
+        width: '100%',
     },
 
     phone: {
         position: 'absolute',
         color: '#FFFFFF',
-
+        alignSelf: 'center'
     },
 
     phoneLabel: {
@@ -255,13 +259,12 @@ export const styles = StyleSheet.create({
         backgroundColor: '#353A50',
         borderRadius: 10,
         justifyContent: 'center',
-        alignSelf: 'center'
+        
     },
 
     buttonTextContainer: {
         height: '100%',
         width: '80%',
-        //backgroundColor: '#b39a2d',
         justifyContent: 'center',
         alignSelf: 'flex-end'
     },
@@ -269,7 +272,6 @@ export const styles = StyleSheet.create({
     separator: {
         height: '100%',
         width: '4%',
-        //backgroundColor: '#522759',
         justifyContent: 'center',
     },
 
@@ -314,21 +316,6 @@ export const styles = StyleSheet.create({
         fontFamily: 'encodeSansExpanded'
     },
 
-    textContainer: {
-        //backgroundColor: '#864f8c',
-        width: '90%',
-        height: '100%',
-        alignSelf: 'center'
-    },
-
-    scrollSeperator: {
-        //backgroundColor: '#3ACCE1',
-        width: '90%',
-        height: '100%',
-        alignSelf: 'center'
-    },
-
-
     sectionHeader: {
         paddingTop: 2,
         paddingLeft: 22,
@@ -340,22 +327,23 @@ export const styles = StyleSheet.create({
         backgroundColor: '#353A50',
         fontFamily: 'encodeSansExpanded'
     },
+
     listItem: {
         padding: 10,
         fontSize: 12,
         height: 44,
         paddingLeft: 22,
         fontFamily: 'encodeSansExpanded',
-        color: "#ffffff",
+        color: "#D3D3D3",
     },
-
     buttonContainer: {
         flexDirection: 'column',
         justifyContent: 'flex-end',
         height: '100%',
         width: '90%',
         alignItems: 'center',
-    }
+    },
+
 });
 
 export { MoreDetails }
