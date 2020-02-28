@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Map from '../screens/Map';
-import {findByTestAtrr} from '../Index';
+import {findByTestAtrr} from '../utils/Indexdex';
 
 const setUp = (props={}) => {
     const component = shallow(<Map {...props} />);
