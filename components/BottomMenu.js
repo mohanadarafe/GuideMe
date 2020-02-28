@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
-import { View, AsyncStorage, Text, StyleSheet, Image } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { View, AsyncStorage, Text, StyleSheet } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
 import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
 // import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
 
-function BottomMenu() {
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [iconSelected, setIconSelected] = React.useState(false);
+
+function BottomMenu () {
+    const [selectedBuilding, setSelectedBuilding] = useState("");
+    const [iconSelected, setIconSelected] = useState(false);
 
     const buildingSelected = async () => {
         let name = await AsyncStorage.getItem('buildingSelected');

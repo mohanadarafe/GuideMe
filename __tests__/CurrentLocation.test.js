@@ -1,14 +1,14 @@
 import React from "react";
-import { CurrentBuilding } from '../components/CurrentBuilding';
+import { CurrentLocation } from '../components/CurrentLocation';
 import renderer from 'react-test-renderer';
 
 afterAll((done) => {
     done();
 });
 
-describe("currentBuilding component", () => {
+describe("CurrentLocation component", () => {
     test('renders correctly', () => {
-        const tree = renderer.create(<CurrentBuilding />).toJSON();
+        const tree = renderer.create(<CurrentLocation />).toJSON();
         expect(tree).toMatchSnapshot();
       });
 });
