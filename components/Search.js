@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import { sgwData } from '../constants/sgwData';
