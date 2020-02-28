@@ -19,7 +19,8 @@ export function CurrentLocation() {
                 setlastLat(position.coords.latitude);
                 setlastLong(position.coords.longitude);
                 setAltitude(position.coords.altitude.toString());
-            }, error => Alert.alert(error.message), 1000);
+                console.log(altitude);
+            }, error => Alert.alert(error.message), { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000 });
         
             
             AsyncStorage.setItem("altitude", altitude);
