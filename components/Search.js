@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import { View, StyleSheet, TouchableOpacity  } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import { sgwData } from '../constants/sgwData';
 import { Icon } from 'react-native-elements'
 import { sgwRooms } from '../constants/sgwRooms';
+import { buildingData } from '../constants/buildingData';
 
-const buildingInfo = sgwData();
+const buildingInfo = buildingData();
 const rooms = sgwRooms();
 let idCount = 1;
 var items = [];

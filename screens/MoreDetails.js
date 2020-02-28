@@ -86,8 +86,6 @@ function MoreDetails(props) {
         accessibilityArray.push("Parking: No");
     }
 
-
-
     return (
 
         <View style={styles.container}>
