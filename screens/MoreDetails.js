@@ -18,30 +18,12 @@ renderSeparator = () => {
     );
 };
 
-//Order is the following:
-//Index 0: departments
-//Index 1: services
-//Index 2: accesibility
-//Index 3: number
 function fetchData(buildingName) {
     const modeDetailsInfo = MapData({passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, number: true, flatten: false}, sgwRooms(), buildingData());
     return modeDetailsInfo;
 }
 
-function MoreDetails(props) {
-
-    const [data, setData] = React.useState();
-
-    const getBuildingInfo = buildingData();
-    var departments = [];
-    var services = [];
-    var accesibility = [];
-    var number;
-
-    useEffect(() => {
-      setData(fetchData(props.name))
-    }, [])
-
+function createLists(data, departments, services, accesibility, number) {
     if (data) {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].length; j++) {
@@ -76,37 +58,51 @@ function MoreDetails(props) {
             }
         }
     }
+}
+
+function MoreDetails(props) {
+
+    const [data, setData] = React.useState();
+
+    const getBuildingInfo = buildingData();
+    var departments = [];
+    var services = [];
+    var accesibility = [];
+    var number;
+
+    useEffect(() => {
+      setData(fetchData(props.name))
+    }, [])
+
+    createLists(data, departments, services, accesibility, number);
 
     if (data) {
         return (
-
             <View style={styles.container}>
     
                 <SafeAreaView style={styles.buttonContainer}>
-    
-                <Button transparent style={styles.mapButton}>
-                    <View style={styles.iconContainer}>
-                        <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
-                    </View>
-                    <View style={styles.separator}></View>
-                    <View style={styles.buttonTextContainer}>
-                        <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
-                    </View>
-                </Button>
-        
-                <Button transparent style={styles.phoneButton}>
-                    <View style={styles.iconContainer}>
-                        <Icon type="Feather" name="phone" style={styles.phone}></Icon>
+                    <Button transparent style={styles.mapButton}>
+                        <View style={styles.iconContainer}>
+                            <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
                         </View>
-                    <SafeAreaView style={styles.separator}></SafeAreaView>
-                    <View style={styles.buttonTextContainer}>
-                        <Text style={styles.mapPinLabel}>{number}</Text>
-                    </View> 
-                </Button>
-    
-                <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
-    
-            </SafeAreaView>
+                        <View style={styles.separator}></View>
+                        <View style={styles.buttonTextContainer}>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
+                        </View>
+                    </Button>
+            
+                    <Button transparent style={styles.phoneButton}>
+                        <View style={styles.iconContainer}>
+                            <Icon type="Feather" name="phone" style={styles.phone}></Icon>
+                            </View>
+                        <SafeAreaView style={styles.separator}></SafeAreaView>
+                        <View style={styles.buttonTextContainer}>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : 'N/A'}</Text>
+                        </View> 
+                    </Button>
+
+                    <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
+                </SafeAreaView>
     
                 <View style={styles.imageContainer}>
                     <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
