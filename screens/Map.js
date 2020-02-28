@@ -25,6 +25,10 @@ const mapPosition = {
 function Map () {
     const [switchVal, setswitchVal] = React.useState("true");
 
+    this.watchID = navigator.geolocation.watchPosition((position) => {
+        console.log(position.coords.altitude)
+    });
+
     campusSelected = async() => {
         let val = await AsyncStorage.getItem("toggle");
         setswitchVal(val);
