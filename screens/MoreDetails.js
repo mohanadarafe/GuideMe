@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from 'react-native'
 import { Icon, Button} from 'native-base';
+import { sgwRooms } from '../constants/sgwRooms';
 import { buildingData } from '../constants/buildingData';
+import { MapData } from '../components/MapData';
+import { AppLoading } from 'expo';
 
 renderSeparator = () => {
     return (
@@ -15,128 +18,111 @@ renderSeparator = () => {
     );
 };
 
+function fetchData(buildingName) {
+    const modeDetailsInfo = MapData({passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false}, sgwRooms(), buildingData());
+    return modeDetailsInfo;
+}
+
+function createLists(data, departments, services, accesibility, number) {
+    if (data) {
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (i === 0) {
+                    if (data[i][j] === "None") {
+                        departments.push("None");
+                    } else {
+                        departments.push(data[i][j].name);
+                    }
+                }
+                if (i === 1) {
+                    if (data[i][j] === "None") {
+                        services.push("None");
+                    } else {
+                        services.push(data[i][j].name);
+                    }
+                }
+                if (i === 2) {
+                    if (data[i][j] === "None") {
+                        accesibility.push("None");
+                    } else {
+                        accesibility.push(data[i][j].name);
+                    }
+                }
+            }
+        }
+    }
+}
+
 function MoreDetails(props) {
 
+    const [data, setData] = React.useState();
+
     const getBuildingInfo = buildingData();
+    var departments = [];
+    var services = [];
+    var accesibility = [];
+    var number;
 
-    var departmentsArray = [];
-    var serviceArray = [];
-    var accessibilityArray = [];
+    useEffect(() => {
+      setData(fetchData(props.name))
+    }, [])
 
-    var dept = getBuildingInfo[props.name].departments;
-    if (dept != null) {
-        dept.forEach(element => {
-            departmentsArray.push(element)
-        });
-    }
-    else{
-        departmentsArray.push("None")
-    }
+    createLists(data, departments, services, accesibility, number);
 
-    var services = getBuildingInfo[props.name].services;
-    if (services != null) {
-        services.forEach(element => {
-            serviceArray.push(element)
-        });
-    }
-    else{
-        servicesArray.push("None")
-    }
-
-    var hasCredit = getBuildingInfo[props.name].hasCredit;
-    if (hasCredit != null && hasCredit == true) {
-        accessibilityArray.push("Credit Card: Yes");
-    }
-    else {
-        accessibilityArray.push("Credit Card: No");
-    }
-
-    var hasBicycle = getBuildingInfo[props.name].hasBicycle;
-    if (hasBicycle != null && hasBicycle == true) {
-        accessibilityArray.push("Bicycle Parking: Yes");
-    }
-    else {
-        accessibilityArray.push("Bicycle Parking: No");
-    }
-
-    var hasHandicap = getBuildingInfo[props.name].hasHandicap;
-    if (hasHandicap != null && hasHandicap == true) {
-        accessibilityArray.push("Wheelchair Accessibility: Yes");
-    }
-    else {
-        accessibilityArray.push("Wheelchair Accessibilty: No");
-    }
-
-    var hasInfocenter = getBuildingInfo[props.name].hasInfocenter;
-    if (hasInfocenter != null && hasInfocenter == true) {
-        accessibilityArray.push("Info Center: Yes");
-    }
-    else {
-        accessibilityArray.push("Info Center: No");
-    }
-
-    var hasParking = getBuildingInfo[props.name].hasParking;
-    if (hasParking != null && hasParking == true) {
-        accessibilityArray.push("Parking: Yes");
-    }
-    else {
-        accessibilityArray.push("Parking: No");
-    }
-
-    return (
-
-        <View style={styles.container}>
-
-            <SafeAreaView style={styles.buttonContainer}>
-
-            <Button transparent style={styles.mapButton}>
-                <View style={styles.iconContainer}>
-                    <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
-                    </View>
-                <View style={styles.separator}></View>
-                <View style={styles.buttonTextContainer}>
-                    <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
-                </View>
-            </Button>
+    if (data) {
+        return (
+            <View style={styles.container}>
     
-            <Button transparent style={styles.phoneButton}>
-                <View style={styles.iconContainer}>
-                    <Icon type="Feather" name="phone" style={styles.phone}></Icon>
-                    </View>
-                <SafeAreaView style={styles.separator}></SafeAreaView>
-                <View style={styles.buttonTextContainer}>
-                    <Text style={styles.phoneLabel}>+1(514)-848-2424</Text>
-                </View> 
-            </Button>
+                <SafeAreaView style={styles.buttonContainer}>
+                    <Button transparent style={styles.mapButton}>
+                        <View style={styles.iconContainer}>
+                            <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
+                        </View>
+                        <View style={styles.separator}></View>
+                        <View style={styles.buttonTextContainer}>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
+                        </View>
+                    </Button>
+            
+                    <Button transparent style={styles.phoneButton}>
+                        <View style={styles.iconContainer}>
+                            <Icon type="Feather" name="phone" style={styles.phone}></Icon>
+                            </View>
+                        <SafeAreaView style={styles.separator}></SafeAreaView>
+                        <View style={styles.buttonTextContainer}>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : 'N/A'}</Text>
+                        </View> 
+                    </Button>
 
-            <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
-
-        </SafeAreaView>
-
-            <View style={styles.imageContainer}>
-                <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
+                    <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
+                </SafeAreaView>
+    
+                <View style={styles.imageContainer}>
+                    <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
+                </View>
+    
+                <Text style={styles.mainLabel}>{props.name}</Text>
+                <Text style={styles.reviewLabel}>19 Reviews</Text>
+    
+                <SafeAreaView style={styles.scrollTextContainer}>
+                    <SectionList
+                        sections={[
+                            { title: 'Departments ', data: departments },
+                            { title: 'Services', data: services },
+                            { title: 'Accessibility', data: accesibility },
+                        ]}
+                        renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
+                        renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+                        keyExtractor={(item, index) => index}
+                        ItemSeparatorComponent={renderSeparator}
+                    />
+                </SafeAreaView>
+    
+                <Text style={styles.shortLabel}>Description</Text>
             </View>
-
-            <Text style={styles.mainLabel}>{props.name}</Text>
-            <Text style={styles.reviewLabel}>19 Reviews</Text>
-
-            <SafeAreaView style={styles.scrollTextContainer}>
-                <SectionList
-                    sections={[
-                        { title: 'Departments ', data: departmentsArray },
-                        { title: 'Services', data: serviceArray },
-                        { title: 'Accessibility', data: accessibilityArray },
-                    ]}
-                    renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
-                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                    ItemSeparatorComponent={renderSeparator}
-                />
-            </SafeAreaView>
-
-            <Text style={styles.shortLabel}>Description</Text>
-        </View>
-    );
+        );
+    }
+    return ( <AppLoading/> )
 }
 export const styles = StyleSheet.create({
 
