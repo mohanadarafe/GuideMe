@@ -41,8 +41,9 @@ function Map () {
 
     return (
     
-        <View>
+        <View data-test ="MapComponent">
             <MapView
+                data-test ="MapViewComponent"
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
                 region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
