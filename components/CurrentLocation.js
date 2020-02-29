@@ -10,21 +10,19 @@ function CurrentLocation() {
     const [lastLat, setlastLat] = React.useState(0)
     const [lastLong, setlastLong] = React.useState(0)
     const [altitude, setAltitude] = React.useState("0") 
-    const [location, setLocation] = React.useState("");
     
 
+    // These are not the real values. We must measure these values real time...
     let baseAltitude = 35;
     let floorHeight = 5;
     let currentFloor = 0;
 
     _getLocationAsync = async () => {   
-        let getLocation = await Location.getCurrentPositionAsync({/*insert acuracy*/});
-        setLocation(getLocation);
+        let location = await Location.getCurrentPositionAsync({/*insert acuracy*/});
 
         setlastLat(JSON.stringify(location.coords.latitude));
         setlastLong(JSON.stringify(location.coords.longitude));
         setAltitude(JSON.stringify(location.coords.altitude));
-        console.log(JSON.stringify(location.coords.altitude));
       };
     
     useEffect(() => {
