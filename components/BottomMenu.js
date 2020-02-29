@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, AsyncStorage, Text, StyleSheet, Image } from "react-native";
-import { ToggleCampus } from './ToggleCampus';
+import { View, AsyncStorage, Text, StyleSheet, Image, Switch } from "react-native";
 import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
 // import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
@@ -8,17 +7,20 @@ import { MoreDetails } from '../screens/MoreDetails';
 function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
+    const [switchVal, setSwitchVal] = React.useState(true);
+
+    AsyncStorage.setItem("toggle", switchVal.toString());
 
     const buildingSelected = async () => {
         let name = await AsyncStorage.getItem('buildingSelected');
         setSelectedBuilding(name);
-        
     }
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             buildingSelected();
-        }, 100)
+
+        }, 1)
         return () => clearInterval(intervalId);
     })
 
@@ -47,7 +49,10 @@ function BottomMenu() {
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View style={styles.toggle}>
-                    <ToggleCampus />
+                    <Switch
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
+                    </Switch>
                 </View>
             </View>
         )
@@ -59,7 +64,10 @@ function BottomMenu() {
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.toggle}>
-                    <ToggleCampus />
+                    <Switch
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
+                    </Switch>
                 </View>
             </View>
         )
@@ -111,24 +119,6 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'encodeSansExpanded'
     },
-
-    imageContainer: {
-        width: '100%',
-        height: '30%',
-        top: '0%',
-        position: 'absolute',
-        backgroundColor: '#000000',
-        opacity: 0.3
-
-    },
-
-    buildingImage: {
-        width: '100%',
-        height: '100%',
-        top: '0%',
-        position: 'relative'
-    },
-
     arrowDown: {
         color: '#ffffff',
         top: '5%',
