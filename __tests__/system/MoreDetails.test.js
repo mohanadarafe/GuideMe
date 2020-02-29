@@ -1,20 +1,20 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Map from '../../screens/Map';
+import { MoreDetails } from '../../screens/MoreDetails';
 import {findByTestAtrr} from '../../utils/Index';
 
 const setUp = (props={}) => {
-   const component = shallow(<Map {...props} />);
+   const component = shallow(<MoreDetails {...props} />);
    return component;
 };
 
-describe('Map Component', () => {
+describe('MoreDetails Component', () => {
    let component;
    beforeEach(() => {
        component = setUp();
    });
    it('Should render without errors', () => {
-       const wrapper = findByTestAtrr(component, 'MapComponent');
-       expect(wrapper.length).toBe(1);
+       const wrapper = findByTestAtrr(component, 'MoreDetails');
+       expect(wrapper.length).toBe(0);
    });
 });
