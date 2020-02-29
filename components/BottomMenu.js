@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { View, AsyncStorage, Text, StyleSheet, Image, Switch } from "react-native";
 import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
-// import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
+import { CurrentLocation } from '../components/CurrentLocation';
 
 function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
+
+    CurrentLocation();
 
     AsyncStorage.setItem("toggle", switchVal.toString());
 
