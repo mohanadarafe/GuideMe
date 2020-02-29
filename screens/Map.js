@@ -4,11 +4,8 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
-
-
 import { View } from 'native-base';
 import { Search } from '../components/Search';
-import { CurrentLocation } from '../components/CurrentLocation';
 
 const mapPosition = {
     sgwCoord: {
@@ -27,8 +24,6 @@ const mapPosition = {
 
 function Map () {
     const [switchVal, setswitchVal] = React.useState("");
-
-    CurrentLocation();
 
     campusSelected = async() => {
         let val = await AsyncStorage.getItem("toggle");
