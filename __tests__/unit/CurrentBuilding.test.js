@@ -1,5 +1,5 @@
 import React from "react";
-import { CurrentBuilding } from '../components/CurrentBuilding';
+import { CurrentBuilding } from '../../components/CurrentBuilding';
 import renderer from 'react-test-renderer';
 
 afterAll((done) => {
