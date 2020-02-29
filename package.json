@@ -10,6 +10,9 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "<rootDir>setupTests.js"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
     ],
@@ -23,12 +26,14 @@
     ]
   },
   "dependencies": {
+    "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.6",
     "acorn": "^7.1.0",
     "expo": "~36.0.0",
     "expo-font": "^8.0.0",
     "galio-framework": "^0.6.3",
     "geolib": "^3.2.1",
+    "jest": "^25.1.0",
     "native-base": "^2.13.8",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
@@ -48,8 +53,11 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "babel-preset-expo": "~8.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "jest-enzyme": "^7.1.2",
     "jest-expo": "^36.0.1",
     "prettier": "1.19.1",
     "react-test-renderer": "^16.12.0"

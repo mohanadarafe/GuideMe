@@ -1,5 +1,5 @@
 import React from "react";
-import { ToggleCampus } from '../components/ToggleCampus';
+import { ToggleCampus } from '../../components/ToggleCampus';
 import renderer from 'react-test-renderer';
 
 describe("Toggle Campus component", () => {
