@@ -1,5 +1,5 @@
 import React from "react";
-import { BuildingIdentification } from '../components/BuildingIdentification';
+import { BuildingIdentification } from '../../components/BuildingIdentification';
 import renderer from 'react-test-renderer';
 
 describe("Building Identification component", () => {
