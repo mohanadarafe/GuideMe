@@ -4,6 +4,8 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
+
+
 import { View } from 'native-base';
 import { Search } from '../components/Search';
 import { CurrentLocation } from '../components/CurrentLocation';
@@ -24,7 +26,7 @@ const mapPosition = {
 }
 
 function Map () {
-    const [switchVal, setswitchVal] = React.useState("true");
+    const [switchVal, setswitchVal] = React.useState("");
 
     CurrentLocation();
 
@@ -42,8 +44,9 @@ function Map () {
 
     return (
     
-        <View>
+        <View data-test ="MapComponent">
             <MapView
+                data-test ="MapViewComponent"
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
                 region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}

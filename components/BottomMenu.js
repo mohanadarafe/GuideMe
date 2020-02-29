@@ -1,15 +1,31 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { View, AsyncStorage, Text, StyleSheet } from "react-native";
 import { ToggleCampus } from './ToggleCampus';
 import { Icon } from 'native-base';
+=======
+import React, { useEffect } from 'react';
+import { View, AsyncStorage, Text, StyleSheet, Image, Switch } from "react-native";
+import { Icon, Button, Right } from 'native-base';
+>>>>>>> 76973a60da0c14c4931ce384b0ffe37d30015956
 import { MoreDetails } from '../screens/MoreDetails';
+// import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
 
+<<<<<<< HEAD
 
 function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = useState("");
     const [iconSelected, setIconSelected] = useState(false);
+=======
+function BottomMenu() {
+    const [selectedBuilding, setSelectedBuilding] = React.useState("");
+    const [iconSelected, setIconSelected] = React.useState(false);
+    const [switchVal, setSwitchVal] = React.useState(true);
+>>>>>>> 76973a60da0c14c4931ce384b0ffe37d30015956
 
-    const buildingSelected = async() => {
+    AsyncStorage.setItem("toggle", switchVal.toString());
+
+    const buildingSelected = async () => {
         let name = await AsyncStorage.getItem('buildingSelected');
         setSelectedBuilding(name);
     }
@@ -17,44 +33,60 @@ function BottomMenu () {
     useEffect(() => {
         const intervalId = setInterval(() => {
             buildingSelected();
-        }, 100)
+
+        }, 1)
         return () => clearInterval(intervalId);
     })
 
-    if(iconSelected) {
-        return(
-                <View style={styles.moreDetails}>
-                    <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => {setIconSelected(false)}} />
-                    <MoreDetails name={selectedBuilding}/>
-                </View>
+    if (iconSelected && selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                <MoreDetails name={selectedBuilding} />
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
+            </View>
+        );
+    }
+
+    else if (iconSelected && !selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                {/* <pointOfInterestInfo/> */}
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
+            </View>
         );
     }
 
     if (!selectedBuilding) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {setIconSelected(true)}} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true) }} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View style={styles.toggle}>
-                    <ToggleCampus />
+                    <Switch
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
+                    </Switch>
                 </View>
             </View>
         )
     }
     else {
-        return(
+        return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {setIconSelected(true)}} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true) }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.toggle}>
-                    <ToggleCampus />
+                    <Switch
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
+                    </Switch>
                 </View>
             </View>
         )
     }
-  
+
 }
 
 export const styles = StyleSheet.create({
@@ -70,43 +102,46 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         position: 'absolute',
-        backgroundColor: '#2A2E43'
+        backgroundColor: '#2A2E43',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     arrowUp: {
         color: '#ffffff',
         left: '5%',
         top: '7%'
     },
-    arrowDown: {
-        color: '#ffffff',
-        top: '5%',
-        left: '25.5%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        fontSize: 54
-    },
+
     toggle: {
         position: 'absolute',
         left: "80%",
         top: "6.5%"
     },
     mainLabel: {
-        position: 'absolute', 
-        top: '5%', 
-        left: '12.5%', 
+        position: 'absolute',
+        top: '5%',
+        left: '12.5%',
         color: '#FFFFFF',
         fontSize: 20,
         fontFamily: 'encodeSansExpanded'
     },
     shortLabel: {
-        position: 'absolute', 
+        position: 'absolute',
         top: '12%',
-        left: '12.5%', 
+        left: '12.5%',
         color: '#80828D',
         fontSize: 16,
         fontFamily: 'encodeSansExpanded'
-    }
+    },
+    arrowDown: {
+        color: '#ffffff',
+        top: '5%',
+        fontSize: 54,
+        position: 'absolute'
+    },
+
+
+
 });
 
 export { BottomMenu };

@@ -1,53 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { View, StyleSheet, TouchableOpacity  } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import { sgwData } from '../constants/sgwData';
 import { Icon } from 'react-native-elements'
+import { MapData } from './MapData';
 import { sgwRooms } from '../constants/sgwRooms';
+import { buildingData } from '../constants/buildingData';
 
-const buildingInfo = sgwData();
-const rooms = sgwRooms();
-let idCount = 1;
-var items = [];
-
-function getData() {
-    for (var key in buildingInfo) {
-        var value = buildingInfo[key].name;
-        items.push({id: idCount, name: value})
-        idCount++;
-    }
-    for (var key in buildingInfo) {
-        var value = buildingInfo[key].departments;
-        if (value != null) {
-            value.forEach(element => {
-                items.push({id: idCount, name: element})
-                idCount++;
-            });
-        }
-    }
-    for (var key in buildingInfo) {
-        var value = buildingInfo[key].services;
-        if (value != null) {
-            value.forEach(element => {
-                items.push({id: idCount, name: element})
-                idCount++;
-            });
-        } 
-    }
-    for (var key in rooms) {
-      var value = rooms[key].room;
-      value.forEach(element => {
-          items.push({id: idCount, name: element})
-          idCount++;
-      });
-    }
+function fetchData() {
+  const searchInfo = MapData({passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true}, sgwRooms(), buildingData());
+  return searchInfo;
 }
 
 function Search() {
     const [destination, setDestination] = React.useState("");
+    const [data, setData] = React.useState();
 
     useEffect(() => {
-        getData();
+      setData(fetchData())
     }, [])
 
     return (
@@ -69,7 +38,7 @@ function Search() {
                 containerStyle = {styles.test}
                 itemTextStyle={styles.itemTextStyle}
                 itemsContainerStyle={styles.itemsContainerStyle}
-                items={items}
+                items={data}
                 placeholder="Where to?"
                 resetValue={false}
             />
