@@ -1,27 +1,13 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from 'react';
-import { View, AsyncStorage, Text, StyleSheet } from "react-native";
-import { ToggleCampus } from './ToggleCampus';
-import { Icon } from 'native-base';
-=======
 import React, { useEffect } from 'react';
 import { View, AsyncStorage, Text, StyleSheet, Image, Switch } from "react-native";
 import { Icon, Button, Right } from 'native-base';
->>>>>>> 76973a60da0c14c4931ce384b0ffe37d30015956
 import { MoreDetails } from '../screens/MoreDetails';
 // import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
 
-<<<<<<< HEAD
-
-function BottomMenu () {
-    const [selectedBuilding, setSelectedBuilding] = useState("");
-    const [iconSelected, setIconSelected] = useState(false);
-=======
 function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
->>>>>>> 76973a60da0c14c4931ce384b0ffe37d30015956
 
     AsyncStorage.setItem("toggle", switchVal.toString());
 

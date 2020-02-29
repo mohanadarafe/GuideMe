@@ -1,10 +1,6 @@
 import React from "react";
-import { CurrentLocation } from '../components/CurrentLocation';
+import { CurrentLocation } from '../../components/CurrentLocation';
 import renderer from 'react-test-renderer';
-
-afterAll((done) => {
-    done();
-});
 
 describe("CurrentLocation component", () => {
     test('renders correctly', () => {

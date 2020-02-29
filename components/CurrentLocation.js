@@ -78,7 +78,6 @@ export function CurrentLocation() {
                 setcurrentBuilding(coord.lb.name)
     
             }
-
         }, 1000)
         return () => clearInterval(intervalId);
     })
