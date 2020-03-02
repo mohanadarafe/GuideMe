@@ -7,4 +7,9 @@ describe("Building Identification component", () => {
         const tree = renderer.create(<BuildingIdentification />).toJSON();
         expect(tree).toMatchSnapshot();
     });
+
+    test('number of markers', () => {
+        const tree = renderer.create(<BuildingIdentification />).toJSON();
+        expect(tree.children.length).toBe(10);
+      });
 });

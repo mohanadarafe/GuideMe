@@ -29,15 +29,15 @@ function CurrentLocation() {
         setlastLat(JSON.stringify(location.coords.latitude));
         setlastLong(JSON.stringify(location.coords.longitude));
         setAltitude(JSON.stringify(location.coords.altitude));
-      };
+    };
+
+    AsyncStorage.setItem("altitude", altitude);
+    AsyncStorage.setItem("currentBuilding", currentBuilding);
     
     useEffect(() => {
         const intervalId = setInterval(() => {
             
             _getLocationAsync();
-
-            AsyncStorage.setItem("altitude", altitude);
-            AsyncStorage.setItem("currentBuilding", currentBuilding);
 
             if (isPointInPolygon({ latitude: lastLat, longitude: lastLong },
                 [{ latitude: coord.gn.coordinates[0].latitude, longitude: coord.gn.coordinates[0].longitude },
