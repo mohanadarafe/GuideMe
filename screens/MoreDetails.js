@@ -93,7 +93,7 @@ function MoreDetails(props) {
 
     if (data) {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} data-test ="MoreDetailsComponent">
     
                 <SafeAreaView style={styles.buttonContainer}>
                     <Button transparent style={styles.mapButton}>

@@ -11,6 +11,7 @@ web-build/
 web-report/
 coverage/**/*
 __tests__/unit/__snapshots__
+--tests__/__snapshots__
 
 # macOS
 .DS_Store
