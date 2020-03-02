@@ -21,6 +21,7 @@ Welcome to GuideMe! The purpose of our software application is to serve directio
 ## Technologies 💻
 * React Native
 * Jest
+* Enzyme
 * Travis CI
 * Google Maps API
 
