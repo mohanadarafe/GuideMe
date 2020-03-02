@@ -22,6 +22,12 @@ const mapPosition = {
     }
 }
 
+/**
+ * US1 - As a user, I would like to navigate through SGW campus.
+ * US2 - As a user, I would like to navigate through Loyola campus.
+ * 
+ * This is our main screen which includes all the components inside a map.
+ */
 function Map () {
     const [switchVal, setswitchVal] = React.useState("");
 

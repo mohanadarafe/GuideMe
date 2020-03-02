@@ -6,6 +6,16 @@ import { MapData } from './MapData';
 import { sgwRooms } from '../constants/sgwRooms';
 import { buildingData } from '../constants/buildingData';
 
+/**
+ * US11 - As a user, I would like to see auto-fill options when I type a query
+ * US13 - As a user, I want to be able to search a building by typing its name.
+ * US25 - As a user, I would like to be able to search for a room
+ * US38 - As a user, I would like to search a department/faculty by name.
+ * 
+ * The following function renders a search bar in the map. One can search for a
+ * classroom, building, department & service.
+ */
+
 function fetchData() {
   const searchInfo = MapData({passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true}, sgwRooms(), buildingData());
   return searchInfo;

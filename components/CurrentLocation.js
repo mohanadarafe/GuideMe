@@ -4,7 +4,13 @@ import { isPointInPolygon } from 'geolib'
 import {AsyncStorage} from 'react-native';
 import * as Location from 'expo-location';
 
-//Call this function inside of bottomMenu
+/**
+ * US5 - As a user, I would like to know which building I am currently in
+ * US32 - As a user, I would like to be able to know where I am indoors.
+ * The following function provides the building & current floor of a user.
+ * 
+ * Note: call CurrentLocation() inside BottomMenu.js
+ */
 function CurrentLocation() {
     const [currentBuilding, setcurrentBuilding] = React.useState("")
     const [lastLat, setlastLat] = React.useState(0)
@@ -23,15 +29,15 @@ function CurrentLocation() {
         setlastLat(JSON.stringify(location.coords.latitude));
         setlastLong(JSON.stringify(location.coords.longitude));
         setAltitude(JSON.stringify(location.coords.altitude));
-      };
+    };
+
+    AsyncStorage.setItem("altitude", altitude);
+    AsyncStorage.setItem("currentBuilding", currentBuilding);
     
     useEffect(() => {
         const intervalId = setInterval(() => {
             
             _getLocationAsync();
-
-            AsyncStorage.setItem("altitude", altitude);
-            AsyncStorage.setItem("currentBuilding", currentBuilding);
 
             if (isPointInPolygon({ latitude: lastLat, longitude: lastLong },
                 [{ latitude: coord.gn.coordinates[0].latitude, longitude: coord.gn.coordinates[0].longitude },
