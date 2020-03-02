@@ -4,6 +4,11 @@ import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
 // import { pointOfInterestInfo} from '../screens/pointOfInterestInfo';
 
+/**
+ * US6 - As a user, I would like to switch between the SGW and the Loyola maps
+ * The following function renders a menu at the bottom of the screen. The menu
+ * includes a toggle (US6) & an arrow icon leading to the More Details page.
+ */
 function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);

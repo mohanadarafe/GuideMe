@@ -2,6 +2,12 @@ import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Marker } from 'react-native-maps';
 
+/**
+ * US3 - As a user, I would like to be able to identify campus buildings and
+ * distinguish them from other buildings.
+ * The following function is a follow up on BuildingHighlight.js, this function
+ * renders the identifier of a building inside a polygon.
+ */
 function BuildingIdentification () {
     return (
         <View>

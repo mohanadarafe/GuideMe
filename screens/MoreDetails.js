@@ -18,11 +18,23 @@ renderSeparator = () => {
     );
 };
 
+/**
+ * 
+ * @param {*} buildingName Name of building to get data of
+ */
 function fetchData(buildingName) {
     const modeDetailsInfo = MapData({passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false}, sgwRooms(), buildingData());
     return modeDetailsInfo;
 }
 
+/**
+ * The following function flattens a list of data incoming from fetchData
+ * @param {*} data double array of data incoming
+ * @param {*} departments array of deparments
+ * @param {*} services array of services
+ * @param {*} accesibility array of accesibility
+ * @param {*} number phone number
+ */
 function createLists(data, departments, services, accesibility, number) {
     if (data) {
         for (let i = 0; i < data.length; i++) {
@@ -53,6 +65,16 @@ function createLists(data, departments, services, accesibility, number) {
     }
 }
 
+/**
+ * The following screen renders information on a selected building.
+ * 
+ * US7 - As a user, I would like to know the departments provided inside a building.
+ * US8 - As a user, I would like to know the services provided inside a building.
+ * US9 - As a user, I would like to know the accessibility of a building.
+ * 
+ * Props passed
+ * @param {*} name props.name is the name of the building selected
+ */
 function MoreDetails(props) {
 
     const [data, setData] = React.useState();

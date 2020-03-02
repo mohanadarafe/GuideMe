@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react';
 import coord from '../constants/buildingCoordinates';
 import { isPointInPolygon } from 'geolib'
 
-export function CurrentBuilding () {
+/**
+ * US5 - As a user, I would like to know which building I am currently in
+ * US32 - As a user, I would like to be able to know where I am indoors.
+ * The following function provides the building & current floor of a user.
+ * 
+ * Note: call CurrentLocation() inside BottomMenu.js
+ */
+function CurrentLocation() {
     const [currentBuilding, setcurrentBuilding] = React.useState("")
     const [lastLat, setlastLat] = React.useState(0)
     const [lastLong, setlastLong] = React.useState(0)

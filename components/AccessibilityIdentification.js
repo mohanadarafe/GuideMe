@@ -2,6 +2,14 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Marker } from 'react-native-maps';
 
+/**
+ * US9 - As a user, I would like to know the accessibility of a building.
+ * The following function displays icons on the buildings representing
+ * the accesibility of a building. 
+ * 
+ * NOTE: We are only displaying them in MoreDetails page now. To be
+ * implemented in sprint 3.
+ */
 function AccessibilityIdentification() {
 
     let handicapIconPath = "./../assets/Icons/handicap_icon.png";
