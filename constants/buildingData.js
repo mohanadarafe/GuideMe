@@ -1,4 +1,4 @@
-export function buildingData() {
+export function buildingData () {
   var buildings = [];
   buildings["B Annex"] = {
     name: "B Annex",

@@ -16,7 +16,7 @@
  * @param buildingInfo function that returns a list of information on buildings
  */
 
-export function MapData(props, rooms, buildingInfo){ 
+export function MapData (props, rooms, buildingInfo) {
     let idCount = 1;
 
     var buildingName = [];
@@ -30,28 +30,28 @@ export function MapData(props, rooms, buildingInfo){
     if (props.buildingName == true) {
         for (var key in buildingInfo) {
             var value = buildingInfo[key].name;
-            buildingName.push({id: idCount, name: value})
+            buildingName.push({ id: idCount, name: value })
             idCount++;
         }
-    }   
+    }
 
     //Get departments
     if (props.passBuildingName != "" && props.departments == true) {
         var value = buildingInfo[props.passBuildingName].departments;
         if (value != null) {
             value.forEach(element => {
-                departmentsArray.push({id: idCount, name: element})
+                departmentsArray.push({ id: idCount, name: element })
                 idCount++;
             });
         }
-    } 
-    
+    }
+
     if (props.passBuildingName == "" && props.departments == true) {
         for (var key in buildingInfo) {
             var value = buildingInfo[key].departments;
             if (value != null) {
                 value.forEach(element => {
-                    departmentsArray.push({id: idCount, name: element})
+                    departmentsArray.push({ id: idCount, name: element })
                     idCount++;
                 });
             }
@@ -63,10 +63,10 @@ export function MapData(props, rooms, buildingInfo){
         var value = buildingInfo[props.passBuildingName].services;
         if (value != null) {
             value.forEach(element => {
-                serviceArray.push({id: idCount, name: element})
+                serviceArray.push({ id: idCount, name: element })
                 idCount++;
             });
-        } 
+        }
     }
 
 
@@ -75,61 +75,61 @@ export function MapData(props, rooms, buildingInfo){
             var value = buildingInfo[key].services;
             if (value != null) {
                 value.forEach(element => {
-                    serviceArray.push({id: idCount, name: element})
+                    serviceArray.push({ id: idCount, name: element })
                     idCount++;
                 });
-            } 
+            }
         }
     }
-    
+
     //Get accesibility
     if (props.passBuildingName != "" && props.accesibility == true) {
         var hasCredit = buildingInfo[props.passBuildingName].hasCredit;
         if (hasCredit && hasCredit == true) {
-            accessibilityArray.push({id: idCount, name: "Credit Card: Yes"})
+            accessibilityArray.push({ id: idCount, name: "Credit Card: Yes" })
             idCount++;
         } else {
-            accessibilityArray.push({id: idCount, name: "Credit Card: No"})
+            accessibilityArray.push({ id: idCount, name: "Credit Card: No" })
             idCount++;
         }
 
         //Bicycle
         var hasBicycle = buildingInfo[props.passBuildingName].hasBicycle;
         if (hasBicycle && hasBicycle == true) {
-            accessibilityArray.push({id: idCount, name: "Bicycle Parking: Yes"})
+            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: Yes" })
             idCount++;
         } else {
-            accessibilityArray.push({id: idCount, name: "Bicycle Parking: No"})
+            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: No" })
             idCount++;
         }
 
         //Handicap
         var hasHandicap = buildingInfo[props.passBuildingName].hasHandicap;
         if (hasHandicap && hasHandicap == true) {
-            accessibilityArray.push({id: idCount, name: "Wheelchair Accessibility: Yes"})
+            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: Yes" })
             idCount++;
         } else {
-            accessibilityArray.push({id: idCount, name: "Wheelchair Accessibility: No"})
+            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: No" })
             idCount++;
         }
 
         //Information center
         var hasInfocenter = buildingInfo[props.passBuildingName].hasInfocenter;
         if (hasInfocenter && hasInfocenter == true) {
-            accessibilityArray.push({id: idCount, name: "Info Center: Yes"})
+            accessibilityArray.push({ id: idCount, name: "Info Center: Yes" })
             idCount++;
         } else {
-            accessibilityArray.push({id: idCount, name: "Info Center: No"})
+            accessibilityArray.push({ id: idCount, name: "Info Center: No" })
             idCount++;
         }
 
         //Parking
         var hasParking = buildingInfo[props.passBuildingName].hasParking;
         if (hasParking && hasParking == true) {
-            accessibilityArray.push({id: idCount, name: "Parking: Yes"})
+            accessibilityArray.push({ id: idCount, name: "Parking: Yes" })
             idCount++;
         } else {
-            accessibilityArray.push({id: idCount, name: "Parking: No"})
+            accessibilityArray.push({ id: idCount, name: "Parking: No" })
             idCount++;
         }
     }
@@ -139,17 +139,17 @@ export function MapData(props, rooms, buildingInfo){
         for (var key in rooms) {
             var value = rooms[key].room;
             value.forEach(element => {
-                classRooms.push({id: idCount, name: element})
+                classRooms.push({ id: idCount, name: element })
                 idCount++;
             });
         }
     }
 
-    if(buildingName.length > 0) {
+    if (buildingName.length > 0) {
         items.push(buildingName);
     }
 
-    if(departmentsArray.length > 0) {
+    if (departmentsArray.length > 0) {
         items.push(departmentsArray);
     }
 
@@ -157,7 +157,7 @@ export function MapData(props, rooms, buildingInfo){
         items.push(["None"])
     }
 
-    if(serviceArray.length > 0) {
+    if (serviceArray.length > 0) {
         items.push(serviceArray);
     }
 
@@ -165,11 +165,11 @@ export function MapData(props, rooms, buildingInfo){
         items.push(["None"])
     }
 
-    if(accessibilityArray.length > 0) {
+    if (accessibilityArray.length > 0) {
         items.push(accessibilityArray);
     }
 
-    if(classRooms.length > 0) {
+    if (classRooms.length > 0) {
         items.push(classRooms);
     }
 

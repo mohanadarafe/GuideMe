@@ -10,7 +10,7 @@ import { Marker } from 'react-native-maps';
  * NOTE: We are only displaying them in MoreDetails page now. To be
  * implemented in sprint 3.
  */
-function AccessibilityIdentification() {
+function AccessibilityIdentification () {
 
     let handicapIconPath = "./../assets/Icons/handicap_icon.png";
 
