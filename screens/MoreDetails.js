@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from 'react-native'
-import { Icon, Button} from 'native-base';
+import { Icon, Button } from 'native-base';
 import { sgwRooms } from '../constants/sgwRooms';
 import { buildingData } from '../constants/buildingData';
 import { MapData } from '../components/MapData';
@@ -22,8 +22,8 @@ renderSeparator = () => {
  * 
  * @param {*} buildingName Name of building to get data of
  */
-function fetchData(buildingName) {
-    const modeDetailsInfo = MapData({passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false}, sgwRooms(), buildingData());
+function fetchData (buildingName) {
+    const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
     return modeDetailsInfo;
 }
 
@@ -35,7 +35,7 @@ function fetchData(buildingName) {
  * @param {*} accesibility array of accesibility
  * @param {*} number phone number
  */
-function createLists(data, departments, services, accesibility, number) {
+function createLists (data, departments, services, accesibility, number) {
     if (data) {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].length; j++) {
@@ -75,7 +75,7 @@ function createLists(data, departments, services, accesibility, number) {
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails(props) {
+function MoreDetails (props) {
 
     const [data, setData] = React.useState();
 
@@ -86,15 +86,15 @@ function MoreDetails(props) {
     var number;
 
     useEffect(() => {
-      setData(fetchData(props.name))
+        setData(fetchData(props.name))
     }, [])
 
     createLists(data, departments, services, accesibility, number);
 
     if (data) {
         return (
-            <View style={styles.container} data-test ="MoreDetailsComponent">
-    
+            <View style={styles.container} data-test="MoreDetailsComponent">
+
                 <SafeAreaView style={styles.buttonContainer}>
                     <Button transparent style={styles.mapButton}>
                         <View style={styles.iconContainer}>
@@ -105,27 +105,27 @@ function MoreDetails(props) {
                             <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
                         </View>
                     </Button>
-            
+
                     <Button transparent style={styles.phoneButton}>
                         <View style={styles.iconContainer}>
                             <Icon type="Feather" name="phone" style={styles.phone}></Icon>
-                            </View>
+                        </View>
                         <SafeAreaView style={styles.separator}></SafeAreaView>
                         <View style={styles.buttonTextContainer}>
                             <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : 'N/A'}</Text>
-                        </View> 
+                        </View>
                     </Button>
 
                     <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
                 </SafeAreaView>
-    
+
                 <View style={styles.imageContainer}>
                     <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
                 </View>
-    
+
                 <Text style={styles.mainLabel}>{props.name}</Text>
                 <Text style={styles.reviewLabel}>19 Reviews</Text>
-    
+
                 <SafeAreaView style={styles.scrollTextContainer}>
                     <SectionList
                         sections={[
@@ -139,12 +139,12 @@ function MoreDetails(props) {
                         ItemSeparatorComponent={renderSeparator}
                     />
                 </SafeAreaView>
-    
+
                 <Text style={styles.shortLabel}>Description</Text>
             </View>
         );
     }
-    return ( <AppLoading/> )
+    return (<AppLoading />)
 }
 export const styles = StyleSheet.create({
 
@@ -218,7 +218,7 @@ export const styles = StyleSheet.create({
     },
 
     mapButton: {
-        bottom:'19%',
+        bottom: '19%',
         height: '8%',
         width: "100%"
 
@@ -261,7 +261,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#353A50',
         borderRadius: 10,
         justifyContent: 'center',
-        
+
     },
 
     buttonTextContainer: {
