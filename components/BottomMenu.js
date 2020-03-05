@@ -4,7 +4,12 @@ import { Icon, Button, Right } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
 import { CurrentLocation } from '../components/CurrentLocation';
 
-function BottomMenu() {
+/**
+ * US6 - As a user, I would like to switch between the SGW and the Loyola maps
+ * The following function renders a menu at the bottom of the screen. The menu
+ * includes a toggle (US6) & an arrow icon leading to the More Details page.
+ */
+function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -38,7 +43,6 @@ function BottomMenu() {
     else if (iconSelected && !selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                {/* <pointOfInterestInfo/> */}
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false) }} />
             </View>
         );

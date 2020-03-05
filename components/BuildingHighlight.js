@@ -3,11 +3,15 @@ import { View, AsyncStorage } from 'react-native';
 import { Polygon } from 'react-native-maps';
 import coord from '../constants/buildingCoordinates';
 
-
-function BuildingHighlight(){
+/**
+ * US3 - As a user, I would like to be able to identify campus buildings and
+ * distinguish them from other buildings.
+ * The following function colors the campus buildings.
+ */
+function BuildingHighlight () {
     const [buildingName, setBuildingName] = React.useState("");
     AsyncStorage.setItem("buildingSelected", buildingName);
-    
+
     return (
         <View>
             <Polygon

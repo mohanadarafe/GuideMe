@@ -2,7 +2,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import Map from '../screens/Map';
 
-
 // Add screens here
 const screens = {
     Map: {
