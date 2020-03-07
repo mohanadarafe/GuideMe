@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import SearchableDropdown from 'react-native-searchable-dropdown';
-import { Icon } from 'react-native-elements'
-import { MapData } from './MapData';
-import { sgwRooms } from '../constants/sgwRooms';
-import { buildingData } from '../constants/buildingData';
+import React, { useEffect } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import SearchableDropdown from "react-native-searchable-dropdown";
+import { Icon } from "react-native-elements";
+import { MapData } from "./MapData";
+import { sgwRooms } from "../constants/sgwRooms";
+import { buildingData } from "../constants/buildingData";
 
 /**
  * US11 - As a user, I would like to see auto-fill options when I type a query
@@ -22,12 +22,13 @@ function fetchData () {
 }
 
 function Search () {
+  // eslint-disable-next-line no-unused-vars
   const [destination, setDestination] = React.useState("");
   const [data, setData] = React.useState();
 
   useEffect(() => {
-    setData(fetchData())
-  }, [])
+    setData(fetchData());
+  }, []);
 
   return (
 
@@ -59,12 +60,12 @@ function Search () {
 
 export const styles = StyleSheet.create({
   buttonStyle: {
-    width: '15%',
+    width: "15%",
     borderRightWidth: 0,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: '#ccc',
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#ccc",
     borderWidth: 1,
     maxHeight: 44,
     borderBottomStartRadius: 20
@@ -72,16 +73,16 @@ export const styles = StyleSheet.create({
   },
   test: {
 
-    width: '90%'
+    width: "90%"
   },
   container: {
-    width: '80%',
-    position: 'absolute',
+    width: "80%",
+    position: "absolute",
     top: 50,
-    left: '10%',
-    flexDirection: 'row',
+    left: "10%",
+    flexDirection: "row",
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
 
   },
   containerStyle: {
@@ -91,24 +92,24 @@ export const styles = StyleSheet.create({
     padding: 12,
     borderWidth: 1,
     borderLeftWidth: 0,
-    borderColor: '#ccc',
-    backgroundColor: '#FFFFFF',
-    fontFamily: 'encodeSansExpanded'
+    borderColor: "#ccc",
+    backgroundColor: "#FFFFFF",
+    fontFamily: "encodeSansExpanded"
   },
   itemStyle: {
     padding: 10,
     marginTop: 2,
-    backgroundColor: '#FAF9F8',
-    borderColor: '#bbb',
+    backgroundColor: "#FAF9F8",
+    borderColor: "#bbb",
     borderWidth: 1,
     borderRadius: 10,
   },
   itemTextStyle: {
-    color: '#222',
-    fontFamily: 'encodeSansExpanded'
+    color: "#222",
+    fontFamily: "encodeSansExpanded"
   },
   itemsContainerStyle: {
-    maxHeight: '60%',
+    maxHeight: "60%",
   }
 });
 

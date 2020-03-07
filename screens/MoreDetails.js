@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from 'react-native'
-import { Icon, Button } from 'native-base';
-import { sgwRooms } from '../constants/sgwRooms';
-import { buildingData } from '../constants/buildingData';
-import { MapData } from '../components/MapData';
-import { AppLoading } from 'expo';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+import React, {  useEffect } from "react";
+import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
+import { Icon, Button } from "native-base";
+import { sgwRooms } from "../constants/sgwRooms";
+import { buildingData } from "../constants/buildingData";
+import { MapData } from "../components/MapData";
+import { AppLoading } from "expo";
 
-renderSeparator = () => {
+const renderSeparator = () => {
     return (
         <View
             style={{
                 height: 1,
                 width: "100%",
-                backgroundColor: '#353A50',
+                backgroundColor: "#353A50",
             }}
         />
     );
@@ -86,8 +89,8 @@ function MoreDetails (props) {
     var number;
 
     useEffect(() => {
-        setData(fetchData(props.name))
-    }, [])
+        setData(fetchData(props.name));
+    }, []);
 
     createLists(data, departments, services, accesibility, number);
 
@@ -112,15 +115,15 @@ function MoreDetails (props) {
                         </View>
                         <SafeAreaView style={styles.separator}></SafeAreaView>
                         <View style={styles.buttonTextContainer}>
-                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : 'N/A'}</Text>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : "N/A"}</Text>
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton}><Text style={{ color: 'white' }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>
-                    <Image style={styles.buildingImage} source={require('./../assets/Hall_Building.png')} />
+                    <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
                 </View>
 
                 <Text style={styles.mainLabel}>{props.name}</Text>
@@ -129,9 +132,9 @@ function MoreDetails (props) {
                 <SafeAreaView style={styles.scrollTextContainer}>
                     <SectionList
                         sections={[
-                            { title: 'Departments ', data: departments },
-                            { title: 'Services', data: services },
-                            { title: 'Accessibility', data: accesibility },
+                            { title: "Departments ", data: departments },
+                            { title: "Services", data: services },
+                            { title: "Accessibility", data: accesibility },
                         ]}
                         renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
                         renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
@@ -144,178 +147,178 @@ function MoreDetails (props) {
             </View>
         );
     }
-    return (<AppLoading />)
+    return (<AppLoading />);
 }
 export const styles = StyleSheet.create({
 
     container: {
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: '100%',
-        width: '100%'
+        alignItems: "center",
+        justifyContent: "space-between",
+        height: "100%",
+        width: "100%"
     },
 
     mainLabel: {
-        color: '#FFFFFF',
-        left: '5%',
-        position: 'absolute',
+        color: "#FFFFFF",
+        left: "5%",
+        position: "absolute",
         fontSize: 30,
-        fontWeight: 'bold',
-        fontFamily: 'encodeSansExpanded',
-        top: '16%'
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+        top: "16%"
     },
 
     shortLabel: {
-        position: 'absolute',
-        left: '5%',
-        top: '27%',
-        color: '#FFFFFF',
+        position: "absolute",
+        left: "5%",
+        top: "27%",
+        color: "#FFFFFF",
         fontSize: 22,
-        fontWeight: 'bold',
-        fontFamily: 'encodeSansExpanded',
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
         opacity: 0.3
     },
 
     reviewLabel: {
-        position: 'absolute',
-        top: '21%',
-        left: '5%',
-        color: '#FFFFFF',
+        position: "absolute",
+        top: "21%",
+        left: "5%",
+        color: "#FFFFFF",
         fontSize: 20,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     scrollTextContainer: {
-        width: '100%',
-        height: '32%',
-        top: '32%',
-        position: 'absolute',
+        width: "100%",
+        height: "32%",
+        top: "32%",
+        position: "absolute",
     },
 
     directionButton: {
-        width: '90%',
-        height: '8%',
+        width: "90%",
+        height: "8%",
         fontSize: 25,
-        bottom: '8%',
-        justifyContent: 'center',
-        backgroundColor: '#3ACCE1',
+        bottom: "8%",
+        justifyContent: "center",
+        backgroundColor: "#3ACCE1",
         borderRadius: 10,
     },
 
     imageContainer: {
-        width: '100%',
-        height: '25%',
-        top: '0%',
-        position: 'absolute',
+        width: "100%",
+        height: "25%",
+        top: "0%",
+        position: "absolute",
         opacity: 0.3
     },
 
     buildingImage: {
-        width: '100%',
-        height: '100%',
-        top: '0%',
-        position: 'relative'
+        width: "100%",
+        height: "100%",
+        top: "0%",
+        position: "relative"
     },
 
     mapButton: {
-        bottom: '19%',
-        height: '8%',
+        bottom: "19%",
+        height: "8%",
         width: "100%"
 
     },
 
     mapPin: {
-        color: '#FFFFFF',
-        position: 'absolute',
+        color: "#FFFFFF",
+        position: "absolute",
     },
 
     mapPinLabel: {
-        color: '#FFFFFF',
+        color: "#FFFFFF",
         fontSize: 13,
-        fontFamily: 'encodeSansExpanded',
-        position: 'absolute',
+        fontFamily: "encodeSansExpanded",
+        position: "absolute",
     },
 
     phoneButton: {
-        bottom: '17%',
-        height: '8%',
-        width: '100%',
+        bottom: "17%",
+        height: "8%",
+        width: "100%",
     },
 
     phone: {
-        position: 'absolute',
-        color: '#FFFFFF',
-        alignSelf: 'center'
+        position: "absolute",
+        color: "#FFFFFF",
+        alignSelf: "center"
     },
 
     phoneLabel: {
-        position: 'absolute',
-        color: '#FFFFFF',
+        position: "absolute",
+        color: "#FFFFFF",
         fontSize: 13,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     iconContainer: {
-        height: '100%',
-        width: '16%',
-        backgroundColor: '#353A50',
+        height: "100%",
+        width: "16%",
+        backgroundColor: "#353A50",
         borderRadius: 10,
-        justifyContent: 'center',
+        justifyContent: "center",
 
     },
 
     buttonTextContainer: {
-        height: '100%',
-        width: '80%',
-        justifyContent: 'center',
-        alignSelf: 'flex-end'
+        height: "100%",
+        width: "80%",
+        justifyContent: "center",
+        alignSelf: "flex-end"
     },
 
     separator: {
-        height: '100%',
-        width: '4%',
-        justifyContent: 'center',
+        height: "100%",
+        width: "4%",
+        justifyContent: "center",
     },
 
     departmentTitle: {
-        position: 'absolute',
-        color: '#FFFFFF',
+        position: "absolute",
+        color: "#FFFFFF",
         fontSize: 16,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     departmentText: {
-        color: '#FFFFFF',
+        color: "#FFFFFF",
         fontSize: 12,
-        fontFamily: 'encodeSansExpanded',
+        fontFamily: "encodeSansExpanded",
     },
 
     servicesTitle: {
-        position: 'absolute',
-        color: '#FFFFFF',
+        position: "absolute",
+        color: "#FFFFFF",
         fontSize: 16,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     servicesText: {
-        position: 'absolute',
-        color: '#FFFFFF',
+        position: "absolute",
+        color: "#FFFFFF",
         fontSize: 12,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     accessibilitiesTitle: {
-        position: 'absolute',
-        color: '#FFFFFF',
+        position: "absolute",
+        color: "#FFFFFF",
         fontSize: 16,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     accessibilitiesText: {
-        position: 'absolute',
-        color: '#FFFFFF',
+        position: "absolute",
+        color: "#FFFFFF",
         fontSize: 12,
-        fontFamily: 'encodeSansExpanded'
+        fontFamily: "encodeSansExpanded"
     },
 
     sectionHeader: {
@@ -324,10 +327,10 @@ export const styles = StyleSheet.create({
         paddingRight: 10,
         paddingBottom: 2,
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: "bold",
         color: "#ffffff",
-        backgroundColor: '#353A50',
-        fontFamily: 'encodeSansExpanded'
+        backgroundColor: "#353A50",
+        fontFamily: "encodeSansExpanded"
     },
 
     listItem: {
@@ -335,16 +338,16 @@ export const styles = StyleSheet.create({
         fontSize: 12,
         height: 44,
         paddingLeft: 22,
-        fontFamily: 'encodeSansExpanded',
+        fontFamily: "encodeSansExpanded",
         color: "#D3D3D3",
     },
     buttonContainer: {
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        height: '100%',
-        width: '90%',
-        alignItems: 'center',
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        height: "100%",
+        width: "90%",
+        alignItems: "center",
     },
 
 });
-export { MoreDetails }
+export { MoreDetails };

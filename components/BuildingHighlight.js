@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, AsyncStorage } from 'react-native';
-import { Polygon } from 'react-native-maps';
-import coord from '../constants/buildingCoordinates';
+import React from "react";
+import { View, AsyncStorage } from "react-native";
+import { Polygon } from "react-native-maps";
+import coord from "../constants/buildingCoordinates";
 
 /**
  * US3 - As a user, I would like to be able to identify campus buildings and
@@ -84,7 +84,7 @@ function BuildingHighlight () {
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
         </View>
-    )
+    );
 }
 
 export { BuildingHighlight };

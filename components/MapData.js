@@ -30,28 +30,28 @@ export function MapData (props, rooms, buildingInfo) {
     if (props.buildingName == true) {
         for (var key in buildingInfo) {
             var value = buildingInfo[key].name;
-            buildingName.push({ id: idCount, name: value })
+            buildingName.push({ id: idCount, name: value });
             idCount++;
         }
     }
 
     //Get departments
     if (props.passBuildingName != "" && props.departments == true) {
-        var value = buildingInfo[props.passBuildingName].departments;
+        value = buildingInfo[props.passBuildingName].departments;
         if (value != null) {
             value.forEach(element => {
-                departmentsArray.push({ id: idCount, name: element })
+                departmentsArray.push({ id: idCount, name: element });
                 idCount++;
             });
         }
     }
 
     if (props.passBuildingName == "" && props.departments == true) {
-        for (var key in buildingInfo) {
-            var value = buildingInfo[key].departments;
+        for (key in buildingInfo) {
+            value = buildingInfo[key].departments;
             if (value != null) {
                 value.forEach(element => {
-                    departmentsArray.push({ id: idCount, name: element })
+                    departmentsArray.push({ id: idCount, name: element });
                     idCount++;
                 });
             }
@@ -60,10 +60,10 @@ export function MapData (props, rooms, buildingInfo) {
 
     //Get services
     if (props.passBuildingName != "" && props.services == true) {
-        var value = buildingInfo[props.passBuildingName].services;
+        value = buildingInfo[props.passBuildingName].services;
         if (value != null) {
             value.forEach(element => {
-                serviceArray.push({ id: idCount, name: element })
+                serviceArray.push({ id: idCount, name: element });
                 idCount++;
             });
         }
@@ -71,11 +71,11 @@ export function MapData (props, rooms, buildingInfo) {
 
 
     if (props.passBuildingName == "" && props.services == true) {
-        for (var key in buildingInfo) {
-            var value = buildingInfo[key].services;
+        for (key in buildingInfo) {
+            value = buildingInfo[key].services;
             if (value != null) {
                 value.forEach(element => {
-                    serviceArray.push({ id: idCount, name: element })
+                    serviceArray.push({ id: idCount, name: element });
                     idCount++;
                 });
             }
@@ -86,60 +86,60 @@ export function MapData (props, rooms, buildingInfo) {
     if (props.passBuildingName != "" && props.accesibility == true) {
         var hasCredit = buildingInfo[props.passBuildingName].hasCredit;
         if (hasCredit && hasCredit == true) {
-            accessibilityArray.push({ id: idCount, name: "Credit Card: Yes" })
+            accessibilityArray.push({ id: idCount, name: "Credit Card: Yes" });
             idCount++;
         } else {
-            accessibilityArray.push({ id: idCount, name: "Credit Card: No" })
+            accessibilityArray.push({ id: idCount, name: "Credit Card: No" });
             idCount++;
         }
 
         //Bicycle
         var hasBicycle = buildingInfo[props.passBuildingName].hasBicycle;
         if (hasBicycle && hasBicycle == true) {
-            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: Yes" })
+            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: Yes" });
             idCount++;
         } else {
-            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: No" })
+            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: No" });
             idCount++;
         }
 
         //Handicap
         var hasHandicap = buildingInfo[props.passBuildingName].hasHandicap;
         if (hasHandicap && hasHandicap == true) {
-            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: Yes" })
+            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: Yes" });
             idCount++;
         } else {
-            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: No" })
+            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: No" });
             idCount++;
         }
 
         //Information center
         var hasInfocenter = buildingInfo[props.passBuildingName].hasInfocenter;
         if (hasInfocenter && hasInfocenter == true) {
-            accessibilityArray.push({ id: idCount, name: "Info Center: Yes" })
+            accessibilityArray.push({ id: idCount, name: "Info Center: Yes" });
             idCount++;
         } else {
-            accessibilityArray.push({ id: idCount, name: "Info Center: No" })
+            accessibilityArray.push({ id: idCount, name: "Info Center: No" });
             idCount++;
         }
 
         //Parking
         var hasParking = buildingInfo[props.passBuildingName].hasParking;
         if (hasParking && hasParking == true) {
-            accessibilityArray.push({ id: idCount, name: "Parking: Yes" })
+            accessibilityArray.push({ id: idCount, name: "Parking: Yes" });
             idCount++;
         } else {
-            accessibilityArray.push({ id: idCount, name: "Parking: No" })
+            accessibilityArray.push({ id: idCount, name: "Parking: No" });
             idCount++;
         }
     }
 
     //Get classrooms
     if (props.classRooms) {
-        for (var key in rooms) {
-            var value = rooms[key].room;
+        for (key in rooms) {
+            value = rooms[key].room;
             value.forEach(element => {
-                classRooms.push({ id: idCount, name: element })
+                classRooms.push({ id: idCount, name: element });
                 idCount++;
             });
         }
@@ -154,7 +154,7 @@ export function MapData (props, rooms, buildingInfo) {
     }
 
     if (departmentsArray.length == 0 && props.passBuildingName !== "") {
-        items.push(["None"])
+        items.push(["None"]);
     }
 
     if (serviceArray.length > 0) {
@@ -162,7 +162,7 @@ export function MapData (props, rooms, buildingInfo) {
     }
 
     if (serviceArray.length == 0 && props.passBuildingName !== "") {
-        items.push(["None"])
+        items.push(["None"]);
     }
 
     if (accessibilityArray.length > 0) {

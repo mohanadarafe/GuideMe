@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { Marker } from 'react-native-maps';
+/* eslint-disable no-undef */
+import React from "react";
+import { View, Image, StyleSheet } from "react-native";
+import { Marker } from "react-native-maps";
 
 /**
  * US9 - As a user, I would like to know the accessibility of a building.
@@ -80,7 +81,7 @@ export const styles = StyleSheet.create({
         width: 30,
         height: 30,
     }
-})
+});
 
 
 export { AccessibilityIdentification };

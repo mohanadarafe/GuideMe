@@ -23,6 +23,6 @@ export function sgwRooms () {
       "H564",
       "H565"
     ]
-  }
+  };
   return rooms;
 }
