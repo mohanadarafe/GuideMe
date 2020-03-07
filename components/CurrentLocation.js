@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import coord from '../constants/buildingCoordinates';
-import { isPointInPolygon } from 'geolib'
-import { AsyncStorage } from 'react-native';
-import * as Location from 'expo-location';
+/* eslint-disable no-undef */
+import React, { useEffect } from "react";
+import coord from "../constants/buildingCoordinates";
+import { isPointInPolygon } from "geolib";
+import { AsyncStorage } from "react-native";
+import * as Location from "expo-location";
 
 /**
  * US5 - As a user, I would like to know which building I am currently in
@@ -12,10 +13,10 @@ import * as Location from 'expo-location';
  * Note: call CurrentLocation() inside BottomMenu.js
  */
 function CurrentLocation () {
-    const [currentBuilding, setcurrentBuilding] = React.useState("")
-    const [lastLat, setlastLat] = React.useState(0)
-    const [lastLong, setlastLong] = React.useState(0)
-    const [altitude, setAltitude] = React.useState("0")
+    const [currentBuilding, setcurrentBuilding] = React.useState("");
+    const [lastLat, setlastLat] = React.useState(0);
+    const [lastLong, setlastLong] = React.useState(0);
+    const [altitude, setAltitude] = React.useState("0");
 
 
     // These are not the real values. We must measure these values real time...
@@ -23,7 +24,7 @@ function CurrentLocation () {
     let floorHeight = 5;
     let currentFloor = 0;
 
-    _getLocationAsync = async () => {
+    const _getLocationAsync = async () => {
         let location = await Location.getCurrentPositionAsync({/*insert acuracy*/ });
 
         setlastLat(JSON.stringify(location.coords.latitude));
@@ -46,7 +47,7 @@ function CurrentLocation () {
                 { latitude: coord.gn.coordinates[3].latitude, longitude: coord.gn.coordinates[3].longitude },
                 { latitude: coord.gn.coordinates[4].latitude, longitude: coord.gn.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.gn.name)
+                setcurrentBuilding(coord.gn.name);
 
             }
 
@@ -57,7 +58,7 @@ function CurrentLocation () {
                 { latitude: coord.h.coordinates[3].latitude, longitude: coord.h.coordinates[3].longitude },
                 { latitude: coord.h.coordinates[4].latitude, longitude: coord.h.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.h.name)
+                setcurrentBuilding(coord.h.name);
 
             }
 
@@ -68,7 +69,7 @@ function CurrentLocation () {
                 { latitude: coord.mb.coordinates[3].latitude, longitude: coord.mb.coordinates[3].longitude },
                 { latitude: coord.mb.coordinates[4].latitude, longitude: coord.mb.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.mb.name)
+                setcurrentBuilding(coord.mb.name);
 
             }
 
@@ -79,7 +80,7 @@ function CurrentLocation () {
                 { latitude: coord.ev.coordinates[3].latitude, longitude: coord.ev.coordinates[3].longitude },
                 { latitude: coord.ev.coordinates[4].latitude, longitude: coord.ev.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.ev.name)
+                setcurrentBuilding(coord.ev.name);
 
             }
 
@@ -90,12 +91,12 @@ function CurrentLocation () {
                 { latitude: coord.lb.coordinates[3].latitude, longitude: coord.lb.coordinates[3].longitude },
                 { latitude: coord.lb.coordinates[4].latitude, longitude: coord.lb.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.lb.name)
+                setcurrentBuilding(coord.lb.name);
 
             }
-        }, 1000)
+        }, 1000);
         return () => clearInterval(intervalId);
-    })
+    });
 
     currentFloor = (altitude - baseAltitude) / floorHeight;
 

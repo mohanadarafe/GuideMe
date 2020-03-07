@@ -98,4 +98,4 @@ export default {
             { latitude: 45.457901, longitude: -73.640113 }
         ]
     }
-}
+};
