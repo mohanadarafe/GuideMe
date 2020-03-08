@@ -7,6 +7,7 @@ import { BottomMenu } from "../components/BottomMenu";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
+import { FloorMenu } from "../components/FloorMenu";
 
 const mapPosition = {
     sgwCoord: {
@@ -43,28 +44,33 @@ function Map () {
     useEffect(() => {
         const intervalId = setInterval(() => {
             campusSelected();
-        }, 1000);
+        }, 1);
         return () => clearInterval(intervalId);
     });
 
     return (
         <View data-test="MapComponent">
-            {getInsideBuild === "false" && 
-                <MapView
-                    data-test="MapViewComponent"
-                    style={styles.map}
-                    provider={PROVIDER_GOOGLE}
-                    region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
-                    showsUserLocation={true}
-                    showsCompass={true}
-                    showsBuildings={true}
-                >
-                    <BuildingHighlight />
-                    <BuildingIdentification />
-                </MapView>
+            {getInsideBuild === "false" &&
+                <View>
+                    <MapView
+                        data-test="MapViewComponent"
+                        style={styles.map}
+                        provider={PROVIDER_GOOGLE}
+                        region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
+                        showsUserLocation={true}
+                        showsCompass={true}
+                        showsBuildings={true}
+                    >
+                        <BuildingHighlight />
+                        <BuildingIdentification />
+                    </MapView>
+                    <Search />
+                </View> 
             }
-            {getInsideBuild === "true" && 
-                <IndoorMapView />
+            {getInsideBuild === "true" &&
+                <View>
+                    <IndoorMapView />
+                </View>
             }
             <BottomMenu />
         </View>

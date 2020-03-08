@@ -4,6 +4,7 @@ import { Icon } from "native-base";
 import { MoreDetails } from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from 'react-native-paper';
+import { FloorMenu } from "./FloorMenu";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -44,7 +45,7 @@ function BottomMenu () {
 
     if (getInside) {
         return(
-            <View style={styles.container}>
+            <View style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
@@ -54,6 +55,9 @@ function BottomMenu () {
                     }}>
                         <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Exit Building</Text>
                     </Button>
+                </View>
+                <View style={styles.changeFloor}>
+                    <FloorMenu />
                 </View>
             </View>
         );
@@ -111,6 +115,14 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         bottom: -275
     },
+    insideBuildingContainer: {
+        width: "100%",
+        height: 425,
+        position: "absolute",
+        borderRadius: 30.5,
+        backgroundColor: "#2A2E43",
+        bottom: -275
+    },
     moreDetails: {
         width: "100%",
         height: "100%",
@@ -163,9 +175,10 @@ export const styles = StyleSheet.create({
         fontSize: 54,
         position: "absolute"
     },
-
-
-
+    changeFloor: {
+        top: "12.5%",
+        left: "15%",
+    }
 });
 
 export { BottomMenu };
