@@ -3,6 +3,7 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { MoreDetails } from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
+import { Button } from 'react-native-paper';
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -13,10 +14,12 @@ function BottomMenu () {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
+    const [getInside, setGetInside] = React.useState(false);
 
     CurrentLocation();
 
     AsyncStorage.setItem("toggle", switchVal.toString());
+    AsyncStorage.setItem("getInsideBuilding", getInside.toString());
 
     const buildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
@@ -26,8 +29,7 @@ function BottomMenu () {
     useEffect(() => {
         const intervalId = setInterval(() => {
             buildingSelected();
-
-        }, 1);
+        }, 100);
         return () => clearInterval(intervalId);
     });
 
@@ -40,6 +42,23 @@ function BottomMenu () {
         );
     }
 
+    if (getInside) {
+        return(
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btnleave}>
+                    <Button style={styles.btnleave} color={'#3ACCE1'} uppercase={false} mode="contained" onPress={() => {
+                        setGetInside(false)
+                    }}>
+                        <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Exit Building</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+
     else if (iconSelected && !selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
@@ -48,7 +67,7 @@ function BottomMenu () {
         );
     }
 
-    if (!selectedBuilding) {
+    else if (!selectedBuilding) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
@@ -63,17 +82,19 @@ function BottomMenu () {
             </View>
         );
     }
+
     else {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.toggle}>
-                    <Switch
-                        value={switchVal}
-                        onValueChange={(val) => setSwitchVal(val)}>
-                    </Switch>
+                <View style={styles.btn}>
+                    <Button style={styles.btn} color={'#3ACCE1'} uppercase={false} mode="contained" onPress={() => {
+                        setGetInside(true)
+                    }}>
+                        <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Get Inside</Text>
+                    </Button>
                 </View>
             </View>
         );
@@ -101,13 +122,24 @@ export const styles = StyleSheet.create({
     arrowUp: {
         color: "#ffffff",
         left: "5%",
-        top: "7%"
+        top: "7%",
     },
-
     toggle: {
         position: "absolute",
         left: "80%",
-        top: "6.5%"
+        top: "7%"
+    },
+    btn: {
+        position: "absolute",
+        left: "65%",
+        top: "5.5%",
+        color: '#FFFFFF'
+    },
+    btnleave: {
+        position: "absolute",
+        left: "62%",
+        top: "5.5%",
+        color: '#FFFFFF',
     },
     mainLabel: {
         position: "absolute",

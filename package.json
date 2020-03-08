@@ -28,11 +28,13 @@
     ]
   },
   "dependencies": {
+    "@dudigital/react-native-zoomable-view": "^1.0.15",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.6",
     "acorn": "^7.1.0",
     "expo": "~36.0.0",
     "expo-font": "^8.0.0",
+    "expo-location": "~8.0.0",
     "galio-framework": "^0.6.3",
     "geolib": "^3.2.1",
     "jest": "^25.1.0",
@@ -48,11 +50,11 @@
     "react-native-safe-area-context": "^0.6.2",
     "react-native-search-header": "^0.3.5",
     "react-native-searchable-dropdown": "^1.1.1",
+    "react-native-svg": "9.13.3",
     "react-native-switch": "^1.5.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.15",
-    "expo-location": "~8.0.0"
+    "react-navigation-stack": "^2.0.15"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -65,6 +67,7 @@
     "jest-enzyme": "^7.1.2",
     "jest-expo": "^36.0.1",
     "prettier": "1.19.1",
+    "react-native-svg-asset-plugin": "^0.3.0",
     "react-test-renderer": "^16.12.0"
   },
   "private": true
