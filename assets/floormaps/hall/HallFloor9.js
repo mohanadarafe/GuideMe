@@ -1,5 +1,6 @@
 import * as React from "react"
 import Svg, { G, Path, Text, LinearGradient, Defs, Stop } from "react-native-svg"
+import { HallClass } from "./HallClassrooms/HallClass";
 
 export function HallFloor9() {
     return(
@@ -193,6 +194,7 @@ export function HallFloor9() {
             strokeWidth={2}
             d="M150.041 53.51h90.535v106.136h-90.535zM10.156 898.469V973.5H58v-61h7.031v-14.031H10.156zM462.888 735.567l15.568 15.084 13.101-15.084z"
           />
+          <HallClass floor={9}/>
         </G>
       </Svg>
     );

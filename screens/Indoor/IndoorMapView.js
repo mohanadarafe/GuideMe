@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { View, ScrollView, AsyncStorage } from "react-native";
 import { HallFloor8 } from "../../assets/floormaps/hall/HallFloor8";
-import { JMSB } from "../../assets/floormaps/mb/JMSB";
-import { FloorMenu } from "../../components/FloorMenu";
+import { JMSBFloor1 } from "../../assets/floormaps/mb/JMSBFloor1";
 import { HallFloor9 } from "../../assets/floormaps/hall/HallFloor9";
+import { JMSBFloor2 } from "../../assets/floormaps/mb/JMSBFloor2";
+import { HallFloorX } from "../../assets/floormaps/hall/HallFloorX";
+import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
 
 function IndoorMapView() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
@@ -30,20 +32,28 @@ function IndoorMapView() {
     return (
         <View>
             <ScrollView>
-                <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.75} >              
-                    {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
+                <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >              
+                    {selectedBuilding === "Hall Building" && selectedFloor === "8" &&
                         <HallFloor8 />
                     }
                     {selectedBuilding === "Hall Building" && selectedFloor === "9" &&
                         <HallFloor9 />
                     }
-                    {selectedBuilding === "JMSB" && 
-                        <JMSB />
+                    {selectedBuilding === "Hall Building" && selectedFloor !== "8" && selectedFloor !== "9" &&
+                        <HallFloorX />
+                    }
+                    {selectedBuilding === "JMSB" && selectedFloor === "1" &&
+                        <JMSBFloor1 />
+                    }
+                    {selectedBuilding === "JMSB" && selectedFloor === "2" &&
+                        <JMSBFloor2 />
+                    }
+                    {selectedBuilding === "JMSB" && selectedFloor !== "1" && selectedFloor !== "2" &&
+                        <JMSBFloorX />
                     }
                 </ScrollView>
             </ScrollView>
         </View>
-        
     )  
 }
 

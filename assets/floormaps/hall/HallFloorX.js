@@ -1,8 +1,23 @@
-import * as React from "react"
-import Svg, { G, Path, Text } from "react-native-svg"
+import React, {useEffect, useState} from "react"
+import { AsyncStorage } from "react-native";
+import Svg, { G, Path, Text, Rect } from "react-native-svg"
 import { HallClass } from "./HallClassrooms/HallClass";
 
-export function HallFloor8() {
+export function HallFloorX() {
+    const [floorNumber, setFloorNumber] = React.useState("");
+
+    const floorSelected = async () => {
+        let name = await AsyncStorage.getItem("floorSelected");
+        setFloorNumber(name);
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            floorSelected();
+        }, 100);
+        return () => clearInterval(intervalId);
+    })
+
     return(
       <Svg width={1024} height={1024}>
       <Path fill="none" d="M-1-1h582v402H-1z" />
@@ -132,7 +147,7 @@ export function HallFloor8() {
           strokeWidth={0}
           stroke="#000"
         >
-          {"H851"}
+          {"H" + floorNumber + "51"}
         </Text>
         <Text
           stroke="#000"
@@ -143,7 +158,7 @@ export function HallFloor8() {
           x={202}
           strokeWidth={0}
         >
-          {"H860"}
+          {"H" + floorNumber + "60"}
         </Text>
         <Text
           stroke="#000"
@@ -154,7 +169,7 @@ export function HallFloor8() {
           x={364.632}
           strokeWidth={0}
         >
-          {"H805"}
+          {"H" + floorNumber + "05"}
         </Text>
         <Text
           stroke="#000"
@@ -165,7 +180,7 @@ export function HallFloor8() {
           x={475.019}
           strokeWidth={0}
         >
-          {"H806"}
+          {"H" + floorNumber + "06"}
         </Text>
         <Text
           stroke="#000"
@@ -176,7 +191,7 @@ export function HallFloor8() {
           x={475.019}
           strokeWidth={0}
         >
-          {"H832"}
+          {"H" + floorNumber + "32"}
         </Text>
         <Path
           stroke="#000"
@@ -198,7 +213,7 @@ export function HallFloor8() {
           strokeWidth={1.5}
           fill="#fff"
         />
-        <HallClass floor={8}/>
+        <HallClass floor={floorNumber}/>
       </G>
     </Svg>
     );
