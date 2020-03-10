@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { BuildingHighlight } from '../components/BuildingHighlight';
 import { BuildingIdentification } from '../components/BuildingIdentification';
 import { BottomMenu } from '../components/BottomMenu';
+import { CurrentLocation } from '../components/CurrentLocation';
 import { View } from 'native-base';
 import { Search } from '../components/Search';
 
@@ -59,6 +60,7 @@ function Map () {
             </MapView>
             <Search />
             <BottomMenu />
+            <CurrentLocation />
         </View>
     );
 }
@@ -67,7 +69,6 @@ export const styles = StyleSheet.create({
     map: {
         height: '100%'
     }
-
 });
 
 export default Map;

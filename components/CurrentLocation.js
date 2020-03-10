@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import coord from '../constants/buildingCoordinates';
-import { isPointInPolygon } from 'geolib'
-import { AsyncStorage } from 'react-native';
+import { isPointInPolygon } from 'geolib';
+import { AsyncStorage, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
+import Modal from "react-native-modal";
+import Icon from 'react-native-vector-icons/Entypo';
+
+import { View, Text, Button, TouchableOpacity } from 'react-native';
+
+
 
 /**
  * US5 - As a user, I would like to know which building I am currently in
@@ -16,7 +22,7 @@ function CurrentLocation () {
     const [lastLat, setlastLat] = React.useState(0)
     const [lastLong, setlastLong] = React.useState(0)
     const [altitude, setAltitude] = React.useState("0")
-
+    const [modalVisibility, setModalVisibility] = React.useState(false)
 
     // These are not the real values. We must measure these values real time...
     let baseAltitude = 35;
@@ -33,6 +39,7 @@ function CurrentLocation () {
 
     AsyncStorage.setItem("altitude", altitude);
     AsyncStorage.setItem("currentBuilding", currentBuilding);
+    
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -47,6 +54,7 @@ function CurrentLocation () {
                 { latitude: coord.gn.coordinates[4].latitude, longitude: coord.gn.coordinates[4].longitude }])) {
 
                 setcurrentBuilding(coord.gn.name)
+
 
             }
 
@@ -97,17 +105,68 @@ function CurrentLocation () {
         return () => clearInterval(intervalId);
     })
 
+    //Compute the floor level
     currentFloor = (altitude - baseAltitude) / floorHeight;
+    roundedCurrentFloor = "Floor level: " + (Math.round(currentFloor * 100) / 100).toFixed(0);
 
-    if (currentFloor > 0) {
-        roundedCurrentFloor = "This is the " + (Math.round(currentFloor * 100) / 100).toFixed(0) + "rd floor";
-    }
 
     if (currentBuilding === "") {
-        return ("");
+        return (
+        <View style={styles.view}>
+        <Icon style={styles.icon} name='location' size="30"  color="#2A2E43" onPress={() => setModalVisibility(true)}/>
+        <Modal isVisible={modalVisibility}>
+            <View style={styles.modal}>
+                <Text style={styles.modalText}>Please try again in a Concordia building</Text>
+                <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+            </View>
+        </Modal>
+        </View>
+        );
     }
-    return (currentBuilding + " - " + roundedCurrentFloor);
-
+    else{
+    return (
+        <View style={styles.view}>
+        <TouchableOpacity>
+        <Icon style={styles.icon} name='location' size="30"  color="#2A2E43" onPress={() => setModalVisibility(true)}/>
+        </TouchableOpacity>
+        <Modal isVisible={modalVisibility}>
+            <View style={styles.modal}>
+                <Text style={styles.modalText}>{currentBuilding}</Text>
+                <Text style={styles.modalText}>{roundedCurrentFloor}</Text>
+                <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+            </View>
+        </Modal>
+        </View>
+    );
 }
+}
+
+
+            
+
+export const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        flexDirection: "column"
+    },
+    icon: {
+        alignSelf: 'flex-end',
+        position: 'absolute',
+        right: 20,
+        bottom: 95
+    },
+    modal: {
+        position:"absolute",
+        right: "20%",
+        paddingTop:10,
+        borderRadius:10,
+        width:200,
+        backgroundColor: "white",
+        alignItems: "center"
+    },
+    modalText: {
+        fontSize:20,
+    },
+});
 
 export { CurrentLocation };

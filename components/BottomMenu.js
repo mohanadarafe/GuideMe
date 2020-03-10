@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, AsyncStorage, Text, StyleSheet, Image, Switch } from "react-native";
-import { Icon, Button, Right } from 'native-base';
+import { Icon } from 'native-base';
 import { MoreDetails } from '../screens/MoreDetails';
 import { CurrentLocation } from '../components/CurrentLocation';
 
