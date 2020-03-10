@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Marker } from 'react-native-maps';
+import React from "react";
+import { Text, View, StyleSheet } from "react-native";
+import { Marker } from "react-native-maps";
 
 /**
  * US3 - As a user, I would like to be able to identify campus buildings and
@@ -69,10 +69,10 @@ export const styles = StyleSheet.create({
         color: "white",
         fontSize: 30,
         fontWeight: "bold",
-        textShadowColor: '#000000',
+        textShadowColor: "#000000",
         textShadowOffset: { width: 1, height: 4 },
         textShadowRadius: 5
     }
-})
+});
 
 export { BuildingIdentification };

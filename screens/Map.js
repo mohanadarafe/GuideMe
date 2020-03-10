@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, AsyncStorage } from 'react-native';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
@@ -7,6 +8,16 @@ import { BottomMenu } from '../components/BottomMenu';
 import { CurrentLocation } from '../components/CurrentLocation';
 import { View } from 'native-base';
 import { Search } from '../components/Search';
+=======
+import React, {  useEffect } from "react";
+import { StyleSheet, AsyncStorage } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { BuildingHighlight } from "../components/BuildingHighlight";
+import { BuildingIdentification } from "../components/BuildingIdentification";
+import { BottomMenu } from "../components/BottomMenu";
+import { View } from "native-base";
+import { Search } from "../components/Search";
+>>>>>>> 8cd39b316b77236f2cd22635ba00367a851dc871
 
 const mapPosition = {
     sgwCoord: {
@@ -21,7 +32,7 @@ const mapPosition = {
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
     }
-}
+};
 
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
@@ -32,17 +43,17 @@ const mapPosition = {
 function Map () {
     const [switchVal, setswitchVal] = React.useState("");
 
-    campusSelected = async () => {
+    const campusSelected = async () => {
         let val = await AsyncStorage.getItem("toggle");
         setswitchVal(val);
-    }
+    };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             campusSelected();
-        }, 1)
+        }, 1);
         return () => clearInterval(intervalId);
-    })
+    });
 
     return (
         <View data-test="MapComponent">
@@ -67,7 +78,7 @@ function Map () {
 
 export const styles = StyleSheet.create({
     map: {
-        height: '100%'
+        height: "100%"
     }
 });
 
