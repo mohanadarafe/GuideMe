@@ -6,6 +6,7 @@ import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
 import { View } from "native-base";
 import { Search } from "../components/Search";
+import IndoorMapView from "./Indoor/IndoorMapView";
 
 const mapPosition = {
     sgwCoord: {
@@ -30,10 +31,13 @@ const mapPosition = {
  */
 function Map () {
     const [switchVal, setswitchVal] = React.useState("");
+    const [getInsideBuild, setGetInsideBuild] = React.useState("");
 
     const campusSelected = async () => {
-        let val = await AsyncStorage.getItem("toggle");
-        setswitchVal(val);
+        let tog = await AsyncStorage.getItem("toggle");
+        let inside = await AsyncStorage.getItem("getInsideBuilding");
+        setswitchVal(tog);
+        setGetInsideBuild(inside);
     };
 
     useEffect(() => {
@@ -45,19 +49,28 @@ function Map () {
 
     return (
         <View data-test="MapComponent">
-            <MapView
-                data-test="MapViewComponent"
-                style={styles.map}
-                provider={PROVIDER_GOOGLE}
-                region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
-                showsUserLocation={true}
-                showsCompass={true}
-                showsBuildings={true}
-            >
-                <BuildingHighlight />
-                <BuildingIdentification />
-            </MapView>
-            <Search />
+            {getInsideBuild === "false" &&
+                <View>
+                    <MapView
+                        data-test="MapViewComponent"
+                        style={styles.map}
+                        provider={PROVIDER_GOOGLE}
+                        region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
+                        showsUserLocation={true}
+                        showsCompass={true}
+                        showsBuildings={true}
+                    >
+                        <BuildingHighlight />
+                        <BuildingIdentification />
+                    </MapView>
+                    <Search />
+                </View> 
+            }
+            {getInsideBuild === "true" &&
+                <View>
+                    <IndoorMapView />
+                </View>
+            }
             <BottomMenu />
         </View>
     );
