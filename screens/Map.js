@@ -7,7 +7,6 @@ import { BottomMenu } from "../components/BottomMenu";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
-import { FloorMenu } from "../components/FloorMenu";
 
 const mapPosition = {
     sgwCoord: {

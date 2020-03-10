@@ -1,37 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage, View } from "react-native";
-import SwitchSelector from 'react-native-switch-selector';
+import SwitchSelector from "react-native-switch-selector";
 
 const hallFloors = [
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '5', value: '4' },
-    { label: '6', value: '5' },
-    { label: '7', value: '7' },
-    { label: '8', value: '8' },
-    { label: '9', value: '9' },
-    { label: '10', value: '10' },
-    { label: '11', value: '11' },
-    { label: '12', value: '12' },
-    { label: '13', value: '13' },
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
+    { label: "4", value: "4" },
+    { label: "5", value: "5" },
+    { label: "6", value: "5" },
+    { label: "7", value: "7" },
+    { label: "8", value: "8" },
+    { label: "9", value: "9" },
+    { label: "10", value: "10" },
+    { label: "11", value: "11" },
+    { label: "12", value: "12" },
+    { label: "13", value: "13" },
 ];
 
 const jmsbFloors = [
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '5', value: '4' },
-    { label: '6', value: '5' },
-    { label: '7', value: '7' },
-    { label: '8', value: '8' },
-    { label: '9', value: '9' },
-    { label: '10', value: '10' },
-    { label: '11', value: '11' },
-    { label: '12', value: '12' },
-    { label: '13', value: '13' },
-    { label: '14', value: '14' },
-    { label: '15', value: '15' },
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
+    { label: "5", value: "4" },
+    { label: "6", value: "5" },
+    { label: "7", value: "7" },
+    { label: "8", value: "8" },
+    { label: "9", value: "9" },
+    { label: "10", value: "10" },
+    { label: "11", value: "11" },
+    { label: "12", value: "12" },
+    { label: "13", value: "13" },
+    { label: "14", value: "14" },
+    { label: "15", value: "15" },
 ];
 
 export function FloorMenu() {
@@ -49,7 +50,7 @@ export function FloorMenu() {
             buildingSelected();
         }, 100);
         return () => clearInterval(intervalId);
-    })
+    });
 
     return(
         <View>
@@ -66,6 +67,15 @@ export function FloorMenu() {
                 <SwitchSelector
                     style={styles.selector} 
                     options={jmsbFloors} 
+                    initial={0}
+                    buttonColor = {"#3ACCE1" }
+                    onPress={(value) => {setFloorNumber(value);}} 
+                />
+            }
+            {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" &&
+                <SwitchSelector
+                    style={styles.selector} 
+                    options={hallFloors} 
                     initial={0}
                     buttonColor = {"#3ACCE1" }
                     onPress={(value) => {setFloorNumber(value);}} 

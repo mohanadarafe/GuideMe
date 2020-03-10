@@ -3,7 +3,7 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { MoreDetails } from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
-import { Button } from 'react-native-paper';
+import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
 
 /**
@@ -50,8 +50,8 @@ function BottomMenu () {
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnleave}>
-                    <Button style={styles.btnleave} color={'#3ACCE1'} uppercase={false} mode="contained" onPress={() => {
-                        setGetInside(false)
+                    <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
+                        setGetInside(false);
                     }}>
                         <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Exit Building</Text>
                     </Button>
@@ -94,8 +94,8 @@ function BottomMenu () {
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btn}>
-                    <Button style={styles.btn} color={'#3ACCE1'} uppercase={false} mode="contained" onPress={() => {
-                        setGetInside(true)
+                    <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
+                        setGetInside(true);
                     }}>
                         <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Get Inside</Text>
                     </Button>
@@ -145,13 +145,13 @@ export const styles = StyleSheet.create({
         position: "absolute",
         left: "65%",
         top: "5.5%",
-        color: '#FFFFFF'
+        color: "#FFFFFF"
     },
     btnleave: {
         position: "absolute",
         left: "62%",
         top: "5.5%",
-        color: '#FFFFFF',
+        color: "#FFFFFF",
     },
     mainLabel: {
         position: "absolute",

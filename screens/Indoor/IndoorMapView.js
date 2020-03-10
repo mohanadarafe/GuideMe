@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { View, ScrollView, AsyncStorage } from "react-native";
-import { HallFloor8 } from "../../assets/floormaps/hall/HallFloor8";
 import { JMSBFloor1 } from "../../assets/floormaps/mb/JMSBFloor1";
 import { HallFloor9 } from "../../assets/floormaps/hall/HallFloor9";
 import { JMSBFloor2 } from "../../assets/floormaps/mb/JMSBFloor2";
@@ -25,7 +24,7 @@ function IndoorMapView() {
         const intervalId = setInterval(() => {
             buildingSelected();
             floorSelected();
-        }, 100);
+        }, 1);
         return () => clearInterval(intervalId);
     })
 
@@ -33,14 +32,11 @@ function IndoorMapView() {
         <View>
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >              
-                    {selectedBuilding === "Hall Building" && selectedFloor === "8" &&
-                        <HallFloor8 />
+                    {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
+                        <HallFloorX />
                     }
                     {selectedBuilding === "Hall Building" && selectedFloor === "9" &&
                         <HallFloor9 />
-                    }
-                    {selectedBuilding === "Hall Building" && selectedFloor !== "8" && selectedFloor !== "9" &&
-                        <HallFloorX />
                     }
                     {selectedBuilding === "JMSB" && selectedFloor === "1" &&
                         <JMSBFloor1 />
@@ -50,6 +46,9 @@ function IndoorMapView() {
                     }
                     {selectedBuilding === "JMSB" && selectedFloor !== "1" && selectedFloor !== "2" &&
                         <JMSBFloorX />
+                    }
+                    {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" &&
+                        <HallFloorX />
                     }
                 </ScrollView>
             </ScrollView>
