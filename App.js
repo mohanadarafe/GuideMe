@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Navigator from './routes/routeStack';
-import { AppLoading } from 'expo';
-import * as Font from 'expo-font';
+import React, { useState, useEffect } from "react";
+import Navigator from "./routes/routeStack";
+import { AppLoading } from "expo";
+import * as Font from "expo-font";
 
 const getFonts = () => {
   return Font.loadAsync({
-    'encodeSansExpanded': require('./assets/fonts/EncodeSansExpanded-Regular.ttf')
-  })
+    "encodeSansExpanded": require("./assets/fonts/EncodeSansExpanded-Regular.ttf")
+  });
 };
 
 //Navigator is an alias, we can give it any name we want, since it is a default export.
@@ -20,9 +20,9 @@ export default function App() {
         startAsync={getFonts}
         onFinish={()=> setIsReady(true)}
       />
-    )
+    );
   } else {
-    return <Navigator />
+    return <Navigator />;
   }
 
 }

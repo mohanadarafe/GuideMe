@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import React, { useEffect } from 'react';
-import { View, AsyncStorage, Text, StyleSheet, Image, Switch } from "react-native";
-import { Icon } from 'native-base';
-import { MoreDetails } from '../screens/MoreDetails';
-import { CurrentLocation } from '../components/CurrentLocation';
-=======
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { MoreDetails } from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
->>>>>>> 8cd39b316b77236f2cd22635ba00367a851dc871
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps

@@ -1,23 +1,14 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from 'react';
-import coord from '../constants/buildingCoordinates';
-import { isPointInPolygon } from 'geolib';
-import { AsyncStorage, StyleSheet } from 'react-native';
-import * as Location from 'expo-location';
-import Modal from "react-native-modal";
-import Icon from 'react-native-vector-icons/Entypo';
-
-import { View, Text, Button, TouchableOpacity } from 'react-native';
-
-
-=======
-/* eslint-disable no-undef */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import coord from "../constants/buildingCoordinates";
 import { isPointInPolygon } from "geolib";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, StyleSheet } from "react-native";
 import * as Location from "expo-location";
->>>>>>> 8cd39b316b77236f2cd22635ba00367a851dc871
+import Modal from "react-native-modal";
+import Icon from "react-native-vector-icons/Entypo";
+
+import { View, Text, Button, TouchableOpacity } from "react-native";
+
+
 
 /**
  * US5 - As a user, I would like to know which building I am currently in
@@ -27,24 +18,16 @@ import * as Location from "expo-location";
  * Note: call CurrentLocation() inside BottomMenu.js
  */
 function CurrentLocation () {
-<<<<<<< HEAD
-    const [currentBuilding, setcurrentBuilding] = React.useState("")
-    const [lastLat, setlastLat] = React.useState(0)
-    const [lastLong, setlastLong] = React.useState(0)
-    const [altitude, setAltitude] = React.useState("0")
-    const [modalVisibility, setModalVisibility] = React.useState(false)
-=======
     const [currentBuilding, setcurrentBuilding] = React.useState("");
     const [lastLat, setlastLat] = React.useState(0);
     const [lastLong, setlastLong] = React.useState(0);
     const [altitude, setAltitude] = React.useState("0");
-
->>>>>>> 8cd39b316b77236f2cd22635ba00367a851dc871
+    const [modalVisibility, setModalVisibility] = React.useState(false);
 
     // These are not the real values. We must measure these values real time...
-    let baseAltitude = 35;
-    let floorHeight = 5;
-    let currentFloor = 0;
+    // let baseAltitude = 35;
+    // let floorHeight = 5;
+    // let currentFloor = 0;
 
     const _getLocationAsync = async () => {
         let location = await Location.getCurrentPositionAsync({/*insert acuracy*/ });
@@ -123,8 +106,8 @@ function CurrentLocation () {
     });
 
     //Compute the floor level
-    currentFloor = (altitude - baseAltitude) / floorHeight;
-    roundedCurrentFloor = "Floor level: " + (Math.round(currentFloor * 100) / 100).toFixed(0);
+    // currentFloor = (altitude - baseAltitude) / floorHeight;
+    // roundedCurrentFloor = "Floor level: " + (Math.round(currentFloor * 100) / 100).toFixed(0);
 
 
     if (currentBuilding === "") {
@@ -148,8 +131,8 @@ function CurrentLocation () {
         </TouchableOpacity>
         <Modal isVisible={modalVisibility}>
             <View style={styles.modal}>
-                <Text style={styles.modalText}>{currentBuilding}</Text>
-                <Text style={styles.modalText}>{roundedCurrentFloor}</Text>
+                <Text style={styles.modalText}>{/*currentBuilding*/}H building</Text>
+                <Text style={styles.modalText}>{/*roundedCurrentFloor*/}2nd floor</Text>
                 <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
             </View>
         </Modal>
@@ -167,8 +150,8 @@ export const styles = StyleSheet.create({
         flexDirection: "column"
     },
     icon: {
-        alignSelf: 'flex-end',
-        position: 'absolute',
+        alignSelf: "flex-end",
+        position: "absolute",
         right: 20,
         bottom: 95
     },

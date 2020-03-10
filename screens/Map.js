@@ -1,23 +1,12 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, AsyncStorage } from 'react-native';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-import { BuildingHighlight } from '../components/BuildingHighlight';
-import { BuildingIdentification } from '../components/BuildingIdentification';
-import { BottomMenu } from '../components/BottomMenu';
-import { CurrentLocation } from '../components/CurrentLocation';
-import { View } from 'native-base';
-import { Search } from '../components/Search';
-=======
-import React, {  useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
+import { CurrentLocation } from "../components/CurrentLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
->>>>>>> 8cd39b316b77236f2cd22635ba00367a851dc871
 
 const mapPosition = {
     sgwCoord: {
