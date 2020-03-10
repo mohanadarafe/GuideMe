@@ -131,7 +131,7 @@ function CurrentLocation () {
         </TouchableOpacity>
         <Modal isVisible={modalVisibility}>
             <View style={styles.modal}>
-                <Text style={styles.modalText}>{/*currentBuilding*/}H building</Text>
+                <Text style={styles.modalText}>{currentBuilding}</Text>
                 <Text style={styles.modalText}>{/*roundedCurrentFloor*/}2nd floor</Text>
                 <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
             </View>
