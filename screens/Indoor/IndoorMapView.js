@@ -10,20 +10,20 @@ function IndoorMapView() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [selectedFloor, setSelectedFloor] = React.useState("");
 
-    const buildingSelected = async () => {
+    const getBuildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
         setSelectedBuilding(name);
     };
 
-    const floorSelected = async () => {
+    const getFloorSelected = async () => {
         let name = await AsyncStorage.getItem("floorSelected");
         setSelectedFloor(name);
     };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            buildingSelected();
-            floorSelected();
+            getBuildingSelected();
+            getFloorSelected();
         }, 1);
         return () => clearInterval(intervalId);
     })

@@ -1,25 +1,25 @@
-import React, {useEffect, useState} from "react"
+import React, { useEffect, useState } from "react"
 import { AsyncStorage } from "react-native";
 import Svg, { G, Path, Text, Rect, Use, Symbol, Defs } from "react-native-svg"
 import { HallClass } from "./HallClassrooms/HallClass";
 
 export function HallFloorX() {
-    const [floorNumber, setFloorNumber] = React.useState("");
+  const [floorNumber, setFloorNumber] = React.useState("");
 
-    const floorSelected = async () => {
-        let name = await AsyncStorage.getItem("floorSelected");
-        setFloorNumber(name);
-    };
+  const floorSelected = async () => {
+    let name = await AsyncStorage.getItem("floorSelected");
+    setFloorNumber(name);
+  };
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            floorSelected();
-        }, 100);
-        return () => clearInterval(intervalId);
-    })
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      floorSelected();
+    }, 100);
+    return () => clearInterval(intervalId);
+  })
 
-    return(
-      <Svg width={1024} height={1024}>
+  return (
+    <Svg width={1024} height={1024}>
       <Defs>
         <Symbol viewBox="0 0 515 400" id="prefix__a">
           <Path d="M218.2 69.69c18.75 0 33.92-15.17 33.9-33.9.02-18.7-15.15-33.88-33.9-33.9-18.68.03-33.85 15.2-33.9 33.9.05 18.73 15.22 33.9 33.9 33.9" />
@@ -163,7 +163,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={475.019}
           y={310}
-          fontSize={16}
+          fontSize={14}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.75495 0 0 .74496 106.933 54.812)"
           stroke="#000"
@@ -180,7 +180,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={75.19}
           y={768.26}
-          fontSize={10}
+          fontSize={9}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(1.05592 0 0 1.04792 28.615 -35.532)"
           stroke="#000"
@@ -189,7 +189,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={910.8}
           x={176}
           strokeWidth={0}
@@ -199,7 +199,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={911.8}
           x={60}
           strokeWidth={0}
@@ -209,7 +209,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={912.8}
           x={266}
           strokeWidth={0}
@@ -219,7 +219,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={912.8}
           x={357}
           strokeWidth={0}
@@ -229,7 +229,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={912.8}
           x={452}
           strokeWidth={0}
@@ -239,7 +239,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={913.8}
           x={625}
           strokeWidth={0}
@@ -249,7 +249,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={914.8}
           x={717}
           strokeWidth={0}
@@ -259,7 +259,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={914.8}
           x={811}
           strokeWidth={0}
@@ -269,7 +269,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={915.8}
           x={929}
           strokeWidth={0}
@@ -279,7 +279,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={789.8}
           x={929}
           strokeWidth={0}
@@ -289,7 +289,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={701.8}
           x={928}
           strokeWidth={0}
@@ -299,7 +299,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={607.8}
           x={929}
           strokeWidth={0}
@@ -309,7 +309,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={513.8}
           x={929}
           strokeWidth={0}
@@ -319,7 +319,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={425.8}
           x={927}
           strokeWidth={0}
@@ -329,7 +329,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={333.8}
           x={927}
           strokeWidth={0}
@@ -339,7 +339,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={243.8}
           x={927}
           strokeWidth={0}
@@ -349,7 +349,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={127.8}
           x={926}
           strokeWidth={0}
@@ -359,7 +359,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={129.8}
           x={808}
           strokeWidth={0}
@@ -369,7 +369,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={128.8}
           x={718}
           strokeWidth={0}
@@ -379,7 +379,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={127.8}
           x={631}
           strokeWidth={0}
@@ -389,7 +389,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={129.8}
           x={451}
           strokeWidth={0}
@@ -399,7 +399,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={88.8}
           x={351}
           strokeWidth={0}
@@ -409,7 +409,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={134.8}
           x={360}
           strokeWidth={0}
@@ -419,7 +419,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={176.8}
           x={360}
           strokeWidth={0}
@@ -429,7 +429,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={129.8}
           x={271}
           strokeWidth={0}
@@ -439,7 +439,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={129.8}
           x={179}
           strokeWidth={0}
@@ -449,7 +449,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={112.8}
           x={59}
           strokeWidth={0}
@@ -459,7 +459,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={180.8}
           x={45}
           strokeWidth={0}
@@ -469,7 +469,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={247.8}
           x={59}
           strokeWidth={0}
@@ -479,7 +479,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={335.8}
           x={60}
           strokeWidth={0}
@@ -489,7 +489,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={427.8}
           x={59}
           strokeWidth={0}
@@ -499,7 +499,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={517.8}
           x={58}
           strokeWidth={0}
@@ -509,7 +509,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={608.8}
           x={56}
           strokeWidth={0}
@@ -519,7 +519,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={697.8}
           x={57}
           strokeWidth={0}
@@ -529,7 +529,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={765.8}
           x={26}
           strokeWidth={0}
@@ -539,7 +539,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={813.8}
           x={17}
           strokeWidth={0}
@@ -549,7 +549,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={623.8}
           x={616}
           strokeWidth={0}
@@ -559,7 +559,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={623.8}
           x={737}
           strokeWidth={0}
@@ -569,7 +569,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={475.8}
           x={675}
           strokeWidth={0}
@@ -579,7 +579,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={370.8}
           x={762}
           strokeWidth={0}
@@ -600,7 +600,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={419.171}
           y={732.235}
-          fontSize={24}
+          fontSize={20}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.64465 0 0 .60714 90.78 176.393)"
           stroke="#000"
@@ -611,7 +611,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={250.088}
           y={709.176}
-          fontSize={24}
+          fontSize={20}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.64465 0 0 .60714 90.78 176.393)"
           stroke="#000"
@@ -622,7 +622,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={223.717}
           y={808}
-          fontSize={24}
+          fontSize={18}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.64465 0 0 .60714 90.78 176.393)"
           stroke="#000"
@@ -633,7 +633,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={315.239}
           y={814.588}
-          fontSize={24}
+          fontSize={18}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.64465 0 0 .60714 90.78 176.393)"
           stroke="#000"
@@ -644,7 +644,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={515.347}
           y={728.941}
-          fontSize={24}
+          fontSize={14}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.64465 0 0 .60714 90.78 176.393)"
           stroke="#000"
@@ -655,7 +655,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={392.801}
           y={962.824}
-          fontSize={24}
+          fontSize={14}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.64465 0 0 .60714 90.78 176.393)"
           stroke="#000"
@@ -696,7 +696,7 @@ export function HallFloorX() {
         />
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={10}
+          fontSize={9}
           y={730.321}
           x={654.043}
           strokeWidth={0}
@@ -736,7 +736,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={741.191}
           x={453.305}
           strokeWidth={0}
@@ -758,7 +758,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={475.019}
           y={310}
-          fontSize={16}
+          fontSize={14}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.75495 0 0 .74496 104.933 89.812)"
           stroke="#000"
@@ -769,7 +769,7 @@ export function HallFloorX() {
           strokeWidth={0}
           x={475.019}
           y={310}
-          fontSize={16}
+          fontSize={14}
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
           transform="matrix(.75495 0 0 .74496 105.933 128.812)"
           stroke="#000"
@@ -778,7 +778,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={16}
+          fontSize={14}
           y={497.8}
           x={357}
           strokeWidth={0}
@@ -788,7 +788,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={12}
+          fontSize={11}
           y={453.8}
           x={217}
           strokeWidth={0}
@@ -798,7 +798,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={12}
+          fontSize={11}
           y={495.8}
           x={215}
           strokeWidth={0}
@@ -818,7 +818,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={12}
+          fontSize={10}
           y={541.8}
           x={283}
           strokeWidth={0}
@@ -828,7 +828,7 @@ export function HallFloorX() {
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
-          fontSize={12}
+          fontSize={10}
           y={474.8}
           x={284}
           strokeWidth={0}
@@ -870,5 +870,5 @@ export function HallFloorX() {
       </G>
       <HallClass floor={8} />
     </Svg>
-    );
+  );
 }

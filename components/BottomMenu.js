@@ -22,14 +22,14 @@ function BottomMenu () {
     AsyncStorage.setItem("toggle", switchVal.toString());
     AsyncStorage.setItem("getInsideBuilding", getInside.toString());
 
-    const buildingSelected = async () => {
+    const getBuildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
         setSelectedBuilding(name);
     };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            buildingSelected();
+            getBuildingSelected();
         }, 100);
         return () => clearInterval(intervalId);
     });
@@ -53,7 +53,7 @@ function BottomMenu () {
                     <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
                         setGetInside(false);
                     }}>
-                        <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Exit Building</Text>
+                        <Text style={styles.btnText}>Exit Building</Text>
                     </Button>
                 </View>
                 <View style={styles.changeFloor}>
@@ -97,7 +97,7 @@ function BottomMenu () {
                     <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
                         setGetInside(true);
                     }}>
-                        <Text style={{color:"#FFFFFF", fontFamily: "encodeSansExpanded"}}>Get Inside</Text>
+                        <Text style={styles.btnText}>Get Inside</Text>
                     </Button>
                 </View>
             </View>
@@ -152,6 +152,10 @@ export const styles = StyleSheet.create({
         left: "62%",
         top: "5.5%",
         color: "#FFFFFF",
+    },
+    btnText: {
+        color:"#FFFFFF", 
+        fontFamily: "encodeSansExpanded"
     },
     mainLabel: {
         position: "absolute",

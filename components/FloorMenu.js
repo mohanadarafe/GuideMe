@@ -40,14 +40,14 @@ export function FloorMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     AsyncStorage.setItem("floorSelected", floorNumber);
 
-    const buildingSelected = async () => {
+    const getSelectedBuilding = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
         setSelectedBuilding(name);
     };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            buildingSelected();
+            getSelectedBuilding();
         }, 100);
         return () => clearInterval(intervalId);
     });
