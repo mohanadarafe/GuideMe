@@ -52,6 +52,24 @@ function BottomMenu () {
         );
     }
 
+
+    if (iconSelected && !selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
+            </View>
+        );
+    }
+
+    if (getDirection) {
+        return (
+            <View style={styles.moreDetails}>
+                <PreferenceMenu />
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false); }} />
+            </View>
+        );
+    }
+
     if (getInside) {
         return (
             <View style={styles.insideBuildingContainer}>
@@ -72,40 +90,7 @@ function BottomMenu () {
         );
     }
 
-    else if (getDirection) {
-        return (
-            <View style={styles.moreDetails}>
-                <PreferenceMenu />
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false); }} />
-            </View>
-        );
-    }
-
-    else if (iconSelected && !selectedBuilding) {
-        return (
-            <View style={styles.moreDetails}>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
-
-    else if (!selectedBuilding) {
-        return (
-            <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>Nearby</Text>
-                <Text style={styles.shortLabel}>Food, drinks & more</Text>
-                <View style={styles.toggle}>
-                    <Switch
-                        value={switchVal}
-                        onValueChange={(val) => setSwitchVal(val)}>
-                    </Switch>
-                </View>
-            </View>
-        );
-    }
-
-    else {
+    if (selectedBuilding && selectedBuilding != "null") {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
@@ -121,6 +106,38 @@ function BottomMenu () {
             </View>
         );
     }
+
+    else if (destination != "null") {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>{destination}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btnGetDirection}>
+                    <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => { setgetDirection(true); }}>
+                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+
+    else {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>Nearby</Text>
+                <Text style={styles.shortLabel}>Food, drinks & more</Text>
+                <View style={styles.toggle}>
+                    <Switch
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
+                    </Switch>
+                </View>
+            </View>
+        );
+    }
+
 }
 
 export const styles = StyleSheet.create({
@@ -164,6 +181,14 @@ export const styles = StyleSheet.create({
         top: "5.5%",
         color: "#FFFFFF"
     },
+
+    btnGetDirection: {
+        position: "absolute",
+        left: "60%",
+        top: "5.5%",
+        color: "#FFFFFF"
+    },
+
     btnleave: {
         position: "absolute",
         left: "62%",
