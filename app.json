@@ -24,7 +24,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.minicapstone.guideme"
+    },
+    "android": {
+      "package": "com.minicapstone.guideme"
     }
   }
 }
