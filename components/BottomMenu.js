@@ -5,17 +5,21 @@ import { MoreDetails } from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
+import { PreferenceMenu } from "../components/PreferenceMenu";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-function BottomMenu () {
+function BottomMenu() {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [getInside, setGetInside] = React.useState(false);
+    const [destination, setDestination] = React.useState("");
+    const [getDirection, setgetDirection] = React.useState(false);
+
 
     CurrentLocation();
 
@@ -27,9 +31,17 @@ function BottomMenu () {
         setSelectedBuilding(name);
     };
 
+    const searchItemSelected = async () => {
+        let searchItem = await AsyncStorage.getItem("destination");
+        setDestination(searchItem);
+    };
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
+            searchItemSelected();
+            
+
         }, 100);
         return () => clearInterval(intervalId);
     });
@@ -44,7 +56,7 @@ function BottomMenu () {
     }
 
     if (getInside) {
-        return(
+        return (
             <View style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
@@ -61,6 +73,15 @@ function BottomMenu () {
                 </View>
             </View>
         );
+    }
+
+    else if(getDirection){
+        return(
+            <View style={styles.moreDetails}>
+                 <PreferenceMenu/>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false);}} />
+                </View>
+        )
     }
 
     else if (iconSelected && !selectedBuilding) {
@@ -154,7 +175,7 @@ export const styles = StyleSheet.create({
         color: "#FFFFFF",
     },
     btnText: {
-        color:"#FFFFFF", 
+        color: "#FFFFFF",
         fontFamily: "encodeSansExpanded"
     },
     mainLabel: {
