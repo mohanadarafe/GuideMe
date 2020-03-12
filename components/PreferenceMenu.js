@@ -5,6 +5,7 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
+import { MoreDetails } from "../screens/MoreDetails";
 
 
 function fetchData() {
@@ -14,16 +15,18 @@ function fetchData() {
 
 function PreferenceMenu() {
 
-    // const [destination, setDestination] = React.useState("");
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
+    const [selectedBuilding, setSelectedBuilding] = React.useState("");
+    const [backArrow, setBackArrow] = React.useState(false);
+
     // const [userType, setUserType] = React.useState("");
     // const [mobilityReduced, setMobilityReduced] = React.useState(false);
     // const [travelType, setTravelType] = React.useState(false);
 
     const fromLocationSelected = async () => {
-        let dest = await AsyncStorage.getItem("from");
+        let dest = await AsyncStorage.getItem("destination");
         setFrom(dest);
     };
 
@@ -32,16 +35,28 @@ function PreferenceMenu() {
         setTo(dest);
     };
 
+    const getBuildingSelected = async () => {
+        let name = await AsyncStorage.getItem("buildingSelected");
+        setSelectedBuilding(name);
+    };
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             setData(fetchData());
             fromLocationSelected();
             toLocationSelected();
+            getBuildingSelected();
         }, 1);
         return () => clearInterval(intervalId);
     });
 
-
+    if (backArrow) {
+        return (
+            <View style={styles.moreDetails}>
+                <MoreDetails name={selectedBuilding} />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container} >
@@ -110,8 +125,6 @@ function PreferenceMenu() {
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
-
-
             <View style={styles.containerOfButtons3}>
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
@@ -123,29 +136,21 @@ function PreferenceMenu() {
 
                     <Text style={styles.buttonLabel}>Car</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
-
                     <Icon name="md-walk" style={styles.icon}></Icon>
-
                     <Text style={styles.buttonLabel}>Walking</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
-
                     <Icon name="md-bus" style={styles.icon}></Icon>
-
                     <Text style={styles.buttonLabel}>Bus</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
                     <Icon name="ios-bus" style={styles.icon}></Icon>
                     <Text style={styles.buttonLabel}>Shuttle Bus</Text>
                 </Button>
             </View>
-
             <View style={styles.backArrowContainer}>
-                <Button transparent style={styles.backArrow}>
+                <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>
@@ -154,7 +159,6 @@ function PreferenceMenu() {
 }
 
 export const styles = StyleSheet.create({
-
     container: {
         alignItems: "center",
         //justifyContent: "space-between",
@@ -190,7 +194,6 @@ export const styles = StyleSheet.create({
         margin: "2%",
         top: "25%",
     },
-
     buttonLabel: {
         position: "absolute",
         color: "#FFFFFF",
@@ -234,7 +237,6 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         bottom: "27.5%"
-
     },
     containerOfButtons3: {
         position: "absolute",
@@ -265,7 +267,6 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         bottom: "-10%"
     },
-
     searchbarContainer: {
         position: "absolute",
         backgroundColor: "#5ac18e",
@@ -276,9 +277,7 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "16%"
-
     },
-
     textInputStyle: {
         padding: 12,
         borderWidth: 1,
@@ -288,7 +287,6 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded"
     },
     test: {
-
         width: "90%"
     },
     itemStyle: {
@@ -306,7 +304,6 @@ export const styles = StyleSheet.create({
     itemsContainerStyle: {
         maxHeight: "60%",
     },
-
     backArrow: {
         height: "100%",
         width: "100%",
@@ -329,7 +326,15 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "10%"
-    }
+    },
+    moreDetails: {
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        backgroundColor: "#2A2E43",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
 });
 
 export { PreferenceMenu };

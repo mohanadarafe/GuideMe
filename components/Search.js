@@ -30,17 +30,17 @@ function Search () {
 
   let destinationName = destination.name;
 
-  if(destinationName === undefined){
+  if (destinationName === undefined) {
     destinationName = "null";
     AsyncStorage.setItem("destination", destinationName.toString());
     AsyncStorage.setItem("buildingSelected", buildingName.toString());
   }
-   else{
-     AsyncStorage.setItem("destination", destinationName.toString());
-     AsyncStorage.setItem("buildingSelected", buildingName.toString());
+  else {
+    AsyncStorage.setItem("destination", destinationName.toString());
+    AsyncStorage.setItem("buildingSelected", buildingName.toString());
   }
 
-  function destinationSetter(destination){
+  function destinationSetter (destination) {
     // resets the value of the buildingName label when on pressing on a searched item
     setBuildingName("null");
     setDestination(destination);

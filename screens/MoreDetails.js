@@ -83,6 +83,8 @@ function MoreDetails (props) {
 
     const [data, setData] = React.useState();
     const [getDirection, setGetDirection] = React.useState(false);
+    const [destination, setDestination] = React.useState("");
+
 
     const getBuildingInfo = buildingData();
     var departments = [];

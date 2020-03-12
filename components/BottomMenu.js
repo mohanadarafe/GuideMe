@@ -59,7 +59,6 @@ function BottomMenu () {
             </View>
         );
     }
-
     if (iconSelected && !selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
