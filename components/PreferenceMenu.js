@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView, ScrollView, TouchableOpacity,AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "./MapData";
@@ -9,51 +9,47 @@ import { buildingData } from "../constants/buildingData";
 
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
-    return searchInfo
+    return searchInfo;
 }
 
-function PreferenceMenu() {
+function PreferenceMenu () {
 
-    const [destination, setDestination] = React.useState("");
+    // const [destination, setDestination] = React.useState("");
     const [data, setData] = React.useState();
-    // from
-    // personna
-    // mobilityreduced
-    // method of travel (travelType)
+    const [to, setTo] = React.useState("");
+    const [from, setFrom] = React.useState("");
 
-    const destinationSelected = async () => {
-        let dest = await AsyncStorage.getItem("destination");
-        setDestination(dest);
+    // const [userType, setUserType] = React.useState("")
+    // const [mobilityReduced, setMobilityReduced] = React.useState("")
+    // const [travelType, setTravelType] = React.useState("")
+
+    const fromLocationSelected = async () => {
+        let dest = await AsyncStorage.getItem("from");
+        setFrom(dest);
     };
 
-        
-        // useEffect(() => {   
-        //     setData(fetchData());
+    const toLocationSelected = async () => {
+        let dest = await AsyncStorage.getItem("to");
+        setTo(dest);
+    };
 
-        //   }, []);
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setData(fetchData());
+            fromLocationSelected();
+            toLocationSelected();
+        }, 1);
+        return () => clearInterval(intervalId);
+    });
 
-        useEffect(() => {
-            const intervalId = setInterval(() => {
-                
-              destinationSelected();
-            }, 1);
-    
-            return () => clearInterval(intervalId);
-        });
-
-          console.log(destination);
+    console.log(to);
 
     return (
-
-
         <View style={styles.container} >
-
-
-
             <View style={styles.searchbarContainer}>
                 <SearchableDropdown
                     onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setDestination(item)}
+                    onItemSelect={item => setFrom(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
                     containerStyle={styles.test}
@@ -66,25 +62,19 @@ function PreferenceMenu() {
 
                 <SearchableDropdown
                     onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setDestination(item)}
+                    onItemSelect={item => setTo(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
                     containerStyle={styles.test}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
                     items={data}
-                    
-                    placeholder={"To: "+destination}
+
+                    placeholder={"To: " + to}
                     resetValue={false}
                 />
-
-
             </View>
-
-
             <Text style={styles.mainLabel}>Preferences</Text>
-
-
             <View style={styles.containerOfButtons1}>
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>I am: </Text>
@@ -148,34 +138,18 @@ function PreferenceMenu() {
                 </Button>
 
                 <Button transparent style={styles.buttonContainer}>
-
                     <Icon name="ios-bus" style={styles.icon}></Icon>
-
                     <Text style={styles.buttonLabel}>Shuttle Bus</Text>
                 </Button>
-
             </View>
-
-            {/* <View style={styles.textContainer}>
-                <View style={styles.labelContainer}>
-                    <Text style={styles.shortLabel}>Method of Travel: </Text>
-                </View>
-                <Text>
-                </Text>
-            </View> */}
-
 
             <View style={styles.backArrowContainer}>
                 <Button transparent style={styles.backArrow}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>
-
         </View>
     );
-
-
-
 }
 
 export const styles = StyleSheet.create({
@@ -187,7 +161,6 @@ export const styles = StyleSheet.create({
         width: "100%",
         flex: 1
     },
-
     mainLabel: {
         color: "#FFFFFF",
         position: "absolute",
@@ -196,7 +169,6 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         top: "36%"
     },
-
     shortLabel: {
         position: "absolute",
         color: "#FFFFFF",
@@ -206,8 +178,6 @@ export const styles = StyleSheet.create({
         opacity: 0.3,
         backgroundColor: "#326060"
     },
-
-
     buttonContainer: {
         height: 80,
         width: 80,
@@ -235,8 +205,6 @@ export const styles = StyleSheet.create({
         left: "5%"
 
     },
-
-
     containerOfButtons1: {
         position: "absolute",
         backgroundColor: "#ffc0cb",
@@ -265,21 +233,18 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         bottom: "10%"
-
     },
-
     scrollView: {
         backgroundColor: "#326060",
         marginHorizontal: 20,
         height: "50%",
     },
-
     icon: {
         position: "absolute",
         color: "#FFFFFF",
-        alignSelf: "center"
+        alignSelf: "center",
+        fontSize: 20
     },
-
     textContainer: {
         position: "absolute",
         backgroundColor: "#ffc0cb",
@@ -300,7 +265,7 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "16%"
-        
+
     },
 
     textInputStyle: {
@@ -343,8 +308,7 @@ export const styles = StyleSheet.create({
         // top: "15%",
         left: "10%"
     },
-
-    backArrowContainer:{
+    backArrowContainer: {
         position: "absolute",
         backgroundColor: "#ffa500",
         width: "100%",
@@ -355,8 +319,6 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         top: "10%"
     }
-
-})
-
+});
 
 export { PreferenceMenu };
