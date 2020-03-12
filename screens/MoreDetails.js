@@ -82,7 +82,7 @@ function createLists (data, departments, services, accesibility, number) {
 function MoreDetails (props) {
 
     const [data, setData] = React.useState();
-    const [getDirections, setGetDirections] = React.useState(false);
+    const [getDirection, setGetDirection] = React.useState(false);
 
     const getBuildingInfo = buildingData();
     var departments = [];
@@ -96,14 +96,13 @@ function MoreDetails (props) {
 
     createLists(data, departments, services, accesibility, number);
 
-    if (getDirections) {
+    if (getDirection) {
         return (
             <View style={styles.PreferenceMenu}>
                 <PreferenceMenu />
             </View>
         );
     }
-
     if (data) {
         return (
             <View style={styles.container} data-test="MoreDetailsComponent">
@@ -129,7 +128,7 @@ function MoreDetails (props) {
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton} onPress={() => { setGetDirections(true); }}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton} onPress={() => { setGetDirection(true); }}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>

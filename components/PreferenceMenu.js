@@ -18,10 +18,9 @@ function PreferenceMenu () {
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
-
-    // const [userType, setUserType] = React.useState("")
-    // const [mobilityReduced, setMobilityReduced] = React.useState("")
-    // const [travelType, setTravelType] = React.useState("")
+    // const [userType, setUserType] = React.useState("");
+    // const [mobilityReduced, setMobilityReduced] = React.useState(false);
+    // const [travelType, setTravelType] = React.useState(false);
 
     const fromLocationSelected = async () => {
         let dest = await AsyncStorage.getItem("from");
@@ -42,7 +41,7 @@ function PreferenceMenu () {
         return () => clearInterval(intervalId);
     });
 
-    console.log(to);
+    // console.log(to);
 
     return (
         <View style={styles.container} >
@@ -102,11 +101,11 @@ function PreferenceMenu () {
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
                 </View>
                 <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>Yes</Text>
+                    <Text style={styles.buttonLabelMobility}>Yes</Text>
                 </Button>
 
                 <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>No</Text>
+                    <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
 
@@ -187,23 +186,32 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         margin: "2%",
-        top: "25%"
+        top: "25%",
     },
 
     buttonLabel: {
         position: "absolute",
         color: "#FFFFFF",
-        fontSize: 12,
+        fontSize: 10,
         fontFamily: "encodeSansExpanded",
         width: "100%",
         alignContent: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        textAlign: "center"
     },
-
+    buttonLabelMobility: {
+        position: "absolute",
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontFamily: "encodeSansExpanded",
+        width: "100%",
+        alignContent: "center",
+        justifyContent: "center",
+        textAlign: "center"
+    },
     labelContainer: {
         position: "absolute",
         left: "5%"
-
     },
     containerOfButtons1: {
         position: "absolute",
@@ -243,7 +251,7 @@ export const styles = StyleSheet.create({
         position: "absolute",
         color: "#FFFFFF",
         alignSelf: "center",
-        fontSize: 20
+        fontSize: 35
     },
     textContainer: {
         position: "absolute",
