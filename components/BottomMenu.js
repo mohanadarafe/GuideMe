@@ -7,6 +7,7 @@ import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
 import { PreferenceMenu } from "../components/PreferenceMenu";
 
+
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
@@ -19,6 +20,7 @@ function BottomMenu () {
     const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
     const [getDirection, setgetDirection] = React.useState(false);
+    const [mapPressed, setmapPressed] = React.useState("");
 
     CurrentLocation();
 
@@ -35,10 +37,16 @@ function BottomMenu () {
         setDestination(searchItem);
     };
 
+    const pressingOnMap = async () => {
+        let pressed = await AsyncStorage.getItem("mapPressed");
+        setmapPressed(pressed);
+    };
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
             searchItemSelected();
+            pressingOnMap();
         }, 100);
         return () => clearInterval(intervalId);
     });
@@ -51,7 +59,6 @@ function BottomMenu () {
             </View>
         );
     }
-
 
     if (iconSelected && !selectedBuilding) {
         return (
@@ -123,7 +130,7 @@ function BottomMenu () {
     }
 
     else {
-        return (
+        return  (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>Nearby</Text>

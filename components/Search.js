@@ -26,6 +26,7 @@ function Search () {
   const [destination, setDestination] = React.useState("");
   const [buildingName, setBuildingName] = React.useState("");
   const [data, setData] = React.useState();
+ 
 
   let destinationName = destination.name;
 
@@ -45,10 +46,14 @@ function Search () {
     setDestination(destination);
   }
 
+  
+
 
   useEffect(() => {
     setData(fetchData());
   }, []);
+
+  
 
   return (
 
