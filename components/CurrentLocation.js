@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import coord from "../constants/buildingCoordinates";
 import { isPointInPolygon } from "geolib";
-import { AsyncStorage, StyleSheet } from "react-native";
+import { AsyncStorage, StyleSheet, View, Text, Button, TouchableOpacity  } from "react-native";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Entypo";
-
-import { View, Text, Button, TouchableOpacity } from "react-native";
 
 
 
@@ -18,7 +16,7 @@ import { View, Text, Button, TouchableOpacity } from "react-native";
  * Note: call CurrentLocation() inside BottomMenu.js
  */
 function CurrentLocation () {
-    const [currentBuilding, setcurrentBuilding] = React.useState("");
+    const [currentBuilding, setCurrentBuilding] = React.useState("");
     const [lastLat, setlastLat] = React.useState(0);
     const [lastLong, setlastLong] = React.useState(0);
     const [altitude, setAltitude] = React.useState("0");
@@ -53,7 +51,7 @@ function CurrentLocation () {
                 { latitude: coord.gn.coordinates[3].latitude, longitude: coord.gn.coordinates[3].longitude },
                 { latitude: coord.gn.coordinates[4].latitude, longitude: coord.gn.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.gn.name);
+                setCurrentBuilding(coord.gn.name);
 
 
             }
@@ -65,7 +63,7 @@ function CurrentLocation () {
                 { latitude: coord.h.coordinates[3].latitude, longitude: coord.h.coordinates[3].longitude },
                 { latitude: coord.h.coordinates[4].latitude, longitude: coord.h.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.h.name);
+                setCurrentBuilding(coord.h.name);
 
             }
 
@@ -76,7 +74,7 @@ function CurrentLocation () {
                 { latitude: coord.mb.coordinates[3].latitude, longitude: coord.mb.coordinates[3].longitude },
                 { latitude: coord.mb.coordinates[4].latitude, longitude: coord.mb.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.mb.name);
+                setCurrentBuilding(coord.mb.name);
 
             }
 
@@ -87,7 +85,7 @@ function CurrentLocation () {
                 { latitude: coord.ev.coordinates[3].latitude, longitude: coord.ev.coordinates[3].longitude },
                 { latitude: coord.ev.coordinates[4].latitude, longitude: coord.ev.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.ev.name);
+                setCurrentBuilding(coord.ev.name);
 
             }
 
@@ -98,7 +96,7 @@ function CurrentLocation () {
                 { latitude: coord.lb.coordinates[3].latitude, longitude: coord.lb.coordinates[3].longitude },
                 { latitude: coord.lb.coordinates[4].latitude, longitude: coord.lb.coordinates[4].longitude }])) {
 
-                setcurrentBuilding(coord.lb.name);
+                setCurrentBuilding(coord.lb.name);
 
             }
         }, 1000);
@@ -110,35 +108,26 @@ function CurrentLocation () {
     // roundedCurrentFloor = "Floor level: " + (Math.round(currentFloor * 100) / 100).toFixed(0);
 
 
-    if (currentBuilding === "") {
-        return (
-        <View style={styles.view}>
-        <Icon style={styles.icon} name='location' size="30"  color="#2A2E43" onPress={() => setModalVisibility(true)}/>
-        <Modal isVisible={modalVisibility}>
-            <View style={styles.modal}>
-                <Text style={styles.modalText}>Please try again in a Concordia building</Text>
-                <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
-            </View>
-        </Modal>
-        </View>
-        );
-    }
-    else{
     return (
-        <View style={styles.view}>
-        <TouchableOpacity>
-        <Icon style={styles.icon} name='location' size="30"  color="#2A2E43" onPress={() => setModalVisibility(true)}/>
-        </TouchableOpacity>
-        <Modal isVisible={modalVisibility}>
-            <View style={styles.modal}>
-                <Text style={styles.modalText}>{currentBuilding}</Text>
-                <Text style={styles.modalText}>{/*roundedCurrentFloor*/}2nd floor</Text>
-                <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+            <View style={styles.view}>
+             <Icon style={styles.icon} name='location' size="30"  color="#2A2E43" onPress={() => setModalVisibility(true)}/>
+                 <Modal isVisible={modalVisibility}>
+                    {currentBuilding === "" &&
+                       <View style={styles.modal}>
+                         <Text style={styles.modalText}>You have to be in a concordia building to use this feature</Text>
+                         <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+                       </View>
+                    }
+                    {currentBuilding !== "" &&
+                        <View style={styles.modal}>
+                            <Text style={styles.modalText}>{currentBuilding}</Text>
+                            <Text style={styles.modalText}>{/*roundedCurrentFloor*/}2nd floor</Text>
+                            <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+                        </View>
+                    }
+                </Modal>
             </View>
-        </Modal>
-        </View>
-    );
-}
+            );
 }
 
 
