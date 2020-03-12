@@ -75,23 +75,26 @@ function PreferenceMenu (props) {
                     containerStyle={styles.test}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"#000"}
                     items={data}
-                    placeholder="From:"
+                    placeholder="Current Location"
                     resetValue={false}
                 />
 
                 <SearchableDropdown
                     onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setTo(item)}
+                    onItemSelect={item => setFrom(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
                     containerStyle={styles.test}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"#000"}
                     items={data}
-                    placeholder={"To: " + to}
+                    placeholder={to}
                     resetValue={false}
                 />
+
             </View>
             <Text style={styles.mainLabel}>Preferences</Text>
             <View style={styles.containerOfButtons1}>
@@ -102,7 +105,7 @@ function PreferenceMenu (props) {
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
                 <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>Undergraduate Student</Text>
+                    <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabel}>Visitor Student</Text>
@@ -196,7 +199,8 @@ export const styles = StyleSheet.create({
         width: "100%",
         alignContent: "center",
         justifyContent: "center",
-        textAlign: "center"
+        textAlign: "center",
+        paddingHorizontal: 10
     },
     buttonLabelMobility: {
         position: "absolute",

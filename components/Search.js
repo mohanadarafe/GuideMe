@@ -86,10 +86,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     maxHeight: 44,
     borderBottomStartRadius: 20
-
   },
   test: {
-
     width: "90%"
   },
   container: {
@@ -100,7 +98,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "center",
-
   },
   containerStyle: {
     padding: 5
