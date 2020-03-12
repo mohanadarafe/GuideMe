@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
+import { PreferenceMenu } from "../components/PreferenceMenu";
 import { AppLoading } from "expo";
 
 const renderSeparator = () => {
@@ -81,6 +82,7 @@ function createLists (data, departments, services, accesibility, number) {
 function MoreDetails (props) {
 
     const [data, setData] = React.useState();
+    const [getDirections, setGetDirections] = React.useState(false);
 
     const getBuildingInfo = buildingData();
     var departments = [];
@@ -93,6 +95,14 @@ function MoreDetails (props) {
     }, []);
 
     createLists(data, departments, services, accesibility, number);
+
+    if (getDirections) {
+        return (
+            <View style={styles.PreferenceMenu}>
+                <PreferenceMenu />
+            </View>
+        );
+    }
 
     if (data) {
         return (
@@ -119,7 +129,7 @@ function MoreDetails (props) {
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton} onPress={() => { setGetDirections(true); }}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>
@@ -348,6 +358,13 @@ export const styles = StyleSheet.create({
         width: "90%",
         alignItems: "center",
     },
-
+    PreferenceMenu: {
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        backgroundColor: "#2A2E43",
+        alignItems: "center",
+        justifyContent: "space-between"
+    }
 });
 export { MoreDetails };
