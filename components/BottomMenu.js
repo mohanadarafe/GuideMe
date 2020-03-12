@@ -62,7 +62,7 @@ function BottomMenu () {
     if (getDirection) {
         return (
             <View style={styles.moreDetails}>
-                <PreferenceMenu />
+                <PreferenceMenu backToMapView={true} />
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false); }} />
             </View>
         );

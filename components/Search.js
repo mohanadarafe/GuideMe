@@ -45,7 +45,6 @@ function Search () {
     setDestination(destination);
   }
 
-
   useEffect(() => {
     setData(fetchData());
   }, []);
@@ -53,7 +52,6 @@ function Search () {
   return (
 
     <View style={styles.container}>
-
       <View style={styles.buttonStyle}>
         <TouchableOpacity>
           <View>
@@ -76,7 +74,6 @@ function Search () {
     </View>
   );
 }
-
 
 export const styles = StyleSheet.create({
   buttonStyle: {

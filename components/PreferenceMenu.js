@@ -6,14 +6,14 @@ import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MoreDetails } from "../screens/MoreDetails";
-
+import Map from "../screens/Map";
 
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
 
-function PreferenceMenu () {
+function PreferenceMenu (props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
@@ -26,12 +26,12 @@ function PreferenceMenu () {
     // const [travelType, setTravelType] = React.useState(false);
 
     const fromLocationSelected = async () => {
-        let dest = await AsyncStorage.getItem("destination");
-        setFrom(dest);
+        let fromDest = await AsyncStorage.getItem("from");
+        setFrom(fromDest);
     };
 
     const toLocationSelected = async () => {
-        let dest = await AsyncStorage.getItem("destination");
+        let dest = await AsyncStorage.getItem("to");
         setTo(dest);
     };
 
@@ -50,10 +50,16 @@ function PreferenceMenu () {
         return () => clearInterval(intervalId);
     });
 
-    if (backArrow) {
+    if (backArrow && props.backToMoreDetails === true) {
         return (
             <View style={styles.moreDetails}>
                 <MoreDetails name={selectedBuilding} />
+            </View>
+        );
+    } else if (backArrow && props.backToMapView === true) {
+        return (
+            <View style={styles.map}>
+                <Map />
             </View>
         );
     }
@@ -95,21 +101,16 @@ function PreferenceMenu () {
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabel}>Undergraduate Student</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabel}>Visitor Student</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
             </View>
-
-
             <View style={styles.containerOfButtons2}>
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
@@ -117,7 +118,6 @@ function PreferenceMenu () {
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabelMobility}>Yes</Text>
                 </Button>
-
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
@@ -126,11 +126,8 @@ function PreferenceMenu () {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
                 </View>
-
                 <Button transparent style={styles.buttonContainer}>
-
                     <Icon name="md-car" style={styles.icon}></Icon>
-
                     <Text style={styles.buttonLabel}>Car</Text>
                 </Button>
                 <Button transparent style={styles.buttonContainer}>
@@ -303,8 +300,6 @@ export const styles = StyleSheet.create({
     backArrow: {
         height: "100%",
         width: "100%",
-        // backgroundColor: "#353A50",
-        // borderRadius: 10,
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "flex-start",
@@ -331,6 +326,10 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
+    map: {
+        height: "100%",
+        width: "100%",
+    }
 });
 
 export { PreferenceMenu };
