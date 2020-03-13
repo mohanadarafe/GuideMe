@@ -6,9 +6,8 @@ import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MoreDetails } from "../screens/MoreDetails";
-import { BottomMenu } from "./BottomMenu";
 
-function fetchData() {
+function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
@@ -25,9 +24,12 @@ function fetchData() {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
- 
+/**
+ *
+ * @param {*} props Properties of the PereferenceMenu function
+ */
 
-function PreferenceMenu(props) {
+function PreferenceMenu (props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
@@ -36,19 +38,17 @@ function PreferenceMenu(props) {
     const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
 
-     function selectDestinationPath(){
-        if(props.backToMoreDetails === true){
-         return props.buildingNameProps
-        }  else{
-            return to
-        }
-      }
-    
-
-
     // const [userType, setUserType] = React.useState("");
     // const [mobilityReduced, setMobilityReduced] = React.useState(false);
     // const [travelType, setTravelType] = React.useState(false);
+
+    function selectDestinationPath () {
+        if (props.backToMoreDetails === true) {
+            return props.buildingNameProps;
+        } else {
+            return to;
+        }
+    }
 
     const fromLocationSelected = async () => {
         let fromDest = await AsyncStorage.getItem("from");
@@ -67,8 +67,8 @@ function PreferenceMenu(props) {
 
     const getDirectionFunction = async () => {
         let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
-        setgetDirection(getDirectionConst)
-    }
+        setgetDirection(getDirectionConst);
+    };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -319,8 +319,8 @@ export const styles = StyleSheet.create({
         marginTop: 2,
         backgroundColor: "#FAF9F8",
         borderColor: "#bbb",
-        borderWidth: 1,
         borderRadius: 10,
+        borderWidth: 1,
     },
     itemTextStyle: {
         color: "#222",
