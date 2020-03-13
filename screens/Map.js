@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
@@ -29,7 +29,6 @@ const mapPosition = {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-
 
 function Map () {
     const [switchVal, setswitchVal] = React.useState("");
@@ -64,13 +63,13 @@ function Map () {
                         showsUserLocation={true}
                         showsCompass={true}
                         showsBuildings={true}
-                        onPress={()=> setmapPressed("true")}
+                        onPress={() => setmapPressed("true")}
                     >
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
                     <Search />
-                </View> 
+                </View>
             }
             {getInsideBuild === "true" &&
                 <View>

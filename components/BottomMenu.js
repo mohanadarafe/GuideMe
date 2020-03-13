@@ -129,7 +129,7 @@ function BottomMenu () {
     }
 
     else {
-        return  (
+        return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>Nearby</Text>
@@ -143,7 +143,6 @@ function BottomMenu () {
             </View>
         );
     }
-
 }
 
 export const styles = StyleSheet.create({
@@ -187,14 +186,12 @@ export const styles = StyleSheet.create({
         top: "5.5%",
         color: "#FFFFFF"
     },
-
     btnGetDirection: {
         position: "absolute",
         left: "60%",
         top: "5.5%",
         color: "#FFFFFF"
     },
-
     btnleave: {
         position: "absolute",
         left: "62%",

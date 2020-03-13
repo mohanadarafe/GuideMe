@@ -160,14 +160,12 @@ function MoreDetails (props) {
     return (<AppLoading />);
 }
 export const styles = StyleSheet.create({
-
     container: {
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
         width: "100%"
     },
-
     mainLabel: {
         color: "#FFFFFF",
         left: "5%",
@@ -177,7 +175,6 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         top: "16%"
     },
-
     shortLabel: {
         position: "absolute",
         left: "5%",
@@ -197,14 +194,12 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "encodeSansExpanded"
     },
-
     scrollTextContainer: {
         width: "100%",
         height: "32%",
         top: "32%",
         position: "absolute",
     },
-
     directionButton: {
         width: "90%",
         height: "8%",
@@ -214,7 +209,6 @@ export const styles = StyleSheet.create({
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
     },
-
     imageContainer: {
         width: "100%",
         height: "25%",
@@ -222,115 +216,96 @@ export const styles = StyleSheet.create({
         position: "absolute",
         opacity: 0.3
     },
-
     buildingImage: {
         width: "100%",
         height: "100%",
         top: "0%",
         position: "relative"
     },
-
     mapButton: {
         bottom: "19%",
         height: "8%",
         width: "100%"
-
     },
-
     mapPin: {
         color: "#FFFFFF",
         position: "absolute",
     },
-
     mapPinLabel: {
         color: "#FFFFFF",
         fontSize: 13,
         fontFamily: "encodeSansExpanded",
         position: "absolute",
     },
-
     phoneButton: {
         bottom: "17%",
         height: "8%",
         width: "100%",
     },
-
     phone: {
         position: "absolute",
         color: "#FFFFFF",
         alignSelf: "center"
     },
-
     phoneLabel: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 13,
         fontFamily: "encodeSansExpanded"
     },
-
     iconContainer: {
         height: "100%",
         width: "16%",
         backgroundColor: "#353A50",
         borderRadius: 10,
         justifyContent: "center",
-
     },
-
     buttonTextContainer: {
         height: "100%",
         width: "80%",
         justifyContent: "center",
         alignSelf: "flex-end"
     },
-
     separator: {
         height: "100%",
         width: "4%",
         justifyContent: "center",
     },
-
     departmentTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     departmentText: {
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded",
     },
-
     servicesTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     servicesText: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded"
     },
-
     accessibilitiesTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     accessibilitiesText: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded"
     },
-
     sectionHeader: {
         paddingTop: 2,
         paddingLeft: 22,
@@ -342,7 +317,6 @@ export const styles = StyleSheet.create({
         backgroundColor: "#353A50",
         fontFamily: "encodeSansExpanded"
     },
-
     listItem: {
         padding: 10,
         fontSize: 12,

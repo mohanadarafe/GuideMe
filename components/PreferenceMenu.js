@@ -6,12 +6,24 @@ import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MoreDetails } from "../screens/MoreDetails";
-import Map from "../screens/Map";
+import { BottomMenu } from "./BottomMenu";
 
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
+
+/**
+ * US12 - As a user, I want to be able to select a destination building by clicking on it.
+ * US14 - As a user, I should be able to set my current location as the starting point.
+ * US18 - As a user, I should be able to choose “walking” as a means of transportation.
+ * US19 - As a user, I should be able to choose public transport as a means of transportation.
+ * US20 - As a user, I should be able to choose my car as a means of transportation.
+ * US21 - As a user, I should be able to choose Concordia Shuttle as a means of transportation.
+ *
+ * The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
+ * is set automatically (but can be modified) and the "to" contains the destination
+ */
 
 function PreferenceMenu (props) {
 
@@ -31,7 +43,7 @@ function PreferenceMenu (props) {
     };
 
     const toLocationSelected = async () => {
-        let dest = await AsyncStorage.getItem("to");
+        let dest = await AsyncStorage.getItem("destination");
         setTo(dest);
     };
 
@@ -58,21 +70,20 @@ function PreferenceMenu (props) {
         );
     } else if (backArrow && props.backToMapView === true) {
         return (
-            <View style={styles.map}>
-                <Map />
-            </View>
+            <BottomMenu dropMenu={true} style={styles.bottomMenu} />
         );
     }
 
     return (
         <View style={styles.container} >
             <View style={styles.searchbarContainer}>
+
                 <SearchableDropdown
                     onTextChange={val => val} //This must be here (does nothing)
                     onItemSelect={item => setFrom(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
-                    containerStyle={styles.test}
+                    containerStyle={styles.containerStyle}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
@@ -86,7 +97,7 @@ function PreferenceMenu (props) {
                     onItemSelect={item => setFrom(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
-                    containerStyle={styles.test}
+                    containerStyle={styles.containerStyle}
                     itemTextStyle={styles.itemTextStyle}
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
@@ -158,7 +169,6 @@ function PreferenceMenu (props) {
 export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        //justifyContent: "space-between",
         height: "100%",
         width: "100%",
         flex: 1
@@ -283,7 +293,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         fontFamily: "encodeSansExpanded"
     },
-    test: {
+    containerStyle: {
         width: "90%"
     },
     itemStyle: {
@@ -307,8 +317,6 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "flex-start",
-        // margin: "2%",
-        // top: "15%",
         left: "10%"
     },
     backArrowContainer: {
@@ -330,9 +338,13 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
-    map: {
-        height: "100%",
+    bottomMenu: {
         width: "100%",
+        height: 350,
+        position: "absolute",
+        borderRadius: 30.5,
+        backgroundColor: "#2A2E43",
+        bottom: -275
     }
 });
 
