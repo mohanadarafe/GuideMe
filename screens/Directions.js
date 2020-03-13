@@ -1,10 +1,8 @@
 import React, {  useEffect } from "react";
 import { StyleSheet, AsyncStorage, Async, TouchableOpacity } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Button, Text, Icon} from "native-base";
-import MapViewDirections from 'react-native-maps-directions';
-import {api_key } from '../gmaps_api/apiKey';
-import getDirections from 'react-native-google-maps-directions';
+import PolyLine from "@mapbox/polyline";
 
 const mapPosition = {
     sgwCoord: {
@@ -21,9 +19,32 @@ const mapPosition = {
     }
 };
 
-const origin = {latitude: 45.494381, longitude: -73.578425};
-const destination = {latitude: 45.497092, longitude: -73.5788};
 
+
+
+
+async function getRouteDirections (start, end) {
+
+    // const [route_polylines, setCoordinates] = React.useState("");
+
+    try{
+        let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${start}&destination=${end}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+        const jsonResponse = await resp.json();
+        const points = PolyLine.decode(jsonResponse.routes[0].overview_polyline.points);
+        let poly_coords = points.map(point => {
+            return {
+                latitude: point[0],
+                longitude: point[1]
+            }
+        });
+        // setCoordinates(poly_coords);
+
+        return poly_coords;
+    }catch(error){
+        console.log(error);
+    }
+
+}
 
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
@@ -31,11 +52,34 @@ const destination = {latitude: 45.497092, longitude: -73.5788};
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Directions () {
+async function Directions (props) {
 
+    // const [route_polylines, setCoordinates] = React.useState("");
 
+    // let poly_resp = getRouteDirections(props.origin, props.destination);
+    // setCoordinates(poly_resp);
+    const origin = "45.494381,-73.578425";
+    const destination = "45.497092,-73.5788";
+    //  const [route_polylines, setCoordinates] = React.useState("");
+     var route_polylines = [];
 
+     try{
+        let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+        const jsonResponse = await resp.json();
+        const points = PolyLine.decode(jsonResponse.routes[0].overview_polyline.points);
+        let poly_coords = points.map(point => {
+            return {
+                latitude: point[0],
+                longitude: point[1]
+            }
+        });
+        // setCoordinates(poly_coords);
+        route_polylines = poly_coords;
+    }catch(error){
+        console.log(error);
+    }
 
+    console.log(route_polylines);
     return (
                 <View>
                     <MapView
@@ -55,6 +99,11 @@ function Directions () {
                                 console.log('GOT AN ERROR');
                               }}
                         /> */}
+                    <Polyline
+                    coordinates = {route_polylines}
+                    strokeWidth = {2}
+                    strokeColor = "pink"
+                    />
                     </MapView>
                     <View style = {styles.navigationHeader}>
                         <View style = {{top: "15%"}}>
