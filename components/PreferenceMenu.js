@@ -25,7 +25,7 @@ function fetchData() {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
- 
+
 
 function PreferenceMenu(props) {
 
@@ -36,14 +36,14 @@ function PreferenceMenu(props) {
     const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
 
-     function selectDestinationPath(){
-        if(props.backToMoreDetails === true){
-         return props.buildingNameProps
-        }  else{
+    function selectDestinationPath() {
+        if (props.backToMoreDetails === true) {
+            return props.buildingNameProps
+        } else {
             return to
         }
-      }
-    
+    }
+
 
 
     // const [userType, setUserType] = React.useState("");
@@ -90,38 +90,8 @@ function PreferenceMenu(props) {
     }
 
     return (
-        <View style={styles.container} >
-            <View style={styles.searchbarContainer}>
+        <View style={styles.container}>
 
-                <SearchableDropdown
-                    onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setFrom(item)}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor={"#000"}
-                    items={data}
-                    placeholder="Current Location"
-                    resetValue={false}
-                />
-
-                <SearchableDropdown
-                    onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setFrom(item)}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor={"#000"}
-                    items={data}
-                    placeholder={selectDestinationPath()}
-                    resetValue={false}
-                />
-
-            </View>
             <Text style={styles.mainLabel}>Preferences</Text>
             <View style={styles.containerOfButtons1}>
                 <View style={styles.labelContainer}>
@@ -140,6 +110,8 @@ function PreferenceMenu(props) {
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
             </View>
+
+
             <View style={styles.containerOfButtons2}>
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
@@ -155,22 +127,42 @@ function PreferenceMenu(props) {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
                 </View>
-                <Button transparent style={styles.buttonContainer}>
-                    <Icon name="md-car" style={styles.icon}></Icon>
-                    <Text style={styles.buttonLabel}>Car</Text>
+                <Button transparent style={styles.buttonContainerMOT}>
+                    <View style={styles.iconContainer}>
+                        <Icon name="md-car" style={styles.icon}></Icon>
+                    </View>
+                    <View style={styles.iconLabelContainer}>
+                        <Text style={styles.buttonLabel}>Car</Text>
+                    </View>
+
                 </Button>
-                <Button transparent style={styles.buttonContainer}>
-                    <Icon name="md-walk" style={styles.icon}></Icon>
-                    <Text style={styles.buttonLabel}>Walking</Text>
+                <Button transparent style={styles.buttonContainerMOT}>
+                    <View style={styles.iconContainer}>
+                        <Icon name="md-walk" style={styles.icon}></Icon>
+                    </View>
+                    <View style={styles.iconLabelContainer}>
+                        <Text style={styles.buttonLabel}>Walking</Text>
+                    </View>
+
                 </Button>
-                <Button transparent style={styles.buttonContainer}>
-                    <Icon name="md-bus" style={styles.icon}></Icon>
-                    <Text style={styles.buttonLabel}>Bus</Text>
+                <Button transparent style={styles.buttonContainerMOT}>
+                    <View style={styles.iconContainer}>
+                        <Icon name="md-bus" style={styles.icon}></Icon>
+                    </View>
+                    <View style={styles.iconLabelContainer}>
+                        <Text style={styles.buttonLabel}>Bus</Text>
+                    </View>
                 </Button>
-                <Button transparent style={styles.buttonContainer}>
+
+                <Button transparent style={styles.buttonContainerMOT}>
+                <View style={styles.iconContainer}>
                     <Icon name="ios-bus" style={styles.icon}></Icon>
+                    </View>
+                    <View style={styles.iconLabelContainer}>
                     <Text style={styles.buttonLabel}>Shuttle Bus</Text>
+                    </View>
                 </Button>
+
             </View>
             <View style={styles.backArrowContainer}>
                 {getDirection === "false" &&
@@ -180,6 +172,43 @@ function PreferenceMenu(props) {
                 }
 
             </View>
+
+            <View style={styles.searchbarContainer}>
+                {/* <View style={styles.fromSearchBar}> */}
+                <SearchableDropdown
+                    onTextChange={val => val} //This must be here (does nothing)
+                    onItemSelect={item => setFrom(item)}
+                    textInputStyle={styles.textInputStyle}
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"#000"}
+                    items={data}
+                    placeholder="Current Location"
+                    resetValue={false}
+
+                />
+                <View style={{ width: 100, height: "3%" }}>
+
+                </View>
+                <SearchableDropdown
+                    onTextChange={val => val} //This must be here (does nothing)
+                    onItemSelect={item => setFrom(item)}
+                    textInputStyle={styles.textInputStyle}
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"#000"}
+                    items={data}
+                    placeholder={selectDestinationPath()}
+                    resetValue={false}
+                />
+                {/* </View> */}
+            </View>
+
+
         </View>
     );
 }
@@ -206,7 +235,6 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
         opacity: 0.3,
-        backgroundColor: "#326060"
     },
     buttonContainer: {
         height: 80,
@@ -218,6 +246,30 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         margin: "2%",
         top: "25%",
+    },
+
+    buttonContainer: {
+        height: 80,
+        width: 80,
+        backgroundColor: "#353A50",
+        borderRadius: 10,
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "2%",
+        top: "25%",
+    },
+
+    buttonContainerMOT: {
+        height: 80,
+        width: 80,
+        backgroundColor: "#353A50",
+        borderRadius: 10,
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: "2%",
+        top: "8%",
     },
     buttonLabel: {
         position: "absolute",
@@ -233,7 +285,7 @@ export const styles = StyleSheet.create({
     buttonLabelMobility: {
         position: "absolute",
         color: "#FFFFFF",
-        fontSize: 20,
+        fontSize: 15,
         fontFamily: "encodeSansExpanded",
         width: "100%",
         alignContent: "center",
@@ -246,7 +298,6 @@ export const styles = StyleSheet.create({
     },
     containerOfButtons1: {
         position: "absolute",
-        backgroundColor: "#ffc0cb",
         width: "100%",
         height: "15%",
         flexDirection: "row",
@@ -256,26 +307,20 @@ export const styles = StyleSheet.create({
     },
     containerOfButtons2: {
         position: "absolute",
-        backgroundColor: "#ffc0cb",
         width: "100%",
         height: "15%",
         flexDirection: "row",
+        flex: 1,
         justifyContent: "center",
         bottom: "27.5%"
     },
     containerOfButtons3: {
         position: "absolute",
-        backgroundColor: "#ffc0cb",
         width: "100%",
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
         bottom: "10%"
-    },
-    scrollView: {
-        backgroundColor: "#326060",
-        marginHorizontal: 20,
-        height: "50%",
     },
     icon: {
         position: "absolute",
@@ -294,11 +339,10 @@ export const styles = StyleSheet.create({
     },
     searchbarContainer: {
         position: "absolute",
-        backgroundColor: "#5ac18e",
         width: "100%",
-        height: "18%",
+        height: "100%",
         flexDirection: "column",
-        justifyContent: "space-around",
+        justifyContent: "flex-start",
         alignContent: "center",
         alignItems: "center",
         top: "16%"
@@ -339,7 +383,6 @@ export const styles = StyleSheet.create({
     },
     backArrowContainer: {
         position: "absolute",
-        backgroundColor: "#ffa500",
         width: "100%",
         height: "6%",
         flexDirection: "column",
@@ -363,7 +406,21 @@ export const styles = StyleSheet.create({
         borderRadius: 30.5,
         backgroundColor: "#2A2E43",
         bottom: -275
+    },
+
+    iconContainer: {
+        width: "100%",
+        height: "60%",
+    },
+    iconLabelContainer: {
+        width: "100%",
+        height: "25%",
+       bottom: "5%"
     }
+
+
+
+
 });
 
 export { PreferenceMenu };
