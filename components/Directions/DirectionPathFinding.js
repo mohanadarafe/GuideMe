@@ -5,10 +5,10 @@ import { HallXCoordinates } from '../../constants/HallXCoordinates';
 const rooms = HallXCoordinates();
 
 export function DirectionPathFinding() {
-    findPath(rooms["H857"], rooms["H803"]);
+    findPath(rooms["H821"], rooms["H803"]);
     return(
         <G>
-            <Line x1={rooms["H857"].x} y1={rooms["H857"].y} x2={rooms["H857"].nearestPoint.x} y2={rooms["H857"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+            <Line x1={rooms["H821"].x} y1={rooms["H821"].y} x2={rooms["H821"].nearestPoint.x} y2={rooms["H821"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
             {
                 path.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
             }
@@ -30,17 +30,17 @@ function findPath(start, end) {
                 visited.push(start);
             }
             start.next.forEach(next => {
-                if (!visited.includes(rooms[next]) && next !== "") {
+                if (!visited.includes(rooms[next])) {
                     path.push({x1: start.nearestPoint.x, y1: start.nearestPoint.y, x2: rooms[next].nearestPoint.x,y2: rooms[next].nearestPoint.y})
                     return findPath(rooms[next], end);
                 }
             });
-            // start.prev.forEach(prev => {
-            //     if (!visited.includes(prev)) {
-            //         path.push({x1: start.nearestPoint.x, y1: start.nearestPoint.y, x2: rooms[prev].nearestPoint.x,y2: rooms[prev].nearestPoint.y})
-            //         return findPath(rooms[prev], end);
-            //     }
-            // });
+            start.prev.forEach(prev => {
+                if (!visited.includes(prev)) {
+                    path.push({x1: start.nearestPoint.x, y1: start.nearestPoint.y, x2: rooms[prev].nearestPoint.x,y2: rooms[prev].nearestPoint.y})
+                    return findPath(rooms[prev], end);
+                }
+            });
         }
     }
 }
