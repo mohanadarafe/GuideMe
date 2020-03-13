@@ -10,6 +10,7 @@ import { MapData } from "../components/MapData";
 import { PreferenceMenu } from "../components/PreferenceMenu";
 import { AppLoading } from "expo";
 
+
 const renderSeparator = () => {
     return (
         <View
@@ -153,7 +154,6 @@ function MoreDetails (props) {
                     />
                 </SafeAreaView>
 
-                <Text style={styles.shortLabel}>Description</Text>
             </View>
         );
     }
@@ -173,7 +173,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "16%"
+        top: "21%"
     },
     shortLabel: {
         position: "absolute",
@@ -183,12 +183,12 @@ export const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        opacity: 0.3
+        // opacity: 0.3
     },
 
     reviewLabel: {
         position: "absolute",
-        top: "21%",
+        top: "27%",
         left: "5%",
         color: "#FFFFFF",
         fontSize: 20,
@@ -211,7 +211,7 @@ export const styles = StyleSheet.create({
     },
     imageContainer: {
         width: "100%",
-        height: "25%",
+        height: "32%",
         top: "0%",
         position: "absolute",
         opacity: 0.3

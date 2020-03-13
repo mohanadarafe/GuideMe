@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, AsyncStorage, Image } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "./MapData";
@@ -35,6 +35,10 @@ function PreferenceMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
+    const [userType, setUserType] = React.useState("");
+    const [mobilityReduced, setMobilityReduced] = React.useState(false);
+    const [travelType, setTravelType] = React.useState(false);
+
 
     function selectDestinationPath() {
         if (props.backToMoreDetails === true) {
@@ -44,11 +48,6 @@ function PreferenceMenu(props) {
         }
     }
 
-
-
-    // const [userType, setUserType] = React.useState("");
-    // const [mobilityReduced, setMobilityReduced] = React.useState(false);
-    // const [travelType, setTravelType] = React.useState(false);
 
     const fromLocationSelected = async () => {
         let fromDest = await AsyncStorage.getItem("from");
@@ -92,6 +91,12 @@ function PreferenceMenu(props) {
     return (
         <View style={styles.container}>
 
+            <View style={{ width: "100%", height: "32%", backgroundColor: "#353A50" }}></View>
+
+            <View style={styles.imageContainer}>
+                <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
+            </View>
+
             <Text style={styles.mainLabel}>Preferences</Text>
             <View style={styles.containerOfButtons1}>
                 <View style={styles.labelContainer}>
@@ -104,7 +109,7 @@ function PreferenceMenu(props) {
                     <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
                 <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>Visitor Student</Text>
+                    <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
                 <Button transparent style={styles.buttonContainer}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
@@ -155,16 +160,20 @@ function PreferenceMenu(props) {
                 </Button>
 
                 <Button transparent style={styles.buttonContainerMOT}>
-                <View style={styles.iconContainer}>
-                    <Icon name="ios-bus" style={styles.icon}></Icon>
+                    <View style={styles.iconContainer}>
+                        <Icon name="ios-bus" style={styles.icon}></Icon>
                     </View>
                     <View style={styles.iconLabelContainer}>
-                    <Text style={styles.buttonLabel}>Shuttle Bus</Text>
+                        <Text style={styles.buttonLabel}>Shuttle Bus</Text>
                     </View>
                 </Button>
 
             </View>
+
+            <Button style={styles.directionButton} ><Text style={{ color: "white" }}>View Route</Text></Button>
+
             <View style={styles.backArrowContainer}>
+
                 {getDirection === "false" &&
                     <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
                         <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
@@ -205,7 +214,7 @@ function PreferenceMenu(props) {
                     placeholder={selectDestinationPath()}
                     resetValue={false}
                 />
-                {/* </View> */}
+
             </View>
 
 
@@ -215,10 +224,10 @@ function PreferenceMenu(props) {
 
 export const styles = StyleSheet.create({
     container: {
-        alignItems: "center",
-        height: "100%",
-        width: "100%",
-        flex: 1
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "100%",
+            width: "100%"
     },
     mainLabel: {
         color: "#FFFFFF",
@@ -226,12 +235,12 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "36%"
+        top: "33%"
     },
     shortLabel: {
         position: "absolute",
         color: "#FFFFFF",
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
         opacity: 0.3,
@@ -302,7 +311,7 @@ export const styles = StyleSheet.create({
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "45%"
+        bottom: "50%",
 
     },
     containerOfButtons2: {
@@ -312,7 +321,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "27.5%"
+        bottom: "32.5%"
     },
     containerOfButtons3: {
         position: "absolute",
@@ -320,7 +329,7 @@ export const styles = StyleSheet.create({
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "10%"
+        bottom: "15%"
     },
     icon: {
         position: "absolute",
@@ -389,7 +398,7 @@ export const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignContent: "center",
         alignItems: "center",
-        top: "10%"
+        top: "7%"
     },
     moreDetails: {
         width: "100%",
@@ -415,10 +424,33 @@ export const styles = StyleSheet.create({
     iconLabelContainer: {
         width: "100%",
         height: "25%",
-       bottom: "5%"
-    }
+        bottom: "5%"
+    },
 
+    directionButton: {
+        width: "90%",
+        height: "8%",
+        fontSize: 25,
+        bottom: "8%",
+        justifyContent: "center",
+        backgroundColor: "#3ACCE1",
+        borderRadius: 10,
+    },
 
+    imageContainer: {
+        width: "100%",
+        height: "32%",
+        top: "0%",
+        position: "absolute",
+        opacity: 0.3
+    },
+
+    buildingImage: {
+        width: "100%",
+        height: "100%",
+        top: "0%",
+        position: "relative"
+    },
 
 
 });
