@@ -100,7 +100,7 @@ function MoreDetails (props) {
     if (getDirection) {
         return (
             <View style={styles.PreferenceMenu}>
-                <PreferenceMenu backToMoreDetails={true} />
+                <PreferenceMenu buildingNameProps={props.name} backToMoreDetails={true} />
             </View>
         );
     }

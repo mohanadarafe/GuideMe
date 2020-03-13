@@ -25,6 +25,8 @@ function fetchData() {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
+ 
+
 function PreferenceMenu(props) {
 
     const [data, setData] = React.useState();
@@ -33,6 +35,15 @@ function PreferenceMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
+
+     function selectDestinationPath(){
+        if(props.backToMoreDetails === true){
+         return props.buildingNameProps
+        }  else{
+            return to
+        }
+      }
+    
 
 
     // const [userType, setUserType] = React.useState("");
@@ -106,7 +117,7 @@ function PreferenceMenu(props) {
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
                     items={data}
-                    placeholder={to}
+                    placeholder={selectDestinationPath()}
                     resetValue={false}
                 />
 
