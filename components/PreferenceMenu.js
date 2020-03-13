@@ -8,7 +8,7 @@ import { buildingData } from "../constants/buildingData";
 import { MoreDetails } from "../screens/MoreDetails";
 import { BottomMenu } from "./BottomMenu";
 
-function fetchData () {
+function fetchData() {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
@@ -25,13 +25,15 @@ function fetchData () {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-function PreferenceMenu (props) {
+function PreferenceMenu(props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [backArrow, setBackArrow] = React.useState(false);
+    const [getDirection, setgetDirection] = React.useState("false");
+
 
     // const [userType, setUserType] = React.useState("");
     // const [mobilityReduced, setMobilityReduced] = React.useState(false);
@@ -52,12 +54,18 @@ function PreferenceMenu (props) {
         setSelectedBuilding(name);
     };
 
+    const getDirectionFunction = async () => {
+        let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
+        setgetDirection(getDirectionConst)
+    }
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             setData(fetchData());
             fromLocationSelected();
             toLocationSelected();
             getBuildingSelected();
+            getDirectionFunction();
         }, 1);
         return () => clearInterval(intervalId);
     });
@@ -67,10 +75,6 @@ function PreferenceMenu (props) {
             <View style={styles.moreDetails}>
                 <MoreDetails name={selectedBuilding} />
             </View>
-        );
-    } else if (backArrow && props.backToMapView === true) {
-        return (
-            <BottomMenu dropMenu={true} style={styles.bottomMenu} />
         );
     }
 
@@ -158,9 +162,12 @@ function PreferenceMenu (props) {
                 </Button>
             </View>
             <View style={styles.backArrowContainer}>
-                <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
-                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                </Button>
+                {getDirection === "false" &&
+                    <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
+                        <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+                    </Button>
+                }
+
             </View>
         </View>
     );

@@ -26,6 +26,7 @@ function BottomMenu () {
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     AsyncStorage.setItem("getInsideBuilding", getInside.toString());
+    AsyncStorage.setItem("getDirectionButtonPressed",getDirection.toString());
 
     const getBuildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
@@ -47,7 +48,7 @@ function BottomMenu () {
             getBuildingSelected();
             searchItemSelected();
             pressingOnMap();
-        }, 100);
+        }, 1);
         return () => clearInterval(intervalId);
     });
 
@@ -70,7 +71,7 @@ function BottomMenu () {
     if (getDirection) {
         return (
             <View style={styles.moreDetails}>
-                <PreferenceMenu backToMapView={true} />
+                <PreferenceMenu/>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false); }} />
             </View>
         );
