@@ -309,8 +309,8 @@ export const styles = StyleSheet.create({
         position: "absolute",
         width: "100%",
         height: "15%",
-        flexDirection: "row",
         flex: 1,
+        flexDirection: "row",
         justifyContent: "center",
         bottom: "27.5%"
     },
