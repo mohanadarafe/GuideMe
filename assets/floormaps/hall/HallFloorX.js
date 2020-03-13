@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { AsyncStorage } from "react-native";
-import Svg, { G, Path, Text, Rect, Use, Symbol, Defs } from "react-native-svg"
+import Svg, { G, Path, Text, Rect, Use, Symbol, Defs, Line } from "react-native-svg"
 import { HallClass } from "./HallClassrooms/HallClass";
+import { DirectionPathFinding } from "../../../components/Directions/DirectionPathFinding";
 
 export function HallFloorX() {
   const [floorNumber, setFloorNumber] = React.useState("");
@@ -868,7 +869,8 @@ export function HallFloorX() {
           d="M459.538 426.23h53.846M514.153 611.23h-54.615"
         />
       </G>
-      <HallClass floor={8} />
+      <DirectionPathFinding />
+      <HallClass floor={floorNumber} />
     </Svg>
   );
 }
