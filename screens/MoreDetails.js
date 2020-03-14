@@ -82,6 +82,9 @@ function MoreDetails (props) {
 
     const [data, setData] = React.useState();
 
+    const getDirectionScreen = () => {
+        props.navigation.navigate("MapDirections");
+    }
     const getBuildingInfo = buildingData();
     var departments = [];
     var services = [];
@@ -119,7 +122,7 @@ function MoreDetails (props) {
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton} onPress = {getDirectionScreen}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>
@@ -350,4 +353,4 @@ export const styles = StyleSheet.create({
     },
 
 });
-export { MoreDetails };
+export default MoreDetails;
