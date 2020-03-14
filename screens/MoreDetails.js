@@ -68,6 +68,8 @@ function createLists (data, departments, services, accesibility, number) {
     }
 }
 
+
+
 /**
  * The following screen renders information on a selected building.
  * 
@@ -81,7 +83,7 @@ function createLists (data, departments, services, accesibility, number) {
 function MoreDetails (props) {
 
     const [data, setData] = React.useState();
-
+    
     const getDirectionScreen = () => {
         props.navigation.navigate("Directions");
     }

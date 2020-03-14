@@ -71,10 +71,10 @@ function Directions(props) {
 
     const onLayout = () => {
         setTimeout(() => {
-            mapRef.fitToCoordinates([
-                { latitude: 33.9260206, longitude: 75.0173499 }, { latitude: 33.949817, longitude: 74.985655 }],
-                { edgePadding: { bottom: 300, right: 0, left: 0, top: 0 }, animated: true, });
-        }, 2000);
+            mapRef.current.fitToCoordinates([
+                { latitude: 45.496557, longitude: -73.578896 }, { latitude: 45.457841, longitude: -73.640307 }],
+                { edgePadding: { bottom: 10, right: 0, left: 0, top: 0 }, animated: true, });
+        }, 100);
     }
     return (
         <View>
@@ -86,7 +86,7 @@ function Directions(props) {
                 showsUserLocation={true}
                 showsCompass={true}
                 showsBuildings={true}
-                onPress={onLayout}
+                onLayout={onLayout}
             >
 
                 {/* <Polyline
