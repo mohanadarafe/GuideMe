@@ -286,7 +286,7 @@ export function HallFloorX() {
           strokeWidth={0}
           stroke="#000"
         >
-          {"H" + floorNumber + "28"}
+          {"H" + floorNumber + "29"}
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
@@ -296,7 +296,7 @@ export function HallFloorX() {
           strokeWidth={0}
           stroke="#000"
         >
-          {"H" + floorNumber + "29"}
+          {"H" + floorNumber + "28"}
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"

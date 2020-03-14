@@ -1,44 +1,52 @@
 export function HallXCoordinates () {
     var rooms = [];
+    rooms["H801"] = {
+        x: "195",
+        y: "175",
+        nearestPoint: {
+            x: "195",
+            y: "217"
+        }
+    }
     rooms["H803"] = {
         x: "281",
         y: "155",
         nearestPoint: {
-            x: "279",
+            x: "281",
             y: "217"
-        },
-        next: ["H805"],
-        prev: ["H863"]
+        }
     }
     rooms["H805"] = {
         x: "385",
         y: "155",
         nearestPoint: {
-            x: "387",
-            y: "216"
-        },
-        next: ["H807"],
-        prev: ["H803"]
-    }
-    rooms["H806"] = {
-        x: "493",
-        y: "357",
-        nearestPoint: {
-            x: "553",
-            y: "399"
-        },
-        next: ["H807"],
-        prev: ["H832"]
+            x: "385",
+            y: "217"
+        }
     },
     rooms["H807"] = {
         x: "471",
         y: "155",
         nearestPoint: {
+            x: "472",
+            y: "217"
+        }
+    },
+    rooms["checkpoint1"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
             x: "550",
-            y: "216"
-        },
-        next: ["H811", "H820"],
-        prev: ["H805"]
+            y: "217"
+        }
+    },
+    rooms["H806"] = {
+        x: "493",
+        y: "314",
+        nearestPoint: {
+            x: "553",
+            y: "309"
+        }
     },
     rooms["H811"] = {
         x: "654",
@@ -46,29 +54,39 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "654",
             y: "216"
-        },
-        next: ["H813"],
-        prev: ["H807"]
+        }
     },
     rooms["H813"] = {
         x: "736",
         y: "155",
         nearestPoint: {
-            x: "734",
+            x: "736",
             y: "216"
-        },
-        next: ["H815"],
-        prev: ["H811"]
+        }
     },
     rooms["H815"] = {
-        x: "820",
+        x: "840",
         y: "155",
         nearestPoint: {
-            x: "845",
+            x: "840",
             y: "216"
-        },
-        next: ["H821"],
-        prev: ["H813"]
+        }
+    },
+    rooms["H817"] = {
+        x: "891",
+        y: "169",
+        nearestPoint: {
+            x: "840",
+            y: "216"
+        }
+    },
+    rooms["H819"] = {
+        x: "894",
+        y: "216",
+        nearestPoint: {
+            x: "840",
+            y: "216"
+        }
     },
     rooms["H820"] = {
         x: "627",
@@ -76,9 +94,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "553",
             y: "399"
-        },
-        next: ["H862", "H832"],
-        prev: ["H807"]
+        }
     },
     rooms["H821"] = {
         x: "899",
@@ -86,29 +102,39 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "848",
             y: "329"
-        },
-        next: ["H823"],
-        prev: ["H815"]
+        }
     },
     rooms["H823"] = {
         x: "899",
         y: "427",
         nearestPoint: {
             x: "848",
-            y: "424"
-        },
-        next: ["H825"],
-        prev: ["H821"]
+            y: "427"
+        }
     },
     rooms["H825"] = {
         x: "899",
-        y: "509",
+        y: "511",
         nearestPoint: {
             x: "850",
             y: "511"
-        },
-        next: ["H829"],
-        prev: ["H823"]
+        }
+    },
+    rooms["H827"] = {
+        x: "899",
+        y: "606",
+        nearestPoint: {
+            x: "850",
+            y: "606"
+        }
+    },
+    rooms["H828"] = {
+        x: "899",
+        y: "692",
+        nearestPoint: {
+            x: "850",
+            y: "692"
+        }
     },
     rooms["H829"] = {
         x: "901",
@@ -116,9 +142,39 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "850",
             y: "802"
-        },
-        next: ["H851"],
-        prev: ["H825"]
+        }
+    },
+    rooms["H831"] = {
+        x: "891",
+        y: "844",
+        nearestPoint: {
+            x: "850",
+            y: "802"
+        }
+    },
+    rooms["H833"] = {
+        x: "833",
+        y: "844",
+        nearestPoint: {
+            x: "850",
+            y: "802"
+        }
+    },
+    rooms["H835"] = {
+        x: "737",
+        y: "844",
+        nearestPoint: {
+            x: "737",
+            y: "802"
+        }
+    },
+    rooms["H837"] = {
+        x: "648",
+        y: "806",
+        nearestPoint: {
+            x: "646",
+            y: "802"
+        }
     },
     rooms["H832"] = {
         x: "627",
@@ -126,9 +182,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "559",
             y: "716"
-        },
-        next: ["H838"],
-        prev: ["H820"]
+        }
     },
     rooms["H838"] = {
         x: "627",
@@ -136,19 +190,63 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "559",
             y: "799"
-        },
-        next: ["H851"],
-        prev: ["H820", "H829"]
+        }
+    },
+    rooms["checkpoint2"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "557",
+            y: "804"
+        }
+    },
+    rooms["H841"] = {
+        x: "472",
+        y: "845",
+        nearestPoint: {
+            x: "472",
+            y: "802"
+        }
+    },
+    rooms["H843"] = {
+        x: "380",
+        y: "845",
+        nearestPoint: {
+            x: "380",
+            y: "802"
+        }
+    },
+    rooms["H845"] = {
+        x: "287",
+        y: "845",
+        nearestPoint: {
+            x: "287",
+            y: "802"
+        }
+    },
+    rooms["H847"] = {
+        x: "197",
+        y: "845",
+        nearestPoint: {
+            x: "200",
+            y: "802"
+        }
+    },
+    rooms["H849"] = {
+        x: "128",
+        y: "845",
+        nearestPoint: {
+            x: "200",
+            y: "802"
+        }
     },
     rooms["H851"] = {
-        x: "134",
-        y: "799",
+        x: "77",
+        y: "808",
         nearestPoint: {
-            x: "183",
-            y: "796"
-        },
-        next: ["H853"],
-        prev: ["H829"]
+            x: "200",
+            y: "802"
+        }
     },
     rooms["H853"] = {
         x: "127",
@@ -156,9 +254,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "183",
             y: "691"
-        },
-        next: ["H855"],
-        prev: ["H851"]
+        }
     },
     rooms["H855"] = {
         x: "127",
@@ -166,9 +262,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "183",
             y: "601"
-        },
-        next: ["H857"],
-        prev: ["H853"]
+        }
     },
     rooms["H857"] = {
         x: "127",
@@ -176,9 +270,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "183",
             y: "512"
-        },
-        next: ["H859"],
-        prev: ["H855"]
+        }
     },
     rooms["H859"] = {
         x: "127",
@@ -186,19 +278,23 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "183",
             y: "423"
-        },
-        next: ["H861", "H860"],
-        prev: ["H857"]
+        }
+    },
+    rooms["checkpoint3"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "183",
+            y: "423"
+        }
     },
     rooms["H860"] = {
         x: "241",
         y: "447",
         nearestPoint: {
-            x: "183",
+            x: "237",
             y: "399"
-        },
-        next: ["H862"],
-        prev: ["H859"]
+        }
     },
     rooms["H861"] = {
         x: "127",
@@ -206,9 +302,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "183",
             y: "330"
-        },
-        next: ["H863"],
-        prev: ["H859"]
+        }
     }
     rooms["H862"] = {
         x: "379",
@@ -216,9 +310,7 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "381",
             y: "399"
-        },
-        next: ["H860"],
-        prev: ["H806"]
+        }
     },
     rooms["H863"] = {
         x: "127",
@@ -226,9 +318,15 @@ export function HallXCoordinates () {
         nearestPoint: {
             x: "183",
             y: "217"
-        },
-        next: ["H803"],
-        prev: ["H861"]
+        }
+    }
+    rooms["checkpoint4"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "553",
+            y: "401"
+        }
     }
     return rooms;
 }
