@@ -24,7 +24,7 @@ function fetchData () {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-function PreferenceMenu (props) {
+function DoubleSearch (props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
@@ -32,10 +32,6 @@ function PreferenceMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
-    const [userType, setUserType] = React.useState("");
-    const [mobilityReduced, setMobilityReduced] = React.useState(false);
-    const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
-    const [travelType, setTravelType] = React.useState(false);
 
     function selectDestinationPath () {
         if (props.backToMoreDetails === true) {
@@ -91,87 +87,6 @@ function PreferenceMenu (props) {
 
             <View style={styles.imageContainer}>
                 <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
-            </View>
-
-            <Text style={styles.mainLabel}>Preferences</Text>
-            <View style={styles.containerOfButtons1}>
-                <View style={styles.labelContainer}>
-                    <Text style={styles.shortLabel}>I am: </Text>
-                </View>
-                <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>Graduate Student</Text>
-                </Button>
-                <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>Undergrad Student</Text>
-                </Button>
-                <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>Visitor</Text>
-                </Button>
-                <Button transparent style={styles.buttonContainer}>
-                    <Text style={styles.buttonLabel}>University Staff</Text>
-                </Button>
-            </View>
-
-            <View style={styles.containerOfButtons2}>
-                <View style={styles.labelContainer}>
-                    <Text style={styles.shortLabel}>Mobility Reduced: </Text>
-                </View>
-                <Button transparent style={styles.buttonContainer} >
-                    <Text style={styles.buttonLabelMobility} > Yes </Text>
-                </Button>
-                <Button transparent style={styles.buttonContainer} >
-                    <Text style={styles.buttonLabelMobility}>No</Text>
-                </Button>
-            </View>
-            <View style={styles.containerOfButtons3}>
-                <View style={styles.labelContainer}>
-                    <Text style={styles.shortLabel}>Method of Travel: </Text>
-                </View>
-                <Button transparent style={styles.buttonContainerMOT} >
-                    <View style={styles.iconContainer}>
-                        <Icon name="md-car" style={styles.icon}></Icon>
-                    </View>
-                    <View style={styles.iconLabelContainer}>
-                        <Text style={styles.buttonLabel}>Car</Text>
-                    </View>
-
-                </Button>
-                <Button transparent style={styles.buttonContainerMOT} >
-                    <View style={styles.iconContainer}>
-                        <Icon name="md-walk" style={styles.icon}></Icon>
-                    </View>
-                    <View style={styles.iconLabelContainer}>
-                        <Text style={styles.buttonLabel}>Walking</Text>
-                    </View>
-                </Button>
-
-                <Button transparent style={styles.buttonContainerMOT}>
-                    <View style={styles.iconContainer}>
-                        <Icon name="md-bus" style={styles.icon}></Icon>
-                    </View>
-                    <View style={styles.iconLabelContainer}>
-                        <Text style={styles.buttonLabel}>Bus</Text>
-                    </View>
-                </Button>
-
-                <Button transparent style={styles.buttonContainerMOT}>
-                    <View style={styles.iconContainer}>
-                        <Icon name="ios-bus" style={styles.icon}></Icon>
-                    </View>
-                    <View style={styles.iconLabelContainer}>
-                        <Text style={styles.buttonLabel}>Shuttle Bus</Text>
-                    </View>
-                </Button>
-            </View>
-
-            <Button transparent style={styles.routeButton} ><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-
-            <View style={styles.backArrowContainer}>
-                {getDirection === "false" &&
-                    <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
-                        <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                    </Button>
-                }
             </View>
 
             <View style={styles.searchbarContainer}>
@@ -423,4 +338,4 @@ export const styles = StyleSheet.create({
     },
 });
 
-export { PreferenceMenu };
+export { DoubleSearch };
