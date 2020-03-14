@@ -3,10 +3,11 @@ import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
-import {BottomMenu}  from "../components/BottomMenu";
+import { BottomMenu } from "../components/BottomMenu";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
+import PropTypes from "prop-types";
 
 const mapPosition = {
     sgwCoord: {
@@ -29,7 +30,7 @@ const mapPosition = {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Map ({navigation}) {
+function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
@@ -75,10 +76,14 @@ function Map ({navigation}) {
                     <IndoorMapView />
                 </View>
             }
-            <BottomMenu navigation = {navigation}/>
+            <BottomMenu navigation={navigation} />
         </View>
     );
 }
+
+Map.propTypes = {
+    navigation: PropTypes.any,
+};
 
 export const styles = StyleSheet.create({
     map: {

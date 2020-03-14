@@ -87,7 +87,7 @@ function MoreDetails (props) {
     const [getDirection, setGetDirection] = React.useState(false);
     const [destination, setDestination] = React.useState("");
 
-  
+
     const getBuildingInfo = buildingData();
     var departments = [];
     var services = [];
@@ -103,7 +103,7 @@ function MoreDetails (props) {
     if (getDirection) {
         return (
             <View style={styles.PreferenceMenu}>
-                <DoubleSearch navigation = {props.navigation} buildingNameProps={props.name} backToMoreDetails={true} />
+                <DoubleSearch navigation={props.navigation} buildingNameProps={props.name} backToMoreDetails={true} />
             </View>
         );
     }
