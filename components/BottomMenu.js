@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
-import { MoreDetails } from "../screens/MoreDetails";
+import MoreDetails  from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-import { DoubleSearch } from "../components/DoubleSearch";
+import { DoubleSearch } from "../screens/DoubleSearch";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-
-function BottomMenu () {
+function BottomMenu ({navigation}) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -55,7 +54,7 @@ function BottomMenu () {
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} />
+                <MoreDetails name={selectedBuilding} navigation = {navigation}/>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
             </View>
         );
@@ -71,7 +70,7 @@ function BottomMenu () {
     if (getDirection) {
         return (
             <View style={styles.moreDetails}>
-                <DoubleSearch />
+                <DoubleSearch navigation = {navigation}/>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false); }} />
             </View>
         );
@@ -231,4 +230,4 @@ export const styles = StyleSheet.create({
     }
 });
 
-export { BottomMenu };
+export {BottomMenu};

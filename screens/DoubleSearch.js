@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, AsyncStorage, Image } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
-import { MapData } from "./MapData";
+import { MapData } from "../components/MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
-import { MoreDetails } from "../screens/MoreDetails";
+import MoreDetails from "./MoreDetails";
+import { JMSBFloorX } from "../assets/floormaps/mb/JMSBFloorX";
+import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
-function fetchData () {
+
+
+function fetchData() {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
@@ -24,7 +28,7 @@ function fetchData () {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-function DoubleSearch (props) {
+function DoubleSearch(props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
@@ -33,12 +37,16 @@ function DoubleSearch (props) {
     const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
 
-    function selectDestinationPath () {
+    function selectDestinationPath() {
         if (props.backToMoreDetails === true) {
             return props.buildingNameProps;
         } else {
             return to;
         }
+    }
+
+    const getDirectionScreen = () => {
+        props.navigation.navigate("MapDirections");
     }
 
     const fromLocationSelected = async () => {
@@ -83,13 +91,16 @@ function DoubleSearch (props) {
     return (
         <View style={styles.container}>
 
-            <View style={{ width: "100%", height: "32%", backgroundColor: "#353A50" }}></View>
+            <View style={{ width: "100%", height: "45%", backgroundColor: "#353A50" }}></View>
 
-            <View style={styles.imageContainer}>
-                <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
+            <View style={styles.svgContainer}>
+                <DoubleSearchSVG />
             </View>
 
             <View style={styles.searchbarContainer}>
+                <Text style={{ color: "white", fontSize: 20, fontFamily: "encodeSansExpanded", paddingBottom: 10 }}>Starting Point & Destination</Text>
+                <Text style={styles.searchBarLabels}>To: </Text>
+
                 <SearchableDropdown
                     onTextChange={val => val} //This must be here (does nothing)
                     onItemSelect={item => setFrom(item)}
@@ -104,9 +115,9 @@ function DoubleSearch (props) {
                     resetValue={false}
 
                 />
-                <View style={{ width: 100, height: "3%" }}>
 
-                </View>
+                <View style={{ width: "100%", height: "3%" }}></View>
+                <Text style={styles.searchBarLabels}>From: </Text>
                 <SearchableDropdown
                     onTextChange={val => val} //This must be here (does nothing)
                     onItemSelect={item => setFrom(item)}
@@ -120,7 +131,21 @@ function DoubleSearch (props) {
                     placeholder={selectDestinationPath()}
                     resetValue={false}
                 />
+
             </View>
+
+            <Button transparent style={styles.routeButton} onPress={getDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+
+
+
+            <View style={styles.backArrowContainer}>
+                {getDirection === "false" &&
+                    <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
+                        <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+                    </Button>
+                }
+            </View>
+
         </View >
     );
 }
@@ -336,6 +361,24 @@ export const styles = StyleSheet.create({
         top: "0%",
         position: "relative"
     },
+
+    searchBarLabels: {
+        color: "#FFFFFF",
+        opacity: 0.3,
+        alignSelf: "flex-start",
+        left: "8%",
+        fontSize: 20,
+        paddingVertical: 10
+    },
+
+    svgContainer: {
+        width: "100%",
+        top: "2%",
+        flex:1,
+        flexDirection:"row",
+        justifyContent:"center",
+    }
+
 });
 
 export { DoubleSearch };

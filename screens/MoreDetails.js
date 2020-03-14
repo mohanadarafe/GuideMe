@@ -9,7 +9,7 @@ import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
 import { PreferenceMenu } from "../components/PreferenceMenu";
 import { AppLoading } from "expo";
-import { DoubleSearch } from "../components/DoubleSearch";
+import { DoubleSearch } from "./DoubleSearch";
 
 
 const renderSeparator = () => {
@@ -87,6 +87,7 @@ function MoreDetails (props) {
     const [getDirection, setGetDirection] = React.useState(false);
     const [destination, setDestination] = React.useState("");
 
+  
     const getBuildingInfo = buildingData();
     var departments = [];
     var services = [];
@@ -102,7 +103,7 @@ function MoreDetails (props) {
     if (getDirection) {
         return (
             <View style={styles.PreferenceMenu}>
-                <DoubleSearch buildingNameProps={props.name} backToMoreDetails={true} />
+                <DoubleSearch navigation = {props.navigation} buildingNameProps={props.name} backToMoreDetails={true} />
             </View>
         );
     }
@@ -342,4 +343,4 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between"
     }
 });
-export { MoreDetails };
+export default MoreDetails;
