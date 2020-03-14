@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, AsyncStorage, Image } from "react-native";
+import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
-import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
@@ -37,13 +36,6 @@ function PreferenceMenu (props) {
     const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
     const [travelType, setTravelType] = React.useState(false);
 
-    function selectDestinationPath () {
-        if (props.backToMoreDetails === true) {
-            return props.buildingNameProps;
-        } else {
-            return to;
-        }
-    }
 
     const fromLocationSelected = async () => {
         let fromDest = await AsyncStorage.getItem("from");
@@ -86,13 +78,6 @@ function PreferenceMenu (props) {
 
     return (
         <View style={styles.container}>
-
-            <View style={{ width: "100%", height: "32%", backgroundColor: "#353A50" }}></View>
-
-            <View style={styles.imageContainer}>
-                <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
-            </View>
-
             <Text style={styles.mainLabel}>Preferences</Text>
             <View style={styles.containerOfButtons1}>
                 <View style={styles.labelContainer}>
@@ -164,7 +149,7 @@ function PreferenceMenu (props) {
                 </Button>
             </View>
 
-            <Button transparent style={styles.routeButton} ><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            {/* <Button transparent style={styles.routeButton} ><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button> */}
 
             <View style={styles.backArrowContainer}>
                 {getDirection === "false" &&
@@ -174,38 +159,6 @@ function PreferenceMenu (props) {
                 }
             </View>
 
-            <View style={styles.searchbarContainer}>
-                <SearchableDropdown
-                    onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setFrom(item)}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor={"#000"}
-                    items={data}
-                    placeholder="Current Location"
-                    resetValue={false}
-
-                />
-                <View style={{ width: 100, height: "3%" }}>
-
-                </View>
-                <SearchableDropdown
-                    onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setFrom(item)}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor={"#000"}
-                    items={data}
-                    placeholder={selectDestinationPath()}
-                    resetValue={false}
-                />
-            </View>
         </View >
     );
 }
@@ -220,10 +173,10 @@ export const styles = StyleSheet.create({
     mainLabel: {
         color: "#FFFFFF",
         position: "absolute",
-        fontSize: 20,
+        fontSize: 25,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "33%"
+        top: "15%" //33%
     },
     shortLabel: {
         position: "absolute",
@@ -286,7 +239,7 @@ export const styles = StyleSheet.create({
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "50%",
+        bottom: "65%", //50%
     },
     containerOfButtons2: {
         position: "absolute",
@@ -295,7 +248,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "32.5%"
+        bottom: "45.5%" //32.5%
     },
     containerOfButtons3: {
         position: "absolute",
@@ -303,7 +256,7 @@ export const styles = StyleSheet.create({
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "15%"
+        bottom: "25%" //15%
     },
     icon: {
         position: "absolute",
@@ -403,10 +356,11 @@ export const styles = StyleSheet.create({
         width: "90%",
         height: "8%",
         fontSize: 25,
-        bottom: "8%",
+        // bottom: "8%",
         justifyContent: "center",
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
+        top: "80%"
     },
     imageContainer: {
         width: "100%",
