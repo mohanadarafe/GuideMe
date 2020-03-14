@@ -4,7 +4,6 @@ import { Icon, Button } from "native-base";
 import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
-import { MoreDetails } from "../screens/MoreDetails";
 
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
@@ -23,34 +22,15 @@ function fetchData () {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-function PreferenceMenu (props) {
+function PreferenceMenu () {
 
     const [data, setData] = React.useState();
-    const [to, setTo] = React.useState("");
-    const [from, setFrom] = React.useState("");
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [backArrow, setBackArrow] = React.useState(false);
     const [getDirection, setgetDirection] = React.useState("false");
-    const [userType, setUserType] = React.useState("");
-    const [mobilityReduced, setMobilityReduced] = React.useState(false);
-    const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
-    const [travelType, setTravelType] = React.useState(false);
 
-
-    const fromLocationSelected = async () => {
-        let fromDest = await AsyncStorage.getItem("from");
-        setFrom(fromDest);
-    };
-
-    const toLocationSelected = async () => {
-        let dest = await AsyncStorage.getItem("destination");
-        setTo(dest);
-    };
-
-    const getBuildingSelected = async () => {
-        let name = await AsyncStorage.getItem("buildingSelected");
-        setSelectedBuilding(name);
-    };
+    // const [userType, setUserType] = React.useState("");
+    // const [mobilityReduced, setMobilityReduced] = React.useState(false);
+    // const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
+    // const [travelType, setTravelType] = React.useState(false);
 
     const getDirectionFunction = async () => {
         let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
@@ -60,25 +40,15 @@ function PreferenceMenu (props) {
     useEffect(() => {
         const intervalId = setInterval(() => {
             setData(fetchData());
-            fromLocationSelected();
-            toLocationSelected();
-            getBuildingSelected();
             getDirectionFunction();
         }, 1);
         return () => clearInterval(intervalId);
     });
 
-    if (backArrow && props.backToMoreDetails === true) {
-        return (
-            <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} />
-            </View>
-        );
-    }
-
     return (
         <View style={styles.container}>
             <Text style={styles.mainLabel}>Preferences</Text>
+
             <View style={styles.containerOfButtons1}>
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>I am: </Text>
@@ -108,6 +78,7 @@ function PreferenceMenu (props) {
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
+
             <View style={styles.containerOfButtons3}>
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
@@ -119,7 +90,6 @@ function PreferenceMenu (props) {
                     <View style={styles.iconLabelContainer}>
                         <Text style={styles.buttonLabel}>Car</Text>
                     </View>
-
                 </Button>
                 <Button transparent style={styles.buttonContainerMOT} >
                     <View style={styles.iconContainer}>
@@ -129,7 +99,6 @@ function PreferenceMenu (props) {
                         <Text style={styles.buttonLabel}>Walking</Text>
                     </View>
                 </Button>
-
                 <Button transparent style={styles.buttonContainerMOT}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
@@ -138,7 +107,6 @@ function PreferenceMenu (props) {
                         <Text style={styles.buttonLabel}>Bus</Text>
                     </View>
                 </Button>
-
                 <Button transparent style={styles.buttonContainerMOT}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bus" style={styles.icon}></Icon>
@@ -149,15 +117,16 @@ function PreferenceMenu (props) {
                 </Button>
             </View>
 
-            {/* <Button transparent style={styles.routeButton} ><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button> */}
-
-            <View style={styles.backArrowContainer}>
-                {getDirection === "false" &&
-                    <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
-                        <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                    </Button>
-                }
-            </View>
+            <View style={styles.containerOfDisclaimer}>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.shortLabel}>Disclaimer: </Text>
+                </View>
+                <View style={styles.disclaimerTextContainer}>
+                    <Text style={styles.disclaimerText}>The Concordia shuttle bus offers you a free ride between the SGW and
+                        Loyola campus. However, the services are reserved for students with valid ID cards
+                        and buses are wheelchair accessible.</Text>
+                </View>
+            </View >
 
         </View >
     );
@@ -176,7 +145,7 @@ export const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "15%" //33%
+        top: "15%"
     },
     shortLabel: {
         position: "absolute",
@@ -184,7 +153,6 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        opacity: 0.3,
     },
     buttonContainer: {
         height: 80,
@@ -239,7 +207,7 @@ export const styles = StyleSheet.create({
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "65%", //50%
+        bottom: "62%"
     },
     containerOfButtons2: {
         position: "absolute",
@@ -248,7 +216,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "45.5%" //32.5%
+        bottom: "41%"
     },
     containerOfButtons3: {
         position: "absolute",
@@ -256,92 +224,39 @@ export const styles = StyleSheet.create({
         height: "15%",
         flexDirection: "row",
         justifyContent: "center",
-        bottom: "25%" //15%
+        bottom: "21%"
+    },
+    containerOfDisclaimer: {
+        position: "absolute",
+        width: "100%",
+        height: "15%",
+        flexDirection: "row",
+        justifyContent: "center",
+        bottom: "1%",
+        flexShrink: 1,
+    },
+    disclaimerTextContainer: {
+        position: "absolute",
+        width: "90%",
+        flexDirection: "row",
+        justifyContent: "center",
+        flexShrink: 1,
+        bottom: "40%"
+    },
+    disclaimerText: {
+        flex: 1,
+        flexWrap: "wrap",
+        color: "#919090",
+        fontSize: 10,
+        fontFamily: "encodeSansExpanded",
+        flexShrink: 1,
+        textAlign: "left"
     },
     icon: {
         position: "absolute",
         color: "#FFFFFF",
         alignSelf: "center",
         fontSize: 35
-    },
-    textContainer: {
-        position: "absolute",
-        backgroundColor: "#ffc0cb",
-        width: "100%",
-        height: "15%",
-        flexDirection: "row",
-        justifyContent: "center",
-        bottom: "-10%"
-    },
-    searchbarContainer: {
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignContent: "center",
-        alignItems: "center",
-        top: "16%"
-    },
-    textInputStyle: {
-        padding: 12,
-        borderWidth: 1,
-        borderLeftWidth: 0,
-        borderColor: "#ccc",
-        backgroundColor: "#FFFFFF",
-        fontFamily: "encodeSansExpanded"
-    },
-    containerStyle: {
-        width: "90%"
-    },
-    itemStyle: {
-        padding: 10,
-        marginTop: 2,
-        backgroundColor: "#FAF9F8",
-        borderColor: "#bbb",
-        borderWidth: 1,
-        borderRadius: 10,
-    },
-    itemTextStyle: {
-        color: "#222",
-        fontFamily: "encodeSansExpanded"
-    },
-    itemsContainerStyle: {
-        maxHeight: "60%",
-    },
-    backArrow: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        left: "10%"
-    },
-    backArrowContainer: {
-        position: "absolute",
-        width: "100%",
-        height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
-    },
-    moreDetails: {
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        backgroundColor: "#2A2E43",
-        alignItems: "center",
-        justifyContent: "space-between"
-    },
-    bottomMenu: {
-        width: "100%",
-        height: 350,
-        position: "absolute",
-        borderRadius: 30.5,
-        backgroundColor: "#2A2E43",
-        bottom: -275
     },
     iconContainer: {
         width: "100%",
@@ -351,29 +266,6 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "25%",
         bottom: "5%"
-    },
-    routeButton: {
-        width: "90%",
-        height: "8%",
-        fontSize: 25,
-        // bottom: "8%",
-        justifyContent: "center",
-        backgroundColor: "#3ACCE1",
-        borderRadius: 10,
-        top: "80%"
-    },
-    imageContainer: {
-        width: "100%",
-        height: "32%",
-        top: "0%",
-        position: "absolute",
-        opacity: 0.3
-    },
-    buildingImage: {
-        width: "100%",
-        height: "100%",
-        top: "0%",
-        position: "relative"
     },
 });
 
