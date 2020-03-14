@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { MoreDetails } from "../../screens/MoreDetails";
+import MoreDetails from "../../screens/MoreDetails";
 import { findByTestAtrr } from "../../utils/Index";
 
 const setUp = (props = {}) => {
