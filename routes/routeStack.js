@@ -1,10 +1,16 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import HomeMap from "../screens/Map";
-import Directions from "../screens/Directions";
+import MapDirections from "../screens/Directions";
 import MoreDetails from "../screens/MoreDetails";
 // Add screens here
 const screens = {
+    Directions: {
+        screen: MapDirections,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
     Map: {
         screen: HomeMap,
         navigationOptions: {
@@ -13,9 +19,6 @@ const screens = {
     },
     buildingMoreDetails: {
         screen: MoreDetails
-    },
-    MapDirections: {
-        screen: Directions
     }
 };
 

@@ -83,7 +83,7 @@ function MoreDetails (props) {
     const [data, setData] = React.useState();
 
     const getDirectionScreen = () => {
-        props.navigation.navigate("MapDirections");
+        props.navigation.navigate("Directions");
     }
     const getBuildingInfo = buildingData();
     var departments = [];

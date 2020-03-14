@@ -42,6 +42,9 @@ function Directions(props) {
         };
         mapRef.current.animateToRegion(region, 1000);
     }
+    const pressHandler = () => {
+        props.navigation.goBack();
+    }
 
     // useEffect(() => {
     //     const fetchData = async () =>  {
@@ -93,8 +96,10 @@ function Directions(props) {
                 /> */}
             </MapView>
             <View style={styles.navigationHeader}>
-                <View style={{ top: "15%" }}>
-                    <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
+                <View style={{ top: "25%" }}>
+                    <TouchableOpacity onPress = {pressHandler}>                    
+                        <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
+                    </TouchableOpacity>
                     <View style={styles.directionText}>
                         <Text style={styles.DirectionTextHeader}>Route Directions</Text>
                         <View style={styles.lineHeader}></View>
