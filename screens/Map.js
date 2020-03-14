@@ -33,7 +33,7 @@ function Map ({navigation}) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
-    //console.log("map pressed"+mapPressed);
+
     AsyncStorage.setItem("mapPressed", mapPressed);
 
     const campusSelected = async () => {
