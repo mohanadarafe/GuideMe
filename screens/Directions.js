@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
-import { View, Button, Text, Icon } from "native-base";
+import { View, Text, Icon } from "native-base";
 import CurrentLocationButton from "../components/CurrentLocationButton";
 import PolyLine from "@mapbox/polyline";
+import PropTypes from "prop-types";
+import HTML from "react-native-render-html";
 
 const mapPosition = {
     sgwCoord: {
@@ -131,6 +133,7 @@ function Directions(props) {
      * TODO: Write on the View the proper instructions and make it dynamic (change instructions) with the clicks
      *       and zoom the mapview accordingly (fitToCoordinates).
      */
+    const htmlText = "Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b>";
     return (
         <View>
             <MapView
@@ -158,9 +161,12 @@ function Directions(props) {
                     <TouchableOpacity onPress = {goBackPressHandler}>                    
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
-                    <View style={styles.directionText}>
-                        <Text style={styles.DirectionTextHeader}>Route Directions</Text>
+                    <View style={styles.directionTextHeader}>
+                        <Text style={styles.DirectionTextHeaderStyle}>Route Directions</Text>
                         <View style={styles.lineHeader}></View>
+                    </View>
+                    <View style = {styles.detailedInstructions}>
+                    <HTML html={htmlText} />
                     </View>
                 </View>
             </View>
@@ -187,15 +193,16 @@ export const styles = StyleSheet.create({
     navigationHeader: {
         width: "100%",
         height: "25%",
+        flex: 1,
         flexDirection: "column",
         backgroundColor: "#2A2E43",
         position: "absolute"
     },
-    directionText: {
+    directionTextHeader: {
         justifyContent: "center",
         alignItems: "center"
     },
-    DirectionTextHeader: {
+    DirectionTextHeaderStyle: {
         color: "white",
         fontSize: 25
     },
@@ -232,6 +239,13 @@ export const styles = StyleSheet.create({
         position: "absolute",
         top: "80%",
         left: "80%"
+    },
+    detailedInstructions: {
+        top: "5%",
+        height: "50%",
+        width: "100%",
+        backgroundColor: "#2A2E43",
+        // flexDirection: "row"
     }
 
 });
