@@ -30,13 +30,13 @@ function BottomMenu ({ navigation }) {
         setSelectedBuilding(name);
     };
 
-    const searchItemSelected = async () => {
+    const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("destination");
         setDestination(searchItem);
     };
 
     //TODO: Will be used to detect when a user pressed on the map view
-    const pressingOnMap = async () => {
+    const getMapPressed = async () => {
         let pressed = await AsyncStorage.getItem("mapPressed");
         setmapPressed(pressed);
     };
@@ -44,8 +44,8 @@ function BottomMenu ({ navigation }) {
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
-            searchItemSelected();
-            pressingOnMap();
+            getDestination();
+            getMapPressed();
         }, 1);
         return () => clearInterval(intervalId);
     });

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { View, Text, StyleSheet, AsyncStorage} from "react-native";
+import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "../components/MapData";
@@ -10,7 +10,7 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
 
-function fetchData() {
+function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
@@ -22,11 +22,11 @@ function fetchData() {
  * The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
  * is set automatically (but can be modified) and the "to" contains the destination
  */
-DoubleSearch.propTypes ={
+DoubleSearch.propTypes = {
     navigation: PropTypes.object
 };
 
-function DoubleSearch(props) {
+function DoubleSearch (props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
@@ -44,20 +44,17 @@ function DoubleSearch(props) {
     };
 
     //TODO: The new "From" location entered by the user will be stored in the asyncStorage with this key
-    AsyncStorage.setItem("fromLocation",from.toString());
+    AsyncStorage.setItem("fromLocation", from.toString());
     // The new "To" destination can also be retrieved from the asyncStorage with this key
-    AsyncStorage.setItem("destination",to.toString());
+    AsyncStorage.setItem("destination", to.toString());
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            setData(fetchData());
-        }, 1);
-        return () => clearInterval(intervalId);
-    });
+        setData(fetchData());
+    }, []);
 
     return (
         <View style={styles.container}>
-            <View style={styles.topBackground}/>
+            <View style={styles.topBackground} />
 
             <View style={styles.svgContainer}>
                 <DoubleSearchSVG />
@@ -66,7 +63,7 @@ function DoubleSearch(props) {
                 <Text style={styles.titleLabel}>Starting Point & Destination</Text>
                 <Text style={styles.searchBarLabels}>From: </Text>
                 <SearchableDropdown
-                    onTextChange={val => val} 
+                    onTextChange={val => val}
                     onItemSelect={item => setFrom(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
@@ -75,7 +72,7 @@ function DoubleSearch(props) {
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
                     items={data}
-                    placeholder="Current Location" 
+                    placeholder="Current Location"
                     resetValue={false}
                 />
                 <View style={{ width: "100%", height: "3%" }}></View>
@@ -111,17 +108,18 @@ export const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#2A2E43"
     },
-    topBackground:{
+    topBackground: {
         width: "100%",
-         height: "43%",
-        backgroundColor: "#353A50" 
+        height: "43%",
+        backgroundColor: "#353A50"
     },
     titleLabel: {
         color: "white",
         fontSize: 20,
         fontFamily: "encodeSansExpanded",
         paddingBottom: 10,
-        bottom: "2%"
+        bottom: "2%",
+        fontWeight: "bold"
     },
     searchbarContainer: {
         position: "absolute",
