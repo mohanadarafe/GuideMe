@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Button, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
+import { BottomMenu } from "../components/BottomMenu";
 
 const mapPosition = {
     sgwCoord: {
@@ -27,12 +28,14 @@ const mapPosition = {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function PreviewDirections (props) {
+function PreviewDirections(props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
+    const [previewMode, setPreviewMode] = React.useState(true);
     const [detailedInstructions, setDetailedInstructions] = React.useState();
     const [directionRegion, setDirectionRegion] = React.useState(props.initialRegion);
     const [backArrow, setBackArrow] = React.useState(false);
+
     const mapRef = useRef(null);
 
     const handleMapPress = () => {
@@ -44,7 +47,7 @@ function PreviewDirections (props) {
         };
         mapRef.current.animateToRegion(region, 1000);
     };
-    const pressHandler = () => {
+    const goBackPressHandler = () => {
         props.navigation.goBack();
     };
 
@@ -106,23 +109,38 @@ function PreviewDirections (props) {
                 strokeColor = "pink"
                 /> */}
             </MapView>
-            <View style={styles.backButtonContainer}>
-                <TouchableOpacity onPress={pressHandler}>
-                    <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
-                </TouchableOpacity>
-            </View>
-            {/* <View style={styles.navigationHeader}>
+
+            <View style={styles.navigationHeader}>
                 <View style={{ top: "25%" }}>
-                    <TouchableOpacity onPress={pressHandler}>
+                    <TouchableOpacity onPress={goBackPressHandler}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
+
                     <View style={styles.directionText}>
                         <Text style={styles.DirectionTextHeader}>Route Directions</Text>
-                        <View style={styles.lineHeader}></View>
+                            <View style={{ width: "100%", height: "50%", top: "10%" }}>
+                                <View style={styles.directionLabelContainer}>
+                                    
+                                    <View style={styles.iconContainer}>
+                            <Icon name="md-locate" style={styles.icon}></Icon>
+                            <Text style={styles.directionLabels}>From: Current Location </Text>
+                        </View>
+                                </View>
+                                <View style={styles.directionLabelContainer}>
+                                    
+                                    <View style={styles.iconContainer}>
+                            <Icon  type="Feather" name="map-pin"  style={styles.icon}></Icon>
+                            <Text style={styles.directionLabels}>To: Hall Building</Text>
+                            
+                        </View>
+                                </View>
+                            </View>
                     </View>
                 </View>
-            </View> */}
-            <View style={styles.bottomArrowDirectionContainer}>
+            </View>
+
+
+            {/* <View style={styles.bottomArrowDirectionContainer}>
                 <TouchableOpacity style={styles.arrowDirection}>
                     <View>
                         <Icon name="arrow-back"></Icon>
@@ -133,7 +151,9 @@ function PreviewDirections (props) {
                         <Icon name="arrow-forward"></Icon>
                     </View>
                 </TouchableOpacity>
-            </View>
+            </View> */}
+
+            <BottomMenu previewMode={previewMode} />
         </View>
     );
 }
@@ -162,6 +182,26 @@ export const styles = StyleSheet.create({
     DirectionTextHeader: {
         color: "white",
         fontSize: 25
+    },
+
+    DirectionTextHeader: {
+        color: "#FFFFFF",
+        fontSize: 25,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+    },
+    directionLabels: {
+        color: "#FFFFFF",
+        fontSize: 15,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+    },
+    directionLabelContainer: {
+        width: "100%",
+        height: "50%",
+        flexDirection: "column",
+        justifyContent: "center",
+        left: "25%"
     },
     lineHeader: {
         borderBottomColor: "white",
@@ -202,7 +242,12 @@ export const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "#2A2E43",
         borderRadius: 5
-    }
+    },
+    icon: {
+        position: "absolute",
+        color: "#FFFFFF",
+        alignSelf: "center"
+    },
 
 });
 

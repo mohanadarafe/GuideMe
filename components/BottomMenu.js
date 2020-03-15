@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
-import MoreDetails  from "../screens/MoreDetails";
+import MoreDetails from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
+import {PreferenceMenu} from "./PreferenceMenu";
+
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-function BottomMenu ({navigation}) {
+function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -37,14 +39,46 @@ function BottomMenu ({navigation}) {
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} navigation = {navigation}/>
+                <MoreDetails name={selectedBuilding} navigation={props.navigation} />
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
             </View>
         );
     }
 
+    if (iconSelected) {
+        return (
+            <View style={styles.moreDetails}>
+                <PreferenceMenu/>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
+            </View>
+        );
+    }
+
+    else if (iconSelected && !selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
+            </View>
+        );
+    }
+
+    if (props.previewMode) {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>17 min (10.9km)</Text>
+                <Text style={styles.shortLabel}>to: Concordia University - SGW </Text>
+                <View style={styles.btnGetDirection}>
+                    <Button style={styles.btnGetDirection, { left: "100%", }} color={"#3ACCE1"} uppercase={false} mode="contained">
+                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+
     if (getInside) {
-        return(
+        return (
             <View style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
@@ -63,13 +97,7 @@ function BottomMenu ({navigation}) {
         );
     }
 
-    else if (iconSelected && !selectedBuilding) {
-        return (
-            <View style={styles.moreDetails}>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
+   
 
     else if (!selectedBuilding) {
         return (
@@ -147,6 +175,12 @@ export const styles = StyleSheet.create({
         top: "5.5%",
         color: "#FFFFFF"
     },
+    btnGetDirection: {
+        position: "absolute",
+        left: "60%",
+        top: "5.5%",
+        color: "#FFFFFF"
+    },
     btnleave: {
         position: "absolute",
         left: "62%",
@@ -154,7 +188,7 @@ export const styles = StyleSheet.create({
         color: "#FFFFFF",
     },
     btnText: {
-        color:"#FFFFFF", 
+        color: "#FFFFFF",
         fontFamily: "encodeSansExpanded"
     },
     mainLabel: {
@@ -185,4 +219,4 @@ export const styles = StyleSheet.create({
     }
 });
 
-export {BottomMenu};
+export { BottomMenu };
