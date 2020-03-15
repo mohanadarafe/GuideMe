@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Icon, Button } from "native-base";
 
 /**
@@ -14,12 +14,9 @@ import { Icon, Button } from "native-base";
  * his method of transport and so on.
  */
 
-
- //TODO: Link this file to the PreviewDirection.js
+//TODO: Link this file to the PreviewDirection.js
 
 function PreferenceMenu () {
-
-
     // const [userType, setUserType] = React.useState("");
     // const [mobilityReduced, setMobilityReduced] = React.useState(false);
     // const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
@@ -103,7 +100,7 @@ function PreferenceMenu () {
                 </View>
                 <View style={styles.disclaimerTextContainer}>
                     <Text style={styles.disclaimerText}>The Concordia shuttle bus offers you a free ride between the SGW and
-                        Loyola campus. However, the services are reserved for students with valid ID cards
+                    Loyola campus. However, the services are reserved for students with valid ID cards
                         and buses are wheelchair accessible.</Text>
                 </View>
             </View >

@@ -85,7 +85,7 @@ function MoreDetails (props) {
     const [data, setData] = React.useState();
 
     const goToDoubleSearchBar = () => {
-        props.navigation.navigate("DoubleSearch", {destinationName: props.name});
+        props.navigation.navigate("DoubleSearch", { destinationName: props.name });
     };
 
     const getBuildingInfo = buildingData();
@@ -324,4 +324,5 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between"
     }
 });
+
 export default MoreDetails;

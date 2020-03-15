@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
-import MoreDetails  from "../screens/MoreDetails";
+import MoreDetails from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
@@ -12,7 +12,7 @@ import { FloorMenu } from "./FloorMenu";
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
 
-function BottomMenu ({navigation}) {
+function BottomMenu ({ navigation }) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -35,7 +35,6 @@ function BottomMenu ({navigation}) {
         setDestination(searchItem);
     };
 
-
     //TODO: Will be used to detect when a user pressed on the map view
     const pressingOnMap = async () => {
         let pressed = await AsyncStorage.getItem("mapPressed");
@@ -54,7 +53,7 @@ function BottomMenu ({navigation}) {
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} navigation = {navigation}/>
+                <MoreDetails name={selectedBuilding} navigation={navigation} />
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
             </View>
         );
@@ -68,7 +67,7 @@ function BottomMenu ({navigation}) {
     }
 
     const goToDoubleSearchBar = () => {
-        navigation.navigate("DoubleSearch",{destinationName: destination});
+        navigation.navigate("DoubleSearch", { destinationName: destination });
     };
 
     if (getInside) {
@@ -227,4 +226,4 @@ export const styles = StyleSheet.create({
     }
 });
 
-export {BottomMenu};
+export { BottomMenu };

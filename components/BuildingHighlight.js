@@ -18,7 +18,7 @@ function BuildingHighlight () {
             <Polygon
                 coordinates={coord.h.coordinates}
                 tappable={true}
-                onPress={()=>{setBuildingName("Hall Building");}}
+                onPress={() => { setBuildingName("Hall Building"); }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 

@@ -4,6 +4,8 @@ import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Button, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import { BottomMenu } from "./BottomMenu";
+import PropTypes from "prop-types";
+
 
 const mapPosition = {
     sgwCoord: {
@@ -20,14 +22,13 @@ const mapPosition = {
     }
 };
 
-
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Directions(props) {
+function Directions (props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructions, setDetailedInstructions] = React.useState();
@@ -90,17 +91,16 @@ function Directions(props) {
                 showsBuildings={true}
                 onPress={onLayout}
             >
-
                 {/* <Polyline
                 coordinates = {decodedPolylines}
                 strokeWidth = {2}
                 strokeColor = "pink"
                 /> */}
             </MapView>
-          
+
             <View style={styles.navigationHeader}>
                 <View style={{ top: "25%" }}>
-                <TouchableOpacity onPress = {goBackPressHandler}>                    
+                    <TouchableOpacity onPress={goBackPressHandler}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
 
@@ -123,11 +123,16 @@ function Directions(props) {
                     </View>
                 </TouchableOpacity>
             </View>
-
             {/* <BottomMenu/> */}
         </View>
     );
 }
+
+Directions.propTypes = {
+    navigation: PropTypes.any,
+    goBack: PropTypes.func,
+    initialRegion: PropTypes.any
+};
 
 export const styles = StyleSheet.create({
     map: {
@@ -177,7 +182,6 @@ export const styles = StyleSheet.create({
         borderColor: "#2A2E43",
         borderRadius: 5
     }
-
 });
 
 export default Directions;
