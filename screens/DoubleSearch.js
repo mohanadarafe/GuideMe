@@ -44,9 +44,9 @@ function DoubleSearch(props) {
     };
 
     //TODO: The new "From" location entered by the user will be stored in the asyncStorage with this key
-    AsyncStorage.setItem("fromLocation",from);
+    AsyncStorage.setItem("fromLocation",from.toString());
     // The new "To" destination can also be retrieved from the asyncStorage with this key
-    AsyncStorage.setItem("destination",to);
+    AsyncStorage.setItem("destination",to.toString());
 
     useEffect(() => {
         const intervalId = setInterval(() => {
