@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Button, Text, Icon } from "native-base";
+import CurrentLocationButton from "../components/CurrentLocationButton";
 import PolyLine from "@mapbox/polyline";
 
 const mapPosition = {
@@ -99,7 +100,6 @@ function Directions(props) {
     }
 
 
-
     const initMapRegion = () => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates([
@@ -110,21 +110,21 @@ function Directions(props) {
 
     useEffect(() => {
 
-        const fetchData = async () =>  {
-            try{
-                // The following line is commented to avoid unecessary requests on the direcitons API. 
-                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                // let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
-                const jsonResponse = await resp.json();
-                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
-                setDecodedPolylines(decodedPoints);
-                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
-                setdetailedInstructionsObject(filteredInstruction);
-            } catch(error) {
-                console.log(error);
-            }
-        }
-        fetchData();
+        // const fetchData = async () =>  {
+        //     try{
+        //         // The following line is commented to avoid unecessary requests on the direcitons API. 
+        //         // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+        //         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+        //         const jsonResponse = await resp.json();
+        //         const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
+        //         setDecodedPolylines(decodedPoints);
+        //         let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+        //         setdetailedInstructionsObject(filteredInstruction);
+        //     } catch(error) {
+        //         console.log(error);
+        //     }
+        // }
+        // fetchData();
     }, []);
 
     /**
@@ -150,6 +150,9 @@ function Directions(props) {
                 strokeColor = "pink"
                 />
             </MapView>
+            <View style ={styles.circleCurrentLocation}>
+                <CurrentLocationButton mapReference ={mapRef}/>
+            </View>
             <View style={styles.navigationHeader}>
                 <View style={{ top: "25%" }}>
                     <TouchableOpacity onPress = {goBackPressHandler}>                    
@@ -224,6 +227,11 @@ export const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: "#2A2E43",
         borderRadius: 5
+    },
+    circleCurrentLocation: {
+        position: "absolute",
+        top: "80%",
+        left: "80%"
     }
 
 });
