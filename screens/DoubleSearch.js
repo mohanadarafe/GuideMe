@@ -23,7 +23,7 @@ function fetchData() {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 DoubleSearch.propTypes ={
-    navigation: PropTypes.string
+    navigation: PropTypes.object
 };
 
 function DoubleSearch(props) {
