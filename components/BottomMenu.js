@@ -5,27 +5,25 @@ import MoreDetails  from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-import { DoubleSearch } from "../screens/DoubleSearch";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
+
 function BottomMenu ({navigation}) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
-    const [getDirection, setgetDirection] = React.useState(false);
     const [mapPressed, setmapPressed] = React.useState("");
 
     CurrentLocation();
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     AsyncStorage.setItem("getInsideBuilding", getInside.toString());
-    AsyncStorage.setItem("getDirectionButtonPressed", getDirection.toString());
 
     const getBuildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
@@ -37,6 +35,8 @@ function BottomMenu ({navigation}) {
         setDestination(searchItem);
     };
 
+
+    //TODO: Will be used to detect when a user pressed on the map view
     const pressingOnMap = async () => {
         let pressed = await AsyncStorage.getItem("mapPressed");
         setmapPressed(pressed);
@@ -67,14 +67,9 @@ function BottomMenu ({navigation}) {
         );
     }
 
-    if (getDirection) {
-        return (
-            <View style={styles.moreDetails}>
-                <DoubleSearch navigation = {navigation}/>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); setgetDirection(false); }} />
-            </View>
-        );
-    }
+    const goToDoubleSearchBar = () => {
+        navigation.navigate("DoubleSearch",{destinationName: destination});
+    };
 
     if (getInside) {
         return (
@@ -96,7 +91,7 @@ function BottomMenu ({navigation}) {
         );
     }
 
-    if (selectedBuilding && selectedBuilding != "null") {
+    if (selectedBuilding) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
@@ -113,14 +108,14 @@ function BottomMenu ({navigation}) {
         );
     }
 
-    else if (destination != "null") {
+    else if (destination) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{destination}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
-                    <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => { setgetDirection(true); }}>
+                    <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
                         <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
                     </Button>
                 </View>
@@ -208,7 +203,9 @@ export const styles = StyleSheet.create({
         left: "12.5%",
         color: "#FFFFFF",
         fontSize: 20,
-        fontFamily: "encodeSansExpanded"
+        fontFamily: "encodeSansExpanded",
+        height: "9%",
+        width: "45%"
     },
     shortLabel: {
         position: "absolute",

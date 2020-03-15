@@ -35,6 +35,7 @@ function Map ({ navigation }) {
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
 
+    //TODO: To have a functionality for when the user presses on the map
     AsyncStorage.setItem("mapPressed", mapPressed);
 
     const campusSelected = async () => {

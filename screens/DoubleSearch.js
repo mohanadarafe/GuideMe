@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, AsyncStorage, Image } from "react-native";
+import PropTypes from "prop-types";
+import { View, Text, StyleSheet, AsyncStorage} from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "../components/MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
-import MoreDetails from "./MoreDetails";
-import { JMSBFloorX } from "../assets/floormaps/mb/JMSBFloorX";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
@@ -19,90 +18,55 @@ function fetchData() {
 /**
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
  * US14 - As a user, I should be able to set my current location as the starting point.
- * US18 - As a user, I should be able to choose “walking” as a means of transportation.
- * US19 - As a user, I should be able to choose public transport as a means of transportation.
- * US20 - As a user, I should be able to choose my car as a means of transportation.
- * US21 - As a user, I should be able to choose Concordia Shuttle as a means of transportation.
  *
  * The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
  * is set automatically (but can be modified) and the "to" contains the destination
  */
+DoubleSearch.propTypes ={
+    navigation: PropTypes.string
+};
 
 function DoubleSearch(props) {
 
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [backArrow, setBackArrow] = React.useState(false);
-    const [getDirection, setgetDirection] = React.useState("false");
 
-    function selectDestinationPath() {
-        if (props.backToMoreDetails === true) {
-            return props.buildingNameProps;
-        } else {
-            return to;
-        }
-    }
-
+    const goToBackToMoreDetails = () => {
+        props.navigation.goBack();
+    };
     const getDirectionScreen = () => {
         props.navigation.navigate("MapDirections");
-    }
-
-    const fromLocationSelected = async () => {
-        let fromDest = await AsyncStorage.getItem("from");
-        setFrom(fromDest);
     };
 
-    const toLocationSelected = async () => {
-        let dest = await AsyncStorage.getItem("destination");
-        setTo(dest);
+    const selectDestinationPath = () => {
+        return props.navigation.getParam("destinationName", "null");
     };
 
-    const getBuildingSelected = async () => {
-        let name = await AsyncStorage.getItem("buildingSelected");
-        setSelectedBuilding(name);
-    };
-
-    const getDirectionFunction = async () => {
-        let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
-        setgetDirection(getDirectionConst);
-    };
+    //TODO: The new "From" location entered by the user will be stored in the asyncStorage with this key
+    AsyncStorage.setItem("fromLocation",from);
+    // The new "To" destination can also be retrieved from the asyncStorage with this key
+    AsyncStorage.setItem("destination",to);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             setData(fetchData());
-            fromLocationSelected();
-            toLocationSelected();
-            getBuildingSelected();
-            getDirectionFunction();
         }, 1);
         return () => clearInterval(intervalId);
     });
 
-    if (backArrow && props.backToMoreDetails === true) {
-        return (
-            <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} />
-            </View>
-        );
-    }
-
     return (
         <View style={styles.container}>
-
-            <View style={{ width: "100%", height: "45%", backgroundColor: "#353A50" }}></View>
+            <View style={styles.topBackground}/>
 
             <View style={styles.svgContainer}>
                 <DoubleSearchSVG />
             </View>
-
             <View style={styles.searchbarContainer}>
-                <Text style={{ color: "white", fontSize: 20, fontFamily: "encodeSansExpanded", paddingBottom: 10 }}>Starting Point & Destination</Text>
-                <Text style={styles.searchBarLabels}>To: </Text>
-
+                <Text style={styles.titleLabel}>Starting Point & Destination</Text>
+                <Text style={styles.searchBarLabels}>From: </Text>
                 <SearchableDropdown
-                    onTextChange={val => val} //This must be here (does nothing)
+                    onTextChange={val => val} 
                     onItemSelect={item => setFrom(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
@@ -111,16 +75,14 @@ function DoubleSearch(props) {
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
                     items={data}
-                    placeholder="Current Location"
+                    placeholder="Current Location" 
                     resetValue={false}
-
                 />
-
                 <View style={{ width: "100%", height: "3%" }}></View>
-                <Text style={styles.searchBarLabels}>From: </Text>
+                <Text style={styles.searchBarLabels}>To: </Text>
                 <SearchableDropdown
-                    onTextChange={val => val} //This must be here (does nothing)
-                    onItemSelect={item => setFrom(item)}
+                    onTextChange={val => val}
+                    onItemSelect={item => setTo(item)}
                     textInputStyle={styles.textInputStyle}
                     itemStyle={styles.itemStyle}
                     containerStyle={styles.containerStyle}
@@ -131,134 +93,35 @@ function DoubleSearch(props) {
                     placeholder={selectDestinationPath()}
                     resetValue={false}
                 />
-
             </View>
-
             <Button transparent style={styles.routeButton} onPress={getDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-
-
-
             <View style={styles.backArrowContainer}>
-                {getDirection === "false" &&
-                    <Button transparent style={styles.backArrow} onPress={() => { setBackArrow(true); }}>
-                        <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                    </Button>
-                }
+                <Button transparent style={styles.backArrow} onPress={goToBackToMoreDetails}>
+                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+                </Button>
             </View>
-
         </View >
     );
 }
-
 export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        backgroundColor: "#2A2E43"
     },
-    mainLabel: {
-        color: "#FFFFFF",
-        position: "absolute",
+    topBackground:{
+        width: "100%",
+         height: "43%",
+        backgroundColor: "#353A50" 
+    },
+    titleLabel: {
+        color: "white",
         fontSize: 20,
-        fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "33%"
-    },
-    shortLabel: {
-        position: "absolute",
-        color: "#FFFFFF",
-        fontSize: 16,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded",
-        opacity: 0.3,
-    },
-    buttonContainer: {
-        height: 80,
-        width: 80,
-        backgroundColor: "#353A50",
-        borderRadius: 10,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: "2%",
-        top: "25%",
-    },
-    buttonContainerMOT: {
-        height: 80,
-        width: 80,
-        backgroundColor: "#353A50",
-        borderRadius: 10,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        margin: "2%",
-        top: "8%",
-    },
-    buttonLabel: {
-        position: "absolute",
-        color: "#FFFFFF",
-        fontSize: 10,
-        fontFamily: "encodeSansExpanded",
-        width: "100%",
-        alignContent: "center",
-        justifyContent: "center",
-        textAlign: "center",
-        paddingHorizontal: 10
-    },
-    buttonLabelMobility: {
-        position: "absolute",
-        color: "#FFFFFF",
-        fontSize: 15,
-        fontFamily: "encodeSansExpanded",
-        width: "100%",
-        alignContent: "center",
-        justifyContent: "center",
-        textAlign: "center"
-    },
-    labelContainer: {
-        position: "absolute",
-        left: "5%"
-    },
-    containerOfButtons1: {
-        position: "absolute",
-        width: "100%",
-        height: "15%",
-        flexDirection: "row",
-        justifyContent: "center",
-        bottom: "50%",
-    },
-    containerOfButtons2: {
-        position: "absolute",
-        width: "100%",
-        height: "15%",
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        bottom: "32.5%"
-    },
-    containerOfButtons3: {
-        position: "absolute",
-        width: "100%",
-        height: "15%",
-        flexDirection: "row",
-        justifyContent: "center",
-        bottom: "15%"
-    },
-    icon: {
-        position: "absolute",
-        color: "#FFFFFF",
-        alignSelf: "center",
-        fontSize: 35
-    },
-    textContainer: {
-        position: "absolute",
-        backgroundColor: "#ffc0cb",
-        width: "100%",
-        height: "15%",
-        flexDirection: "row",
-        justifyContent: "center",
-        bottom: "-10%"
+        paddingBottom: 10,
+        bottom: "2%"
     },
     searchbarContainer: {
         position: "absolute",
@@ -268,7 +131,7 @@ export const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignContent: "center",
         alignItems: "center",
-        top: "16%"
+        top: "14%"
     },
     textInputStyle: {
         padding: 12,
@@ -322,22 +185,11 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
-    bottomMenu: {
-        width: "100%",
-        height: 350,
+    icon: {
         position: "absolute",
-        borderRadius: 30.5,
-        backgroundColor: "#2A2E43",
-        bottom: -275
-    },
-    iconContainer: {
-        width: "100%",
-        height: "60%",
-    },
-    iconLabelContainer: {
-        width: "100%",
-        height: "25%",
-        bottom: "5%"
+        color: "#FFFFFF",
+        alignSelf: "center",
+        fontSize: 35
     },
     routeButton: {
         width: "90%",
@@ -348,37 +200,21 @@ export const styles = StyleSheet.create({
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
     },
-    imageContainer: {
-        width: "100%",
-        height: "32%",
-        top: "0%",
-        position: "absolute",
-        opacity: 0.3
-    },
-    buildingImage: {
-        width: "100%",
-        height: "100%",
-        top: "0%",
-        position: "relative"
-    },
-
     searchBarLabels: {
         color: "#FFFFFF",
         opacity: 0.3,
         alignSelf: "flex-start",
         left: "8%",
         fontSize: 20,
-        paddingVertical: 10
+        paddingVertical: 10,
+        bottom: "2%"
     },
-
     svgContainer: {
         width: "100%",
-        top: "2%",
-        flex:1,
-        flexDirection:"row",
-        justifyContent:"center",
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "center",
     }
-
 });
 
-export { DoubleSearch };
+export default DoubleSearch;

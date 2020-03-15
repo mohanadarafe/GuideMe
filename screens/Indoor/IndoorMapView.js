@@ -26,7 +26,7 @@ function IndoorMapView() {
             getFloorSelected();
         }, 1);
         return () => clearInterval(intervalId);
-    })
+    });
 
     return (
         <View>
@@ -53,7 +53,7 @@ function IndoorMapView() {
                 </ScrollView>
             </ScrollView>
         </View>
-    )  
+    );  
 }
 
-export default IndoorMapView
+export default IndoorMapView;

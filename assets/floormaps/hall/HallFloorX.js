@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
-import Svg, { G, Path, Text, Rect, Use, Symbol, Defs } from "react-native-svg"
+import Svg, { G, Path, Text, Use, Symbol, Defs } from "react-native-svg";
 import { HallClass } from "./HallClassrooms/HallClass";
 
 export function HallFloorX() {
@@ -16,7 +16,7 @@ export function HallFloorX() {
       floorSelected();
     }, 100);
     return () => clearInterval(intervalId);
-  })
+  });
 
   return (
     <Svg width={1024} height={1024}>

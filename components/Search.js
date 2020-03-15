@@ -30,7 +30,7 @@ function Search () {
   let destinationName = destination.name;
 
   if (destinationName === undefined) {
-    destinationName = "null";
+    destinationName = "";
     AsyncStorage.setItem("destination", destinationName.toString());
     AsyncStorage.setItem("buildingSelected", buildingName.toString());
   }
@@ -41,8 +41,8 @@ function Search () {
 
   function destinationSetter (destination) {
     // resets the value of the buildingName label when on pressing on a searched item
-    setBuildingName("null");
     setDestination(destination);
+    setBuildingName("");
   }
 
   useEffect(() => {
@@ -50,7 +50,6 @@ function Search () {
   }, []);
 
   return (
-
     <View style={styles.container}>
       <View style={styles.buttonStyle}>
         <TouchableOpacity>

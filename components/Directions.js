@@ -3,6 +3,7 @@ import { StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Button, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
+import { BottomMenu } from "./BottomMenu";
 
 const mapPosition = {
     sgwCoord: {
@@ -41,7 +42,11 @@ function Directions(props) {
             longitudeDelta: 0.0421
         };
         mapRef.current.animateToRegion(region, 1000);
-    }
+    };
+
+    const goBackPressHandler = () => {
+        props.navigation.goBack();
+    };
 
     // useEffect(() => {
     //     const fetchData = async () =>  {
@@ -72,7 +77,7 @@ function Directions(props) {
                 { latitude: 33.9260206, longitude: 75.0173499 }, { latitude: 33.949817, longitude: 74.985655 }],
                 { edgePadding: { bottom: 300, right: 0, left: 0, top: 0 }, animated: true, });
         }, 2000);
-    }
+    };
     return (
         <View>
             <MapView
@@ -92,13 +97,18 @@ function Directions(props) {
                 strokeColor = "pink"
                 /> */}
             </MapView>
+          
             <View style={styles.navigationHeader}>
-                <View style={{ top: "15%" }}>
-                    <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
+                <View style={{ top: "25%" }}>
+                <TouchableOpacity onPress = {goBackPressHandler}>                    
+                        <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
+                    </TouchableOpacity>
+
                     <View style={styles.directionText}>
                         <Text style={styles.DirectionTextHeader}>Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View>
+
                 </View>
             </View>
             <View style={styles.bottomArrowDirectionContainer}>
@@ -113,6 +123,8 @@ function Directions(props) {
                     </View>
                 </TouchableOpacity>
             </View>
+
+            {/* <BottomMenu/> */}
         </View>
     );
 }
@@ -137,7 +149,7 @@ export const styles = StyleSheet.create({
         fontSize: 25
     },
     lineHeader: {
-        borderBottomColor: 'white',
+        borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
         top: "10%"

@@ -1,5 +1,5 @@
 import React from "react";
-import Svg, { G, Path, Rect, Ellipse, Circle } from "react-native-svg"
+import Svg, { G, Path, Rect, Ellipse, Circle } from "react-native-svg";
 
 export function DoubleSearchSVG () {
   return (

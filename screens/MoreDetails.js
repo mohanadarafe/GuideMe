@@ -7,9 +7,8 @@ import { Icon, Button } from "native-base";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
-import { PreferenceMenu } from "../components/PreferenceMenu";
 import { AppLoading } from "expo";
-import { DoubleSearch } from "./DoubleSearch";
+
 
 
 const renderSeparator = () => {
@@ -84,9 +83,10 @@ function createLists (data, departments, services, accesibility, number) {
 function MoreDetails (props) {
 
     const [data, setData] = React.useState();
-    const [getDirection, setGetDirection] = React.useState(false);
-    const [destination, setDestination] = React.useState("");
 
+    const goToDoubleSearchBar = () => {
+        props.navigation.navigate("DoubleSearch", {destinationName: props.name});
+    };
 
     const getBuildingInfo = buildingData();
     var departments = [];
@@ -99,14 +99,6 @@ function MoreDetails (props) {
     }, []);
 
     createLists(data, departments, services, accesibility, number);
-
-    if (getDirection) {
-        return (
-            <View style={styles.PreferenceMenu}>
-                <DoubleSearch navigation={props.navigation} buildingNameProps={props.name} backToMoreDetails={true} />
-            </View>
-        );
-    }
     if (data) {
         return (
             <View style={styles.container} data-test="MoreDetailsComponent">
@@ -132,7 +124,7 @@ function MoreDetails (props) {
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton} onPress={() => { setGetDirection(true); }}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>
@@ -177,17 +169,6 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         top: "21%"
     },
-    shortLabel: {
-        position: "absolute",
-        left: "5%",
-        top: "27%",
-        color: "#FFFFFF",
-        fontSize: 22,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded",
-        // opacity: 0.3
-    },
-
     reviewLabel: {
         position: "absolute",
         top: "27%",

@@ -3,6 +3,7 @@ import { createAppContainer } from "react-navigation";
 import HomeMap from "../screens/Map";
 import Directions from "../components/Directions";
 import MoreDetails from "../screens/MoreDetails";
+import DoubleSearch from "../screens/DoubleSearch";
 // Add screens here
 const screens = {
     Map: {
@@ -15,8 +16,17 @@ const screens = {
         screen: MoreDetails
     },
     MapDirections: {
-        screen: Directions
+        screen: Directions,
+        navigationOptions: {
+            headerShown: false
+        }  
     },
+    DoubleSearch: {
+        screen: DoubleSearch,
+        navigationOptions: {
+            headerShown: false
+        }
+    }
 };
 
 const HomeStack = createStackNavigator(screens);
