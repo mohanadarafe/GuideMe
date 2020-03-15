@@ -1,13 +1,12 @@
 import React from "react";
 import { JMSBFloorX } from '../../assets/floormaps/mb/JMSBFloorX.js';
-import renderer from 'react-test-renderer';
+import { Path } from "react-native-svg";
+import { shallow } from 'enzyme';
 
+describe('JMSB Floor X Asset coverage', () => {
+    const JMSBFloorXAssetWrapper = shallow(<JMSBFloorX />)
 
-describe("JMSB Floor X ", () => {
-
-    test('number of <Path>', () => {
-        const tree = renderer.create(<JMSBFloorX/>).toJSON();
-        expect(tree.children.length).toBe(19);
+    it('Should return the appropriate number of <Path> children', () => {
+        expect(JMSBFloorXAssetWrapper.find(Path).length).toBe(19);
     });
-
 });
