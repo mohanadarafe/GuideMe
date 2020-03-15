@@ -1,4 +1,4 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
@@ -7,6 +7,7 @@ import { BottomMenu } from "../components/BottomMenu";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
+import PropTypes from "prop-types";
 
 const mapPosition = {
     sgwCoord: {
@@ -29,9 +30,13 @@ const mapPosition = {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Map () {
+function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
+    const [mapPressed, setmapPressed] = React.useState("");
+
+    //TODO: To have a functionality for when the user presses on the map
+    AsyncStorage.setItem("mapPressed", mapPressed);
 
     const campusSelected = async () => {
         let tog = await AsyncStorage.getItem("toggle");
@@ -59,22 +64,28 @@ function Map () {
                         showsUserLocation={true}
                         showsCompass={true}
                         showsBuildings={true}
+                    // TODO: remove the dropdown list whenever you press on the map
+                    // onPress={() => setmapPressed("true")}
                     >
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
                     <Search />
-                </View> 
+                </View>
             }
             {getInsideBuild === "true" &&
                 <View>
                     <IndoorMapView />
                 </View>
             }
-            <BottomMenu />
+            <BottomMenu navigation={navigation} />
         </View>
     );
 }
+
+Map.propTypes = {
+    navigation: PropTypes.any,
+};
 
 export const styles = StyleSheet.create({
     map: {

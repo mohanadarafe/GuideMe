@@ -1,13 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
 import { AppLoading } from "expo";
+
+
 
 const renderSeparator = () => {
     return (
@@ -82,6 +84,10 @@ function MoreDetails (props) {
 
     const [data, setData] = React.useState();
 
+    const goToDoubleSearchBar = () => {
+        props.navigation.navigate("DoubleSearch", { destinationName: props.name });
+    };
+
     const getBuildingInfo = buildingData();
     var departments = [];
     var services = [];
@@ -93,7 +99,6 @@ function MoreDetails (props) {
     }, []);
 
     createLists(data, departments, services, accesibility, number);
-
     if (data) {
         return (
             <View style={styles.container} data-test="MoreDetailsComponent">
@@ -119,7 +124,7 @@ function MoreDetails (props) {
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>
@@ -143,21 +148,18 @@ function MoreDetails (props) {
                     />
                 </SafeAreaView>
 
-                <Text style={styles.shortLabel}>Description</Text>
             </View>
         );
     }
     return (<AppLoading />);
 }
 export const styles = StyleSheet.create({
-
     container: {
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
         width: "100%"
     },
-
     mainLabel: {
         color: "#FFFFFF",
         left: "5%",
@@ -165,36 +167,22 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "16%"
+        top: "21%"
     },
-
-    shortLabel: {
-        position: "absolute",
-        left: "5%",
-        top: "27%",
-        color: "#FFFFFF",
-        fontSize: 22,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded",
-        opacity: 0.3
-    },
-
     reviewLabel: {
         position: "absolute",
-        top: "21%",
+        top: "27%",
         left: "5%",
         color: "#FFFFFF",
         fontSize: 20,
         fontFamily: "encodeSansExpanded"
     },
-
     scrollTextContainer: {
         width: "100%",
         height: "32%",
         top: "32%",
         position: "absolute",
     },
-
     directionButton: {
         width: "90%",
         height: "8%",
@@ -204,123 +192,103 @@ export const styles = StyleSheet.create({
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
     },
-
     imageContainer: {
         width: "100%",
-        height: "25%",
+        height: "32%",
         top: "0%",
         position: "absolute",
         opacity: 0.3
     },
-
     buildingImage: {
         width: "100%",
         height: "100%",
         top: "0%",
         position: "relative"
     },
-
     mapButton: {
         bottom: "19%",
         height: "8%",
         width: "100%"
-
     },
-
     mapPin: {
         color: "#FFFFFF",
         position: "absolute",
     },
-
     mapPinLabel: {
         color: "#FFFFFF",
         fontSize: 13,
         fontFamily: "encodeSansExpanded",
         position: "absolute",
     },
-
     phoneButton: {
         bottom: "17%",
         height: "8%",
         width: "100%",
     },
-
     phone: {
         position: "absolute",
         color: "#FFFFFF",
         alignSelf: "center"
     },
-
     phoneLabel: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 13,
         fontFamily: "encodeSansExpanded"
     },
-
     iconContainer: {
         height: "100%",
         width: "16%",
         backgroundColor: "#353A50",
         borderRadius: 10,
         justifyContent: "center",
-
     },
-
     buttonTextContainer: {
         height: "100%",
         width: "80%",
         justifyContent: "center",
         alignSelf: "flex-end"
     },
-
     separator: {
         height: "100%",
         width: "4%",
         justifyContent: "center",
     },
-
     departmentTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     departmentText: {
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded",
     },
-
     servicesTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     servicesText: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded"
     },
-
     accessibilitiesTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     accessibilitiesText: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded"
     },
-
     sectionHeader: {
         paddingTop: 2,
         paddingLeft: 22,
@@ -332,7 +300,6 @@ export const styles = StyleSheet.create({
         backgroundColor: "#353A50",
         fontFamily: "encodeSansExpanded"
     },
-
     listItem: {
         padding: 10,
         fontSize: 12,
@@ -348,6 +315,14 @@ export const styles = StyleSheet.create({
         width: "90%",
         alignItems: "center",
     },
-
+    PreferenceMenu: {
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        backgroundColor: "#2A2E43",
+        alignItems: "center",
+        justifyContent: "space-between"
+    }
 });
-export { MoreDetails };
+
+export default MoreDetails;
