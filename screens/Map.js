@@ -81,6 +81,8 @@ Map.propTypes = {
     navigation: PropTypes.any,
 };
 
+
+
 export const styles = StyleSheet.create({
     map: {
         height: "100%"
