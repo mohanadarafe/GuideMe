@@ -1,20 +1,16 @@
 import React from "react";
 import { HallFloorX } from '../../assets/floormaps/hall/HallFloorX.js';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import { Path, Text } from "react-native-svg";
 
+describe('Hall Floor X Asset coverage', () => {
+    const HallFloorXAssetWrapper = shallow(<HallFloorX />)
 
-describe("Hall Floor X ", () => {
-
-    test('number of <Text>', () => {
-        const tree = renderer.create(<HallFloorX/>).toJSON();
-        expect(tree.children.length).toBe(62);
+    it('Should return the appropriate number of <Path> children', () => {
+        expect(HallFloorXAssetWrapper.find(Path).length).toBe(38);
     });
 
-    test('number of <Path>', () => {
-        const tree = renderer.create(<HallFloorX/>).toJSON();
-        expect(tree.children.length).toBe(38);
+    it('Should return the appropriate number of <Text> children', () => {
+        expect(HallFloorXAssetWrapper.find(Text).length).toBe(62);
     });
-
-
-
 });

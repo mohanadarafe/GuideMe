@@ -1,13 +1,12 @@
 import React from "react";
 import { HallFloor9 } from '../../assets/floormaps/hall/HallFloor9.js';
-import renderer from 'react-test-renderer';
+import { shallow } from 'enzyme';
+import { Path } from "react-native-svg";
 
+describe('Hall Floor 9 Asset coverage', () => {
+    const HallFloor9AssetWrapper = shallow(<HallFloor9 />)
 
-describe("Hall Floor 9 ", () => {
-
-    test('number of <Path>', () => {
-        const tree = renderer.create(<HallFloor9/>).toJSON();
-        expect(tree.children.length).toBe(31);
+    it('Should return the appropriate number of <Path> children', () => {
+        expect(HallFloor9AssetWrapper.find(Path).length).toBe(31);
     });
-
 });
