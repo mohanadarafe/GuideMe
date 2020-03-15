@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
-import { MoreDetails } from "../screens/MoreDetails";
+import MoreDetails from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
@@ -11,11 +11,14 @@ import { FloorMenu } from "./FloorMenu";
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-function BottomMenu () {
+
+function BottomMenu ({ navigation }) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [getInside, setGetInside] = React.useState(false);
+    const [destination, setDestination] = React.useState("");
+    const [mapPressed, setmapPressed] = React.useState("");
 
     CurrentLocation();
 
@@ -27,24 +30,48 @@ function BottomMenu () {
         setSelectedBuilding(name);
     };
 
+    const getDestination = async () => {
+        let searchItem = await AsyncStorage.getItem("destination");
+        setDestination(searchItem);
+    };
+
+    //TODO: Will be used to detect when a user pressed on the map view
+    const getMapPressed = async () => {
+        let pressed = await AsyncStorage.getItem("mapPressed");
+        setmapPressed(pressed);
+    };
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
-        }, 100);
+            getDestination();
+            getMapPressed();
+        }, 1);
         return () => clearInterval(intervalId);
     });
 
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} />
+                <MoreDetails name={selectedBuilding} navigation={navigation} />
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
+            </View>
+        );
+    }
+    if (iconSelected && !selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
             </View>
         );
     }
 
+    const goToDoubleSearchBar = () => {
+        navigation.navigate("DoubleSearch", { destinationName: destination });
+    };
+
     if (getInside) {
-        return(
+        return (
             <View style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
@@ -63,31 +90,7 @@ function BottomMenu () {
         );
     }
 
-    else if (iconSelected && !selectedBuilding) {
-        return (
-            <View style={styles.moreDetails}>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
-
-    else if (!selectedBuilding) {
-        return (
-            <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>Nearby</Text>
-                <Text style={styles.shortLabel}>Food, drinks & more</Text>
-                <View style={styles.toggle}>
-                    <Switch
-                        value={switchVal}
-                        onValueChange={(val) => setSwitchVal(val)}>
-                    </Switch>
-                </View>
-            </View>
-        );
-    }
-
-    else {
+    if (selectedBuilding) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
@@ -104,6 +107,36 @@ function BottomMenu () {
         );
     }
 
+    else if (destination) {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>{destination}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btnGetDirection}>
+                    <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+
+    else {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>Nearby</Text>
+                <Text style={styles.shortLabel}>Food, drinks & more</Text>
+                <View style={styles.toggle}>
+                    <Switch
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
+                    </Switch>
+                </View>
+            </View>
+        );
+    }
 }
 
 export const styles = StyleSheet.create({
@@ -147,6 +180,12 @@ export const styles = StyleSheet.create({
         top: "5.5%",
         color: "#FFFFFF"
     },
+    btnGetDirection: {
+        position: "absolute",
+        left: "60%",
+        top: "5.5%",
+        color: "#FFFFFF"
+    },
     btnleave: {
         position: "absolute",
         left: "62%",
@@ -154,7 +193,7 @@ export const styles = StyleSheet.create({
         color: "#FFFFFF",
     },
     btnText: {
-        color:"#FFFFFF", 
+        color: "#FFFFFF",
         fontFamily: "encodeSansExpanded"
     },
     mainLabel: {
@@ -163,7 +202,9 @@ export const styles = StyleSheet.create({
         left: "12.5%",
         color: "#FFFFFF",
         fontSize: 20,
-        fontFamily: "encodeSansExpanded"
+        fontFamily: "encodeSansExpanded",
+        height: "9%",
+        width: "45%"
     },
     shortLabel: {
         position: "absolute",

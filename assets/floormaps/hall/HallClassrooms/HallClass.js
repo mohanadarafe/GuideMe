@@ -1,7 +1,7 @@
-import React from "react"
-import Svg, { Rect } from "react-native-svg"
+import React from "react";
+import Svg, { Rect } from "react-native-svg";
 
-export function HallClass(props) {
+export function HallClass() {
     return(
         <Svg width={1024} height={1024}>
             <Rect

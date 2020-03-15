@@ -24,7 +24,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.minicapstone.guideme",
+      "config": {
+        "googleMapsApiKey": "AIzaSyBXPHFU9Ri5cUt7LTcYegCWLWayqJGzYtA"
+      }
+    },
+    "android": {
+      "package": "com.minicapstone.guideme"
     }
   }
 }
