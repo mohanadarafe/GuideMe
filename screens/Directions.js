@@ -19,7 +19,63 @@ const mapPosition = {
     }
 };
 
+function getFilteredDetailedInstructions (jsonLeg) {
+    
+    var directionObject = {
+        generalRouteInfo: {
+            totalDistance: jsonLeg.distance.text,
+            totalDuration: jsonLeg.duration.text,
+            startAddress: jsonLeg.start_address,
+            startLocation: {
+                latitude: jsonLeg.start_location.lat,
+                longitude: jsonLeg.start_location.lng,
+            },
+            endAddress: jsonLeg.end_address,
+            endLocation: {
+                latitude: jsonLeg.end_location.lat,
+                longitude: jsonLeg.end_location.lng
+            }
+        },
+        steps: []
+    }
+    directionObject.steps = jsonLeg.steps.map(step => {
 
+        // let decodedPolylines = decodedPolylinesAlgo(step.polyline.points);
+        return {
+            distance: step.distance.text,
+            duration: step.duration.text,
+            polylines: decodedPolylinesAlgo(step.polyline.points),
+            startLocation: {
+                latitude: step.start_location.lat,
+                longitude: step.end_location.lng
+            },
+            endLocation: {
+                latitude: step.end_location.lat,
+                longitude: step.end_location.lng
+            },
+            htmlInstructions: step.html_instructions,
+            travelMode: step.travel_mode
+        }
+    });
+
+    return directionObject;
+}
+
+function decodedPolylinesAlgo (hashedPolyline) {
+    let points = PolyLine.decode(hashedPolyline);
+    return (points.map(point => {
+        return {
+            latitude: point[0],
+            longitude: point[1]
+        }
+    }));
+}
+
+
+
+/**
+ * TODO: A) If we want to enabled a dark mode. https://github.com/react-native-community/react-native-maps#customizing-the-map-style
+*/
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
@@ -29,53 +85,52 @@ const mapPosition = {
 function Directions(props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
-    const [detailedInstructions, setDetailedInstructions] = React.useState();
-    const [directionRegion, setDirectionRegion] = React.useState(props.initialRegion);
+    // const [detailedInstructions, setDetailedInstructions] = React.useState(null);
+    const [directionRegion, setDirectionRegion] = React.useState(null);
+    const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const mapRef = useRef(null);
 
-    const handleMapPress = () => {
-        const region = {
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-        };
-        mapRef.current.animateToRegion(region, 1000);
-    }
-    const pressHandler = () => {
+    const origin = "45.493622,-73.577003";
+    const destination = "45.497092,-73.5788";
+    
+
+    const goBackPressHandler = () => {
         props.navigation.goBack();
     }
 
-    // useEffect(() => {
-    //     const fetchData = async () =>  {
-    //         try{
-    //             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${props.origin}&destination=${props.destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
-    //             const jsonResponse = await resp.json();
-    //             const points = PolyLine.decode(jsonResponse.routes[0].overview_polyline.points);
-    //             const decodedPoints = points.map(point => {
-    //                 return {
-    //                     latitude: point[0],
-    //                     longitude: point[1]
-    //                 }
-    //             });
-    //             setDecodedPolylines(decodedPoints);
-    //             // const stepPoint = PolyLine.decode(jsonResponse.routes[0].)
-    //             setDirectionRegion()
-    //             setDetailedInstructions(jsonResponse.routes[0].legs);
-    //         } catch(error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchData();
-    // }, []);
 
-    const onLayout = () => {
+
+    const initMapRegion = () => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates([
-                { latitude: 45.496557, longitude: -73.578896 }, { latitude: 45.457841, longitude: -73.640307 }],
-                { edgePadding: { bottom: 10, right: 0, left: 0, top: 0 }, animated: true, });
+                { latitude: 45.493622, longitude: -73.577003 }, { latitude: 45.497092, longitude: -73.5788 }],
+                { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
     }
+
+    useEffect(() => {
+
+        const fetchData = async () =>  {
+            try{
+                // The following line is commented to avoid unecessary requests on the direcitons API. 
+                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+                // let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+                const jsonResponse = await resp.json();
+                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
+                setDecodedPolylines(decodedPoints);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+                setdetailedInstructionsObject(filteredInstruction);
+            } catch(error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, []);
+
+    /**
+     * TODO: Write on the View the proper instructions and make it dynamic (change instructions) with the clicks
+     *       and zoom the mapview accordingly (fitToCoordinates).
+     */
     return (
         <View>
             <MapView
@@ -86,18 +141,18 @@ function Directions(props) {
                 showsUserLocation={true}
                 showsCompass={true}
                 showsBuildings={true}
-                onLayout={onLayout}
+                onLayout={initMapRegion}
+                // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
             >
-
-                {/* <Polyline
+                <Polyline
                 coordinates = {decodedPolylines}
-                strokeWidth = {2}
+                strokeWidth = {6}
                 strokeColor = "pink"
-                /> */}
+                />
             </MapView>
             <View style={styles.navigationHeader}>
                 <View style={{ top: "25%" }}>
-                    <TouchableOpacity onPress = {pressHandler}>                    
+                    <TouchableOpacity onPress = {goBackPressHandler}>                    
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionText}>
