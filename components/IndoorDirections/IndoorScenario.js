@@ -24,6 +24,7 @@ export function IndoorScenario(props) {
         }
     }
 
+    
     return(
         <G></G>
     );
