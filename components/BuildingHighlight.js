@@ -14,8 +14,8 @@ function BuildingHighlight () {
     AsyncStorage.setItem("buildingSelected", buildingName);
 
     return (
-        <View data-test="BuildingHighlightTestID">
-            <Polygon data-test="HBuildingTestID"
+        <View>
+            <Polygon
                 coordinates={coord.h.coordinates}
                 tappable={true}
                 onPress={() => { setBuildingName("Hall Building"); }}
