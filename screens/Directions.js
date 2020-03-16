@@ -5,27 +5,12 @@ import { View, Text, Icon } from "native-base";
 import CurrentLocationButton from "../components/CurrentLocationButton";
 import PolyLine from "@mapbox/polyline";
 import HTML from "react-native-render-html";
-import { BottomMenu } from "./BottomMenu";
 import PropTypes from "prop-types";
 
 
-const mapPosition = {
-    sgwCoord: {
-        latitude: 45.496557,
-        longitude: -73.578896,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-    },
-    loyCoord: {
-        latitude: 45.457841,
-        longitude: -73.640307,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-    }
-};
-
 function getFilteredDetailedInstructions (jsonLeg) {
     
+    const instructionsHtmlStyle = "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">";
     var directionObject = {
         generalRouteInfo: {
             totalDistance: jsonLeg.distance.text,
@@ -58,7 +43,7 @@ function getFilteredDetailedInstructions (jsonLeg) {
                 latitude: step.end_location.lat,
                 longitude: step.end_location.lng
             },
-            htmlInstructions: step.html_instructions,
+            htmlInstructions: instructionsHtmlStyle+step.html_instructions+"</div>",
             travelMode: step.travel_mode
         }
     });
@@ -95,6 +80,9 @@ function Directions (props) {
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const mapRef = useRef(null);
 
+    /**
+     * TODO: B) The Value of the origin cannot be hard coded for the final version.
+     */
     const origin = "45.493622,-73.577003";
     const destination = "45.497092,-73.5788";
     
@@ -135,7 +123,7 @@ function Directions (props) {
      * TODO: Write on the View the proper instructions and make it dynamic (change instructions) with the clicks
      *       and zoom the mapview accordingly (fitToCoordinates).
      */
-    const htmlText = "Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b>";
+    const htmlText = "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b></div>";
     return (
         <View>
             <MapView
@@ -168,7 +156,9 @@ function Directions (props) {
                         <View style={styles.lineHeader}></View>
                     </View>
                     <View style = {styles.detailedInstructions}>
-                    <HTML html={htmlText} />
+                    <HTML 
+                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
+                    />
                     </View>
                 </View>
             </View>
