@@ -5,7 +5,7 @@ import { ClassGraph } from '../../constants/ClassGraph';
 import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDirections';
 import { SameFloorDirections } from './TypesOfDirections/SameFloorDirections';
 
-export function IndoorDirections({floor}) {
+export function IndoorScenario({floor}) {
     const rooms = HallXCoordinates();
     const graph = ClassGraph();
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import Svg, { G, Path, Text, Use, Symbol, Defs } from "react-native-svg";
 import { HallClass } from "./HallClassrooms/HallClass";
-import { IndoorDirections } from "../../../components/Directions/IndoorDirections";
+import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario";
 
 export function HallFloorX() {
   const [floorNumber, setFloorNumber] = React.useState("");
@@ -881,7 +881,7 @@ export function HallFloorX() {
           d="M459.538 426.23h53.846M514.153 611.23h-54.615"
         />
       </G>
-      <IndoorDirections floor={floorNumber} />
+      <IndoorScenario floor={floorNumber} />
       <HallClass floor={floorNumber} />
     </Svg>
   );
