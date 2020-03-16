@@ -52,6 +52,7 @@
     "react-native-search-header": "^0.3.5",
     "react-native-searchable-dropdown": "^1.1.1",
     "react-native-svg": "9.13.3",
+    "react-native-svg-transformer": "^0.14.3",
     "react-native-switch": "^1.5.0",
     "react-native-switch-selector": "^2.0.3",
     "react-native-web": "~0.11.7",

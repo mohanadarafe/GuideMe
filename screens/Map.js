@@ -33,6 +33,10 @@ const mapPosition = {
 function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
+    const [mapPressed, setmapPressed] = React.useState("");
+
+    //TODO: To have a functionality for when the user presses on the map
+    AsyncStorage.setItem("mapPressed", mapPressed);
 
     const campusSelected = async () => {
         let tog = await AsyncStorage.getItem("toggle");
@@ -60,6 +64,8 @@ function Map ({ navigation }) {
                         showsUserLocation={true}
                         showsCompass={true}
                         showsBuildings={true}
+                    // TODO: remove the dropdown list whenever you press on the map
+                    // onPress={() => setmapPressed("true")}
                     >
                         <BuildingHighlight />
                         <BuildingIdentification />

@@ -4,8 +4,10 @@ import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import CurrentLocationButton from "../components/CurrentLocationButton";
 import PolyLine from "@mapbox/polyline";
-import PropTypes from "prop-types";
 import HTML from "react-native-render-html";
+import { BottomMenu } from "./BottomMenu";
+import PropTypes from "prop-types";
+
 
 const mapPosition = {
     sgwCoord: {
@@ -85,7 +87,7 @@ function decodedPolylinesAlgo (hashedPolyline) {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Directions(props) {
+function Directions (props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     // const [detailedInstructions, setDetailedInstructions] = React.useState(null);
@@ -182,9 +184,16 @@ function Directions(props) {
                     </View>
                 </TouchableOpacity>
             </View>
+            {/* <BottomMenu/> */}
         </View>
     );
 }
+
+Directions.propTypes = {
+    navigation: PropTypes.any,
+    goBack: PropTypes.func,
+    initialRegion: PropTypes.any
+};
 
 export const styles = StyleSheet.create({
     map: {
@@ -207,7 +216,7 @@ export const styles = StyleSheet.create({
         fontSize: 25
     },
     lineHeader: {
-        borderBottomColor: 'white',
+        borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
         top: "10%"
@@ -247,7 +256,6 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         // flexDirection: "row"
     }
-
 });
 
 export default Directions;
