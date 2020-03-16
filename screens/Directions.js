@@ -78,6 +78,16 @@ function Directions (props) {
     // const [detailedInstructions, setDetailedInstructions] = React.useState(null);
     const [directionRegion, setDirectionRegion] = React.useState(null);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
+    const [nextInstructions, setNextInstructions] = React.useState(false);
+    const [previousInstructions, setPreviousInstructions] = React.useState(false);
+    const [instructionIndex, setInstructionIndex] = React.useState(0);
+    const [isLastInstruction, setIsLastInstruction] = React.useState(false);
+    const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
+    const htmlList = [
+        "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b></div>",
+        "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>"
+    ];
+    // const [htmlText, setHtmlText] = React.useState(htmlList[0]);
     const mapRef = useRef(null);
 
     /**
@@ -123,7 +133,30 @@ function Directions (props) {
      * TODO: Write on the View the proper instructions and make it dynamic (change instructions) with the clicks
      *       and zoom the mapview accordingly (fitToCoordinates).
      */
-    const htmlText = "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b></div>";
+    
+    const goToNextInstruction = () => {
+
+        setIsFirstInstruction(false);
+        if(instructionIndex >= htmlList.length - 1) {
+            setIsLastInstruction(true);
+        } else {
+        setNextInstructions(true);
+        setPreviousInstructions(false);
+        setInstructionIndex(instructionIndex + 1);
+        }
+        
+    }
+
+    const goToPreviousInstruction = () => {
+        if(instructionIndex == 0) {
+            setIsFirstInstruction(true);
+        } else {
+        setNextInstructions(false);
+        setPreviousInstructions(true);
+        setInstructionIndex(instructionIndex - 1);
+        setIsLastInstruction(false);
+        }
+    }
     return (
         <View>
             <MapView
@@ -156,19 +189,33 @@ function Directions (props) {
                         <View style={styles.lineHeader}></View>
                     </View>
                     <View style = {styles.detailedInstructions}>
+                        {(!nextInstructions && !previousInstructions) && 
                     <HTML 
-                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
-                    />
+                        // html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
+                        html = {htmlList[instructionIndex]}
+                    /> 
+                        }
+                        {nextInstructions && 
+                    <HTML 
+                        // html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
+                        html = {htmlList[instructionIndex]}
+                    /> 
+                        }
+                        {previousInstructions && 
+                    <HTML 
+                        // html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
+                        html = {htmlList[instructionIndex]}
+                    />}
                     </View>
                 </View>
             </View>
             <View style={styles.bottomArrowDirectionContainer}>
-                <TouchableOpacity style={styles.arrowDirection}>
+                <TouchableOpacity style={styles.arrowDirection} onPress = {goToPreviousInstruction} disabled ={isFirstInstruction}>
                     <View>
                         <Icon name="arrow-back"></Icon>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.arrowDirection}>
+                <TouchableOpacity style={styles.arrowDirection} onPress = {goToNextInstruction} disabled = {isLastInstruction}>
                     <View >
                         <Icon name="arrow-forward"></Icon>
                     </View>
