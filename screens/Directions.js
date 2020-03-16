@@ -78,13 +78,17 @@ function Directions (props) {
     // const [detailedInstructions, setDetailedInstructions] = React.useState(null);
     const [directionRegion, setDirectionRegion] = React.useState(null);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
+    const [numberOfSteps, setNumberOfSteps] = React.useState(0);
     const [nextInstructions, setNextInstructions] = React.useState(false);
     const [previousInstructions, setPreviousInstructions] = React.useState(false);
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
-    const htmlList = [
+    const hardCoded_htmlList = [
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b></div>",
+        "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>",
+        "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>",
+        "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>",
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>"
     ];
     // const [htmlText, setHtmlText] = React.useState(htmlList[0]);
@@ -121,6 +125,7 @@ function Directions (props) {
         //         const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
         //         setDecodedPolylines(decodedPoints);
         //         let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+        //         setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
         //         setdetailedInstructionsObject(filteredInstruction);
         //     } catch(error) {
         //         console.log(error);
@@ -137,9 +142,13 @@ function Directions (props) {
     const goToNextInstruction = () => {
 
         setIsFirstInstruction(false);
-        if(instructionIndex >= htmlList.length - 1) {
+        console.log("instructionIndex: "+instructionIndex);
+        console.log("numberOfSteps: "+numberOfSteps);
+        if(instructionIndex >= numberOfSteps - 1) {
+            console.log("Last Index");
             setIsLastInstruction(true);
         } else {
+        console.log("Not Last Index");
         setNextInstructions(true);
         setPreviousInstructions(false);
         setInstructionIndex(instructionIndex + 1);
@@ -191,20 +200,20 @@ function Directions (props) {
                     <View style = {styles.detailedInstructions}>
                         {(!nextInstructions && !previousInstructions) && 
                     <HTML 
-                        // html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
-                        html = {htmlList[instructionIndex]}
+                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].htmlInstructions: "Invalid"} 
+                        // html = {htmlList[instructionIndex]}
                     /> 
                         }
                         {nextInstructions && 
                     <HTML 
-                        // html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
-                        html = {htmlList[instructionIndex]}
+                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].htmlInstructions: "Invalid"} 
+                        // html = {htmlList[instructionIndex]}
                     /> 
                         }
                         {previousInstructions && 
                     <HTML 
-                        // html={detailedInstructionsObject ? detailedInstructionsObject.steps[0].htmlInstructions: "Invalid"} 
-                        html = {htmlList[instructionIndex]}
+                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].htmlInstructions: "Invalid"} 
+                        // html = {htmlList[instructionIndex]}
                     />}
                     </View>
                 </View>
