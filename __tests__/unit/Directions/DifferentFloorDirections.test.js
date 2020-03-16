@@ -1,7 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { DifferentFloorDirections, getFloorNumber, changeClassName } from "../../../components/IndoorDirections/TypesOfDirections/DifferentFloorDirections";
+import { DifferentFloorDirections } from "../../../components/IndoorDirections/TypesOfDirections/DifferentFloorDirections";
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
+import { getFloorNumber, changeClassName } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 
 describe("DifferentFloorDirections component", () => {
     test("renders correctly", () => {

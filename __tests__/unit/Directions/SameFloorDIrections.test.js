@@ -1,7 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
-import { SameFloorDirections, getFloorNumber } from "../../../components/IndoorDirections/TypesOfDirections/SameFloorDirections";
+import { SameFloorDirections } from "../../../components/IndoorDirections/TypesOfDirections/SameFloorDirections";
+import { getFloorNumber, changeClassName } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 
 describe("SameFloorDirections component", () => {
     test("renders correctly", () => {

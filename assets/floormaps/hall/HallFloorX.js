@@ -9,19 +9,6 @@ export function HallFloorX() {
   const [to, setTo] = React.useState("");
   const [from, setFrom] = React.useState("");
 
-  // const [from, setFrom] = React.useState("");
-  // const [to, setTo] = React.useState("");
-  
-  // const getFrom = async() => {
-  //     let name = AsyncStorage.getItem("fromLocation");
-  //     setFrom(name);
-  // }
-
-  // const getTo = async() => {
-  //     let name = AsyncStorage.getItem("destination");
-  //     setTo(name);
-  // }
-
   const floorSelected = async () => {
     let name = await AsyncStorage.getItem("floorSelected");
     setFloorNumber(name);
@@ -42,7 +29,7 @@ export function HallFloorX() {
       floorSelected();
       getFromLocation();
       getToLocation();
-    }, 100);
+    }, 1);
     return () => clearInterval(intervalId);
   });
 
@@ -196,7 +183,7 @@ export function HallFloorX() {
           transform="matrix(.75495 0 0 .74496 106.933 54.812)"
           stroke="#000"
         >
-          {"H806.01" +"From:"+from+"To:"+to}
+          {"H806.01"}
         </Text>
         <Path
           fill="#fff"
@@ -896,7 +883,11 @@ export function HallFloorX() {
           d="M459.538 426.23h53.846M514.153 611.23h-54.615"
         />
       </G>
-      <IndoorScenario floor={floorNumber} />
+      <G>
+        {from !== null && to !==null &&
+          <IndoorScenario floor={floorNumber} from={from} to={to} />
+        }
+      </G>
       <HallClass floor={floorNumber} />
     </Svg>
   );
