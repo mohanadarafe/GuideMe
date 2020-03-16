@@ -1,10 +1,9 @@
 import React from 'react';
 import { Line, G } from 'react-native-svg';
-import { HallXCoordinates } from '../../../constants/HallXCoordinates';
 import { ClassGraph } from '../../../constants/ClassGraph';
 
 export function DifferentFloorDirections(props) {
-    const rooms = HallXCoordinates();
+    const rooms = props.rooms;
     const graph = ClassGraph();
 
     const pathToElevator = dijkstra(graph, props.from, "elevator").path;
@@ -71,9 +70,20 @@ export function DifferentFloorDirections(props) {
  * Ex: H829 returns 8
  * @param {*} name | classroom name
  */
-const getFloorNumber = (name) => {
-    const num = name.match(/\d+/g).map(Number);
-    return num.toString().charAt(0);
+export const getFloorNumber = (name) => {
+    if (name) {
+        const num = name.match(/\d+/g).map(Number);
+
+        if(num.length > 1) {
+            return num[0].toString();
+        }
+        if (num.toString().length == 3) {
+            return num.toString().charAt(0)
+        }
+        if (num.toString().length == 4) {
+            return num.toString().charAt(0) + num.toString().charAt(1);
+        }   
+    }
 }
 
 /**
@@ -84,10 +94,17 @@ const getFloorNumber = (name) => {
  * Ex: H529 returns H829
  * @param {*} name | classroom name
  */
-const changeClassName = (name) => {
-    const num = name.match(/\d+/g).map(Number);
-    const numToString = num.toString();
-    return name.replace(numToString.charAt(0), "8");
+export const changeClassName = (name) => {
+    if (name) {
+        const num = name.match(/\d+/g).map(Number);
+        const numToString = num.toString();
+        if (numToString.length == 3) {
+            return name.replace(numToString.charAt(0), "8");
+        }
+        if (numToString.length == 4) {
+            return name.replace(numToString.substring(0,2), "8");
+        }
+    }  
 }
 
 const dijkstra = (graph, start, end) => {

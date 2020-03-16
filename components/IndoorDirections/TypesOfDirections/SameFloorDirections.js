@@ -1,9 +1,10 @@
 import React from 'react';
 import { Line, G } from 'react-native-svg';
+import { ClassGraph } from '../../../constants/ClassGraph';
 
 export function SameFloorDirections(props) {
     const rooms = props.rooms;
-    const graph = props.graph;
+    const graph = ClassGraph();
     const route = dijkstra(graph, props.from, props.to).path;
 
     var getNextRoom = (index) => {
@@ -32,6 +33,23 @@ export function SameFloorDirections(props) {
     }
     return(<G></G>);
 }
+
+export const getFloorNumber = (name) => {
+    if (name) {
+        const num = name.match(/\d+/g).map(Number);
+
+        if(num.length > 1) {
+            return num[0].toString();
+        }
+        if (num.toString().length == 3) {
+            return num.toString().charAt(0)
+        }
+        if (num.toString().length == 4) {
+            return num.toString().charAt(0) + num.toString().charAt(1);
+        }   
+    }
+}
+
 const lowestCostNode = (costs, processed) => {
     return Object.keys(costs).reduce((lowest, node) => {
         if (lowest === null || costs[node] < costs[lowest]) {
@@ -90,8 +108,3 @@ const dijkstra = (graph, start, end) => {
 
     return results;
 };
-
-const getFloorNumber = (name) => {
-    const num = name.match(/\d+/g).map(Number);
-    return num.toString().charAt(0);
-}
