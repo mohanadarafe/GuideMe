@@ -16,7 +16,7 @@ import { Icon, Button } from "native-base";
 
 //TODO: Link this file to the PreviewDirection.js
 
-export function PreferenceMenu () {
+function PreferenceMenu () {
     // const [userType, setUserType] = React.useState("");
     // const [mobilityReduced, setMobilityReduced] = React.useState(false);
     // const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
@@ -245,3 +245,5 @@ export const styles = StyleSheet.create({
         bottom: "5%"
     },
 });
+
+export { PreferenceMenu };

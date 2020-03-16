@@ -4,22 +4,21 @@ import { HallXCoordinates } from '../../constants/HallXCoordinates';
 import { ClassGraph } from '../../constants/ClassGraph';
 import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDirections';
 import { SameFloorDirections } from './TypesOfDirections/SameFloorDirections';
-import { DifferentBuildingDirections } from './TypesOfDirections/DifferentBuildingDirections';
 
 export function IndoorScenario({floor}) {
     const rooms = HallXCoordinates();
     const graph = ClassGraph();
-    const routeToTake = whichPathToTake("H820", "MB3.125");
+    const routeToTake = whichPathToTake("H820", "H720");
 
     switch (routeToTake) {
         case "SAME_FLOOR":
-            return <SameFloorDirections rooms={rooms} floor={floor} from={"H855"} to={"H829"}/>
+            return <SameFloorDirections rooms={rooms} graph={graph} floor={floor} from={"H855"} to={"H829"}/>
             break;
         case "DIFFERENT_FLOOR":
-            return <DifferentFloorDirections rooms={rooms} floor={floor} from={"H855"} to={"H521"}/>;
+            return <DifferentFloorDirections rooms={rooms} graph={graph} floor={floor} from={"H855"} to={"H521"}/>;
             break;
         case "DIFFERENT_BUILDING":
-            return <DifferentBuildingDirections rooms={rooms} floor={floor} from={"H855"} to={"MB3.125"}/>;
+            return null;
             break;
     }
 
