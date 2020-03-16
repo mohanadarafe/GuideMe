@@ -10,7 +10,7 @@ import { Marker } from "react-native-maps";
  */
 function BuildingIdentification () {
     return (
-        <View>
+        <View data-test="BuildingIdentificationTestID">
             <Marker
                 coordinate={{ latitude: 45.497222, longitude: -73.578809 }}>
                 <Text style={styles.buildingIdentification}>H</Text>
