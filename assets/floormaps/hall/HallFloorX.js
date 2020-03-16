@@ -2,10 +2,22 @@ import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import Svg, { G, Path, Text, Use, Symbol, Defs } from "react-native-svg";
 import { HallClass } from "./HallClassrooms/HallClass";
-import { DirectionPathFinding } from "../../../components/Directions/DirectionPathFinding";
+import { IndoorDirections } from "../../../components/Directions/IndoorDirections";
 
 export function HallFloorX() {
   const [floorNumber, setFloorNumber] = React.useState("");
+  // const [from, setFrom] = React.useState("");
+  // const [to, setTo] = React.useState("");
+  
+  // const getFrom = async() => {
+  //     let name = AsyncStorage.getItem("fromLocation");
+  //     setFrom(name);
+  // }
+
+  // const getTo = async() => {
+  //     let name = AsyncStorage.getItem("destination");
+  //     setTo(name);
+  // }
 
   const floorSelected = async () => {
     let name = await AsyncStorage.getItem("floorSelected");
@@ -869,7 +881,7 @@ export function HallFloorX() {
           d="M459.538 426.23h53.846M514.153 611.23h-54.615"
         />
       </G>
-      <DirectionPathFinding />
+      <IndoorDirections floor={floorNumber} />
       <HallClass floor={floorNumber} />
     </Svg>
   );

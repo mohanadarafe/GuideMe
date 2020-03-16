@@ -43,10 +43,20 @@ function DoubleSearch (props) {
         return props.navigation.getParam("destinationName", "null");
     };
 
-    //TODO: The new "From" location entered by the user will be stored in the asyncStorage with this key
-    AsyncStorage.setItem("fromLocation", from.toString());
-    // The new "To" destination can also be retrieved from the asyncStorage with this key
-    AsyncStorage.setItem("destination", to.toString());
+    let fromName = from.name;
+    let toName = to.name;
+    if (fromName !== undefined) {
+        AsyncStorage.setItem("fromLocation", fromName.toString());
+    }
+    if (toName !== undefined) {
+        AsyncStorage.setItem("destination", toName.toString());
+    }
+    if (toName === undefined && fromName === undefined) {
+        fromName = "";
+        toName = "";
+        AsyncStorage.setItem("toLocation", toName.toString());
+        AsyncStorage.setItem("destination", fromName.toString());
+    }
 
     useEffect(() => {
         setData(fetchData());
