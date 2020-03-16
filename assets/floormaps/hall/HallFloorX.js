@@ -2,10 +2,13 @@ import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import Svg, { G, Path, Text, Use, Symbol, Defs } from "react-native-svg";
 import { HallClass } from "./HallClassrooms/HallClass";
-import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario";
+import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario.js";
 
 export function HallFloorX() {
   const [floorNumber, setFloorNumber] = React.useState("");
+  const [to, setTo] = React.useState("");
+  const [from, setFrom] = React.useState("");
+
   // const [from, setFrom] = React.useState("");
   // const [to, setTo] = React.useState("");
   
@@ -24,9 +27,21 @@ export function HallFloorX() {
     setFloorNumber(name);
   };
 
+  const getFromLocation = async () => {
+    let name = await AsyncStorage.getItem("fromLocation");
+    setFrom(name);
+  };
+
+  const getToLocation = async () => {
+    let name = await AsyncStorage.getItem("toLocation");
+    setTo(name);
+  };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       floorSelected();
+      getFromLocation();
+      getToLocation();
     }, 100);
     return () => clearInterval(intervalId);
   });
@@ -181,7 +196,7 @@ export function HallFloorX() {
           transform="matrix(.75495 0 0 .74496 106.933 54.812)"
           stroke="#000"
         >
-          {"H806.01"}
+          {"H806.01" +"From:"+from+"To:"+to}
         </Text>
         <Path
           fill="#fff"

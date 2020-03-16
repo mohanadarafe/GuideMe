@@ -39,23 +39,23 @@ function DoubleSearch (props) {
         props.navigation.navigate("MapDirections");
     };
 
-    const selectDestinationPath = () => {
+    const selectDestinationName = () => {
         return props.navigation.getParam("destinationName", "null");
     };
 
     let fromName = from.name;
     let toName = to.name;
+
     if (fromName !== undefined) {
         AsyncStorage.setItem("fromLocation", fromName.toString());
     }
     if (toName !== undefined) {
-        AsyncStorage.setItem("destination", toName.toString());
+        AsyncStorage.setItem("toLocation", toName.toString());
     }
     if (toName === undefined && fromName === undefined) {
-        fromName = "";
         toName = "";
-        AsyncStorage.setItem("toLocation", toName.toString());
-        AsyncStorage.setItem("destination", fromName.toString());
+        AsyncStorage.setItem("fromLocation", toName.toString());
+        AsyncStorage.setItem("toLocation", selectDestinationName());
     }
 
     useEffect(() => {
@@ -97,7 +97,7 @@ function DoubleSearch (props) {
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
                     items={data}
-                    placeholder={selectDestinationPath()}
+                    placeholder={selectDestinationName()}
                     resetValue={false}
                 />
             </View>
