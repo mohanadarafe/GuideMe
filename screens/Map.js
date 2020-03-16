@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
+=======
+import React, { useEffect } from "react";
+>>>>>>> 72de5688e9fbbc6a01d71f0e21c510aa72f68ec5
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
@@ -7,6 +11,8 @@ import { BottomMenu } from "../components/BottomMenu";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
+import IndoorMapView from "./Indoor/IndoorMapView";
+import PropTypes from "prop-types";
 
 const mapPosition = {
     sgwCoord: {
@@ -29,12 +35,19 @@ const mapPosition = {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Map () {
+function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
+    const [getInsideBuild, setGetInsideBuild] = React.useState("");
+    const [mapPressed, setmapPressed] = React.useState("");
+
+    //TODO: To have a functionality for when the user presses on the map
+    AsyncStorage.setItem("mapPressed", mapPressed);
 
     const campusSelected = async () => {
-        let val = await AsyncStorage.getItem("toggle");
-        setswitchVal(val);
+        let tog = await AsyncStorage.getItem("toggle");
+        let inside = await AsyncStorage.getItem("getInsideBuilding");
+        setswitchVal(tog);
+        setGetInsideBuild(inside);
     };
 
     useEffect(() => {
@@ -46,6 +59,7 @@ function Map () {
 
     return (
         <View data-test="MapComponent">
+<<<<<<< HEAD
             <MapView
                 data-test="MapViewComponent"
                 style={styles.map}
@@ -61,9 +75,40 @@ function Map () {
             <Search />
             <BottomMenu />
             <CurrentLocation />
+=======
+            {getInsideBuild === "false" &&
+                <View>
+                    <MapView
+                        data-test="MapViewComponent"
+                        style={styles.map}
+                        provider={PROVIDER_GOOGLE}
+                        region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
+                        showsUserLocation={true}
+                        showsCompass={true}
+                        showsBuildings={true}
+                    // TODO: remove the dropdown list whenever you press on the map
+                    // onPress={() => setmapPressed("true")}
+                    >
+                        <BuildingHighlight />
+                        <BuildingIdentification />
+                    </MapView>
+                    <Search />
+                </View>
+            }
+            {getInsideBuild === "true" &&
+                <View>
+                    <IndoorMapView />
+                </View>
+            }
+            <BottomMenu navigation={navigation} />
+>>>>>>> 72de5688e9fbbc6a01d71f0e21c510aa72f68ec5
         </View>
     );
 }
+
+Map.propTypes = {
+    navigation: PropTypes.any,
+};
 
 export const styles = StyleSheet.create({
     map: {

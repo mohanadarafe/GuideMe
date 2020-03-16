@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
+=======
+import React from "react";
+>>>>>>> 72de5688e9fbbc6a01d71f0e21c510aa72f68ec5
 import Navigator from "./routes/routeStack";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
