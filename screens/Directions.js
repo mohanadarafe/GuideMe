@@ -105,6 +105,14 @@ function Directions (props) {
         props.navigation.goBack();
     }
 
+    const updateMapRegionToInstruction = (arrayOfCoordinates) => {
+        setTimeout(() => {
+            mapRef.current.fitToCoordinates(
+                arrayOfCoordinates,
+                { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
+        }, 100);
+    }
+
 
     const initMapRegion = () => {
         setTimeout(() => {
@@ -142,17 +150,14 @@ function Directions (props) {
     const goToNextInstruction = () => {
 
         setIsFirstInstruction(false);
-        console.log("instructionIndex: "+instructionIndex);
-        console.log("numberOfSteps: "+numberOfSteps);
         if(instructionIndex >= numberOfSteps - 1) {
-            console.log("Last Index");
             setIsLastInstruction(true);
         } else {
-        console.log("Not Last Index");
         setNextInstructions(true);
         setPreviousInstructions(false);
         setInstructionIndex(instructionIndex + 1);
-        }
+    }
+    updateMapRegionToInstruction(detailedInstructionsObject.steps[instructionIndex].polylines);
         
     }
 
@@ -164,7 +169,8 @@ function Directions (props) {
         setPreviousInstructions(true);
         setInstructionIndex(instructionIndex - 1);
         setIsLastInstruction(false);
-        }
+    }
+    updateMapRegionToInstruction(detailedInstructionsObject.steps[instructionIndex].polylines);
     }
     return (
         <View>
