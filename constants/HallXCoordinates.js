@@ -8,6 +8,14 @@ export function HallXCoordinates (floorNumber) {
             y: "415"
         }
     }
+    rooms["exit"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "555",
+            y: "43"
+        }
+    }
     rooms["H801"] = {
         x: "195",
         y: "175",

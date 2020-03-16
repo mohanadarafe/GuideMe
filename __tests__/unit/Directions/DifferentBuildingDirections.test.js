@@ -32,5 +32,4 @@ describe("DifferentBuildingDirections component", () => {
             expect(getFloorNumber(element)).toEqual(results[index])
         });
     })
-
 }); 
