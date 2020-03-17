@@ -74,8 +74,7 @@ function Map ({ navigation }) {
                         <BuildingIdentification />
                     </MapView>
                     <Search />
-                    <View style={styles.CurrentBuildingLocation
-            }>
+                    <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
                     </View>
                 </View>
