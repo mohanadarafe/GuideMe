@@ -23,25 +23,29 @@ function fetchData () {
 
 function Search () {
   // eslint-disable-next-line no-unused-vars
-  const [destination, setDestination] = React.useState("");
   const [buildingName, setBuildingName] = React.useState("");
+  const [from, setFrom] = React.useState("");
+  const [to, setTo] = React.useState("");
   const [data, setData] = React.useState();
 
-  let destinationName = destination.name;
+  let toName = to.name;
 
-  if (destinationName === undefined) {
-    destinationName = "";
-    AsyncStorage.setItem("destination", destinationName.toString());
+  if (toName === undefined) {
+    toName = "";
+    AsyncStorage.setItem("toLocation", toName.toString());
+    AsyncStorage.setItem("toLocation", toName.toString());
     AsyncStorage.setItem("buildingSelected", buildingName.toString());
   }
   else {
-    AsyncStorage.setItem("destination", destinationName.toString());
+    AsyncStorage.setItem("fromLocation", from.toString());
+    AsyncStorage.setItem("toLocation", toName.toString());
     AsyncStorage.setItem("buildingSelected", buildingName.toString());
   }
 
-  function destinationSetter (destination) {
+  function destinationSetter (to) {
     // resets the value of the buildingName label when on pressing on a searched item
-    setDestination(destination);
+    setTo(to);
+    setFrom("Current Location");
     setBuildingName("");
   }
 

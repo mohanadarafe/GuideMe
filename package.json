@@ -58,7 +58,8 @@
     "react-native-web": "~0.11.7",
     "react-native-webview": "^8.1.2",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.15"
+    "react-navigation-stack": "^2.0.15",
+    "@expo/vector-icons": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
