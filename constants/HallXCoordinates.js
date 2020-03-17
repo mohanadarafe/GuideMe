@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-export function HallXCoordinates () {
-    var rooms = [];
-=======
 export function HallXCoordinates (floorNumber) {
     var rooms = [];
     rooms["elevator"] = {
@@ -268,20 +264,13 @@ export function HallXCoordinates (floorNumber) {
             y: "802"
         }
     },
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     rooms["H853"] = {
         x: "127",
         y: "691",
         nearestPoint: {
             x: "183",
             y: "691"
-<<<<<<< HEAD
-        },
-        next: ["H855"],
-        prev: ["H851"]
-=======
         }
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     },
     rooms["H855"] = {
         x: "127",
@@ -289,13 +278,7 @@ export function HallXCoordinates (floorNumber) {
         nearestPoint: {
             x: "183",
             y: "601"
-<<<<<<< HEAD
-        },
-        next: ["H857"],
-        prev: ["H853"]
-=======
         }
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     },
     rooms["H857"] = {
         x: "127",
@@ -303,25 +286,13 @@ export function HallXCoordinates (floorNumber) {
         nearestPoint: {
             x: "183",
             y: "512"
-<<<<<<< HEAD
-        },
-        next: ["H859"],
-        prev: ["H855"]
-=======
         }
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     },
     rooms["H859"] = {
         x: "127",
         y: "426",
         nearestPoint: {
             x: "183",
-<<<<<<< HEAD
-            y: "423"
-        },
-        next: ["H861"],
-        prev: ["H857"]
-=======
             y: "415"
         }
     },
@@ -340,7 +311,6 @@ export function HallXCoordinates (floorNumber) {
             x: "237",
             y: "399"
         }
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     },
     rooms["H861"] = {
         x: "127",
@@ -348,12 +318,6 @@ export function HallXCoordinates (floorNumber) {
         nearestPoint: {
             x: "183",
             y: "330"
-<<<<<<< HEAD
-        },
-        next: ["H863"],
-        prev: ["H859"]
-    }
-=======
         }
     }
     rooms["H862"] = {
@@ -364,28 +328,12 @@ export function HallXCoordinates (floorNumber) {
             y: "399"
         }
     },
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     rooms["H863"] = {
         x: "127",
         y: "244",
         nearestPoint: {
             x: "183",
             y: "217"
-<<<<<<< HEAD
-        },
-        next: ["H803"],
-        prev: ["H861"]
-    }
-    rooms["H803"] = {
-        x: "281",
-        y: "155",
-        nearestPoint: {
-            x: "279",
-            y: "217"
-        },
-        next: [""],
-        prev: ["H861"]
-=======
         }
     }
     rooms["checkpoint4"] = {
@@ -395,7 +343,6 @@ export function HallXCoordinates (floorNumber) {
             x: "553",
             y: "401"
         }
->>>>>>> f64bb91db1dd2acda266918aa43874bf1f8a4590
     }
     return rooms;
 }

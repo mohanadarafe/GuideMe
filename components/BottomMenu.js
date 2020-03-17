@@ -180,7 +180,7 @@ export const styles = StyleSheet.create({
     },
     btnGetDirection: {
         position: "absolute",
-        left: "60%",
+        left: "57%",
         top: "5.5%",
         color: "#FFFFFF"
     },
