@@ -1,10 +1,10 @@
 import React from "react";
-import { CurrentLocation } from "../../components/CurrentLocation";
+import { CurrentBuildingInformation } from "../../components/CurrentBuildingInformation";
 import renderer from "react-test-renderer";
 
-describe("CurrentLocation component", () => {
+describe("CurrentBuildingInformation component", () => {
     test("renders correctly", () => {
-        const tree = renderer.create(<CurrentLocation />).toJSON();
+        const tree = renderer.create(<CurrentBuildingInformation />).toJSON();
         expect(tree).toMatchSnapshot();
       });
 });

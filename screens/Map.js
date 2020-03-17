@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-=======
 import React, { useEffect } from "react";
->>>>>>> 72de5688e9fbbc6a01d71f0e21c510aa72f68ec5
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
-import { CurrentLocation } from "../components/CurrentLocation";
+import { CurrentBuildingInformation } from "../components/CurrentBuildingInformation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
@@ -59,23 +55,6 @@ function Map ({ navigation }) {
 
     return (
         <View data-test="MapComponent">
-<<<<<<< HEAD
-            <MapView
-                data-test="MapViewComponent"
-                style={styles.map}
-                provider={PROVIDER_GOOGLE}
-                region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
-                showsUserLocation={true}
-                showsCompass={true}
-                showsBuildings={true}
-            >
-                <BuildingHighlight />
-                <BuildingIdentification />
-            </MapView>
-            <Search />
-            <BottomMenu />
-            <CurrentLocation />
-=======
             {getInsideBuild === "false" &&
                 <View>
                     <MapView
@@ -93,6 +72,10 @@ function Map ({ navigation }) {
                         <BuildingIdentification />
                     </MapView>
                     <Search />
+                    <View style={styles.CurrentBuildingInformation
+            }>
+                        <CurrentBuildingInformation />
+                    </View>
                 </View>
             }
             {getInsideBuild === "true" &&
@@ -101,7 +84,6 @@ function Map ({ navigation }) {
                 </View>
             }
             <BottomMenu navigation={navigation} />
->>>>>>> 72de5688e9fbbc6a01d71f0e21c510aa72f68ec5
         </View>
     );
 }
@@ -113,6 +95,11 @@ Map.propTypes = {
 export const styles = StyleSheet.create({
     map: {
         height: "100%"
+    },
+    CurrentBuildingInformation: {
+        position: "absolute",
+        top: "82%",
+        left: "80%"
     }
 });
 

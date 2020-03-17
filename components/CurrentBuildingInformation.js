@@ -4,8 +4,7 @@ import { isPointInPolygon } from "geolib";
 import { AsyncStorage, StyleSheet, View, Text, Button, TouchableOpacity  } from "react-native";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
-import Icon from "react-native-vector-icons/Entypo";
-
+import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 
 /**
@@ -13,9 +12,9 @@ import Icon from "react-native-vector-icons/Entypo";
  * US32 - As a user, I would like to be able to know where I am indoors.
  * The following function provides the building & current floor of a user.
  * 
- * Note: call CurrentLocation() inside BottomMenu.js
+ * Note: call CurrentBuildingInformation() inside BottomMenu.js
  */
-function CurrentLocation () {
+function CurrentBuildingInformation () {
     const [currentBuilding, setCurrentBuilding] = React.useState("");
     const [lastLat, setlastLat] = React.useState(0);
     const [lastLong, setlastLong] = React.useState(0);
@@ -109,40 +108,35 @@ function CurrentLocation () {
 
 
     return (
-            <View style={styles.view}>
-             <Icon style={styles.icon} name='location' size="30"  color="#2A2E43" onPress={() => setModalVisibility(true)}/>
-                 <Modal isVisible={modalVisibility}>
-                    {currentBuilding === "" &&
-                       <View style={styles.modal}>
-                         <Text style={styles.modalText}>You have to be in a concordia building to use this feature</Text>
-                         <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
-                       </View>
-                    }
-                    {currentBuilding !== "" &&
-                        <View style={styles.modal}>
-                            <Text style={styles.modalText}>{currentBuilding}</Text>
-                            <Text style={styles.modalText}>{/*roundedCurrentFloor*/}2nd floor</Text>
-                            <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
-                        </View>
-                    }
-                </Modal>
-            </View>
-            );
+        <TouchableOpacity style ={styles.layout}>
+        <View style ={{top: "2%"}}>
+            <MaterialIcons name="office-building" size={35} color="white" onPress={() => setModalVisibility(true)}></MaterialIcons><Modal isVisible={modalVisibility}>
+               {currentBuilding === "" &&
+                  <View style={styles.modal}>
+                    <Text style={styles.modalText}>You have to be in a concordia building to use this feature</Text>
+                    <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+                  </View>
+               }
+               {currentBuilding !== "" &&
+                   <View style={styles.modal}>
+                       <Text style={styles.modalText}>{/*currentBuilding*/}We didn't measure the floor height yet... Waiting for concordia to reopen</Text>
+                       <Text style={styles.modalText}>{/*roundedCurrentFloor*/}</Text>
+                       <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
+                   </View>
+               }
+           </Modal>
+        </View>
+        </TouchableOpacity>
+    );
 }
-
-
-            
-
 export const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        flexDirection: "column"
-    },
-    icon: {
-        alignSelf: "flex-end",
-        position: "absolute",
-        right: 20,
-        bottom: 95
+    layout: {
+        width: 60,
+        height: 60,
+        borderRadius: 100/2,
+        backgroundColor: "#2A2E43",
+        justifyContent: "center",
+        alignItems: "center"        //Align text horizontally
     },
     modal: {
         position:"absolute",
@@ -151,11 +145,11 @@ export const styles = StyleSheet.create({
         borderRadius:10,
         width:200,
         backgroundColor: "white",
-        alignItems: "center"
     },
     modalText: {
         fontSize:20,
+        textAlign: 'center'         //Align text vertically
     },
 });
 
-export { CurrentLocation };
+export { CurrentBuildingInformation };
