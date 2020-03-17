@@ -18,7 +18,7 @@ function BottomMenu ({ navigation }) {
     const [switchVal, setSwitchVal] = React.useState(true);
     const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
-    const [mapPressed, setmapPressed] = React.useState("");
+    //const [mapPressed, setmapPressed] = React.useState("");
 
     CurrentLocation();
 
@@ -31,21 +31,21 @@ function BottomMenu ({ navigation }) {
     };
 
     const getDestination = async () => {
-        let searchItem = await AsyncStorage.getItem("destination");
+        let searchItem = await AsyncStorage.getItem("toLocation");
         setDestination(searchItem);
     };
 
-    //TODO: Will be used to detect when a user pressed on the map view
-    const getMapPressed = async () => {
-        let pressed = await AsyncStorage.getItem("mapPressed");
-        setmapPressed(pressed);
-    };
+    // //TODO: Will be used to detect when a user pressed on the map view
+    // const getMapPressed = async () => {
+    //     let pressed = await AsyncStorage.getItem("mapPressed");
+    //     setmapPressed(pressed);
+    // };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
             getDestination();
-            getMapPressed();
+            //getMapPressed();
         }, 1);
         return () => clearInterval(intervalId);
     });
