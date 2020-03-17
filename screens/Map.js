@@ -36,8 +36,6 @@ function Map ({ navigation }) {
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
 
-    CurrentBuildingLocation();
-
     //TODO: To have a functionality for when the user presses on the map
     AsyncStorage.setItem("mapPressed", mapPressed);
 
