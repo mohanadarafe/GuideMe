@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 function getFilteredDetailedInstructions (jsonLeg) {
     
-    const instructionsHtmlStyle = "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">";
+    const instructionsHtmlStyle = "<div style=\"font-size:1.4em;color:white;\">";
     var directionObject = {
         generalRouteInfo: {
             totalDistance: jsonLeg.distance.text,
@@ -48,6 +48,9 @@ function getFilteredDetailedInstructions (jsonLeg) {
         }
     });
 
+    //Making sure the last instructions doesn't break the consistency of the layout ... I know the line is ugly but I dont see any other way.
+    directionObject.steps[directionObject.steps.length-1].htmlInstructions = directionObject.steps[directionObject.steps.length-1].htmlInstructions.replace("<div style=\"font-size:0.9em\">",instructionsHtmlStyle);
+
     return directionObject;
 }
 
@@ -65,6 +68,7 @@ function decodedPolylinesAlgo (hashedPolyline) {
 
 /**
  * TODO: A) If we want to enabled a dark mode. https://github.com/react-native-community/react-native-maps#customizing-the-map-style
+ * TODO: B) For some reason, in the boundaries of the instructions list, theres a touchable delay. 
 */
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
@@ -75,15 +79,14 @@ function decodedPolylinesAlgo (hashedPolyline) {
 function Directions (props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
-    // const [detailedInstructions, setDetailedInstructions] = React.useState(null);
     const [directionRegion, setDirectionRegion] = React.useState(null);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const [numberOfSteps, setNumberOfSteps] = React.useState(0);
-    const [nextInstructions, setNextInstructions] = React.useState(false);
-    const [previousInstructions, setPreviousInstructions] = React.useState(false);
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
+    
+    //HardCoded List for testing
     const hardCoded_htmlList = [
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Head <b>northeast</b> on <b>Rue Sainte-Catherine O</b> toward <b>Rue Guy</b></div>",
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>",
@@ -91,11 +94,10 @@ function Directions (props) {
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>",
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>"
     ];
-    // const [htmlText, setHtmlText] = React.useState(htmlList[0]);
     const mapRef = useRef(null);
 
     /**
-     * TODO: B) The Value of the origin cannot be hard coded for the final version.
+     * TODO: C) The Value of the origin cannot be hard coded for the final version.
      */
     const origin = "45.493622,-73.577003";
     const destination = "45.497092,-73.5788";
@@ -105,10 +107,11 @@ function Directions (props) {
         props.navigation.goBack();
     }
 
-    const updateMapRegionToInstruction = (arrayOfCoordinates) => {
+    const updateMapRegionToInstruction = () => {
+        console.log("Going To "+instructionIndex);
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
-                arrayOfCoordinates,
+                detailedInstructionsObject.steps[instructionIndex].polylines,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
     }
@@ -124,54 +127,55 @@ function Directions (props) {
 
     useEffect(() => {
 
-        // const fetchData = async () =>  {
-        //     try{
-        //         // The following line is commented to avoid unecessary requests on the direcitons API. 
-        //         // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-        //         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
-        //         const jsonResponse = await resp.json();
-        //         const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
-        //         setDecodedPolylines(decodedPoints);
-        //         let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
-        //         setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
-        //         setdetailedInstructionsObject(filteredInstruction);
-        //     } catch(error) {
-        //         console.log(error);
-        //     }
-        // }
-        // fetchData();
+        const fetchData = async () =>  {
+            try{
+                // The following line is commented to avoid unecessary requests on the direcitons API. 
+                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+                let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+                const jsonResponse = await resp.json();
+                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
+                setDecodedPolylines(decodedPoints);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+                setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
+                setdetailedInstructionsObject(filteredInstruction);
+            } catch(error) {
+                console.log(error);
+            }
+        }
+        fetchData();
     }, []);
 
-    /**
-     * TODO: Write on the View the proper instructions and make it dynamic (change instructions) with the clicks
-     *       and zoom the mapview accordingly (fitToCoordinates).
-     */
     
     const goToNextInstruction = () => {
-
-        setIsFirstInstruction(false);
+        console.log("Next Click : "+instructionIndex)
         if(instructionIndex >= numberOfSteps - 1) {
             setIsLastInstruction(true);
         } else {
-        setNextInstructions(true);
-        setPreviousInstructions(false);
         setInstructionIndex(instructionIndex + 1);
+        setIsFirstInstruction(false);
+        console.log("Instruction incremented: "+instructionIndex);
+
     }
-    updateMapRegionToInstruction(detailedInstructionsObject.steps[instructionIndex].polylines);
+    updateMapRegionToInstruction();
         
     }
 
     const goToPreviousInstruction = () => {
+        console.log("Previous Click : "+instructionIndex)
         if(instructionIndex == 0) {
             setIsFirstInstruction(true);
         } else {
-        setNextInstructions(false);
-        setPreviousInstructions(true);
+        console.log("Before Decrement : "+instructionIndex)
         setInstructionIndex(instructionIndex - 1);
         setIsLastInstruction(false);
+        console.log("Instruction decremented: "+instructionIndex);
     }
-    updateMapRegionToInstruction(detailedInstructionsObject.steps[instructionIndex].polylines);
+    updateMapRegionToInstruction();
     }
+
+    /**
+     * TODO: The destination is at your right or smt like that is not properly displayed in the layout (thats because of the <div>)
+     */
     return (
         <View>
             <MapView
@@ -195,7 +199,7 @@ function Directions (props) {
                 <CurrentLocationButton mapReference ={mapRef}/>
             </View>
             <View style={styles.navigationHeader}>
-                <View style={{ top: "25%" }}>
+                <View style={{ top: "15%" }}>
                     <TouchableOpacity onPress = {goBackPressHandler}>                    
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
@@ -204,23 +208,14 @@ function Directions (props) {
                         <View style={styles.lineHeader}></View>
                     </View>
                     <View style = {styles.detailedInstructions}>
-                        {(!nextInstructions && !previousInstructions) && 
-                    <HTML 
+                     <HTML 
                         html={detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].htmlInstructions: "Invalid"} 
-                        // html = {htmlList[instructionIndex]}
                     /> 
-                        }
-                        {nextInstructions && 
-                    <HTML 
-                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].htmlInstructions: "Invalid"} 
-                        // html = {htmlList[instructionIndex]}
-                    /> 
-                        }
-                        {previousInstructions && 
-                    <HTML 
-                        html={detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].htmlInstructions: "Invalid"} 
-                        // html = {htmlList[instructionIndex]}
-                    />}
+                    <View style = {{flexDirection: "row", top: "2%", justifyContent: "space-between", width: "90%"}}>
+                    <Text style = {styles.stepMetrics}>Duration: <Text style ={styles.stepMetricsValues}>{detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].duration: "N/A"}</Text></Text>
+                    <Text style = {styles.stepMetrics}>Distance: <Text style ={styles.stepMetricsValues}>{detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].distance: "N/A"}</Text></Text>
+                    <Text style = {styles.stepMetrics}>By: <Text style ={styles.stepMetricsValues}>{detailedInstructionsObject ? detailedInstructionsObject.steps[instructionIndex].travelMode: "N/A"}</Text></Text>
+                    </View>
                     </View>
                 </View>
             </View>
@@ -236,7 +231,6 @@ function Directions (props) {
                     </View>
                 </TouchableOpacity>
             </View>
-            {/* <BottomMenu/> */}
         </View>
     );
 }
@@ -273,9 +267,10 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 2,
         top: "10%"
     },
-    backIcon: {
+    backIcon: { //NOTE: Maybe should be absolute positioning...
         color: "white",
-        left: "5%"
+        left: "5%",
+        top: "40%"
     },
     bottomArrowDirectionContainer: {
         top: "90%",
@@ -303,10 +298,20 @@ export const styles = StyleSheet.create({
     },
     detailedInstructions: {
         top: "5%",
-        height: "50%",
+        height: "60%",
         width: "100%",
         backgroundColor: "#2A2E43",
-        // flexDirection: "row"
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    stepMetrics : {
+        fontSize: 18,
+        color: "white"
+    },
+    stepMetricsValues: {
+        fontWeight: "bold", 
+        color: "yellow"
     }
 });
 
