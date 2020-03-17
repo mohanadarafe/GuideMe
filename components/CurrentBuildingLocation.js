@@ -109,7 +109,7 @@ function CurrentBuildingLocation () {
 
     return (
         <TouchableOpacity style ={styles.layout}>
-        <View style ={{top: "2%"}}>
+        <View>
             <MaterialIcons name="office-building" size={35} color="white" onPress={() => setModalVisibility(true)}></MaterialIcons><Modal isVisible={modalVisibility}>
                {currentBuilding === "" &&
                   <View style={styles.modal}>
