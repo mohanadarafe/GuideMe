@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
-import { CurrentBuildingInformation } from "../components/CurrentBuildingInformation";
+import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
@@ -35,6 +35,8 @@ function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
+
+    CurrentBuildingLocation();
 
     //TODO: To have a functionality for when the user presses on the map
     AsyncStorage.setItem("mapPressed", mapPressed);
@@ -72,9 +74,9 @@ function Map ({ navigation }) {
                         <BuildingIdentification />
                     </MapView>
                     <Search />
-                    <View style={styles.CurrentBuildingInformation
+                    <View style={styles.CurrentBuildingLocation
             }>
-                        <CurrentBuildingInformation />
+                        <CurrentBuildingLocation />
                     </View>
                 </View>
             }
@@ -96,7 +98,7 @@ export const styles = StyleSheet.create({
     map: {
         height: "100%"
     },
-    CurrentBuildingInformation: {
+    CurrentBuildingLocation: {
         position: "absolute",
         top: "82%",
         left: "80%"

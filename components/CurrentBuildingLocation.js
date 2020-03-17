@@ -12,9 +12,9 @@ import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
  * US32 - As a user, I would like to be able to know where I am indoors.
  * The following function provides the building & current floor of a user.
  * 
- * Note: call CurrentBuildingInformation() inside BottomMenu.js
+ * Note: call CurrentBuildingLocation() inside BottomMenu.js
  */
-function CurrentBuildingInformation () {
+function CurrentBuildingLocation () {
     const [currentBuilding, setCurrentBuilding] = React.useState("");
     const [lastLat, setlastLat] = React.useState(0);
     const [lastLong, setlastLong] = React.useState(0);
@@ -152,4 +152,4 @@ export const styles = StyleSheet.create({
     },
 });
 
-export { CurrentBuildingInformation };
+export { CurrentBuildingLocation };
