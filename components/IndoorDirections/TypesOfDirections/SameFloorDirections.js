@@ -1,13 +1,13 @@
 import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
-import { dijkstra, getFloorNumber, changeClassName } from '../Dijkstra/DijkstraAlgorithm';
+import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
 
 export function SameFloorDirections(props) {
     const rooms = props.rooms;
     const graph = ClassGraph();
-    const from = changeClassName(props.from);
-    const to = changeClassName(props.to);
+    const from = ConvertToHall8Floor(props.from);
+    const to = ConvertToHall8Floor(props.to);
     const route = dijkstra(graph, from, to).path;
 
     var getNextRoom = (index) => {

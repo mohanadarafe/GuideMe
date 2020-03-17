@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { DifferentFloorDirections } from "../../../components/IndoorDirections/TypesOfDirections/DifferentFloorDirections";
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
-import { getFloorNumber, changeClassName } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
+import { getFloorNumber, ConvertToHall8Floor } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 
 describe("DifferentFloorDirections component", () => {
     test("renders correctly", () => {
@@ -50,7 +50,7 @@ describe("DifferentFloorDirections component", () => {
             "H847",
         ]
         testCases.forEach((element, index) => {
-            expect(changeClassName(element)).toEqual(results[index])
+            expect(ConvertToHall8Floor(element)).toEqual(results[index])
         });
     })
 });

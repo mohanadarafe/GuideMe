@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { DifferentFloorDirections } from "../../../components/IndoorDirections/TypesOfDirections/DifferentFloorDirections";
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
-import { getFloorNumber, changeClassName, dijkstra } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
+import { getFloorNumber, ConvertToHall8Floor, dijkstra } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 import { ClassGraph } from "../../../constants/ClassGraph";
 
 describe("DifferentBuildingDirections component", () => {
@@ -65,7 +65,7 @@ describe("DifferentBuildingDirections component", () => {
             "H847",
         ]
         testCases.forEach((element, index) => {
-            expect(changeClassName(element)).toEqual(results[index])
+            expect(ConvertToHall8Floor(element)).toEqual(results[index])
         });
     })
 }); 
