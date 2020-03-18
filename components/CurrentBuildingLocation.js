@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import coord from "../constants/buildingCoordinates";
 import { isPointInPolygon } from "geolib";
 import { AsyncStorage, StyleSheet, View, Text, Button, TouchableOpacity  } from "react-native";
