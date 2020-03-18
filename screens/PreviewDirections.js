@@ -6,20 +6,63 @@ import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
 
-const mapPosition = {
-    sgwCoord: {
-        latitude: 45.496557,
-        longitude: -73.578896,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-    },
-    loyCoord: {
-        latitude: 45.457841,
-        longitude: -73.640307,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
+
+const getFilteredDetailedInstructions = (jsonLeg) => {
+    
+    const instructionsHtmlStyle = "<div style=\"font-size:1.4em;color:white;\">";
+    var directionObject = {
+        generalRouteInfo: {
+            totalDistance: jsonLeg.distance.text,
+            totalDuration: jsonLeg.duration.text,
+            startAddress: jsonLeg.start_address,
+            startLocation: {
+                latitude: jsonLeg.start_location.lat,
+                longitude: jsonLeg.start_location.lng,
+            },
+            endAddress: jsonLeg.end_address,
+            endLocation: {
+                latitude: jsonLeg.end_location.lat,
+                longitude: jsonLeg.end_location.lng
+            }
+        },
+        steps: []
     }
-};
+    directionObject.steps = jsonLeg.steps.map(step => {
+
+        // let decodedPolylines = decodedPolylinesAlgo(step.polyline.points);
+        return {
+            distance: step.distance.text,
+            duration: step.duration.text,
+            polylines: decodedPolylinesAlgo(step.polyline.points),
+            startLocation: {
+                latitude: step.start_location.lat,
+                longitude: step.end_location.lng
+            },
+            endLocation: {
+                latitude: step.end_location.lat,
+                longitude: step.end_location.lng
+            },
+            htmlInstructions: instructionsHtmlStyle+step.html_instructions+"</div>",
+            travelMode: step.travel_mode
+        }
+    });
+
+    //Making sure the last instructions doesn't break the consistency of the layout ... I know the line is ugly but I dont see any other way.
+    directionObject.steps[directionObject.steps.length-1].htmlInstructions = directionObject.steps[directionObject.steps.length-1].htmlInstructions.replace("<div style=\"font-size:0.9em\">",instructionsHtmlStyle);
+
+    return directionObject;
+}
+
+const decodedPolylinesAlgo = (hashedPolyline) => {
+    let points = PolyLine.decode(hashedPolyline);
+    return (points.map(point => {
+        return {
+            latitude: point[0],
+            longitude: point[1]
+        }
+    }));
+}
+
 
 
 /**
@@ -35,6 +78,7 @@ function PreviewDirections(props) {
     const [detailedInstructions, setDetailedInstructions] = React.useState();
     const [directionRegion, setDirectionRegion] = React.useState(props.initialRegion);
     const [backArrow, setBackArrow] = React.useState(false);
+    const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
 
     const mapRef = useRef(null);
 
@@ -60,28 +104,25 @@ function PreviewDirections(props) {
     //     );
     // }
 
-    // useEffect(() => {
-    //     const fetchData = async () =>  {
-    //         try{
-    //             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${props.origin}&destination=${props.destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
-    //             const jsonResponse = await resp.json();
-    //             const points = PolyLine.decode(jsonResponse.routes[0].overview_polyline.points);
-    //             const decodedPoints = points.map(point => {
-    //                 return {
-    //                     latitude: point[0],
-    //                     longitude: point[1]
-    //                 }
-    //             });
-    //             setDecodedPolylines(decodedPoints);
-    //             // const stepPoint = PolyLine.decode(jsonResponse.routes[0].)
-    //             setDirectionRegion()
-    //             setDetailedInstructions(jsonResponse.routes[0].legs);
-    //         } catch(error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchData();
-    // }, []);
+    useEffect(() => {
+
+        const fetchData = async () =>  {
+            try{
+                // The following line is commented to avoid unecessary requests on the direcitons API. 
+                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+                let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+                const jsonResponse = await resp.json();
+                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
+                setDecodedPolylines(decodedPoints);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+                setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
+                setdetailedInstructionsObject(filteredInstruction);
+            } catch(error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, []);
 
     const onLayout = () => {
         setTimeout(() => {
@@ -103,20 +144,24 @@ function PreviewDirections(props) {
                 onLayout={onLayout}
             >
 
-                {/* <Polyline
+                <Polyline
                 coordinates = {decodedPolylines}
-                strokeWidth = {2}
+                strokeWidth = {6}
                 strokeColor = "pink"
-                /> */}
+                />
             </MapView>
 
             <View style={styles.navigationHeader}>
-                <View style={{ top: "25%" }}>
+                <View style={{ top: "15%" }}>
                     <TouchableOpacity onPress={goBackPressHandler}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
+                    <View style={styles.directionTextHeader}>
+                        <Text style={styles.DirectionTextHeaderStyle}>Route Directions</Text>
+                        <View style={styles.lineHeader}></View>
+                    </View>
 
-                    <View style={styles.directionText}>
+                    {/* <View style={styles.directionText}>
                         <Text style={styles.DirectionTextHeader}>Route Directions</Text>
                             <View style={{ width: "100%", height: "50%", top: "10%" }}>
                                 <View style={styles.directionLabelContainer}>
@@ -125,35 +170,19 @@ function PreviewDirections(props) {
                             <Icon name="md-locate" style={styles.icon}></Icon>
                             <Text style={styles.directionLabels}>From: Current Location </Text>
                         </View>
-                                </View>
-                                <View style={styles.directionLabelContainer}>
-                                    
-                                    <View style={styles.iconContainer}>
+                        </View>
+                            <View style={styles.directionLabelContainer}> 
+                            <View style={styles.iconContainer}>
                             <Icon  type="Feather" name="map-pin"  style={styles.icon}></Icon>
                             <Text style={styles.directionLabels}>To: Hall Building</Text>
-                            
-                        </View>
-                                </View>
                             </View>
+                        </View>
                     </View>
+                    </View> */}
                 </View>
             </View>
 
-
-            {/* <View style={styles.bottomArrowDirectionContainer}>
-                <TouchableOpacity style={styles.arrowDirection}>
-                    <View>
-                        <Icon name="arrow-back"></Icon>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.arrowDirection}>
-                    <View >
-                        <Icon name="arrow-forward"></Icon>
-                    </View>
-                </TouchableOpacity>
-            </View> */}
-
-            <BottomMenu previewMode={previewMode} />
+            <BottomMenu previewMode={previewMode} navigation = {props.navigation} directionResponse = {detailedInstructionsObject}/>
         </View>
     );
 }
@@ -248,6 +277,20 @@ export const styles = StyleSheet.create({
         color: "#FFFFFF",
         alignSelf: "center"
     },
+    directionTextHeader: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    DirectionTextHeaderStyle: {
+        color: "white",
+        fontSize: 25
+    },
+    lineHeader: {
+        borderBottomColor: "white",
+        width: "100%",
+        borderBottomWidth: 2,
+        top: "10%"
+    }
 
 });
 

@@ -85,6 +85,7 @@ function Directions (props) {
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
+    const mapRef = useRef(null);
     
     //HardCoded List for testing
     const hardCoded_htmlList = [
@@ -94,7 +95,6 @@ function Directions (props) {
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>",
         "<div style=\"font-size:1.6em;color:white;display:flex;justify-content:center;align-items:center\">Turn <b>left</b> at the 3rd cross street onto <b>Rue Bishop</b></div>"
     ];
-    const mapRef = useRef(null);
 
     /**
      * TODO: C) The Value of the origin cannot be hard coded for the final version.

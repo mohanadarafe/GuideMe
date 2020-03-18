@@ -44,7 +44,10 @@ function BottomMenu(props) {
 
     
     const goToDoubleSearchBar = () => {
-        navigation.navigate("DoubleSearch", { destinationName: destination });
+        props.navigation.navigate("DoubleSearch", { destinationName: destination });
+    };
+    const goToDirections = () => {
+        props.navigation.navigate("Directions", { destinationResponse: props.directionResponse });
     };
     
     useEffect(() => {
@@ -97,7 +100,8 @@ function BottomMenu(props) {
                 <Text style={styles.mainLabel}>17 min (10.9km)</Text>
                 <Text style={styles.shortLabel}>to: Concordia University - SGW </Text>
                 <View style={styles.btnGetDirection}>
-                    <Button style={styles.btnGetDirection, { left: "100%", }} color={"#3ACCE1"} uppercase={false} mode="contained">
+                    <Button style={styles.btnGetDirection, { left: "100%", }} 
+                    color={"#3ACCE1"} uppercase={false} mode="contained" onPress = {goToDirections}>
                         <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
                     </Button>
                 </View>
