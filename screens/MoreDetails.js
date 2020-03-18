@@ -85,10 +85,6 @@ function createLists (data, departments, services, accesibility, number) {
 function MoreDetails (props) {
 
     const [data, setData] = React.useState();
-    
-    const getDirectionScreen = () => {
-        props.navigation.navigate("Directions");
-    }
 
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: props.name });

@@ -64,6 +64,7 @@ function Map ({ navigation }) {
                         showsUserLocation={true}
                         showsCompass={true}
                         showsBuildings={true}
+                        showsIndoors={false}
                     // TODO: remove the dropdown list whenever you press on the map
                     // onPress={() => setmapPressed("true")}
                     >

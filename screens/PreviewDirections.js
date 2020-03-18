@@ -8,7 +8,7 @@ import { BottomMenu } from "../components/BottomMenu";
 
 
 const getFilteredDetailedInstructions = (jsonLeg) => {
-    
+
     const instructionsHtmlStyle = "<div style=\"font-size:1.4em;color:white;\">";
     var directionObject = {
         generalRouteInfo: {
@@ -42,13 +42,13 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
                 latitude: step.end_location.lat,
                 longitude: step.end_location.lng
             },
-            htmlInstructions: instructionsHtmlStyle+step.html_instructions+"</div>",
+            htmlInstructions: instructionsHtmlStyle + step.html_instructions + "</div>",
             travelMode: step.travel_mode
         }
     });
 
     //Making sure the last instructions doesn't break the consistency of the layout ... I know the line is ugly but I dont see any other way.
-    directionObject.steps[directionObject.steps.length-1].htmlInstructions = directionObject.steps[directionObject.steps.length-1].htmlInstructions.replace("<div style=\"font-size:0.9em\">",instructionsHtmlStyle);
+    directionObject.steps[directionObject.steps.length - 1].htmlInstructions = directionObject.steps[directionObject.steps.length - 1].htmlInstructions.replace("<div style=\"font-size:0.9em\">", instructionsHtmlStyle);
 
     return directionObject;
 }
@@ -111,11 +111,11 @@ function PreviewDirections(props) {
 
     useEffect(() => {
 
-        const fetchData = async () =>  {
-            try{
+        const fetchData = async () => {
+            try {
                 // The following line is commented to avoid unecessary requests on the direcitons API. 
                 // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+                //  let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
                 const jsonResponse = await resp.json();
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
@@ -123,7 +123,7 @@ function PreviewDirections(props) {
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 // setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
                 setdetailedInstructionsObject(filteredInstruction);
-            } catch(error) {
+            } catch (error) {
                 console.log(error);
             }
         }
@@ -149,13 +149,13 @@ function PreviewDirections(props) {
                 showsCompass={true}
                 showsBuildings={true}
                 onLayout={initMapRegion}
-                showsIndoors = {false}
+                showsIndoors={false}
             >
 
                 <Polyline
-                coordinates = {decodedPolylines}
-                strokeWidth = {6}
-                strokeColor = "pink"
+                    coordinates={decodedPolylines}
+                    strokeWidth={6}
+                    strokeColor="pink"
                 />
             </MapView>
 
@@ -168,25 +168,25 @@ function PreviewDirections(props) {
                         <Text style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View>
-                    <View style = {{flexDirection: "column", width: "100%", top: "15%"}}>
-                        <View style = {{flexDirection: "row", alignItems: "center"}}>
-                            <View style = {{flexDirection: "row", alignItems: "center", width: "25%"}}>
-                                <Icon name = "location" type ="Entypo" style = {{color: "white", marginLeft: 10, marginRight: 10, fontSize: 16}}/>
-                                <Text style = {{fontSize: 20, color: "white", fontWeight: "bold"}}>From: </Text>
+                    <View style={styles.lowerHeaderContainer}>
+                        <View style={styles.addressContainer}>
+                            <View style={styles.iconAndTextContainter}>
+                                <Icon name="location" type="Entypo" style={styles.sideIcons} />
+                                <Text style={styles.fromToSideLabels}>From: </Text>
                             </View>
-                            <Text style = {{fontWeight: "normal", fontSize: 14, color: "white"}}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.startAddress: "N/A"}</Text>
+                            <Text style={styles.directionLabels}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.startAddress : "N/A"}</Text>
                         </View>
-                        <View style = {{top: "2%", flexDirection: "row", alignItems: "center"}}>
-                            <View style = {{flexDirection: "row", alignItems: "center", width: "25%"}}>
-                                <Icon name = "location" type ="Entypo" style = {{color: "white",  marginLeft: 10, marginRight: 10, fontSize: 16}}/>
-                                <Text style = {{fontSize: 20, color: "white", fontWeight: "bold"}}>To: </Text>
+                        <View style={styles.addressContainer}>
+                            <View style={styles.iconAndTextContainter}>
+                                <Icon name="location" type="Entypo" style={styles.sideIcons} />
+                                <Text style={styles.fromToSideLabels}>To: </Text>
                             </View>
-                            <Text style = {{fontWeight: "normal", fontSize: 14, color: "white"}}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.endAddress: "N/A"}</Text>
+                            <Text style={styles.directionLabels}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.endAddress : "N/A"}</Text>
                         </View>
                     </View>
                 </View>
             </View>
-            <BottomMenu previewMode={true} navigation = {props.navigation} directionResponse = {detailedInstructionsObject ? detailedInstructionsObject: null}/>
+            <BottomMenu previewMode={true} navigation={props.navigation} directionResponse={detailedInstructionsObject ? detailedInstructionsObject : null} />
         </View>
     );
 }
@@ -224,10 +224,10 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
     },
     directionLabels: {
-        color: "#FFFFFF",
-        fontSize: 15,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded",
+        fontWeight: "normal",
+        fontSize: 14,
+        color: "white",
+        width: "70%"
     },
     directionLabelContainer: {
         width: "100%",
@@ -294,7 +294,43 @@ export const styles = StyleSheet.create({
         width: "100%",
         borderBottomWidth: 2,
         top: "10%"
+    },
+
+    fromToSideLabels: {
+        fontSize: 20,
+        color: "white",
+        fontWeight: "bold"
+    },
+
+    sideIcons: {
+        color: "white",
+        marginLeft: 10,
+        marginRight: 10,
+        fontSize: 16
+    },
+
+    iconAndTextContainter: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "25%"
+    },
+
+    addressContainer:{
+        top: "2%",
+        flexDirection: "row",
+        alignItems: "center" 
+    },
+
+    lowerHeaderContainer:{
+        flexDirection: "column", 
+        width: "100%",
+         top: "15%" 
+
     }
+
+
+
+    
 
 });
 

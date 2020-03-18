@@ -32,16 +32,17 @@ function DoubleSearch (props) {
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
 
-    const goToBackToMoreDetails = () => {
+    const goBack = () => {
         props.navigation.goBack();
     };
-    const getDirectionScreen = () => {
-        props.navigation.navigate("MapDirections");
+    const goToPreviewDirectionScreen = () => {
+        props.navigation.navigate("PreviewDirections");
     };
 
     const selectDestinationName = () => {
         return props.navigation.getParam("destinationName", "null");
     };
+
 
     let fromName = from.name;
     let toName = to.name;
@@ -101,9 +102,9 @@ function DoubleSearch (props) {
                     resetValue={false}
                 />
             </View>
-            <Button transparent style={styles.routeButton} onPress={getDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             <View style={styles.backArrowContainer}>
-                <Button transparent style={styles.backArrow} onPress={goToBackToMoreDetails}>
+                <Button transparent style={styles.backArrow} onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>

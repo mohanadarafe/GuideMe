@@ -44,6 +44,7 @@ function Directions (props) {
             mapRef.current.fitToCoordinates(
                 destinationResponse.steps[index].polylines,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
+            
         }, 100);
     }
 

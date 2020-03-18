@@ -128,7 +128,25 @@ function BottomMenu(props) {
             </View>
         );
     }
-    else if (destination) {
+
+    if (selectedBuilding) {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btn}>
+                    <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
+                        setGetInside(true);
+                    }}>
+                        <Text style={styles.btnText}>Get Inside</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+
+    if (destination) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
