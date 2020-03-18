@@ -1,6 +1,14 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
+import { MapData } from "./MapData";
+import { sgwRooms } from "../constants/sgwRooms";
+import { buildingData } from "../constants/buildingData";
+
+function fetchData () {
+    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
+    return searchInfo;
+}
 
 /**
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
@@ -10,17 +18,32 @@ import { Icon, Button } from "native-base";
  * US20 - As a user, I should be able to choose my car as a means of transportation.
  * US21 - As a user, I should be able to choose Concordia Shuttle as a means of transportation.
  *
- * The following function renders a preference menu with button for the user to select
- * his method of transport and so on.
+ * The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
+ * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-//TODO: Link this file to the PreviewDirection.js
+function PreferenceMenu () {
 
-export function PreferenceMenu () {
+    const [data, setData] = React.useState();
+    const [getDirection, setgetDirection] = React.useState("false");
+
     // const [userType, setUserType] = React.useState("");
     // const [mobilityReduced, setMobilityReduced] = React.useState(false);
     // const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
     // const [travelType, setTravelType] = React.useState(false);
+
+    const getDirectionFunction = async () => {
+        let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
+        setgetDirection(getDirectionConst);
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setData(fetchData());
+            getDirectionFunction();
+        }, 1);
+        return () => clearInterval(intervalId);
+    });
 
     return (
         <View style={styles.container}>
@@ -100,7 +123,7 @@ export function PreferenceMenu () {
                 </View>
                 <View style={styles.disclaimerTextContainer}>
                     <Text style={styles.disclaimerText}>The Concordia shuttle bus offers you a free ride between the SGW and
-                    Loyola campus. However, the services are reserved for students with valid ID cards
+                        Loyola campus. However, the services are reserved for students with valid ID cards
                         and buses are wheelchair accessible.</Text>
                 </View>
             </View >
@@ -245,3 +268,5 @@ export const styles = StyleSheet.create({
         bottom: "5%"
     },
 });
+
+export { PreferenceMenu };

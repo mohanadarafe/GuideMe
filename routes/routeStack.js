@@ -4,8 +4,16 @@ import HomeMap from "../screens/Map";
 import MoreDetails from "../screens/MoreDetails";
 import DoubleSearch from "../screens/DoubleSearch";
 import MapDirections from "../screens/Directions";
+import PreviewDirections from "../screens/PreviewDirections";
+
 // Add screens here
 const screens = {
+    PreviewDirections: {
+        screen: PreviewDirections,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
     Directions: {
         screen: MapDirections,
         navigationOptions: {
@@ -16,17 +24,11 @@ const screens = {
         screen: HomeMap,
         navigationOptions: {
             headerShown: false
-        }  
+        }
     },
     buildingMoreDetails: {
         screen: MoreDetails
     },
-    DoubleSearch: {
-        screen: DoubleSearch,
-        navigationOptions: {
-            headerShown: false
-        }
-    }
 };
 
 const HomeStack = createStackNavigator(screens);

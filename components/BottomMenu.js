@@ -5,14 +5,15 @@ import MoreDetails from "../screens/MoreDetails";
 import { CurrentLocation } from "../components/CurrentLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
+import {PreferenceMenu} from "./PreferenceMenu";
+
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-
-function BottomMenu ({ navigation }) {
+function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -41,6 +42,11 @@ function BottomMenu ({ navigation }) {
     //     setmapPressed(pressed);
     // };
 
+    
+    const goToDoubleSearchBar = () => {
+        navigation.navigate("DoubleSearch", { destinationName: destination });
+    };
+    
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
@@ -53,7 +59,16 @@ function BottomMenu ({ navigation }) {
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} navigation={navigation} />
+                <MoreDetails name={selectedBuilding} navigation={props.navigation} />
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
+            </View>
+        );
+    }
+
+    if (iconSelected) {
+        return (
+            <View style={styles.moreDetails}>
+                <PreferenceMenu/>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
             </View>
         );
@@ -66,9 +81,29 @@ function BottomMenu ({ navigation }) {
         );
     }
 
-    const goToDoubleSearchBar = () => {
-        navigation.navigate("DoubleSearch", { destinationName: destination });
-    };
+
+    else if (iconSelected && !selectedBuilding) {
+        return (
+            <View style={styles.moreDetails}>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
+            </View>
+        );
+    }
+
+    if (props.previewMode) {
+        return (
+            <View style={styles.container}>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Text style={styles.mainLabel}>17 min (10.9km)</Text>
+                <Text style={styles.shortLabel}>to: Concordia University - SGW </Text>
+                <View style={styles.btnGetDirection}>
+                    <Button style={styles.btnGetDirection, { left: "100%", }} color={"#3ACCE1"} uppercase={false} mode="contained">
+                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
 
     if (getInside) {
         return (
@@ -89,24 +124,6 @@ function BottomMenu ({ navigation }) {
             </View>
         );
     }
-
-    if (selectedBuilding) {
-        return (
-            <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-                <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.btn}>
-                    <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
-                        setGetInside(true);
-                    }}>
-                        <Text style={styles.btnText}>Get Inside</Text>
-                    </Button>
-                </View>
-            </View>
-        );
-    }
-
     else if (destination) {
         return (
             <View style={styles.container}>
