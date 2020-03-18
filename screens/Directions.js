@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
+import { StyleSheet, TouchableOpacity} from "react-native";
+import MapView, { PROVIDER_GOOGLE, Polyline, Circle } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import CurrentLocationButton from "../components/CurrentLocationButton";
 import PolyLine from "@mapbox/polyline";
@@ -127,22 +127,22 @@ function Directions (props) {
 
     useEffect(() => {
 
-        const fetchData = async () =>  {
-            try{
-                // The following line is commented to avoid unecessary requests on the direcitons API. 
-                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
-                const jsonResponse = await resp.json();
-                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
-                setDecodedPolylines(decodedPoints);
-                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
-                setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
-                setdetailedInstructionsObject(filteredInstruction);
-            } catch(error) {
-                console.log(error);
-            }
-        }
-        fetchData();
+        // const fetchData = async () =>  {
+        //     try{
+        //         // The following line is commented to avoid unecessary requests on the direcitons API. 
+        //         // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+        //         let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+        //         const jsonResponse = await resp.json();
+        //         const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
+        //         setDecodedPolylines(decodedPoints);
+        //         let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+        //         setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
+        //         setdetailedInstructionsObject(filteredInstruction);
+        //     } catch(error) {
+        //         console.log(error);
+        //     }
+        // }
+        // fetchData();
     }, []);
 
     
@@ -155,9 +155,8 @@ function Directions (props) {
         setIsFirstInstruction(false);
         console.log("Instruction incremented: "+instructionIndex);
 
-    }
-    updateMapRegionToInstruction();
-        
+        }
+    updateMapRegionToInstruction();      
     }
 
     const goToPreviousInstruction = () => {
@@ -169,7 +168,7 @@ function Directions (props) {
         setInstructionIndex(instructionIndex - 1);
         setIsLastInstruction(false);
         console.log("Instruction decremented: "+instructionIndex);
-    }
+        }
     updateMapRegionToInstruction();
     }
 
@@ -187,6 +186,7 @@ function Directions (props) {
                 showsCompass={true}
                 showsBuildings={true}
                 onLayout={initMapRegion}
+                showsIndoors = {false}
                 // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
             >
                 <Polyline
@@ -219,18 +219,35 @@ function Directions (props) {
                     </View>
                 </View>
             </View>
-            <View style={styles.bottomArrowDirectionContainer}>
-                <TouchableOpacity style={styles.arrowDirection} onPress = {goToPreviousInstruction} disabled ={isFirstInstruction}>
+            {/* <View style={styles.bottomArrowDirectionContainer}> */}
+            {isFirstInstruction &&
+                <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled = {true}>
                     <View>
-                        <Icon name="arrow-back"></Icon>
+                        <Icon name="arrow-back" style={{color: "grey"}}/>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.arrowDirection} onPress = {goToNextInstruction} disabled = {isLastInstruction}>
+            }
+            {!isFirstInstruction &&
+                <TouchableOpacity style={styles.arrowLeftDirection} onPress = {goToPreviousInstruction}>
+                    <View>
+                        <Icon name="arrow-back" />
+                    </View>
+                </TouchableOpacity>
+            }
+            {isLastInstruction &&
+                <TouchableOpacity style={styles.arrowRightDirectionDisabled} disabled = {true}>
                     <View >
-                        <Icon name="arrow-forward"></Icon>
+                        <Icon name="arrow-forward" style={{color: "grey"}} />
                     </View>
                 </TouchableOpacity>
-            </View>
+            }
+            {!isLastInstruction &&
+                <TouchableOpacity style={styles.arrowRightDirection} onPress = {goToNextInstruction}>
+                    <View >
+                        <Icon name="arrow-forward" />
+                    </View>
+                </TouchableOpacity>
+            }
         </View>
     );
 }
@@ -289,6 +306,60 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         borderWidth: 2,
         borderColor: "#2A2E43",
+        borderRadius: 5
+    },
+    arrowRightDirection: {
+        top: "90%",
+        left: "84%",
+        width: 50,
+        height: 50,
+        position: "absolute",
+        color: "#2A2E43",
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderColor: "#2A2E43",
+        borderRadius: 5
+    },
+    arrowLeftDirection: {
+        top: "90%",
+        left: "70%",
+        position: "absolute",
+        width: 50,
+        height: 50,
+        color: "#2A2E43",
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderColor: "#2A2E43",
+        borderRadius: 5
+    },
+    arrowLeftDirectionDisabled: {
+        top: "90%",
+        left: "70%",
+        position: "absolute",
+        width: 50,
+        height: 50,
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderColor: "grey",
+        borderRadius: 5
+    },
+    arrowRightDirectionDisabled: {
+        top: "90%",
+        left: "84%",
+        position: "absolute",
+        width: 50,
+        height: 50,
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+        borderWidth: 2,
+        borderColor: "grey",
         borderRadius: 5
     },
     circleCurrentLocation: {
