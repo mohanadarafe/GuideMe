@@ -23,13 +23,13 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
             endLocation: {
                 latitude: jsonLeg.end_location.lat,
                 longitude: jsonLeg.end_location.lng
-            }
+            },
+            overviewPolyline: null
         },
         steps: []
     }
     directionObject.steps = jsonLeg.steps.map(step => {
 
-        // let decodedPolylines = decodedPolylinesAlgo(step.polyline.points);
         return {
             distance: step.distance.text,
             duration: step.duration.text,
@@ -74,26 +74,31 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
 function PreviewDirections(props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
-    const [previewMode, setPreviewMode] = React.useState(true);
     const [detailedInstructions, setDetailedInstructions] = React.useState();
     const [directionRegion, setDirectionRegion] = React.useState(props.initialRegion);
     const [backArrow, setBackArrow] = React.useState(false);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
-
     const mapRef = useRef(null);
 
-    const handleMapPress = () => {
-        const region = {
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-        };
-        mapRef.current.animateToRegion(region, 1000);
-    };
+
     const goBackPressHandler = () => {
         props.navigation.goBack();
     };
+
+    const initMapRegion = () => {
+        setTimeout(() => {
+            mapRef.current.fitToCoordinates([
+                { latitude: 45.493622, longitude: -73.577003 }, { latitude: 45.497092, longitude: -73.5788 }],
+                { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
+        }, 100);
+    }
+
+    /**
+     * TODO: C) The Value of the origin cannot be hard coded for the final version. 
+     *          Has to be fetch when this component will be linked to the DoubleSearch.
+     */
+    const origin = "45.493622,-73.577003";
+    const destination = "45.497092,-73.5788";
 
     // TODO: uncomment when linking DoubleSearch to this screen
     // if (backArrow && props.backToDoubleSearch === true) {
@@ -115,7 +120,8 @@ function PreviewDirections(props) {
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
-                setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
+                filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
+                // setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
                 setdetailedInstructionsObject(filteredInstruction);
             } catch(error) {
                 console.log(error);
@@ -131,6 +137,7 @@ function PreviewDirections(props) {
                 { edgePadding: { bottom: 10, right: 0, left: 0, top: 0 }, animated: true, });
         }, 100);
     };
+    console.log(detailedInstructionsObject);
     return (
         <View>
             <MapView
@@ -141,7 +148,8 @@ function PreviewDirections(props) {
                 showsUserLocation={true}
                 showsCompass={true}
                 showsBuildings={true}
-                onLayout={onLayout}
+                onLayout={initMapRegion}
+                showsIndoors = {false}
             >
 
                 <Polyline
@@ -157,32 +165,28 @@ function PreviewDirections(props) {
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
-                        <Text style={styles.DirectionTextHeaderStyle}>Route Directions</Text>
+                        <Text style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View>
-
-                    {/* <View style={styles.directionText}>
-                        <Text style={styles.DirectionTextHeader}>Route Directions</Text>
-                            <View style={{ width: "100%", height: "50%", top: "10%" }}>
-                                <View style={styles.directionLabelContainer}>
-                                    
-                                    <View style={styles.iconContainer}>
-                            <Icon name="md-locate" style={styles.icon}></Icon>
-                            <Text style={styles.directionLabels}>From: Current Location </Text>
-                        </View>
-                        </View>
-                            <View style={styles.directionLabelContainer}> 
-                            <View style={styles.iconContainer}>
-                            <Icon  type="Feather" name="map-pin"  style={styles.icon}></Icon>
-                            <Text style={styles.directionLabels}>To: Hall Building</Text>
+                    <View style = {{flexDirection: "column", width: "100%", top: "15%"}}>
+                        <View style = {{flexDirection: "row", alignItems: "center"}}>
+                            <View style = {{flexDirection: "row", alignItems: "center", width: "25%"}}>
+                                <Icon name = "location" type ="Entypo" style = {{color: "white", marginLeft: 10, marginRight: 10, fontSize: 16}}/>
+                                <Text style = {{fontSize: 20, color: "white", fontWeight: "bold"}}>From: </Text>
                             </View>
+                            <Text style = {{fontWeight: "normal", fontSize: 14, color: "white"}}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.startAddress: "N/A"}</Text>
+                        </View>
+                        <View style = {{top: "2%", flexDirection: "row", alignItems: "center"}}>
+                            <View style = {{flexDirection: "row", alignItems: "center", width: "25%"}}>
+                                <Icon name = "location" type ="Entypo" style = {{color: "white",  marginLeft: 10, marginRight: 10, fontSize: 16}}/>
+                                <Text style = {{fontSize: 20, color: "white", fontWeight: "bold"}}>To: </Text>
+                            </View>
+                            <Text style = {{fontWeight: "normal", fontSize: 14, color: "white"}}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.endAddress: "N/A"}</Text>
                         </View>
                     </View>
-                    </View> */}
                 </View>
             </View>
-
-            <BottomMenu previewMode={previewMode} navigation = {props.navigation} directionResponse = {detailedInstructionsObject}/>
+            <BottomMenu previewMode={true} navigation = {props.navigation} directionResponse = {detailedInstructionsObject ? detailedInstructionsObject: null}/>
         </View>
     );
 }
@@ -283,7 +287,7 @@ export const styles = StyleSheet.create({
     },
     DirectionTextHeaderStyle: {
         color: "white",
-        fontSize: 25
+        fontSize: 22
     },
     lineHeader: {
         borderBottomColor: "white",

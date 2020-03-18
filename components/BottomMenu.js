@@ -97,8 +97,8 @@ function BottomMenu(props) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>17 min (10.9km)</Text>
-                <Text style={styles.shortLabel}>to: Concordia University - SGW </Text>
+        <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse? props.directionResponse.generalRouteInfo.totalDistance: "N/A"})</Text>
+                <Text style={styles.shortLabel}>Main Travel Mode: Driving </Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirection, { left: "100%", }} 
                     color={"#3ACCE1"} uppercase={false} mode="contained" onPress = {goToDirections}>
