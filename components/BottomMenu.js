@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import MoreDetails from "../screens/MoreDetails";
-import { CurrentLocation } from "../components/CurrentLocation";
+import { CurrentBuildingLocation } from "./CurrentBuildingLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
 import {PreferenceMenu} from "./PreferenceMenu";
@@ -20,8 +20,6 @@ function BottomMenu(props) {
     const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
     //const [mapPressed, setmapPressed] = React.useState("");
-
-    CurrentLocation();
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     AsyncStorage.setItem("getInsideBuilding", getInside.toString());
@@ -221,7 +219,7 @@ export const styles = StyleSheet.create({
     },
     btnGetDirection: {
         position: "absolute",
-        left: "60%",
+        left: "57%",
         top: "5.5%",
         color: "#FFFFFF"
     },

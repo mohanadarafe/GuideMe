@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
+import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
@@ -72,6 +73,9 @@ function Map ({ navigation }) {
                         <BuildingIdentification />
                     </MapView>
                     <Search />
+                    <View style={styles.CurrentBuildingLocation}>
+                        <CurrentBuildingLocation />
+                    </View>
                 </View>
             }
             {getInsideBuild === "true" &&
@@ -93,8 +97,12 @@ Map.propTypes = {
 export const styles = StyleSheet.create({
     map: {
         height: "100%"
+    },
+    CurrentBuildingLocation: {
+        position: "absolute",
+        top: "82%",
+        left: "80%"
     }
-
 });
 
 export default Map;
