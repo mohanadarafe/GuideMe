@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import MoreDetails from "../screens/MoreDetails";
-import { CurrentBuildingLocation } from "./CurrentBuildingLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
 
