@@ -1,9 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import { StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
-import { View, Button, Text, Icon } from "native-base";
-import PolyLine from "@mapbox/polyline";
-import { BottomMenu } from "./BottomMenu";
+import React, { useRef } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { View, Text, Icon } from "native-base";
 import PropTypes from "prop-types";
 
 
