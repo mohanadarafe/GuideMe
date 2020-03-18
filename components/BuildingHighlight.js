@@ -8,16 +8,17 @@ import coord from "../constants/buildingCoordinates";
  * distinguish them from other buildings.
  * The following function colors the campus buildings.
  */
+
 function BuildingHighlight () {
     const [buildingName, setBuildingName] = React.useState("");
     AsyncStorage.setItem("buildingSelected", buildingName);
 
     return (
-        <View data-test="BuildingHighlightTestID">
-            <Polygon data-test="HBuildingTestID"
+        <View>
+            <Polygon
                 coordinates={coord.h.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName("Hall Building")}
+                onPress={() => { setBuildingName("Hall Building"); }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 

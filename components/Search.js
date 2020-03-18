@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
@@ -23,17 +23,38 @@ function fetchData () {
 
 function Search () {
   // eslint-disable-next-line no-unused-vars
-  const [destination, setDestination] = React.useState("");
+  const [buildingName, setBuildingName] = React.useState("");
+  const [from, setFrom] = React.useState("");
+  const [to, setTo] = React.useState("");
   const [data, setData] = React.useState();
+
+  let toName = to.name;
+
+  if (toName === undefined) {
+    toName = "";
+    AsyncStorage.setItem("toLocation", toName.toString());
+    AsyncStorage.setItem("toLocation", toName.toString());
+    AsyncStorage.setItem("buildingSelected", buildingName.toString());
+  }
+  else {
+    AsyncStorage.setItem("fromLocation", from.toString());
+    AsyncStorage.setItem("toLocation", toName.toString());
+    AsyncStorage.setItem("buildingSelected", buildingName.toString());
+  }
+
+  function destinationSetter (to) {
+    // resets the value of the buildingName label when on pressing on a searched item
+    setTo(to);
+    setFrom("Current Location");
+    setBuildingName("");
+  }
 
   useEffect(() => {
     setData(fetchData());
   }, []);
 
   return (
-
     <View style={styles.container}>
-
       <View style={styles.buttonStyle}>
         <TouchableOpacity>
           <View>
@@ -43,7 +64,7 @@ function Search () {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => setDestination(item)}
+        onItemSelect={item => destinationSetter(item)}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}
@@ -57,7 +78,6 @@ function Search () {
   );
 }
 
-
 export const styles = StyleSheet.create({
   buttonStyle: {
     width: "15%",
@@ -69,10 +89,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     maxHeight: 44,
     borderBottomStartRadius: 20
-
   },
   test: {
-
     width: "90%"
   },
   container: {
@@ -83,7 +101,6 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "center",
-
   },
   containerStyle: {
     padding: 5
