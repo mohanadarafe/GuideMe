@@ -3,10 +3,20 @@ import { IndoorScenario, whichPathToTake } from "../../../components/IndoorDirec
 import renderer from "react-test-renderer";
 
 describe("IndoorScenario component", () => {
-    test("renders correctly", () => {
-        const tree = renderer.create(<IndoorScenario />).toJSON();
+    test("renders same floor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"H825"} to={"H801"} />).toJSON();
         expect(tree).toMatchSnapshot();
     });
+
+    test("renders different floor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"H825"} to={"H501"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
+    test("renders different building correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"H825"} to={"Grey Nuns Annex"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
 
     test("returns correct algorithm path", () => {
         const testCases = [

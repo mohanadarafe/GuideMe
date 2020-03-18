@@ -27,7 +27,6 @@ DoubleSearch.propTypes = {
 };
 
 function DoubleSearch (props) {
-
     const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
@@ -64,7 +63,7 @@ function DoubleSearch (props) {
     }, []);
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container} data-test="DoubleSearch">
             <View style={styles.topBackground} />
 
             <View style={styles.svgContainer}>
