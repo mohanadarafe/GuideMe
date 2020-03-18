@@ -5,7 +5,7 @@ import { View, Button, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-
+import { api_key } from "../gmaps_api/apiKey"
 
 const getFilteredDetailedInstructions = (jsonLeg) => {
 
@@ -74,9 +74,6 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
 function PreviewDirections(props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
-    const [detailedInstructions, setDetailedInstructions] = React.useState();
-    const [directionRegion, setDirectionRegion] = React.useState(props.initialRegion);
-    const [backArrow, setBackArrow] = React.useState(false);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const mapRef = useRef(null);
 
@@ -115,13 +112,13 @@ function PreviewDirections(props) {
             try {
                 // The following line is commented to avoid unecessary requests on the direcitons API. 
                 // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                //  let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
+                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}`);
                 const jsonResponse = await resp.json();
+                //TODO: If there the size of the routes array is 0, then alert error!
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
-                // setNumberOfSteps(jsonResponse.routes[0].legs[0].steps.length);
                 setdetailedInstructionsObject(filteredInstruction);
             } catch (error) {
                 console.log(error);
@@ -137,14 +134,12 @@ function PreviewDirections(props) {
                 { edgePadding: { bottom: 10, right: 0, left: 0, top: 0 }, animated: true, });
         }, 100);
     };
-    console.log(detailedInstructionsObject);
     return (
         <View>
             <MapView
                 ref={mapRef}
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
-                region={directionRegion}
                 showsUserLocation={true}
                 showsCompass={true}
                 showsBuildings={true}
@@ -204,6 +199,7 @@ export const styles = StyleSheet.create({
     navigationHeader: {
         width: "100%",
         height: "25%",
+        flex: 1,
         flexDirection: "column",
         backgroundColor: "#2A2E43",
         position: "absolute"
@@ -245,41 +241,7 @@ export const styles = StyleSheet.create({
     backIcon: {
         color: "white",
         left: "5%",
-        fontSize: 30
-
-    },
-    backButtonContainer: {
-        top: "87%",
-        left: "70%",
-        position: "absolute",
-        height: 50,
-        width: 100,
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    bottomArrowDirectionContainer: {
-        top: "87%",
-        left: "70%",
-        position: "absolute",
-        height: 50,
-        width: 100,
-        flexDirection: "row",
-        justifyContent: "space-between"
-    },
-    arrowDirection: {
-        width: "45%",
-        color: "#2A2E43",
-        backgroundColor: "white",
-        alignItems: "center",
-        justifyContent: "center",
-        borderWidth: 2,
-        borderColor: "#2A2E43",
-        borderRadius: 5
-    },
-    icon: {
-        position: "absolute",
-        color: "#FFFFFF",
-        alignSelf: "center"
+        top: "40%"
     },
     directionTextHeader: {
         justifyContent: "center",
@@ -289,48 +251,32 @@ export const styles = StyleSheet.create({
         color: "white",
         fontSize: 22
     },
-    lineHeader: {
-        borderBottomColor: "white",
-        width: "100%",
-        borderBottomWidth: 2,
-        top: "10%"
-    },
-
     fromToSideLabels: {
         fontSize: 20,
         color: "white",
         fontWeight: "bold"
     },
-
     sideIcons: {
         color: "white",
         marginLeft: 10,
         marginRight: 10,
         fontSize: 16
     },
-
     iconAndTextContainter: {
         flexDirection: "row",
         alignItems: "center",
         width: "25%"
     },
-
     addressContainer:{
         top: "2%",
         flexDirection: "row",
         alignItems: "center" 
     },
-
     lowerHeaderContainer:{
         flexDirection: "column", 
         width: "100%",
-         top: "15%" 
-
-    }
-
-
-
-    
+        top: "5%" 
+    }   
 
 });
 
