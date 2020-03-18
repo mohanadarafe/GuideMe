@@ -124,7 +124,7 @@ function BottomMenu ({ navigation }) {
 
     else {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} data-test="BottomMenu">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>

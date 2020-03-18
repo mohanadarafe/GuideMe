@@ -1,13 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { DifferentFloorDirections } from "../../../components/IndoorDirections/TypesOfDirections/DifferentFloorDirections";
+import { DifferentBuildingDirections } from "../../../components/IndoorDirections/TypesOfDirections/DifferentBuildingDirections";
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
 import { getFloorNumber, ConvertToHall8Floor, dijkstra } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 import { ClassGraph } from "../../../constants/ClassGraph";
 
 describe("DifferentBuildingDirections component", () => {
     test("renders correctly", () => {
-        const tree = renderer.create(<DifferentFloorDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"MB3.125"}/>).toJSON();
+        const tree = renderer.create(<DifferentBuildingDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"MB3.125"}/>).toJSON();
         expect(tree).toMatchSnapshot();
     });
 

@@ -71,8 +71,6 @@ describe("MoreDetails component", () => {
             departments = [];
             services = [];
             accessibility = [];
-        });
-        
-        
+        }); 
     });
 })

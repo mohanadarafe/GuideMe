@@ -74,6 +74,7 @@ export function FloorMenu() {
             }
             {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" &&
                 <SwitchSelector
+                    id="floor_select_none"
                     style={styles.selector} 
                     options={hallFloors} 
                     initial={0}
