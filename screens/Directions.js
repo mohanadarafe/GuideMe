@@ -18,7 +18,6 @@ import PropTypes from "prop-types";
  */
 function Directions (props) {
 
-    const [directionRegion, setDirectionRegion] = React.useState(null);
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
@@ -109,15 +108,15 @@ function Directions (props) {
                         <View style={styles.lineHeader}></View>
                     </View>
                     <View style = {styles.detailedInstructions}>
-                     <HTML 
+                        <HTML 
                         html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions: "Invalid"} 
-                    /> 
-                    <View style = {{flexDirection: "row", top: "2%", justifyContent: "space-between", width: "90%"}}>
-                    <Text style = {styles.stepMetrics}>Duration: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration: "N/A"}</Text></Text>
-                    <Text style = {styles.stepMetrics}>Distance: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance: "N/A"}</Text></Text>
-                    <Text style = {styles.stepMetrics}>By: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode: "N/A"}</Text></Text>
+                        /> 
+                        <View style = {{flexDirection: "row", top: "2%", justifyContent: "space-between", width: "90%"}}>
+                        <Text style = {styles.stepMetrics}>Duration: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration: "N/A"}</Text></Text>
+                        <Text style = {styles.stepMetrics}>Distance: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance: "N/A"}</Text></Text>
+                        <Text style = {styles.stepMetrics}>By: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode: "N/A"}</Text></Text>
                     </View>
-                    </View>
+                </View>
                 </View>
             </View>
             {isFirstInstruction &&
@@ -167,7 +166,7 @@ export const styles = StyleSheet.create({
         height: "25%",
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#2A2E43",
+        backgroundColor: "#3F8796",
         position: "absolute"
     },
     directionTextHeader: {
@@ -268,10 +267,8 @@ export const styles = StyleSheet.create({
         left: "80%"
     },
     detailedInstructions: {
-        top: "5%",
-        height: "60%",
+        top: "15%",
         width: "100%",
-        backgroundColor: "#2A2E43",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center"
