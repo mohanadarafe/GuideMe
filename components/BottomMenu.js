@@ -29,7 +29,13 @@ function BottomMenu ({ navigation }) {
 
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
-        setDestination(searchItem);
+        if(searchItem.length > 13){
+            var upadatedSearchItem = searchItem.substring(0,13) + "...";
+            setDestination(upadatedSearchItem);
+        }
+        else{
+            setDestination(searchItem);
+        }
     };
 
     // //TODO: Will be used to detect when a user pressed on the map view
@@ -37,6 +43,11 @@ function BottomMenu ({ navigation }) {
     //     let pressed = await AsyncStorage.getItem("mapPressed");
     //     setmapPressed(pressed);
     // };
+
+    const currentAltitude = async() => {
+        let altitude = await AsyncStorage.getItem('altitude');
+    }
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
