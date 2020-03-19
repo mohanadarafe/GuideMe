@@ -5,11 +5,6 @@ import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 
-//FIXME: UNECESSARY FUNCTION
-function fetchData () {
-    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
-    return searchInfo;
-}
 
 /**
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
@@ -31,22 +26,6 @@ function PreferenceMenu () {
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({selectedButton: null})
     const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({selectedButton: null})
 
-    //FIXME: ALSO WHY?
-    const getDirectionFunction = async () => {
-        let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
-        setgetDirection(getDirectionConst);
-    };
-
-    //FIXME: UNECESSARY useEFFECT
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setData(fetchData());
-            getDirectionFunction();
-        }, 1);
-        return () => clearInterval(intervalId);
-    });
-
-
 
     return (
         <View style={styles.container}>
@@ -57,59 +36,23 @@ function PreferenceMenu () {
                     <Text style={styles.shortLabel}>I am: </Text>
                 </View>
 
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" ? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressFirstCategory({selectedButton: "GRADUATE"})}>
+                <Button transparent style={[styles.buttonContainer,{backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressFirstCategory({selectedButton: "GRADUATE"})}>
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
 
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE"? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressFirstCategory({selectedButton: "UNDERGRADUATE"})}>
+                <Button transparent style={[styles.buttonContainer,{backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressFirstCategory({selectedButton: "UNDERGRADUATE"})}>
                     <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
 
-                <Button transparent style={{
-                         height: 80,
-                         width: 80,
-                         backgroundColor: onPressFirstCategory.selectedButton === "VISITOR"? "#3ACCE1" : "#353A50",
-                         borderRadius: 10,
-                         flexDirection: "column",
-                         justifyContent: "center",
-                         alignItems: "center",
-                         margin: "2%",
-                         top: "8%"
-                }} onPress = {() => setOnPressFirstCategory({selectedButton: "VISITOR"})}>
+                <Button transparent style={[styles.buttonContainer,{backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressFirstCategory({selectedButton: "VISITOR"})}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
 
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY STAFF"? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressFirstCategory({selectedButton: "UNIVERSITY STAFF"})}>
+                <Button transparent style={[styles.buttonContainer,{backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY_STAFF" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressFirstCategory({selectedButton: "UNIVERSITY_STAFF"})}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
             </View>
@@ -118,30 +61,12 @@ function PreferenceMenu () {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
                 </View>
-                <Button transparent style={{
-                         height: 80,
-                         width: 80,
-                         backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY REDUCED: YES"? "#3ACCE1" : "#353A50",
-                         borderRadius: 10,
-                         flexDirection: "column",
-                         justifyContent: "center",
-                         alignItems: "center",
-                         margin: "2%",
-                         top: "8%"
-                }} onPress = {() => setOnPressSecondCategory({selectedButton: "MOBILITY REDUCED: YES"})}>
+                <Button transparent style={[styles.buttonContainer,{backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_REDUCED" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressSecondCategory({selectedButton: "MOBILITY_REDUCED"})}>
                     <Text style={styles.buttonLabelMobility} > Yes </Text>
                 </Button>
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY REDUCED: NO"? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressSecondCategory({selectedButton: "MOBILITY REDUCED: NO"})}>
+                <Button transparent style={[styles.buttonContainer,{backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_NOT_REDUCED" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressSecondCategory({selectedButton: "MOBILITY_NOT_REDUCED"})}>
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
@@ -151,17 +76,9 @@ function PreferenceMenu () {
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
                 </View>
 
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressThirdCategory.selectedButton === "CAR"? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressThirdCategory({selectedButton: "CAR"})}>
+                <Button transparent style={[styles.buttonContainerMOT,{backgroundColor: onPressThirdCategory.selectedButton === "DRIVING" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressThirdCategory({selectedButton: "DRIVING"})}>
+
                     <View style={styles.iconContainer}>
                         <Icon name="md-car" style={styles.icon}></Icon>
                     </View>
@@ -170,17 +87,8 @@ function PreferenceMenu () {
                     </View>
                 </Button>
 
-                <Button transparent style={{
-                         height: 80,
-                         width: 80,
-                         backgroundColor: onPressThirdCategory.selectedButton === "WALKING"? "#3ACCE1" : "#353A50",
-                         borderRadius: 10,
-                         flexDirection: "column",
-                         justifyContent: "center",
-                         alignItems: "center",
-                         margin: "2%",
-                         top: "8%"
-                }} onPress = {() => setOnPressThirdCategory({selectedButton: "WALKING"})}>
+                <Button transparent style={[styles.buttonContainerMOT,{backgroundColor: onPressThirdCategory.selectedButton === "WALKING" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressThirdCategory({selectedButton: "WALKING"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-walk" style={styles.icon}></Icon>
                     </View>
@@ -189,17 +97,8 @@ function PreferenceMenu () {
                     </View>
                 </Button>
 
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressThirdCategory.selectedButton === "BUS"? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressThirdCategory({selectedButton: "BUS"})}>
+                <Button transparent style={[styles.buttonContainerMOT,{backgroundColor: onPressThirdCategory.selectedButton === "BUS" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressThirdCategory({selectedButton: "BUS"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>
@@ -208,17 +107,8 @@ function PreferenceMenu () {
                     </View>
                 </Button>
 
-                <Button transparent style={{
-                        height: 80,
-                        width: 80,
-                        backgroundColor: onPressThirdCategory.selectedButton === "SHUTTLEBUS"? "#3ACCE1" : "#353A50",
-                        borderRadius: 10,
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        margin: "2%",
-                        top: "8%"
-                }} onPress = {() => setOnPressThirdCategory({selectedButton: "SHUTTLEBUS"})}>
+                <Button transparent style={[styles.buttonContainerMOT,{backgroundColor: onPressThirdCategory.selectedButton === "SHUTTLE_BUS" ? "#f0b400" : "#353A50"}]} 
+                onPress = {() => setOnPressThirdCategory({selectedButton: "SHUTTLE_BUS"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bus" style={styles.icon}></Icon>
                     </View>
@@ -270,7 +160,7 @@ export const styles = StyleSheet.create({
     buttonContainer: {
         height: 80,
         width: 80,
-        backgroundColor: "#353A50",
+        // backgroundColor: "#353A50",
         borderRadius: 10,
         flexDirection: "row",
         justifyContent: "center",
@@ -289,6 +179,7 @@ export const styles = StyleSheet.create({
         margin: "2%",
         top: "8%"
     },
+
     buttonLabel: {
         position: "absolute",
         color: "#FFFFFF",
@@ -363,7 +254,7 @@ export const styles = StyleSheet.create({
         fontSize: 10,
         fontFamily: "encodeSansExpanded",
         flexShrink: 1,
-        textAlign: "left"
+        textAlign: "left",
     },
     icon: {
         position: "absolute",
@@ -382,4 +273,4 @@ export const styles = StyleSheet.create({
     },
 });
 
-export default PreferenceMenu;
+export {PreferenceMenu};

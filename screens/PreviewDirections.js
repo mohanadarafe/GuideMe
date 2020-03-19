@@ -5,7 +5,7 @@ import { View, Button, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-import { api_key } from "../gmaps_api/apiKey"
+// import { api_key } from "../gmaps_api/apiKey"
 
 const getFilteredDetailedInstructions = (jsonLeg) => {
 
@@ -112,7 +112,7 @@ function PreviewDirections(props) {
             try {
                 // The following line is commented to avoid unecessary requests on the direcitons API. 
                 // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}`);
+                //  let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}`);
                 const jsonResponse = await resp.json();
                 //TODO: If there the size of the routes array is 0, then alert error!
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);

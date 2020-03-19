@@ -5,8 +5,7 @@ import MoreDetails from "../screens/MoreDetails";
 import { CurrentBuildingLocation } from "./CurrentBuildingLocation";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-import {PreferenceMenu} from "./PreferenceMenu";
-
+import { PreferenceMenu } from "./PreferenceMenu";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
