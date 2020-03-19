@@ -46,12 +46,12 @@ function DoubleSearch (props) {
     let fromName = from.name;
     let toName = to.name;
 
-    if (fromName !== undefined) {
+    if (fromName !== undefined)
         AsyncStorage.setItem("fromLocation", fromName.toString());
-    }
-    if (toName !== undefined) {
+
+    if (toName !== undefined) 
         AsyncStorage.setItem("toLocation", toName.toString());
-    }
+    
     if (toName === undefined && fromName === undefined) {
         toName = "";
         AsyncStorage.setItem("fromLocation", toName.toString());

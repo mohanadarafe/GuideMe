@@ -17,6 +17,11 @@ function BottomMenu(props) {
     const [switchVal, setSwitchVal] = React.useState(true);
     const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
+    const [methodTravel, setMethodTravel] = React.useState("");
+    const [personaType, setPersonaType] = React.useState("");
+    const [mobilityReduced, setMobilityReduced] = React.useState("");
+
+
     //const [mapPressed, setmapPressed] = React.useState("");
 
     AsyncStorage.setItem("toggle", switchVal.toString());
@@ -28,9 +33,27 @@ function BottomMenu(props) {
     };
 
     const getDestination = async () => {
-        let searchItem = await AsyncStorage.getItem("toLocation");
-        setDestination(searchItem);
+        let name = await AsyncStorage.getItem("toLocation");
+        setDestination(name);
     };
+
+    const getPersonaType = async () => {
+        let name = await AsyncStorage.getItem("firstCategory");
+        setPersonaType(name);
+    }; 
+    
+    const getMobility = async () => {
+        let name = await AsyncStorage.getItem("secondCategory");
+        setMobilityReduced(name);
+    };
+
+    const getMethodTravel = async () => {
+        let name = await AsyncStorage.getItem("thirdCategory");
+        setMethodTravel(name);
+    };
+
+    
+
 
     // //TODO: Will be used to detect when a user pressed on the map view
     // const getMapPressed = async () => {
@@ -50,11 +73,32 @@ function BottomMenu(props) {
         const intervalId = setInterval(() => {
             getBuildingSelected();
             getDestination();
+            getPersonaType();
+            getMobility();
+            getMethodTravel();
             //getMapPressed();
         }, 1);
         return () => clearInterval(intervalId);
     });
 
+    const nameMethodTravel = () => {
+        switch(methodTravel){
+            case 'DRIVING':
+            return "Driving";
+            
+            case 'WALKING': 
+            return "Walking";
+    
+            case 'BUS':
+            return "Bus";
+
+            case'SHUTTLE_BUS':
+            return "Shuttle Bus";
+
+            default:
+                return "Driving";
+        }
+    }
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
@@ -67,7 +111,7 @@ function BottomMenu(props) {
     if (iconSelected) {
         return (
             <View style={styles.moreDetails}>
-                <PreferenceMenu/>
+                <PreferenceMenu personaType={personaType} mobilityType={mobilityReduced} travelType={methodTravel}/>
                 <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
             </View>
         );
@@ -94,7 +138,7 @@ function BottomMenu(props) {
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
         <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse? props.directionResponse.generalRouteInfo.totalDistance: "N/A"})</Text>
-                <Text style={styles.shortLabel}>Main Travel Mode: Driving </Text>
+        <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirection, { left: "100%", }} 
                     color={"#3ACCE1"} uppercase={false} mode="contained" onPress = {goToDirections}>
