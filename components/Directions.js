@@ -28,20 +28,20 @@ const mapPosition = {
  */
 function Directions (props) {
 
-    const [decodedPolylines, setDecodedPolylines] = React.useState([]);
-    const [detailedInstructions, setDetailedInstructions] = React.useState();
-    const [directionRegion, setDirectionRegion] = React.useState(props.initialRegion);
+    const [directionRegion] = React.useState(props.initialRegion);
     const mapRef = useRef(null);
 
-    const handleMapPress = () => {
-        const region = {
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421
-        };
-        mapRef.current.animateToRegion(region, 1000);
-    };
+    /* SonarQube indicates that const handleMapPress was never used, im commenting it out for
+     the moment waiting for confirmationfrom you guys*/ 
+    // const handleMapPress = () => {
+    //     const region = {
+    //         latitude: 37.78825,
+    //         longitude: -122.4324,
+    //         latitudeDelta: 0.0922,
+    //         longitudeDelta: 0.0421
+    //     };
+    //     mapRef.current.animateToRegion(region, 1000);
+    // };
 
     const goBackPressHandler = () => {
         props.navigation.goBack();
