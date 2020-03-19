@@ -5,6 +5,7 @@ import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 
+//FIXME: UNECESSARY FUNCTION
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
@@ -26,17 +27,17 @@ function PreferenceMenu () {
 
     const [data, setData] = React.useState();
     const [getDirection, setgetDirection] = React.useState("false");
+    const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({selectedButton: null})
+    const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({selectedButton: null})
+    const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({selectedButton: null})
 
-    // const [userType, setUserType] = React.useState("");
-    // const [mobilityReduced, setMobilityReduced] = React.useState(false);
-    // const [mobilityNotReduced, setMobilityNotReduced] = React.useState(false);
-    // const [travelType, setTravelType] = React.useState(false);
-
+    //FIXME: ALSO WHY?
     const getDirectionFunction = async () => {
         let getDirectionConst = await AsyncStorage.getItem("getDirectionButtonPressed");
         setgetDirection(getDirectionConst);
     };
 
+    //FIXME: UNECESSARY useEFFECT
     useEffect(() => {
         const intervalId = setInterval(() => {
             setData(fetchData());
@@ -44,6 +45,8 @@ function PreferenceMenu () {
         }, 1);
         return () => clearInterval(intervalId);
     });
+
+
 
     return (
         <View style={styles.container}>
@@ -53,16 +56,60 @@ function PreferenceMenu () {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>I am: </Text>
                 </View>
-                <Button transparent style={styles.buttonContainer}>
+
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" ? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressFirstCategory({selectedButton: "GRADUATE"})}>
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
-                <Button transparent style={styles.buttonContainer}>
+
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE"? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressFirstCategory({selectedButton: "UNDERGRADUATE"})}>
                     <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
-                <Button transparent style={styles.buttonContainer}>
+
+                <Button transparent style={{
+                         height: 80,
+                         width: 80,
+                         backgroundColor: onPressFirstCategory.selectedButton === "VISITOR"? "#3ACCE1" : "#353A50",
+                         borderRadius: 10,
+                         flexDirection: "column",
+                         justifyContent: "center",
+                         alignItems: "center",
+                         margin: "2%",
+                         top: "8%"
+                }} onPress = {() => setOnPressFirstCategory({selectedButton: "VISITOR"})}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
-                <Button transparent style={styles.buttonContainer}>
+
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY STAFF"? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressFirstCategory({selectedButton: "UNIVERSITY STAFF"})}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
             </View>
@@ -71,10 +118,30 @@ function PreferenceMenu () {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
                 </View>
-                <Button transparent style={styles.buttonContainer} >
+                <Button transparent style={{
+                         height: 80,
+                         width: 80,
+                         backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY REDUCED: YES"? "#3ACCE1" : "#353A50",
+                         borderRadius: 10,
+                         flexDirection: "column",
+                         justifyContent: "center",
+                         alignItems: "center",
+                         margin: "2%",
+                         top: "8%"
+                }} onPress = {() => setOnPressSecondCategory({selectedButton: "MOBILITY REDUCED: YES"})}>
                     <Text style={styles.buttonLabelMobility} > Yes </Text>
                 </Button>
-                <Button transparent style={styles.buttonContainer} >
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY REDUCED: NO"? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressSecondCategory({selectedButton: "MOBILITY REDUCED: NO"})}>
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
@@ -83,7 +150,18 @@ function PreferenceMenu () {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
                 </View>
-                <Button transparent style={styles.buttonContainerMOT} >
+
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressThirdCategory.selectedButton === "CAR"? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressThirdCategory({selectedButton: "CAR"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-car" style={styles.icon}></Icon>
                     </View>
@@ -91,7 +169,18 @@ function PreferenceMenu () {
                         <Text style={styles.buttonLabel}>Car</Text>
                     </View>
                 </Button>
-                <Button transparent style={styles.buttonContainerMOT} >
+
+                <Button transparent style={{
+                         height: 80,
+                         width: 80,
+                         backgroundColor: onPressThirdCategory.selectedButton === "WALKING"? "#3ACCE1" : "#353A50",
+                         borderRadius: 10,
+                         flexDirection: "column",
+                         justifyContent: "center",
+                         alignItems: "center",
+                         margin: "2%",
+                         top: "8%"
+                }} onPress = {() => setOnPressThirdCategory({selectedButton: "WALKING"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-walk" style={styles.icon}></Icon>
                     </View>
@@ -99,7 +188,18 @@ function PreferenceMenu () {
                         <Text style={styles.buttonLabel}>Walking</Text>
                     </View>
                 </Button>
-                <Button transparent style={styles.buttonContainerMOT}>
+
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressThirdCategory.selectedButton === "BUS"? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressThirdCategory({selectedButton: "BUS"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>
@@ -107,7 +207,18 @@ function PreferenceMenu () {
                         <Text style={styles.buttonLabel}>Bus</Text>
                     </View>
                 </Button>
-                <Button transparent style={styles.buttonContainerMOT}>
+
+                <Button transparent style={{
+                        height: 80,
+                        width: 80,
+                        backgroundColor: onPressThirdCategory.selectedButton === "SHUTTLEBUS"? "#3ACCE1" : "#353A50",
+                        borderRadius: 10,
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "2%",
+                        top: "8%"
+                }} onPress = {() => setOnPressThirdCategory({selectedButton: "SHUTTLEBUS"})}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bus" style={styles.icon}></Icon>
                     </View>
@@ -115,6 +226,7 @@ function PreferenceMenu () {
                         <Text style={styles.buttonLabel}>Shuttle Bus</Text>
                     </View>
                 </Button>
+
             </View>
 
             <View style={styles.containerOfDisclaimer}>
@@ -137,7 +249,8 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        backgroundColor: "#2A2E43"
     },
     mainLabel: {
         color: "#FFFFFF",
@@ -174,7 +287,7 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         margin: "2%",
-        top: "8%",
+        top: "8%"
     },
     buttonLabel: {
         position: "absolute",
@@ -269,4 +382,4 @@ export const styles = StyleSheet.create({
     },
 });
 
-export { PreferenceMenu };
+export default PreferenceMenu;
