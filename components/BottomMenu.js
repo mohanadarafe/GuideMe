@@ -46,7 +46,6 @@ function BottomMenu ({ navigation }) {
 
     const currentAltitude = async() => {
         let altitude = await AsyncStorage.getItem('altitude');
-        console.log(altitude);
     }
 
 
