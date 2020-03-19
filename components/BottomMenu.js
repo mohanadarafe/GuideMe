@@ -33,8 +33,19 @@ function BottomMenu(props) {
     };
 
     const getDestination = async () => {
+
         let name = await AsyncStorage.getItem("toLocation");
         setDestination(name);
+
+        let searchItem = await AsyncStorage.getItem("toLocation");
+        if(searchItem.length > 13){
+            var upadatedSearchItem = searchItem.substring(0,13) + "...";
+            setDestination(upadatedSearchItem);
+        }
+        else{
+            setDestination(searchItem);
+        }
+
     };
 
     const getPersonaType = async () => {
@@ -61,6 +72,7 @@ function BottomMenu(props) {
     //     setmapPressed(pressed);
     // };
 
+
     
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: destination });
@@ -68,7 +80,11 @@ function BottomMenu(props) {
     const goToDirections = () => {
         props.navigation.navigate("Directions", { destinationResponse: props.directionResponse });
     };
-    
+
+    const currentAltitude = async() => {
+        let altitude = await AsyncStorage.getItem('altitude');
+    }
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
