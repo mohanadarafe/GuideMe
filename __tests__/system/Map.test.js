@@ -16,10 +16,8 @@ const setUpBottom = (props={}) => {
 
 describe("Map Component", () => {
    let component;
-   let component2;
    beforeEach(() => {
        component = setUp();
-       component2 = setUpBottom();
    });
    it("Should render without errors", () => {
        const wrapper = findByTestAtrr(component, "MapComponent");
