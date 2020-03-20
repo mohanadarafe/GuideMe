@@ -12,3 +12,4 @@ script:
   - npm ci
   # - npx jest --ci
   - npm test -- --coverage --updateSnapshot
+  - npm run lint
