@@ -76,10 +76,17 @@ function PreviewDirections(props) {
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
 
-    // The variables retrived from the preference page 
-    const [personaType, setPersonaType] = React.useState()
-    const [mobilityReduced, setMobilityReduced] = React.useState()
-    const [transportMethod, setTransportMethod] = React.useState()
+    // // The variables retrived from the preference page 
+
+    const { params } = props.navigation.state;
+    const personaType = params ? params.personaType : null;
+    const mobilityType = params ? params.mobilityType : null; 
+    const transportType = params ? params.transportType : null;
+
+    console.log("prev 1 "+personaType);
+    console.log("prev 2 "+mobilityType);
+    console.log("prev 3 "+transportType);
+
 
     const mapRef = useRef(null);
 
@@ -112,21 +119,6 @@ function PreviewDirections(props) {
     //     );
     // }
 
-    const getPersonaType = async () => {
-        let name = await AsyncStorage.getItem("firstCategory");
-        setPersonaType(name);
-    };
-
-    const getMobility = async () => {
-        let name = await AsyncStorage.getItem("secondCategory");
-        setMobilityReduced(name);
-    };
-
-    const getMethodTravel = async () => {
-        let name = await AsyncStorage.getItem("thirdCategory");
-        setTransportMethod(name);
-    };
-
 
     useEffect(() => {
 
@@ -149,15 +141,6 @@ function PreviewDirections(props) {
 
         fetchData();
     }, []);
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            getPersonaType();
-            getMobility();
-            getMethodTravel();
-        }, 1);
-        return () => clearInterval(intervalId);
-    });
 
     const onLayout = () => {
         setTimeout(() => {

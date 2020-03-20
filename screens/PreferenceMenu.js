@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
-import { MapData } from "./MapData";
-import { sgwRooms } from "../constants/sgwRooms";
-import { buildingData } from "../constants/buildingData";
-
 
 /**
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
@@ -20,21 +16,26 @@ import { buildingData } from "../constants/buildingData";
 
 function PreferenceMenu(props) {
 
-    const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: null })
-    const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: null })
-    const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: null })
+    const { params } = props.navigation.state;
+    const personaSavedState = params ? params.personaType : null;
+    const mobilitySavedState = params ? params.mobilityType : null; 
+    const transportSavedState = params ? params.transportType : null;
+
+    const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState?personaSavedState:null })
+    const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState?mobilitySavedState:null})
+    const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState?transportSavedState:null})
 
     let firstRow = onPressFirstCategory.selectedButton;
     let secondRow = onPressSecondCategory.selectedButton;
     let thirdRow = onPressThirdCategory.selectedButton;
 
-    if(firstRow != undefined)
+    if (firstRow != undefined)
         AsyncStorage.setItem("firstCategory", onPressFirstCategory.selectedButton.toString());
 
-    if(secondRow != undefined)
+    if (secondRow != undefined)
         AsyncStorage.setItem("secondCategory", onPressSecondCategory.selectedButton.toString());
 
-    if(thirdRow != undefined)
+    if (thirdRow != undefined)
         AsyncStorage.setItem("thirdCategory", onPressThirdCategory.selectedButton.toString());
 
     if (firstRow && secondRow && thirdRow === undefined) {
@@ -46,8 +47,19 @@ function PreferenceMenu(props) {
         AsyncStorage.setItem("thirdCategory", onPressThirdCategory.selectedButton.toString());
     }
 
+    const goToPreviewDirections = () => {
+        props.navigation.navigate("PreviewDirections", {
+            personaType: onPressFirstCategory.selectedButton,
+            mobilityType: onPressSecondCategory.selectedButton, 
+            transportType: onPressThirdCategory.selectedButton,
+        },  );
+
+    }
+
     return (
         <View style={styles.container}>
+            <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goToPreviewDirections} />
+
             <Text style={styles.mainLabel}>Preferences</Text>
 
             <View style={styles.containerOfButtons1}>
@@ -55,22 +67,22 @@ function PreferenceMenu(props) {
                     <Text style={styles.shortLabel}>I am: </Text>
                 </View>
 
-                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" || props.personaType === "GRADUATE" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressFirstCategory({ selectedButton: "GRADUATE" })}>
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE" || props.personaType === "UNDERGRADUATE"?  "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressFirstCategory({ selectedButton: "UNDERGRADUATE" })}>
                     <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" || props.personaType === "VISITOR" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressFirstCategory({ selectedButton: "VISITOR" })}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY_STAFF" || props.personaType === "UNIVERSITY_STAFF" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY_STAFF" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressFirstCategory({ selectedButton: "UNIVERSITY_STAFF" })}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
@@ -80,11 +92,11 @@ function PreferenceMenu(props) {
                 <View style={styles.labelContainer}>
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
                 </View>
-                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_REDUCED" || props.mobilityType === "MOBILITY_REDUCED" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_REDUCED" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressSecondCategory({ selectedButton: "MOBILITY_REDUCED" })}>
                     <Text style={styles.buttonLabelMobility} > Yes </Text>
                 </Button>
-                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_NOT_REDUCED" || props.mobilityType === "MOBILITY_NOT_REDUCED" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_NOT_REDUCED" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressSecondCategory({ selectedButton: "MOBILITY_NOT_REDUCED" })}>
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
@@ -95,7 +107,7 @@ function PreferenceMenu(props) {
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
                 </View>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "DRIVING" || props.travelType === "DRIVING" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "DRIVING" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressThirdCategory({ selectedButton: "DRIVING" })}>
 
                     <View style={styles.iconContainer}>
@@ -106,7 +118,7 @@ function PreferenceMenu(props) {
                     </View>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "WALKING" || props.travelType === "WALKING" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "WALKING" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressThirdCategory({ selectedButton: "WALKING" })}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-walk" style={styles.icon}></Icon>
@@ -116,7 +128,7 @@ function PreferenceMenu(props) {
                     </View>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "BUS" || props.travelType === "BUS" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "BUS" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressThirdCategory({ selectedButton: "BUS" })}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
@@ -126,7 +138,7 @@ function PreferenceMenu(props) {
                     </View>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "SHUTTLE_BUS" || props.travelType === "SHUTTLE_BUS" ? "#f0b400" : "#353A50" }]}
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "SHUTTLE_BUS" ? "#f0b400" : "#353A50" }]}
                     onPress={() => setOnPressThirdCategory({ selectedButton: "SHUTTLE_BUS" })}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bus" style={styles.icon}></Icon>
@@ -289,6 +301,12 @@ export const styles = StyleSheet.create({
         height: "25%",
         bottom: "5%"
     },
+    arrowDown: {
+        color: "#ffffff",
+        top: "5%",
+        fontSize: 54,
+        position: "absolute"
+    },
 });
 
-export { PreferenceMenu };
+export default PreferenceMenu;

@@ -4,7 +4,7 @@ import { Icon } from "native-base";
 import MoreDetails from "../screens/MoreDetails";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-import { PreferenceMenu } from "./PreferenceMenu";
+import  PreferenceMenu  from "../screens/PreferenceMenu";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -37,14 +37,14 @@ function BottomMenu(props) {
         let name = await AsyncStorage.getItem("toLocation");
         setDestination(name);
 
-        let searchItem = await AsyncStorage.getItem("toLocation");
-        if(searchItem.length > 13){
-            var upadatedSearchItem = searchItem.substring(0,13) + "...";
-            setDestination(upadatedSearchItem);
-        }
-        else{
-            setDestination(searchItem);
-        }
+        // let searchItem = await AsyncStorage.getItem("toLocation");
+        // if(searchItem.length > 13){
+        //     var upadatedSearchItem = searchItem.substring(0,13) + "...";
+        //     setDestination(upadatedSearchItem);
+        // }
+        // else{
+        //     setDestination(searchItem);
+        // }
 
     };
 
@@ -79,6 +79,14 @@ function BottomMenu(props) {
     };
     const goToDirections = () => {
         props.navigation.navigate("Directions", { destinationResponse: props.directionResponse });
+    };
+
+    const goToPreferenceMenu = () => {
+        props.navigation.navigate("PreferenceMenu",{
+            personaType: personaType,
+            mobilityType: mobilityReduced,
+            transportType: methodTravel
+        } );
     };
 
     const currentAltitude = async() => {
@@ -124,14 +132,6 @@ function BottomMenu(props) {
         );
     }
 
-    if (iconSelected) {
-        return (
-            <View style={styles.moreDetails}>
-                <PreferenceMenu personaType={personaType} mobilityType={mobilityReduced} travelType={methodTravel}/>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
     if (iconSelected && !selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
@@ -152,7 +152,7 @@ function BottomMenu(props) {
     if (props.previewMode) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToPreferenceMenu} />
         <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse? props.directionResponse.generalRouteInfo.totalDistance: "N/A"})</Text>
         <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>

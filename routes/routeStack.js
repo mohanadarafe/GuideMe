@@ -1,10 +1,11 @@
-import { createStackNavigator } from "react-navigation-stack";
+import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import HomeMap from "../screens/Map";
 import MoreDetails from "../screens/MoreDetails";
 import DoubleSearch from "../screens/DoubleSearch";
 import MapDirections from "../screens/Directions";
 import PreviewDirections from "../screens/PreviewDirections";
+import PreferenceMenu from "../screens/PreferenceMenu";
 
 // Add screens here
 const screens = {
@@ -34,9 +35,20 @@ const screens = {
     DoubleSearch: {
         screen: DoubleSearch,
         navigationOptions: {
-            headerShown: false
+            headerShown: false,
         }
+    },
+
+    PreferenceMenu: {
+        screen: PreferenceMenu,
+        navigationOptions: {
+            headerShown: false,
+            ...TransitionPresets.ModalSlideFromBottomIOS
+        }
+
     }
+
+
 
 
 };
