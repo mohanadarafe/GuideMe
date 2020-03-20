@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
@@ -11,7 +12,7 @@ import { FloorMenu } from "./FloorMenu";
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
 
-function BottomMenu ({ navigation }) {
+function BottomMenu({ navigation }) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -29,11 +30,11 @@ function BottomMenu ({ navigation }) {
 
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
-        if(searchItem.length > 13){
-            var upadatedSearchItem = searchItem.substring(0,13) + "...";
+        if (searchItem.length > 13) {
+            var upadatedSearchItem = searchItem.substring(0, 13) + "...";
             setDestination(upadatedSearchItem);
         }
-        else{
+        else {
             setDestination(searchItem);
         }
     };
@@ -44,9 +45,9 @@ function BottomMenu ({ navigation }) {
     //     setmapPressed(pressed);
     // };
 
-    const currentAltitude = async() => {
-        let altitude = await AsyncStorage.getItem('altitude');
-    }
+    const currentAltitude = async () => {
+        let altitude = await AsyncStorage.getItem("altitude");
+    };
 
 
     useEffect(() => {

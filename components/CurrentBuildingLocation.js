@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useEffect } from "react";
 import coord from "../constants/buildingCoordinates";
 import { isPointInPolygon } from "geolib";
-import { AsyncStorage, StyleSheet, View, Text, Button, TouchableOpacity  } from "react-native";
+import { AsyncStorage, StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
 import * as Location from "expo-location";
 import Modal from "react-native-modal";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -14,7 +15,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
  * 
  * Note: call CurrentBuildingLocation() inside BottomMenu.js
  */
-function CurrentBuildingLocation () {
+function CurrentBuildingLocation() {
     const [currentBuilding, setCurrentBuilding] = React.useState("");
     const [lastLat, setlastLat] = React.useState(0);
     const [lastLong, setlastLong] = React.useState(0);
@@ -36,7 +37,7 @@ function CurrentBuildingLocation () {
 
     AsyncStorage.setItem("altitude", altitude);
     AsyncStorage.setItem("currentBuilding", currentBuilding);
-    
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -108,24 +109,24 @@ function CurrentBuildingLocation () {
 
 
     return (
-        <TouchableOpacity style ={styles.layout}>
-        <View>
-            <MaterialIcons name="office-building" size={35} color="white" onPress={() => setModalVisibility(true)}></MaterialIcons><Modal isVisible={modalVisibility}>
-               {currentBuilding === "" &&
-                  <View style={styles.modal}>
-                    <Text style={styles.modalText}>You have to be in a concordia building to use this feature</Text>
-                    <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
-                  </View>
-               }
-               {currentBuilding !== "" &&
-                   <View style={styles.modal}>
-                       <Text style={styles.modalText}>{/*currentBuilding*/}We didn't measure the floor height yet... Waiting for concordia to reopen</Text>
-                       <Text style={styles.modalText}>{/*roundedCurrentFloor*/}</Text>
-                       <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)}/>
-                   </View>
-               }
-           </Modal>
-        </View>
+        <TouchableOpacity style={styles.layout}>
+            <View>
+                <MaterialIcons name="office-building" size={35} color="white" onPress={() => setModalVisibility(true)}></MaterialIcons><Modal isVisible={modalVisibility}>
+                    {currentBuilding === "" &&
+                        <View style={styles.modal}>
+                            <Text style={styles.modalText}>You have to be in a concordia building to use this feature</Text>
+                            <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)} />
+                        </View>
+                    }
+                    {currentBuilding !== "" &&
+                        <View style={styles.modal}>
+                            <Text style={styles.modalText}>{/*currentBuilding*/}We didn't measure the floor height yet... Waiting for concordia to reopen</Text>
+                            <Text style={styles.modalText}>{/*roundedCurrentFloor*/}</Text>
+                            <Button style={styles.modalButton} title="Close" onPress={() => setModalVisibility(false)} />
+                        </View>
+                    }
+                </Modal>
+            </View>
         </TouchableOpacity>
     );
 }
@@ -133,22 +134,22 @@ export const styles = StyleSheet.create({
     layout: {
         width: 60,
         height: 60,
-        borderRadius: 100/2,
+        borderRadius: 100 / 2,
         backgroundColor: "#2A2E43",
         justifyContent: "center",
         alignItems: "center"        //Align text horizontally
     },
     modal: {
-        position:"absolute",
+        position: "absolute",
         right: "20%",
-        paddingTop:10,
-        borderRadius:10,
-        width:200,
+        paddingTop: 10,
+        borderRadius: 10,
+        width: 200,
         backgroundColor: "white",
     },
     modalText: {
-        fontSize:20,
-        textAlign: 'center'         //Align text vertically
+        fontSize: 20,
+        textAlign: "center"         //Align text vertically
     },
 });
 

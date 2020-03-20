@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -31,7 +32,7 @@ const mapPosition = {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-function Map ({ navigation }) {
+function Map({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
