@@ -46,6 +46,15 @@ const screens = {
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
 
+    },
+
+    MoreDetails: {
+        screen: MoreDetails,
+        navigationOptions: {
+            headerShown: false,
+            ...TransitionPresets.ModalSlideFromBottomIOS
+        }
+
     }
 
 

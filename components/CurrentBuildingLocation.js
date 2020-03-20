@@ -27,8 +27,7 @@ function CurrentBuildingLocation () {
     // let currentFloor = 0;
 
     const _getLocationAsync = async () => {
-        let location = await Location.getCurrentPositionAsync({/*insert acuracy*/ });
-
+               let location = await Location.getCurrentPositionAsync({/*insert acuracy*/ });
         setlastLat(JSON.stringify(location.coords.latitude));
         setlastLong(JSON.stringify(location.coords.longitude));
         setAltitude(JSON.stringify(location.coords.altitude));

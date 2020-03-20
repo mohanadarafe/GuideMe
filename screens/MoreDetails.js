@@ -25,7 +25,7 @@ export const renderSeparator = () => {
  * 
  * @param {*} buildingName Name of building to get data of
  */
-export function fetchData (buildingName) {
+export function fetchData(buildingName) {
     const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
     return modeDetailsInfo;
 }
@@ -38,7 +38,7 @@ export function fetchData (buildingName) {
  * @param {*} accesibility array of accesibility
  * @param {*} number phone number
  */
-export function createLists (data, departments, services, accesibility, number) {
+export function createLists(data, departments, services, accesibility, number) {
     if (data) {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].length; j++) {
@@ -80,11 +80,18 @@ export function createLists (data, departments, services, accesibility, number) 
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails (props) {
+function MoreDetails(props) {
     const [data, setData] = React.useState();
 
+    const goBack = () => {
+        props.navigation.goBack();
+    }
+
+    const { params } = props.navigation.state;
+    const name = params ? params.name : null;
+
     const goToDoubleSearchBar = () => {
-        props.navigation.navigate("DoubleSearch", { destinationName: props.name });
+        props.navigation.navigate("DoubleSearch", { destinationName: name });
     };
 
     const getBuildingInfo = buildingData();
@@ -94,9 +101,10 @@ function MoreDetails (props) {
     var number;
 
     useEffect(() => {
-        setData(fetchData(props.name));
+        setData(fetchData(name));
     }, []);
 
+ 
     createLists(data, departments, services, accesibility, number);
     if (data) {
         return (
@@ -109,7 +117,7 @@ function MoreDetails (props) {
                         </View>
                         <View style={styles.separator}></View>
                         <View style={styles.buttonTextContainer}>
-                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[name].address}</Text>
                         </View>
                     </Button>
 
@@ -119,7 +127,7 @@ function MoreDetails (props) {
                         </View>
                         <SafeAreaView style={styles.separator}></SafeAreaView>
                         <View style={styles.buttonTextContainer}>
-                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : "N/A"}</Text>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[name].phone != undefined ? getBuildingInfo[name].phone : "N/A"}</Text>
                         </View>
                     </Button>
 
@@ -130,7 +138,7 @@ function MoreDetails (props) {
                     <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
                 </View>
 
-                <Text style={styles.mainLabel}>{props.name}</Text>
+                <Text style={styles.mainLabel}>{name}</Text>
                 <Text style={styles.reviewLabel}>19 Reviews</Text>
 
                 <SafeAreaView style={styles.scrollTextContainer}>
@@ -147,6 +155,8 @@ function MoreDetails (props) {
                     />
                 </SafeAreaView>
 
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+
             </View>
         );
     }
@@ -157,7 +167,9 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        backgroundColor: "#2A2E43",
+        
     },
     mainLabel: {
         color: "#FFFFFF",
@@ -321,7 +333,13 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         alignItems: "center",
         justifyContent: "space-between"
-    }
+    },
+    arrowDown: {
+        color: "#ffffff",
+        top: "5%",
+        fontSize: 54,
+        position: "absolute"
+    },
 });
 
 export default MoreDetails;

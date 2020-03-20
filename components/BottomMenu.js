@@ -89,6 +89,13 @@ function BottomMenu(props) {
         } );
     };
 
+    const goToMoreDetails = () => {
+        props.navigation.navigate("MoreDetails", {
+            name: selectedBuilding,
+            navigation: props.navigation,
+        })
+    }
+
     const currentAltitude = async() => {
         let altitude = await AsyncStorage.getItem('altitude');
     }
@@ -140,15 +147,6 @@ function BottomMenu(props) {
         );
     }
 
-
-    else if (iconSelected && !selectedBuilding) {
-        return (
-            <View style={styles.moreDetails}>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
-
     if (props.previewMode) {
         return (
             <View style={styles.container}>
@@ -188,7 +186,7 @@ function BottomMenu(props) {
     if (selectedBuilding) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btn}>

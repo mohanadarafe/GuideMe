@@ -38,10 +38,8 @@ function DoubleSearch (props) {
         props.navigation.navigate("PreviewDirections");
     };
 
-    const selectDestinationName = () => {
-        return props.navigation.getParam("destinationName", "null");
-    };
-
+    const { params } = props.navigation.state;
+    const destinationName = params ? params.destinationName : null;
 
     let fromName = from.name;
     let toName = to.name;
@@ -55,7 +53,7 @@ function DoubleSearch (props) {
     if (toName === undefined && fromName === undefined) {
         toName = "";
         AsyncStorage.setItem("fromLocation", toName.toString());
-        AsyncStorage.setItem("toLocation", selectDestinationName());
+        AsyncStorage.setItem("toLocation", destinationName);
     }
 
     useEffect(() => {
@@ -97,7 +95,7 @@ function DoubleSearch (props) {
                     itemsContainerStyle={styles.itemsContainerStyle}
                     placeholderTextColor={"#000"}
                     items={data}
-                    placeholder={selectDestinationName()}
+                    placeholder={destinationName}
                     resetValue={false}
                 />
             </View>
