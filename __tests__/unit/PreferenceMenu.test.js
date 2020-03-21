@@ -4,7 +4,10 @@ import  PreferenceMenu  from "../../screens/PreferenceMenu";
 
 describe("Preference Menu component", () => {
     test("renders correctly", () => {
-        const tree = renderer.create(<PreferenceMenu />).toJSON();
+      const navigation = { getParam: (param, defaultValue) => {
+        return param
+      }, };
+        const tree = renderer.create(<PreferenceMenu navigation={navigation} />).toJSON();
         expect(tree).toMatchSnapshot();
       });
 });
