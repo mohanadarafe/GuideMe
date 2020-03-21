@@ -15,10 +15,9 @@ describe("Main screen", () => {
   * 5. Select the corresponding item from the dropdown list
   * 6. Click on the bottom menu (not yet implemented)
   * 7. Scroll down and read the information provided (not yet implemented)
-  * includes a toggle (US6) & an arrow icon leading to the More Details page.
   */
 
-  it.skip("Should click on the searchbar and type: hall building", async () => {
+  it("Should click on the searchbar and type: hall building", async () => {
     await element(by.id("search")).tap();
     await element(by.id("search")).typeText("hall building");
     await element(by.id("search")).tapAtPoint({ x: 200, y: 75 });
