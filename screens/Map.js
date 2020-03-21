@@ -30,6 +30,8 @@ const mapPosition = {
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * This is our main screen which includes all the components inside a map.
+ * FIXME: When the app refreshes, a random component appears on in the upper
+ *        half of the screen for miliseconds...
  */
 function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");

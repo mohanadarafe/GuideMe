@@ -7,6 +7,18 @@ import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
 import { api_key } from "../gmaps_api/apiKey"
 
+/**
+ * Description: This method act as an interface. After taking the leg of the response
+ * called jsonLeg as argument, the method will create an object that will 
+ * be accessible to the rest of the Mapview components.
+ * 
+ * Particularity: one of the attributes has an embedded html syntax in it
+ * and to be able to render the proper values, we had to do some string 
+ * manipulation (first and last line of method).
+ * 
+ * Returns an object with nested attributes.
+ * @param {*} jsonLeg 
+ */
 const getFilteredDetailedInstructions = (jsonLeg) => {
 
     const instructionsHtmlStyle = "<div style=\"font-size:1.4em;color:white;\">";
@@ -53,6 +65,14 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
     return directionObject;
 }
 
+/**
+ * Description: This method decodes the value of a hashed polylines 
+ * by reusing the component made my mapbox PolyLine 
+ * notice the capital L. 
+ * 
+ * Returns an array of latitude and longitude.
+ * @param {*} hashedPolyline 
+ */
 const decodedPolylinesAlgo = (hashedPolyline) => {
     let points = PolyLine.decode(hashedPolyline);
     return (points.map(point => {
@@ -69,32 +89,44 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
- * This is our main screen which includes all the components inside a map.
+ * Description: This is our main screen which includes all the components inside a map.
+ * FIXME: 1. PreviewDirection and Direction, the headers in the Direction is not properly changing his UI
+ *           more specifically the height.
  */
 function PreviewDirections(props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
+    const mapRef = useRef(null);
 
-    // // The variables retrived from the preference page 
-
+    /* Read the params from the navigation state */
     const { params } = props.navigation.state;
+
+    // The variables retrieved from DoubleSearch
+    const fromCoordinates = params ? params.From : null;
+    const toCoordinates = params ? params.To : null;
+    //TODO: Error handling when the value given is null.
+    const origin = `${fromCoordinates.latitude},${fromCoordinates.longitude}`;
+    const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
+    // The variables retrived from the preference page 
     const personaType = params ? params.personaType : null;
     const mobilityType = params ? params.mobilityType : null; 
     const transportType = params ? params.transportType : null;
 
-    console.log("prev 1 "+personaType);
-    console.log("prev 2 "+mobilityType);
-    console.log("prev 3 "+transportType);
-
-
-    const mapRef = useRef(null);
-
-
+    /**
+     * Description: Go back to previous screen method.
+     * Using Stack Navigator
+     */
     const goBackPressHandler = () => {
         props.navigation.goBack();
     };
 
+    /**
+     * Description: The map has to be initialized to a certain area of the map.
+     * We used the reference of the mapview used in ref={mapRef}. 
+     * 
+     * Particularity: Hard-coded to the SGW campus for now. 
+     */
     const initMapRegion = () => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates([
@@ -102,73 +134,51 @@ function PreviewDirections(props) {
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
     }
-
+    /**
+     * Description: This method will update the region to fit all coordinates of the overall path 
+     *              by taking an array of polylines. 
+     * @param {*} polylines 
+     */
     const updateMapRegionToOverallPath = (polylines) => {
         setTimeout(() => {
-            console.log(polylines);
             mapRef.current.fitToCoordinates(
-                // decodedPolylines ? decodedPolylines : [{ latitude: 45.493622, longitude: -73.577003 }, { latitude: 45.497092, longitude: -73.5788 }],
                 polylines,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
             
         }, 100);
     }
 
-    /**
-     * TODO: C) The Value of the origin cannot be hard coded for the final version. 
-     *          Has to be fetch when this component will be linked to the DoubleSearch.
-     */
-    // const origin = "45.493622,-73.577003";
-    // const destination = "45.497092,-73.5788";
-
-    
-    /* 2. Read the params from the navigation state */
-    const { params } = props.navigation.state;
-    const fromCoordinates = params ? params.From : null;
-    const toCoordinates = params ? params.To : null;
-    const origin = `${fromCoordinates.latitude},${fromCoordinates.longitude}`;
-    const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
-
-    // TODO: uncomment when linking DoubleSearch to this screen
-    // if (backArrow && props.backToDoubleSearch === true) {
-    //     return (
-    //         <View style={styles.DoubleSearch}>
-    //             <DoubleSearch navigation={navigation} />
-    //         </View>
-    //     );
-    // }
-
-
     useEffect(() => {
-
+        /**
+         * Description: fetchData() is an async method that makes the API request to Google Maps.
+         * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
+         */
         const fetchData = async () => {
             try {
                 // The following line is commented to avoid unecessary requests on the direcitons API. 
                 // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
                  let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}`);
                 const jsonResponse = await resp.json();
-                //TODO: If there the size of the routes array is 0, then alert error!
+                if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
                 let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 setdetailedInstructionsObject(filteredInstruction);
+                }
+                else { //Error handling
+                    alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
+                    goBackPressHandler(); 
+                }
             } catch (error) {
-                console.log(error);
+                alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
+                goBackPressHandler(); 
             }
         }
-
         fetchData();
     }, []);
 
-    const onLayout = () => {
-        setTimeout(() => {
-            mapRef.current.fitToCoordinates([
-                { latitude: 45.496557, longitude: -73.578896 }, { latitude: 45.457841, longitude: -73.640307 }],
-                { edgePadding: { bottom: 10, right: 0, left: 0, top: 0 }, animated: true, });
-        }, 100);
-    };
     return (
         <View>
             <MapView
@@ -181,7 +191,6 @@ function PreviewDirections(props) {
                 onLayout={initMapRegion}
                 showsIndoors={false}
             >
-
                 <Polyline
                     coordinates={decodedPolylines}
                     strokeWidth={6}

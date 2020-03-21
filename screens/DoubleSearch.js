@@ -11,12 +11,11 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 /**
  * FIXME: 
- * 1) FetchData Returns duplicate sometimes in the searchItems
- * 2) - If a Service is unique to a building, searching for a service should find the
- *    coordinates of that corresponding building.
- *    - If it's not, we should not allow them to search those values in this context
- * 3) Same for departements
- * 4) TODO: Algorithm for classrooms 
+ * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
+ * 2) TODO: - Services and departments should not be in the searchItems.
+ *      Thus different parameters need to be sent to MapData()
+ * 3) TODO: Algorithm for classrooms and refers to B)
+ * 
  * A.U
  */
 function fetchData () {
@@ -29,28 +28,56 @@ function fetchData () {
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
  * US14 - As a user, I should be able to set my current location as the starting point.
  *
- * The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
+ * Description: The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 DoubleSearch.propTypes = {
     navigation: PropTypes.object
 };
 
+/**
+ * Overall :
+ * TODO: 1.  The Double Search is not taking in consideration the values passed from the previous screens/contexts. 
+ * TODO: 2.  The current Location is hard to implicitely call if it's not a choice in the dropdown list.
+ * FIXME: Potential fix: After resolving 1. we can right away call setCoordinatesFrom(getCoordinates(objectPassed.name) and 
+ *        setCoordinatesTo(getCoordinates(objectPassed.name)) where objectPassed is the object passed from the previous screens.
+ * TODO: 3.  Algorithm for another Classrom, refers to B) and fetchData() - 3
+ * 
+ * A.U
+ * @param {*} props 
+ */
 function DoubleSearch (props) {
-    // const [data, setData] = React.useState([]); FIXME: I don't think this is needed anymore A.U
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState("");
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState({latitude: null, longitude: null});
 
+    /**
+     * Description: Method to go back to the previous screen.
+     * Using Stack navigator.
+     */
     const goBack = () => {
         props.navigation.goBack();
     };
+    /**
+     * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
+     * Particularity: 
+     * 1. We use Stack navigator
+     * 2. Error Handling to prevent unwanted behavior in rendering of map in subsequent screens (PreviewDirection &
+     * Direction).
+     *      - The same address for origin and destination is not accepted
+     *      - If the Current Direction is wanted, fetch the proper coordinates
+     *      - If there's no destination, refuse search
+     *      - A value selected beyond the search Items displayed by the dropdown is not accepted.
+     * 
+     * A.U
+     */
     const goToPreviewDirectionScreen = () => {
         if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.")
         }
+        //TODO: Refer To A)
         else if (from.name == "Current Location" && currentLocationCoords) {
             props.navigation.navigate("PreviewDirections", {From: currentLocationCoords, To: coordinatesTo});
         }
@@ -69,6 +96,13 @@ function DoubleSearch (props) {
         return props.navigation.getParam("destinationName", "Destination");
     };
 
+    /**
+     * Algorithm to find the coordinates of a given building name.
+     * returns longitude and latitude
+     * TODO: B) Another algorithm or extend this one to take in consideration classrooms.
+     * A.U
+     * @param {*} name 
+     */
     const getCoordinates =  (name) => {
 
         var list = buildingData();
@@ -92,9 +126,7 @@ function DoubleSearch (props) {
       )
     }
 
-/**
- * FIXME: I think the following setters are no longer necessary. A.U
- */
+
     let fromName = from.name;
     let toName = to.name;
 
@@ -111,11 +143,8 @@ function DoubleSearch (props) {
     }
 
 /**
- * I removed the useEffect because only one call is necessary to the constant file.
- * Update: Used an useEffect to fetch the currentLocation
- * Replaced by the following two lines... 
- * Second line adds Current position on top of list
- * 
+ * Used an useEffect to fetch the currentLocation
+ * A.U
  */
     useEffect(() => {
         if(from.name == "Current Location") {
@@ -125,9 +154,22 @@ function DoubleSearch (props) {
 
     /**
      * FIXME: Refers to fetchData()
+     * TODO: A) the unshift method is called to add at the start of the array the value of Current Location.
+     *          However, one could argue that we don't want to make them select Current Location as it's not 
+     *          intuitive. However, I do not know how to fetch the data if no item is selected in the 
+     *          dropdown. 
+     *          This is very important since the onTextChange props returns nothing when we are not writing or 
+     *          when nothing was passed or selected. This is annoying since if the user selected something and then changed his
+     *          mind and select nothing, the item passed is the previous value!
+     * 
+     * Clues: I left some clue about what could be investigated with the tag Refer TODO: A). So just Ctr+F that.
+     * Overall: As of now, The user has to select the Current Location for the double search to fetch the current Location coordinates. 
+     *
+     * A.U
      */
-    var dataItems = fetchData();
-    dataItems.unshift({"id": 0, "name": "Current Location"})
+    var originItems = fetchData();
+    var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
+    originItems.unshift({"id": 0, "name": "Current Location"})
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
@@ -146,15 +188,15 @@ function DoubleSearch (props) {
                 <View style = {styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
-                        onTextChange={val => setFrom(val)}
+                        onTextChange={val => setFrom(val)} //Refer TODO: A)
                         onItemSelect={item => {setFrom(item); setCoordinatesFrom(getCoordinates(item.name));  }}
-                        defaultIndex = {0}
+                        defaultIndex = {0} //Refer TODO: A)
                         textInputStyle={styles.textInputStyle}
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
-                        items={dataItems}
+                        items={originItems}
                         placeholder= {"Starting Position"} 
                         placeholderTextColor = {"grey"}
                         textInputProps = {{
@@ -175,7 +217,7 @@ function DoubleSearch (props) {
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
                         placeholderTextColor = {"grey"}
-                        items={dataItems}
+                        items={destinationItems}
                         placeholder={selectDestinationName()}
                         textInputProps = {{
                             keyboardAppearance: "dark", 

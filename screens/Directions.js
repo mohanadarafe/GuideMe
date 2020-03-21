@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
- * 
+ * TODO: There are other user stories to refer.
  * This is our main screen which includes all the components inside a map.
  */
 function Directions (props) {
@@ -23,21 +23,27 @@ function Directions (props) {
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
     const mapRef = useRef(null);
  
-    useEffect(() => {
-        if (instructionIndex  == 0) {
-            setIsFirstInstruction(true); //If I remove this, I have less problems
-        }
-      });
-
     /* 2. Read the params from the navigation state */
     const { params } = props.navigation.state;
     const destinationResponse = params ? params.destinationResponse : null;
 
-
+    useEffect(() => {
+        if (instructionIndex  == 0) {
+            setIsFirstInstruction(true); //When Direction enabled, we are at the first instruction.
+        }
+      });
+    
+      /**
+       * Description: Go back method
+       * Using Stack navigator.
+       */
     const goBackPressHandler = () => {
         props.navigation.goBack();
     }
-
+    /**
+     * Description: This method will update the region to fit all coordinates of the a specific (index) step of the instruction. 
+     * @param {*} index 
+     */
     const updateMapRegionToInstruction = (index) => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
@@ -47,7 +53,10 @@ function Directions (props) {
         }, 100);
     }
 
-
+    /**
+     * Description: The map has to be initialized to the first instruction.
+     * Particularity: We used the reference of the mapview used in ref={mapRef}. 
+     */
     const initMapRegion = () => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
@@ -55,7 +64,15 @@ function Directions (props) {
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
     }
-    
+    /**
+     * Description: This method will increment the instructionIndex so that we can render the next instruction 
+     * in the MapView. 
+     * How: 
+     * 1. Making sure it's not the last instruction, if it is, we disabled the button by setting 
+     * setIsLastInstruction to true. If it's not, we increment the counter and setIsLastInstruction
+     * to false.
+     * 2. We update the mapView by calling updateMapRegionToInstruction with the index incremented.
+     */
     const goToNextInstruction = () => {
         if(instructionIndex >= destinationResponse.steps.length - 1) {
             setIsLastInstruction(true);
@@ -65,7 +82,9 @@ function Directions (props) {
         updateMapRegionToInstruction(instructionIndex + 1);      
         }
     }
-
+    /**
+     * Same as goToNextInstruction but for previous instruction
+     */
     const goToPreviousInstruction = () => {
         if(instructionIndex == 0) {
             setIsFirstInstruction(true);
