@@ -1,19 +1,61 @@
 import React from "react";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, AsyncStorage, FlatList, Dimensions } from "react-native";
 import { Icon, Button } from "native-base";
+
 
 
 function Nearby(props) {
 
-const goBack = () => {
-    props.navigation.goBack();
-}
+    const goBack = () => {
+        props.navigation.goBack();
+    }
+
+    const data = [{ key: "A" }, { key: "B" }, { key: "C" }];
+    const numColumns = 2;
+
+
+    const renderItem = ({ item, index }) => {
+
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    margin: 5,
+                    minWidth: 170,
+                    maxWidth: 223,
+                    height: 200,
+                    maxHeight: 200,
+                    backgroundColor: '#353A50',
+                }}
+            />
+        );
+    }
+
 
     return (
         <View style={styles.container}>
             <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
+
+            <FlatList
+                onEndReachedThreshold={0}
+
+                contentContainerStyle={styles.list}
+                data={[
+                    { key: 'a' },
+                    { key: 'b' },
+                    { key: 'c' },
+                    { key: 'd' },
+                    { key: 'e' },
+                    { key: 'f' },
+                    { key: 'g' },
+                    { key: 'h' },
+                    { key: 'i' },
+                    { key: 'j' },
+                ]}
+                renderItem={renderItem}
+            />
 
         </View >
     );
@@ -40,6 +82,13 @@ export const styles = StyleSheet.create({
         top: "5%",
         fontSize: 54,
         position: "absolute"
+    },
+
+    list: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        top: "50%"
     },
 });
 
