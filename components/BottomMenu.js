@@ -3,8 +3,7 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import MoreDetails from "../screens/MoreDetails";
 import { Button } from "react-native-paper";
-import { FloorMenu } from "./FloorMenu";
-import  PreferenceMenu  from "../screens/PreferenceMenu";
+
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -15,18 +14,16 @@ function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
-    const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
+    const previewDirections = props.previewMode;
 
 
     //const [mapPressed, setmapPressed] = React.useState("");
 
     AsyncStorage.setItem("toggle", switchVal.toString());
-    AsyncStorage.setItem("getInsideBuilding", getInside.toString());
-
     const getBuildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
         setSelectedBuilding(name);
@@ -36,6 +33,8 @@ function BottomMenu(props) {
 
         let name = await AsyncStorage.getItem("toLocation");
         setDestination(name);
+
+        // FIXME: Causing some synchronization issues, Baddredine will place it elsewhere
 
         // let searchItem = await AsyncStorage.getItem("toLocation");
         // if(searchItem.length > 13){
@@ -51,8 +50,8 @@ function BottomMenu(props) {
     const getPersonaType = async () => {
         let name = await AsyncStorage.getItem("firstCategory");
         setPersonaType(name);
-    }; 
-    
+    };
+
     const getMobility = async () => {
         let name = await AsyncStorage.getItem("secondCategory");
         setMobilityReduced(name);
@@ -63,17 +62,6 @@ function BottomMenu(props) {
         setMethodTravel(name);
     };
 
-    
-
-
-    // //TODO: Will be used to detect when a user pressed on the map view
-    // const getMapPressed = async () => {
-    //     let pressed = await AsyncStorage.getItem("mapPressed");
-    //     setmapPressed(pressed);
-    // };
-
-
-    
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: destination });
     };
@@ -82,11 +70,11 @@ function BottomMenu(props) {
     };
 
     const goToPreferenceMenu = () => {
-        props.navigation.navigate("PreferenceMenu",{
+        props.navigation.navigate("PreferenceMenu", {
             personaType: personaType,
             mobilityType: mobilityReduced,
             transportType: methodTravel
-        } );
+        });
     };
 
     const goToMoreDetails = () => {
@@ -96,7 +84,15 @@ function BottomMenu(props) {
         })
     }
 
-    const currentAltitude = async() => {
+    const goToInsideBuilding = () => {
+        props.navigation.navigate("IndoorMapView")
+    }
+
+    const goToNearby = () => {
+        props.navigation.navigate("Nearby")
+    }
+
+    const currentAltitude = async () => {
         let altitude = await AsyncStorage.getItem('altitude');
     }
 
@@ -113,72 +109,34 @@ function BottomMenu(props) {
     });
 
     const nameMethodTravel = () => {
-        switch(methodTravel){
+        switch (methodTravel) {
             case 'DRIVING':
-            return "Driving";
-            
-            case 'WALKING': 
-            return "Walking";
-    
-            case 'BUS':
-            return "Bus";
+                return "Driving";
 
-            case'SHUTTLE_BUS':
-            return "Shuttle Bus";
+            case 'WALKING':
+                return "Walking";
+
+            case 'BUS':
+                return "Bus";
+
+            case 'SHUTTLE_BUS':
+                return "Shuttle Bus";
 
             default:
                 return "Driving";
         }
     }
-    if (iconSelected && selectedBuilding) {
-        return (
-            <View style={styles.moreDetails}>
-                <MoreDetails name={selectedBuilding} navigation={props.navigation} />
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
 
-    if (iconSelected && !selectedBuilding) {
-        return (
-            <View style={styles.moreDetails}>
-                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => { setIconSelected(false); }} />
-            </View>
-        );
-    }
-
-    if (props.previewMode) {
+    if (previewDirections) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToPreferenceMenu} />
-        <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse? props.directionResponse.generalRouteInfo.totalDistance: "N/A"})</Text>
-        <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
-                <View style={styles.btnGetDirection}>
-                    <Button style={styles.btnGetDirection, { left: "100%", }} 
-                    color={"#3ACCE1"} uppercase={false} mode="contained" onPress = {goToDirections}>
-                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
-                    </Button>
-                </View>
-            </View>
-        );
-    }
-
-    if (getInside) {
-        return (
-            <View style={styles.insideBuildingContainer}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-                <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.btnleave}>
-                    <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
-                        setGetInside(false);
-                    }}>
-                        <Text style={styles.btnText}>Exit Building</Text>
-                    </Button>
-                </View>
-                <View style={styles.changeFloor}>
-                    <FloorMenu />
-                </View>
+                <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
+                <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
+                <Button style={styles.btnGetDirection, { left: "100%", }}
+                    color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
+                    <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
+                </Button>
             </View>
         );
     }
@@ -189,13 +147,9 @@ function BottomMenu(props) {
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.btn}>
-                    <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
-                        setGetInside(true);
-                    }}>
-                        <Text style={styles.btnText}>Get Inside</Text>
-                    </Button>
-                </View>
+                <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
+                    <Text style={styles.btnText}>Get Inside</Text>
+                </Button>
             </View>
         );
     }
@@ -214,11 +168,10 @@ function BottomMenu(props) {
             </View>
         );
     }
-
     else {
         return (
             <View style={styles.container} data-test="BottomMenu">
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View style={styles.toggle}>

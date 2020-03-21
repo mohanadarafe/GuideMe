@@ -55,7 +55,7 @@ function Map ({ navigation }) {
 
     return (
         <View data-test="MapComponent">
-            {getInsideBuild === "false" &&
+            
                 <View>
                     <MapView
                         data-test="MapViewComponent"
@@ -66,23 +66,17 @@ function Map ({ navigation }) {
                         showsCompass={true}
                         showsBuildings={true}
                         showsIndoors={false}
-                    // TODO: remove the dropdown list whenever you press on the map
-                    // onPress={() => setmapPressed("true")}
                     >
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
                     <Search />
-                    <View style={styles.CurrentBuildingLocation}>
+                    {/* FixMe: need to add permission for Location in this file <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
-                    </View>
+                    </View> */}
                 </View>
-            }
-            {getInsideBuild === "true" &&
-                <View>
-                    <IndoorMapView />
-                </View>
-            }
+            
+        
             <BottomMenu navigation={navigation} />
         </View>
     );
