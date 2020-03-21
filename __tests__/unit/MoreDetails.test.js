@@ -4,7 +4,10 @@ import renderer from "react-test-renderer";
 
 describe("MoreDetails component", () => {
     test("renders correctly", () => {
-        const tree = renderer.create(<MoreDetails name={"JMSB"} />).toJSON();
+        const navigation = { getParam: (param, defaultValue) => {
+            return defaultValue
+          }};
+        const tree = renderer.create(<MoreDetails name={"JMSB"} navigation={navigation} />).toJSON();
         expect(tree).toMatchSnapshot();
     });
 

@@ -7,29 +7,30 @@ import { Icon, Button } from "native-base";
 function Nearby(props) {
 
     const goBack = () => {
+        console.log("pressed");
         props.navigation.goBack();
     }
 
-    const data = [{ key: "A" }, { key: "B" }, { key: "C" }];
-    const numColumns = 2;
+    // const data = [{ key: "A" }, { key: "B" }, { key: "C" }];
+    // const numColumns = 2;
 
 
-    const renderItem = ({ item, index }) => {
+    // const renderItem = ({ item, index }) => {
 
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    margin: 5,
-                    minWidth: 170,
-                    maxWidth: 223,
-                    height: 200,
-                    maxHeight: 200,
-                    backgroundColor: '#353A50',
-                }}
-            />
-        );
-    }
+    //     return (
+    //         <View
+    //             style={{
+    //                 flex: 1,
+    //                 margin: 5,
+    //                 minWidth: 170,
+    //                 maxWidth: 223,
+    //                 height: 200,
+    //                 maxHeight: 200,
+    //                 backgroundColor: '#353A50',
+    //             }}
+    //         />
+    //     );
+    // }
 
 
     return (
@@ -38,7 +39,7 @@ function Nearby(props) {
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
 
-            <FlatList
+            {/* <FlatList
                 onEndReachedThreshold={0}
 
                 contentContainerStyle={styles.list}
@@ -55,7 +56,7 @@ function Nearby(props) {
                     { key: 'j' },
                 ]}
                 renderItem={renderItem}
-            />
+            /> */}
 
         </View >
     );

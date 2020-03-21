@@ -16,10 +16,11 @@ import { Icon, Button } from "native-base";
 
 function PreferenceMenu(props) {
 
-    const { params } = props.navigation.state;
-    const personaSavedState = params ? params.personaType : null;
-    const mobilitySavedState = params ? params.mobilityType : null; 
-    const transportSavedState = params ? params.transportType : null;
+    const personaSavedState = props.navigation.getParam("personaType", "null");
+
+    const mobilitySavedState =  props.navigation.getParam("mobilityType","null");
+    
+    const transportSavedState = props.navigation.getParam("transportType", "null");
 
     const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState?personaSavedState:null })
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState?mobilitySavedState:null})
@@ -38,13 +39,13 @@ function PreferenceMenu(props) {
     if (thirdRow != undefined)
         AsyncStorage.setItem("thirdCategory", onPressThirdCategory.selectedButton.toString());
 
-    if (firstRow && secondRow && thirdRow === undefined) {
+    if (firstRow == undefined && secondRow == undefined && thirdRow === undefined) {
         firstRow = "";
         secondRow = "";
         thirdRow = "";
-        AsyncStorage.setItem("firstCategory", onPressFirstCategory.selectedButton.toString());
-        AsyncStorage.setItem("secondCategory", onPressSecondCategory.selectedButton.toString());
-        AsyncStorage.setItem("thirdCategory", onPressThirdCategory.selectedButton.toString());
+        AsyncStorage.setItem("firstCategory",firstRow);
+        AsyncStorage.setItem("secondCategory",secondRow);
+        AsyncStorage.setItem("thirdCategory",thirdRow);
     }
 
     const goToPreviewDirections = () => {

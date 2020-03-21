@@ -87,8 +87,7 @@ function MoreDetails(props) {
         props.navigation.goBack();
     }
 
-    const { params } = props.navigation.state;
-    const name = params ? params.name : null;
+    const name = props.navigation.getParam("name", "null");
 
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: name });

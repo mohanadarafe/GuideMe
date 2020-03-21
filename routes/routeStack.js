@@ -7,7 +7,7 @@ import MapDirections from "../screens/Directions";
 import PreviewDirections from "../screens/PreviewDirections";
 import PreferenceMenu from "../screens/PreferenceMenu";
 import IndoorMapView from "../screens/Indoor/IndoorMapView";
-import Nearby from "../components/Nearby";
+import Nearby from "../screens/Nearby";
 
 // Add screens here
 const screens = {

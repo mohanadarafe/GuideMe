@@ -29,8 +29,7 @@ function IndoorMapView(props) {
         })
     }
 
-    const { params } = props.navigation.state;
-    const selectedBuilding = params ? params.selectedBuilding : null;
+    const selectedBuilding = props.navigation.getParam("selectedBuilding", "null");
 
     useEffect(() => {
         const intervalId = setInterval(() => {
