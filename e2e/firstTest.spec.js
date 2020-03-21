@@ -6,7 +6,7 @@ describe("Main screen", () => {
     await reloadApp();
   });
 
-  it("should have a map and a searchbar", async () => {
+  it.skip("should have a map and a searchbar", async () => {
     await expect(element(by.id("mapview"))).toBeVisible();
     await element(by.id("search")).tap();
   });
