@@ -11,7 +11,7 @@ import { FloorMenu } from "./FloorMenu";
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
 
-function BottomMenu ({ navigation }) {
+function BottomMenu ({ navigation }, props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -29,11 +29,11 @@ function BottomMenu ({ navigation }) {
 
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
-        if(searchItem.length > 13){
-            var upadatedSearchItem = searchItem.substring(0,13) + "...";
+        if (searchItem.length > 13) {
+            var upadatedSearchItem = searchItem.substring(0, 13) + "...";
             setDestination(upadatedSearchItem);
         }
-        else{
+        else {
             setDestination(searchItem);
         }
     };
@@ -44,9 +44,9 @@ function BottomMenu ({ navigation }) {
     //     setmapPressed(pressed);
     // };
 
-    const currentAltitude = async() => {
-        let altitude = await AsyncStorage.getItem('altitude');
-    }
+    const currentAltitude = async () => {
+        let altitude = await AsyncStorage.getItem("altitude");
+    };
 
 
     useEffect(() => {
@@ -117,7 +117,7 @@ function BottomMenu ({ navigation }) {
 
     else if (destination) {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{destination}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
@@ -132,7 +132,7 @@ function BottomMenu ({ navigation }) {
 
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu">
+            <View style={styles.container} data-test="BottomMenu" testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>

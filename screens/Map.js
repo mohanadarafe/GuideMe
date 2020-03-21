@@ -82,7 +82,7 @@ function Map ({ navigation }) {
                     <IndoorMapView />
                 </View>
             }
-            <BottomMenu navigation={navigation} />
+            <BottomMenu navigation={navigation} testID="bottomMenu" />
         </View>
     );
 }
