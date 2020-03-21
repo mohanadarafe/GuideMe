@@ -79,8 +79,7 @@ function BottomMenu(props) {
 
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
-            name: selectedBuilding,
-            navigation: props.navigation,
+            name: selectedBuildings
         })
     }
 
