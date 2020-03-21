@@ -7,16 +7,22 @@ import { MapData } from "../components/MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
-import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 
-
+/**
+ * FIXME: 
+ * 1) FetchData Returns duplicate sometimes in the searchItems
+ * 2) - If a Service is unique to a building, searching for a service should find the
+ *    coordinates of that corresponding building.
+ *    - If it's not, we should not allow them to search those values in this context
+ * 3) Same for departements
+ * 4) TODO: Algorithm for classrooms 
+ * A.U
+ */
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
-
 
 
 /**
@@ -31,7 +37,7 @@ DoubleSearch.propTypes = {
 };
 
 function DoubleSearch (props) {
-    // const [data, setData] = React.useState([]); FIXME: I don't think this is needed anymore 
+    // const [data, setData] = React.useState([]); FIXME: I don't think this is needed anymore A.U
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState("");
@@ -106,6 +112,7 @@ function DoubleSearch (props) {
 
 /**
  * I removed the useEffect because only one call is necessary to the constant file.
+ * Update: Used an useEffect to fetch the currentLocation
  * Replaced by the following two lines... 
  * Second line adds Current position on top of list
  * 
@@ -115,6 +122,10 @@ function DoubleSearch (props) {
             getCurrentLocation();
         }
     });
+
+    /**
+     * FIXME: Refers to fetchData()
+     */
     var dataItems = fetchData();
     dataItems.unshift({"id": 0, "name": "Current Location"})
 
@@ -153,31 +164,28 @@ function DoubleSearch (props) {
                         }}
                     />
                 </View>
-                {/* <View style={{ width: "100%", height: "3%" }}></View> FIXME: THIS IS WAY TOO HARDCODED, we can do this with the boostrap. To remove.*/} 
                 <View style = {styles.destinationSearchContainer}>
-                <Text style={styles.searchBarLabels}>To: </Text>
-                <SearchableDropdown
-                    onTextChange={val => val}
-                    onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor = {"grey"}
-                    items={dataItems}
-                    placeholder={selectDestinationName()}
-                    textInputProps = {{
-                        keyboardAppearance: "dark", 
-                        clearButtonMode: "while-editing",
-                        clearTextOnFocus: false,
-                    }}
-                />
+                    <Text style={styles.searchBarLabels}>To: </Text>
+                    <SearchableDropdown
+                        onTextChange={val => val}
+                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
+                        textInputStyle={styles.textInputStyle}
+                        itemStyle={styles.itemStyle}
+                        containerStyle={styles.containerStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        itemsContainerStyle={styles.itemsContainerStyle}
+                        placeholderTextColor = {"grey"}
+                        items={dataItems}
+                        placeholder={selectDestinationName()}
+                        textInputProps = {{
+                            keyboardAppearance: "dark", 
+                            clearButtonMode: "while-editing",
+                            clearTextOnFocus: false,
+                        }}
+                    />
                 </View>
-            </View>
-            
-            <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            
+            </View>     
+            <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>       
         </View >
     );
 }
@@ -270,14 +278,6 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "7%"
-    },
-    moreDetails: {
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        backgroundColor: "#2A2E43",
-        alignItems: "center",
-        justifyContent: "space-between"
     },
     icon: {
         position: "absolute",
