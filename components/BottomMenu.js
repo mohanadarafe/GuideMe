@@ -85,7 +85,7 @@ function BottomMenu(props) {
     }
 
     const goToInsideBuilding = () => {
-        props.navigation.navigate("IndoorMapView")
+        props.navigation.navigate("IndoorMapView" ,{selectedBuilding:selectedBuilding})
     }
 
     const goToNearby = () => {

@@ -37,6 +37,10 @@ function DoubleSearch (props) {
     const goToPreviewDirectionScreen = () => {
         props.navigation.navigate("PreviewDirections");
     };
+    
+    const goToIndoorMapView = () => {
+        props.navigation.navigate("IndoorMapView");
+    }
 
     const { params } = props.navigation.state;
     const destinationName = params ? params.destinationName : null;
@@ -59,6 +63,7 @@ function DoubleSearch (props) {
     useEffect(() => {
         setData(fetchData());
     }, []);
+
 
     return (
         <View style={styles.container} data-test="DoubleSearch">

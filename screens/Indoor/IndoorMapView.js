@@ -10,13 +10,8 @@ import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
 import { FloorMenu } from "../../components/FloorMenu";
 
 function IndoorMapView(props) {
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [selectedFloor, setSelectedFloor] = React.useState("");
 
-    const getBuildingSelected = async () => {
-        let name = await AsyncStorage.getItem("buildingSelected");
-        setSelectedBuilding(name);
-    };
+    const [selectedFloor, setSelectedFloor] = React.useState("");
 
     const getFloorSelected = async () => {
         let name = await AsyncStorage.getItem("floorSelected");
@@ -33,10 +28,12 @@ function IndoorMapView(props) {
             navigation: props.navigation,
         })
     }
-    
+
+    const { params } = props.navigation.state;
+    const selectedBuilding = params ? params.selectedBuilding : null;
+
     useEffect(() => {
         const intervalId = setInterval(() => {
-            getBuildingSelected();
             getFloorSelected();
         }, 1);
         return () => clearInterval(intervalId);
