@@ -1,347 +1,614 @@
 export function Hall9Coordinates () {
     var rooms = [];
     rooms["elevator"] = {
-        x: "361",
-        y: "353",
+        x: "340",
+        y: "294",
         nearestPoint: {
-            x: "362",
-            y: "415"
+            x: "347",
+            y: "345"
         }
     }
-    rooms["exit"] = {
-        x: "",
-        y: "",
+    rooms["H902"] = {
+        x: "324",
+        y: "209",
         nearestPoint: {
-            x: "555",
-            y: "43"
+            x: "322",
+            y: "167"
         }
     }
-    rooms["H801"] = {
-        x: "195",
-        y: "175",
+    rooms["H903"] = {
+        x: "157",
+        y: "71",
         nearestPoint: {
-            x: "195",
-            y: "217"
+            x: "184",
+            y: "168"
         }
     }
-    rooms["H803"] = {
-        x: "281",
-        y: "155",
+    rooms["H906"] = {
+        x: "470",
+        y: "205",
         nearestPoint: {
-            x: "281",
-            y: "217"
+            x: "470",
+            y: "170"
         }
     }
-    rooms["H805"] = {
-        x: "385",
-        y: "155",
+    rooms["H907"] = {
+        x: "301",
+        y: "127",
         nearestPoint: {
-            x: "385",
-            y: "217"
+            x: "322",
+            y: "167"
         }
-    },
-    rooms["H807"] = {
-        x: "471",
-        y: "155",
-        nearestPoint: {
-            x: "472",
-            y: "217"
-        }
-    },
+    }
     rooms["checkpoint1"] = {
         x: "",
         y: "",
         nearestPoint: {
-            x: "550",
-            y: "217"
+            x: "520",
+            y: "170"
         }
-    },
-    rooms["H806"] = {
-        x: "493",
-        y: "314",
+    }
+    rooms["H909"] = {
+        x: "635",
+        y: "219",
         nearestPoint: {
-            x: "553",
-            y: "309"
+            x: "558",
+            y: "170"
         }
-    },
-    rooms["H811"] = {
-        x: "654",
-        y: "155",
+    }
+    rooms["H910"] = {
+        x: "634",
+        y: "266",
         nearestPoint: {
-            x: "654",
-            y: "216"
+            x: "634",
+            y: "170"
         }
-    },
-    rooms["H813"] = {
-        x: "736",
-        y: "155",
+    }
+    rooms["H911"] = {
+        x: "634",
+        y: "125",
         nearestPoint: {
-            x: "736",
-            y: "216"
+            x: "634",
+            y: "170"
         }
-    },
-    rooms["H815"] = {
-        x: "840",
-        y: "155",
+    }
+    rooms["H913"] = {
+        x: "714",
+        y: "126",
         nearestPoint: {
-            x: "840",
-            y: "216"
+            x: "714",
+            y: "170"
         }
-    },
-    rooms["H817"] = {
-        x: "891",
-        y: "169",
+    }
+    rooms["H915"] = {
+        x: "813",
+        y: "125",
         nearestPoint: {
-            x: "840",
-            y: "216"
+            x: "822",
+            y: "170"
         }
-    },
-    rooms["H819"] = {
-        x: "894",
-        y: "216",
+    }
+    rooms["H917"] = {
+        x: "880",
+        y: "119",
         nearestPoint: {
-            x: "840",
-            y: "216"
+            x: "822",
+            y: "170"
         }
-    },
-    rooms["H820"] = {
-        x: "627",
-        y: "468",
+    }
+    rooms["H919"] = {
+        x: "882",
+        y: "193",
         nearestPoint: {
-            x: "553",
-            y: "399"
+            x: "822",
+            y: "170"
         }
-    },
-    rooms["H821"] = {
-        x: "899",
-        y: "329",
+    }
+    rooms["H921"] = {
+        x: "878",
+        y: "285",
         nearestPoint: {
-            x: "848",
-            y: "329"
+            x: "832",
+            y: "285"
         }
-    },
-    rooms["H823"] = {
-        x: "899",
-        y: "427",
+    }
+    rooms["H920"] = {
+        x: "751",
+        y: "362",
         nearestPoint: {
-            x: "848",
-            y: "427"
+            x: "832",
+            y: "381"
         }
-    },
-    rooms["H825"] = {
-        x: "899",
-        y: "511",
+    }
+    rooms["H923"] = {
+        x: "878",
+        y: "381",
         nearestPoint: {
-            x: "850",
-            y: "511"
+            x: "832",
+            y: "381"
         }
-    },
-    rooms["H827"] = {
-        x: "899",
-        y: "606",
+    }
+    rooms["H925"] = {
+        x: "948",
+        y: "444",
         nearestPoint: {
-            x: "850",
-            y: "606"
+            x: "832",
+            y: "444"
         }
-    },
-    rooms["H828"] = {
-        x: "899",
-        y: "692",
-        nearestPoint: {
-            x: "850",
-            y: "692"
-        }
-    },
-    rooms["H829"] = {
-        x: "901",
-        y: "799",
-        nearestPoint: {
-            x: "850",
-            y: "802"
-        }
-    },
-    rooms["H831"] = {
-        x: "891",
-        y: "844",
-        nearestPoint: {
-            x: "850",
-            y: "802"
-        }
-    },
-    rooms["H833"] = {
-        x: "833",
-        y: "844",
-        nearestPoint: {
-            x: "850",
-            y: "802"
-        }
-    },
-    rooms["H835"] = {
-        x: "737",
-        y: "844",
-        nearestPoint: {
-            x: "737",
-            y: "802"
-        }
-    },
-    rooms["H837"] = {
-        x: "648",
-        y: "806",
-        nearestPoint: {
-            x: "646",
-            y: "802"
-        }
-    },
-    rooms["H832"] = {
-        x: "627",
-        y: "717",
-        nearestPoint: {
-            x: "559",
-            y: "716"
-        }
-    },
-    rooms["H838"] = {
-        x: "627",
-        y: "717",
-        nearestPoint: {
-            x: "559",
-            y: "799"
-        }
-    },
+    }
     rooms["checkpoint2"] = {
         x: "",
         y: "",
         nearestPoint: {
-            x: "557",
-            y: "804"
+            x: "808",
+            y: "594"
         }
-    },
-    rooms["H841"] = {
-        x: "472",
-        y: "845",
+    }
+    rooms["H927"] = {
+        x: "884",
+        y: "692",
         nearestPoint: {
-            x: "472",
-            y: "802"
+            x: "815",
+            y: "688"
         }
-    },
-    rooms["H843"] = {
-        x: "380",
-        y: "845",
+    }
+    rooms["H931"] = {
+        x: "841",
+        y: "795",
         nearestPoint: {
-            x: "380",
-            y: "802"
+            x: "813",
+            y: "774"
         }
-    },
-    rooms["H845"] = {
-        x: "287",
-        y: "845",
+    }
+    rooms["H929"] = {
+        x: "829",
+        y: "832",
         nearestPoint: {
-            x: "287",
-            y: "802"
+            x: "808",
+            y: "794"
         }
-    },
-    rooms["H847"] = {
-        x: "197",
-        y: "845",
+    }
+    rooms["H933"] = {
+        x: "726",
+        y: "873",
         nearestPoint: {
-            x: "200",
-            y: "802"
+            x: "759",
+            y: "791"
         }
-    },
-    rooms["H849"] = {
-        x: "128",
-        y: "845",
+    }
+    rooms["H928"] = {
+        x: "812",
+        y: "807",
         nearestPoint: {
-            x: "183",
-            y: "802"
+            x: "759",
+            y: "791"
         }
-    },
-    rooms["H851"] = {
-        x: "77",
-        y: "808",
+    }
+    rooms["H932"] = {
+        x: "729",
+        y: "806",
         nearestPoint: {
-            x: "183",
-            y: "802"
+            x: "759",
+            y: "791"
         }
-    },
-    rooms["H853"] = {
-        x: "127",
+    }
+    rooms["H985"] = {
+        x: "696",
         y: "691",
         nearestPoint: {
-            x: "183",
-            y: "691"
+            x: "658",
+            y: "692"
         }
-    },
-    rooms["H855"] = {
-        x: "127",
-        y: "601",
+    }
+    rooms["H937"] = {
+        x: "615",
+        y: "726",
         nearestPoint: {
-            x: "183",
-            y: "601"
+            x: "658",
+            y: "692"
         }
-    },
-    rooms["H857"] = {
-        x: "127",
-        y: "512",
+    }
+    rooms["turn1"] = {
+        x: "",
+        y: "",
         nearestPoint: {
-            x: "183",
-            y: "512"
+            x: "696",
+            y: "786"
         }
-    },
-    rooms["H859"] = {
-        x: "127",
-        y: "426",
-        nearestPoint: {
-            x: "183",
-            y: "415"
-        }
-    },
+    }
     rooms["checkpoint3"] = {
         x: "",
         y: "",
         nearestPoint: {
-            x: "183",
-            y: "423"
-        }
-    },
-    rooms["H860"] = {
-        x: "241",
-        y: "447",
-        nearestPoint: {
-            x: "237",
-            y: "399"
-        }
-    },
-    rooms["H861"] = {
-        x: "127",
-        y: "332",
-        nearestPoint: {
-            x: "183",
-            y: "330"
-        }
-    }
-    rooms["H862"] = {
-        x: "379",
-        y: "445",
-        nearestPoint: {
-            x: "381",
-            y: "399"
-        }
-    },
-    rooms["H863"] = {
-        x: "127",
-        y: "244",
-        nearestPoint: {
-            x: "183",
-            y: "217"
+            x: "636",
+            y: "597"
         }
     }
     rooms["checkpoint4"] = {
         x: "",
         y: "",
         nearestPoint: {
-            x: "553",
-            y: "401"
+            x: "498",
+            y: "592"
+        }
+    }
+    rooms["checkpoint5"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "407",
+            y: "622"
+        }
+    }
+    rooms["H977"] = {
+        x: "357",
+        y: "677",
+        nearestPoint: {
+            x: "394",
+            y: "664"
+        }
+    }
+    rooms["H981"] = {
+        x: "357",
+        y: "732",
+        nearestPoint: {
+            x: "392",
+            y: "705"
+        }
+    }
+    rooms["H945"] = {
+        x: "357",
+        y: "746",
+        nearestPoint: {
+            x: "392",
+            y: "747"
+        }
+    }
+    rooms["H943"] = {
+        x: "363",
+        y: "809",
+        nearestPoint: {
+            x: "382",
+            y: "823"
+        }
+    }
+    rooms["H941"] = {
+        x: "405",
+        y: "835",
+        nearestPoint: {
+            x: "382",
+            y: "823"
+        }
+    }
+    rooms["H961_33"] = {
+        x: "340",
+        y: "873",
+        nearestPoint: {
+            x: "341",
+            y: "847"
+        }
+    }
+    rooms["H961_31"] = {
+        x: "295",
+        y: "873",
+        nearestPoint: {
+            x: "296",
+            y: "847"
+        }
+    }
+    rooms["H961_29"] = {
+        x: "269",
+        y: "817",
+        nearestPoint: {
+            x: "254",
+            y: "847"
+        }
+    }
+    rooms["H961_30"] = {
+        x: "254",
+        y: "817",
+        nearestPoint: {
+            x: "254",
+            y: "847"
+        }
+    }
+    rooms["H961_27"] = {
+        x: "212",
+        y: "874",
+        nearestPoint: {
+            x: "211",
+            y: "847"
+        }
+    }
+    rooms["H961_28"] = {
+        x: "213",
+        y: "817",
+        nearestPoint: {
+            x: "211",
+            y: "847"
+        }
+    }
+    rooms["H961_25"] = {
+        x: "166",
+        y: "874",
+        nearestPoint: {
+            x: "166",
+            y: "847"
+        }
+    }
+    rooms["H961_23"] = {
+        x: "118",
+        y: "874",
+        nearestPoint: {
+            x: "119",
+            y: "847"
+        }
+    }
+    rooms["H961_26"] = {
+        x: "118",
+        y: "820",
+        nearestPoint: {
+            x: "119",
+            y: "847"
+        }
+    }
+    rooms["H961_21"] = {
+        x: "71",
+        y: "875",
+        nearestPoint: {
+            x: "72",
+            y: "847"
+        }
+    }
+    rooms["H961_19"] = {
+        x: "39",
+        y: "856",
+        nearestPoint: {
+            x: "72",
+            y: "847"
+        }
+    }
+    rooms["H961_17"] = {
+        x: "41",
+        y: "816",
+        nearestPoint: {
+            x: "69",
+            y: "816"
+        }
+    }
+    rooms["H961_15"] = {
+        x: "41",
+        y: "775",
+        nearestPoint: {
+            x: "69",
+            y: "775"
+        }
+    }
+    rooms["H961_13"] = {
+        x: "41",
+        y: "732",
+        nearestPoint: {
+            x: "69",
+            y: "735"
+        }
+    }
+    rooms["H961_14"] = {
+        x: "104",
+        y: "735",
+        nearestPoint: {
+            x: "69",
+            y: "735"
+        }
+    }
+    rooms["H961_11"] = {
+        x: "46",
+        y: "678",
+        nearestPoint: {
+            x: "69",
+            y: "678"
+        }
+    }
+    rooms["H961_12"] = {
+        x: "97",
+        y: "678",
+        nearestPoint: {
+            x: "69",
+            y: "678"
+        }
+    }
+    rooms["H961_9"] = {
+        x: "45",
+        y: "640",
+        nearestPoint: {
+            x: "69",
+            y: "641"
+        }
+    }
+    rooms["H961_10"] = {
+        x: "101",
+        y: "640",
+        nearestPoint: {
+            x: "69",
+            y: "641"
+        }
+    }
+    rooms["checkpoint6"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "76",
+            y: "610"
+        }
+    }
+    rooms["H961_7"] = {
+        x: "45",
+        y: "594",
+        nearestPoint: {
+            x: "76",
+            y: "610"
+        }
+    }
+    rooms["H961_6"] = {
+        x: "100",
+        y: "548",
+        nearestPoint: {
+            x: "69",
+            y: "550"
+        }
+    }
+    rooms["H961_3"] = {
+        x: "44",
+        y: "548",
+        nearestPoint: {
+            x: "69",
+            y: "550"
+        }
+    }
+    rooms["H961_4"] = {
+        x: "100",
+        y: "505",
+        nearestPoint: {
+            x: "69",
+            y: "506"
+        }
+    }
+    rooms["H961_1"] = {
+        x: "48",
+        y: "464",
+        nearestPoint: {
+            x: "69",
+            y: "464"
+        }
+    }
+    rooms["H961_2"] = {
+        x: "102",
+        y: "464",
+        nearestPoint: {
+            x: "69",
+            y: "464"
+        }
+    }
+    rooms["H961_8"] = {
+        x: "167",
+        y: "642",
+        nearestPoint: {
+            x: "170",
+            y: "608"
+        }
+    }
+    rooms["H968"] = {
+        x: "220",
+        y: "582",
+        nearestPoint: {
+            x: "220",
+            y: "611"
+        }
+    }
+    rooms["H975"] = {
+        x: "291",
+        y: "644",
+        nearestPoint: {
+            x: "290",
+            y: "611"
+        }
+    }
+    rooms["H966"] = {
+        x: "360",
+        y: "586",
+        nearestPoint: {
+            x: "360",
+            y: "611"
+        }
+    }
+    rooms["H960"] = {
+        x: "432",
+        y: "414",
+        nearestPoint: {
+            x: "497",
+            y: "411"
+        }
+    }
+    rooms["checkpoint7"] = {
+        x: "",
+        y: "",
+        nearestPoint: {
+            x: "515",
+            y: "357"
+        }
+    }
+    rooms["H980"] = {
+        x: "554",
+        y: "357",
+        nearestPoint: {
+            x: "515",
+            y: "357"
+        }
+    }
+    rooms["H914"] = {
+        x: "487",
+        y: "273",
+        nearestPoint: {
+            x: "519",
+            y: "273"
+        }
+    }
+    rooms["H962"] = {
+        x: "363",
+        y: "385",
+        nearestPoint: {
+            x: "363",
+            y: "354"
+        }
+    }
+    rooms["H964"] = {
+        x: "281",
+        y: "386",
+        nearestPoint: {
+            x: "281",
+            y: "351"
+        }
+    }
+    rooms["H963"] = {
+        x: "135",
+        y: "351",
+        nearestPoint: {
+            x: "176",
+            y: "350"
+        }
+    }
+    rooms["H965"] = {
+        x: "124",
+        y: "280",
+        nearestPoint: {
+            x: "176",
+            y: "280"
+        }
+    }
+
+
+
+    rooms["H986"] = {
+        x: "894",
+        y: "241",
+        nearestPoint: {
+            x: "832",
+            y: "285"
+        }
+    }
+    rooms["H990"] = {
+        x: "805",
+        y: "162",
+        nearestPoint: {
+            x: "714",
+            y: "170"
+        }
+    }
+    rooms["H967"] = {
+        x: "39",
+        y: "149",
+        nearestPoint: {
+            x: "184",
+            y: "168"
         }
     }
     return rooms;

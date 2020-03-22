@@ -72,7 +72,11 @@ const lowestCostNode = (costs, processed) => {
 export const getFloorNumber = (name) => {
     if (name) {
         const num = name.match(/\d+/g).map(Number);
-
+        
+        if (name.includes("_")) {
+            const room = num[0].toString();
+            return room[0];
+        }
         if(num.length > 1) {
             return num[0].toString();
         }

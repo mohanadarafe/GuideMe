@@ -34,6 +34,7 @@ describe("DifferentBuildingDirections component", () => {
             "H1347",
             "MB3.125",
             "MB12.246",
+            "H961_1"
         ]
         const results = [
             "8",
@@ -42,7 +43,8 @@ describe("DifferentBuildingDirections component", () => {
             "10",
             "13",
             "3",
-            "12"
+            "12",
+            "9"
         ]
         testCases.forEach((element, index) => {
             expect(getFloorNumber(element)).toEqual(results[index])

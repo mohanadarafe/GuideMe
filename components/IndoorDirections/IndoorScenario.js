@@ -12,7 +12,7 @@ export function IndoorScenario(props) {
         const routeToTake = whichPathToTake(props.from.toString(), props.to.toString());
         switch (routeToTake) {
             case "SAME_FLOOR":
-                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>
+                return <SameFloorDirections rooms={rooms} floor={props.floor} from={"H965"} to={"H933"}/>
                 break;
             case "DIFFERENT_FLOOR":
                 return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
