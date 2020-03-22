@@ -88,10 +88,6 @@ function DoubleSearch (props) {
         }
     };
     
-    const goToIndoorMapView = () => {
-        props.navigation.navigate("IndoorMapView");
-    }
-
     const destinationName =  props.navigation.getParam("destinationName", "Destination");
 
     /**
@@ -250,7 +246,7 @@ export const styles = StyleSheet.create({
         backgroundColor: "#353A50"
     },
     titleLabel: {
-        color: "#3ACCE1",
+        color: "#FFF",
         fontSize: 23,
         fontFamily: "encodeSansExpanded",
         paddingBottom: 10,
