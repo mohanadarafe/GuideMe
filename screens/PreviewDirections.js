@@ -5,7 +5,7 @@ import { View, Button, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-// import { api_key } from "../gmaps_api/apiKey"
+import { api_key } from "../gmaps_api/apiKey"
 
 /**
  * Description: This method act as an interface. After taking the leg of the response
@@ -85,6 +85,8 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
 
 
 
+
+
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
@@ -97,23 +99,63 @@ function PreviewDirections(props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
+    const [isRefreshed, setIsRefreshed] = React.useState(true);
     const mapRef = useRef(null);
 
+    
     /* Read the params from the navigation state */
     const { params } = props.navigation.state;
 
     // The variables retrieved from DoubleSearch
     const fromCoordinates = params ? params.From : null;
     const toCoordinates = params ? params.To : null;
-    //TODO: Error handling when the value given is null.
+    // //TODO: Uncomment this section
+    if (!fromCoordinates || !toCoordinates) {
+        alert("Sorry, could not load directions. The Starting Point or Destination might be wrong. Please Try again.");
+        goBackPressHandler();
+    }
     const origin = `${fromCoordinates.latitude},${fromCoordinates.longitude}`;
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
+    
+    
+    // //Temp origins/destination
+    // const origin = "45.494381,-73.578425";
+    // const destination = "45.457984,-73.639834";
     // The variables retrived from the preference page 
     const personaType = params ? params.personaType : null;
     const mobilityType = params ? params.mobilityType : null; 
-    const transportType = params ? params.transportType : null;
+    var transportType = params ? params.transportType : null;
 
     /**
+         * Description: fetchData() is an async method that makes the API request to Google Maps.
+         * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
+         * @param {*} transportType 
+        */
+        const fetchData = async (transportType) => {
+            console.log("Fetching");
+            try {
+                // The following line is commented to avoid unecessary requests on the direcitons API. 
+                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}&mode=${transportType}`);
+                const jsonResponse = await resp.json();
+                if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
+                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
+                setDecodedPolylines(decodedPoints);
+                updateMapRegionToOverallPath(decodedPoints);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+                filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
+                setdetailedInstructionsObject(filteredInstruction);
+                }
+                else { //Error handling
+                    alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
+                    goBackPressHandler(); 
+                }
+            } catch (error) {
+                alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
+                goBackPressHandler(); 
+            }
+        };  
+   /**
      * Description: Go back to previous screen method.
      * Using Stack Navigator
      */
@@ -147,35 +189,20 @@ function PreviewDirections(props) {
             
         }, 100);
     }
-
-    useEffect(() => {
-        /**
-         * Description: fetchData() is an async method that makes the API request to Google Maps.
-         * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
-         */
-        const fetchData = async () => {
-            try {
-                // The following line is commented to avoid unecessary requests on the direcitons API. 
-                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=AIzaSyC_ik7PAKgcFPtFYnDAqCr3TI7HM9QU_SY`);
-                const jsonResponse = await resp.json();
-                if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
-                const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
-                setDecodedPolylines(decodedPoints);
-                updateMapRegionToOverallPath(decodedPoints);
-                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
-                filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
-                setdetailedInstructionsObject(filteredInstruction);
-                }
-                else { //Error handling
-                    alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
-                    goBackPressHandler(); 
-                }
-            } catch (error) {
-                alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
-                goBackPressHandler(); 
-            }
+    /**
+     * This component will update the preview Map after the user made some selection.
+     * FIXME: A) Not Too Secure, the user can call the fetchMethod non stop once he comes from 
+     * that context, so maybe conditional rendering with the color and disabled it to only allow one
+     * API Call.
+     */
+    const refreshPreviewMap= () => {
+        if (transportType) {
+        fetchData(transportType);
+        setIsRefreshed(false);
         }
+    };
+
+    useEffect(() => {      
         fetchData();
     }, []);
 
@@ -226,6 +253,16 @@ function PreviewDirections(props) {
                 </View>
             </View>
             <BottomMenu previewMode={true} navigation={props.navigation} directionResponse={detailedInstructionsObject ? detailedInstructionsObject : null} />
+            {/* {isRefreshed && */}
+            <TouchableOpacity style = {styles.refresh} onPress = {refreshPreviewMap}>
+                <Icon name="ios-refresh" style = {styles.icon}></Icon>
+            </TouchableOpacity>
+            {/* } */}
+            {/* {!isRefreshed &&  //Refer to FIXME: A)
+            <TouchableOpacity style = {styles.disabledRefresh} disabled = {true}>
+            <Icon name="ios-refresh" style = {styles.icon}></Icon>
+            </TouchableOpacity>  
+            } */}
         </View>
     );
 }
@@ -256,7 +293,31 @@ export const styles = StyleSheet.create({
         color: "white",
         fontSize: 25
     },
-
+    refresh: {
+        width: 60,
+        height: 60,
+        borderRadius: 100/2,
+        backgroundColor: "#f0b400",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: "80%",
+        left: "80%"
+    },
+    disabledRefresh: {
+        width: 60,
+        height: 60,
+        borderRadius: 100/2,
+        backgroundColor: "gray",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: "80%",
+        left: "80%"
+    },
+    icon: {
+        color: "#2A2E43"
+    },
     DirectionTextHeader: {
         color: "#FFFFFF",
         fontSize: 25,

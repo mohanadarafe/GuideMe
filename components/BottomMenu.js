@@ -109,21 +109,22 @@ function BottomMenu(props) {
 
     const nameMethodTravel = () => {
         switch (methodTravel) {
-            case 'DRIVING':
+            case 'driving':
                 return "Driving";
 
-            case 'WALKING':
+            case 'walking':
                 return "Walking";
 
-            case 'BUS':
-                return "Bus";
+            case 'transit':
+                return "Transit";
 
-            case 'SHUTTLE_BUS':
-                return "Shuttle Bus";
+            case 'bicycling':
+                return "Bicycling";
 
             default:
                 return "Driving";
         }
+        // return methodTravel;
     }
 
     if (previewDirections) {

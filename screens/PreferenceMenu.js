@@ -108,8 +108,8 @@ function PreferenceMenu(props) {
                     <Text style={styles.shortLabel}>Method of Travel: </Text>
                 </View>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "DRIVING" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "DRIVING" })}>
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "driving" ? "#f0b400" : "#353A50" }]}
+                    onPress={() => setOnPressThirdCategory({ selectedButton: "driving" })}>
 
                     <View style={styles.iconContainer}>
                         <Icon name="md-car" style={styles.icon}></Icon>
@@ -119,8 +119,8 @@ function PreferenceMenu(props) {
                     </View>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "WALKING" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "WALKING" })}>
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "walking" ? "#f0b400" : "#353A50" }]}
+                    onPress={() => setOnPressThirdCategory({ selectedButton: "walking" })}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-walk" style={styles.icon}></Icon>
                     </View>
@@ -129,23 +129,23 @@ function PreferenceMenu(props) {
                     </View>
                 </Button>
 
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "BUS" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "BUS" })}>
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "bicycling" ? "#f0b400" : "#353A50" }]}
+                    onPress={() => setOnPressThirdCategory({ selectedButton: "bicycling" })}>
+                    <View style={styles.iconContainer}>
+                        <Icon name="ios-bicycle" style={styles.icon}></Icon>
+                    </View>
+                    <View style={styles.iconLabelContainer}>
+                        <Text style={styles.buttonLabel}>Bicycling</Text>
+                    </View>
+                </Button>
+
+                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "transit" ? "#f0b400" : "#353A50" }]}
+                    onPress={() => setOnPressThirdCategory({ selectedButton: "transit" })}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>
                     <View style={styles.iconLabelContainer}>
-                        <Text style={styles.buttonLabel}>Bus</Text>
-                    </View>
-                </Button>
-
-                <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "SHUTTLE_BUS" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "SHUTTLE_BUS" })}>
-                    <View style={styles.iconContainer}>
-                        <Icon name="ios-bus" style={styles.icon}></Icon>
-                    </View>
-                    <View style={styles.iconLabelContainer}>
-                        <Text style={styles.buttonLabel}>Shuttle Bus</Text>
+                        <Text style={styles.buttonLabel}>Transit</Text>
                     </View>
                 </Button>
 
@@ -159,6 +159,8 @@ function PreferenceMenu(props) {
                     <Text style={styles.disclaimerText}>The Concordia shuttle bus offers you a free ride between the SGW and
                     Loyola campus. However, the services are reserved for students with valid ID cards
                         and buses are wheelchair accessible.</Text>
+                    <Text style={styles.disclaimerText}>The shuttle bus is only useful to travel between campuses.</Text>
+                    <Text style = {styles.shuttleSideMenuText}>Head to the Side Menu if you wish to see the next departures.</Text>
                 </View>
             </View >
 
@@ -273,10 +275,10 @@ export const styles = StyleSheet.create({
     disclaimerTextContainer: {
         position: "absolute",
         width: "90%",
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "center",
         flexShrink: 1,
-        bottom: "40%"
+        bottom: "20%"
     },
     disclaimerText: {
         flex: 1,
@@ -284,6 +286,15 @@ export const styles = StyleSheet.create({
         color: "#919090",
         fontSize: 10,
         fontFamily: "encodeSansExpanded",
+        flexShrink: 1,
+        textAlign: "left",
+    },
+    shuttleSideMenuText: {
+        flex: 1,
+        flexWrap: "wrap",
+        color: "#919090",
+        fontSize: 11,
+        fontWeight: "bold",
         flexShrink: 1,
         textAlign: "left",
     },
