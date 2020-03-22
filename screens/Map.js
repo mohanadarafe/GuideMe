@@ -54,7 +54,7 @@ function Map ({ navigation }) {
     });
 
     return (
-        <View data-test="MapComponent">
+        <View testID="mapview" data-test="MapComponent">
             {getInsideBuild === "false" &&
                 <View>
                     <MapView
@@ -71,7 +71,7 @@ function Map ({ navigation }) {
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
-                    <Search />
+                    <Search testID="search" />
                     <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
                     </View>
@@ -82,7 +82,7 @@ function Map ({ navigation }) {
                     <IndoorMapView />
                 </View>
             }
-            <BottomMenu navigation={navigation} />
+            <BottomMenu navigation={navigation} testID="bottomMenu" />
         </View>
     );
 }
