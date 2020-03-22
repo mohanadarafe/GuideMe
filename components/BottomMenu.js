@@ -1,17 +1,14 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import MoreDetails from "../screens/MoreDetails";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-
 function BottomMenu({ navigation }, props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
@@ -19,15 +16,12 @@ function BottomMenu({ navigation }, props) {
     const [getInside, setGetInside] = React.useState(false);
     const [destination, setDestination] = React.useState("");
     //const [mapPressed, setmapPressed] = React.useState("");
-
     AsyncStorage.setItem("toggle", switchVal.toString());
     AsyncStorage.setItem("getInsideBuilding", getInside.toString());
-
     const getBuildingSelected = async () => {
         let name = await AsyncStorage.getItem("buildingSelected");
         setSelectedBuilding(name);
     };
-
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
         if (searchItem.length > 13) {
@@ -38,18 +32,14 @@ function BottomMenu({ navigation }, props) {
             setDestination(searchItem);
         }
     };
-
     // //TODO: Will be used to detect when a user pressed on the map view
     // const getMapPressed = async () => {
     //     let pressed = await AsyncStorage.getItem("mapPressed");
     //     setmapPressed(pressed);
     // };
-
     const currentAltitude = async () => {
         let altitude = await AsyncStorage.getItem("altitude");
     };
-
-
     useEffect(() => {
         const intervalId = setInterval(() => {
             getBuildingSelected();
@@ -58,7 +48,6 @@ function BottomMenu({ navigation }, props) {
         }, 1);
         return () => clearInterval(intervalId);
     });
-
     if (iconSelected && selectedBuilding) {
         return (
             <View style={styles.moreDetails}>
@@ -74,11 +63,9 @@ function BottomMenu({ navigation }, props) {
             </View>
         );
     }
-
     const goToDoubleSearchBar = () => {
         navigation.navigate("DoubleSearch", { destinationName: destination });
     };
-
     if (getInside) {
         return (
             <View style={styles.insideBuildingContainer}>
@@ -98,7 +85,6 @@ function BottomMenu({ navigation }, props) {
             </View>
         );
     }
-
     if (selectedBuilding) {
         return (
             <View style={styles.container}>
@@ -115,7 +101,6 @@ function BottomMenu({ navigation }, props) {
             </View>
         );
     }
-
     else if (destination) {
         return (
             <View style={styles.container} testID={props.testID}>
@@ -130,7 +115,6 @@ function BottomMenu({ navigation }, props) {
             </View>
         );
     }
-
     else {
         return (
             <View style={styles.container} data-test="BottomMenu" testID={props.testID}>
@@ -147,7 +131,6 @@ function BottomMenu({ navigation }, props) {
         );
     }
 }
-
 export const styles = StyleSheet.create({
     container: {
         width: "100%",
@@ -234,5 +217,4 @@ export const styles = StyleSheet.create({
         left: "15%",
     }
 });
-
 export { BottomMenu };
