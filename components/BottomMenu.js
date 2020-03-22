@@ -55,7 +55,6 @@ function BottomMenu({ navigation }, props) {
     }, 1);
     return () => clearInterval(intervalId);
   });
-  //checked
   if (iconSelected && selectedBuilding) {
     return (
       <View style={styles.moreDetails}>
@@ -70,7 +69,6 @@ function BottomMenu({ navigation }, props) {
       </View>
     );
   }
-  //checked
   if (iconSelected && !selectedBuilding) {
     return (
       <View style={styles.moreDetails}>
@@ -88,7 +86,6 @@ function BottomMenu({ navigation }, props) {
   const goToDoubleSearchBar = () => {
     navigation.navigate("DoubleSearch", { destinationName: destination });
   };
-  //checked
   if (getInside) {
     return (
       <View style={styles.insideBuildingContainer}>
@@ -120,7 +117,6 @@ function BottomMenu({ navigation }, props) {
       </View>
     );
   }
-  //checked
   if (selectedBuilding) {
     return (
       <View style={styles.container}>
