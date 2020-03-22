@@ -5,6 +5,8 @@ import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
+import PropTypes from "prop-types";
+
 
 /**
  * US11 - As a user, I would like to see auto-fill options when I type a query
@@ -21,7 +23,7 @@ function fetchData () {
   return searchInfo;
 }
 
-function Search () {
+function Search (props) {
   // eslint-disable-next-line no-unused-vars
   const [buildingName, setBuildingName] = React.useState("");
   const [from, setFrom] = React.useState("");
@@ -54,7 +56,7 @@ function Search () {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID={props.testID}>
       <View style={styles.buttonStyle}>
         <TouchableOpacity>
           <View>
@@ -77,6 +79,10 @@ function Search () {
     </View>
   );
 }
+
+Search.propTypes = {
+  testID: PropTypes.string
+};
 
 export const styles = StyleSheet.create({
   buttonStyle: {

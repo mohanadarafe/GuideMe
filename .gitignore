@@ -13,6 +13,7 @@ coverage/**/*
 __tests__/unit/__snapshots__
 --tests__/__snapshots__
 gmaps_api/apiKey.js
+bin
 
 # macOS
 .DS_Store

@@ -8,7 +8,18 @@
     "eject": "expo eject",
     "test": "jest --forceExit",
     "lint": "eslint **/*.js --ignore-pattern node_modules/",
-    "lint:fix": "eslint **/*.js --fix"
+    "lint:fix": "eslint **/*.js --fix",
+    "e2e": "detox test --configuration ios.sim"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim": {
+        "binaryPath": "bin/Exponent.app",
+        "type": "ios.simulator",
+        "name": "iPhone 11 Pro Max"
+      }
+    },
+    "test-runner": "jest"
   },
   "jest": {
     "preset": "jest-expo",
@@ -28,11 +39,14 @@
     ]
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.0.0",
     "@mapbox/polyline": "^1.1.0",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.6",
     "acorn": "^7.1.0",
+    "detox-expo-helpers": "^0.6.0",
     "expo": "~36.0.0",
+    "expo-detox-hook": "^1.0.10",
     "expo-font": "^8.0.0",
     "expo-location": "~8.0.0",
     "galio-framework": "^0.6.3",
@@ -58,14 +72,14 @@
     "react-native-switch-selector": "^2.0.3",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^2.0.15",
-    "@expo/vector-icons": "^10.0.0"
+    "react-navigation-stack": "^2.0.15"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@iconify/icons-fa-solid": "^1.0.7",
     "@iconify/react": "^1.1.2",
     "babel-preset-expo": "~8.0.0",
+    "detox": "^16.0.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
