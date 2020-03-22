@@ -189,7 +189,7 @@ function BottomMenu({ navigation }, props) {
         />
         <Text style={styles.mainLabel}>Nearby</Text>
         <Text style={styles.shortLabel}>Food, drinks & more</Text>
-        <View style={styles.toggle}>
+        <View testID="toggleButton" style={styles.toggle}>
           <Switch
             value={switchVal}
             onValueChange={val => setSwitchVal(val)}
