@@ -20,8 +20,6 @@ function PreferenceMenu(props) {
 
     const mobilitySavedState =  props.navigation.getParam("mobilityType","null");
     
-
-    
     const transportSavedState = props.navigation.getParam("transportType", "null");
 
     const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState?personaSavedState:null })
