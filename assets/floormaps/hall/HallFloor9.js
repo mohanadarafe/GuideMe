@@ -1009,7 +1009,9 @@ export function HallFloor9() {
           strokeWidth={1.5}
           fill="#fff"
         />
-        <IndoorScenario floor={floorNumber} from={from} to={to} />
+        {from !== null && to !==null &&
+          <IndoorScenario floor={floorNumber} from={from} to={to} />
+        }
       </G>
     </Svg>
     );

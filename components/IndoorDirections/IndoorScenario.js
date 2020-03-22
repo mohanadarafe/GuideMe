@@ -4,6 +4,7 @@ import { HallXCoordinates } from '../../constants/HallXCoordinates';
 import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDirections';
 import { SameFloorDirections } from './TypesOfDirections/SameFloorDirections';
 import { DifferentBuildingDirections } from './TypesOfDirections/DifferentBuildingDirections';
+import { getFloorNumber } from './Dijkstra/DijkstraAlgorithm';
 
 export function IndoorScenario(props) {
     const rooms = HallXCoordinates();
@@ -12,7 +13,7 @@ export function IndoorScenario(props) {
         const routeToTake = whichPathToTake(props.from.toString(), props.to.toString());
         switch (routeToTake) {
             case "SAME_FLOOR":
-                return <SameFloorDirections rooms={rooms} floor={props.floor} from={"H965"} to={"H933"}/>
+                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>
                 break;
             case "DIFFERENT_FLOOR":
                 return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
@@ -45,23 +46,8 @@ export const whichPathToTake = (from, to) => {
             return different_building;
         }
     
-        const fromFloor = from.match(/\d+/g).map(Number);
-        const toFloor = to.match(/\d+/g).map(Number);
-    
-        if (fromFloor.toString().length === toFloor.toString().length) {
-            if (fromFloor.toString().length === 3) {
-                if (fromFloor.toString().charAt(0) == toFloor.toString().charAt(0)) {
-                    return same_floor;
-                } else {
-                    return different_floor;
-                }
-            } else {
-                if (fromFloor.toString().charAt(0) == toFloor.toString().charAt(0) && fromFloor.toString().charAt(1) == toFloor.toString().charAt(1)) {
-                    return same_floor;
-                } else {
-                    return different_floor;
-                }
-            }
+        if (getFloorNumber(from) == getFloorNumber(to)) {
+            return same_floor;
         } else {
             return different_floor;
         }

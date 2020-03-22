@@ -17,6 +17,7 @@ export function Class9Graph () {
         H921: {H986: 0.5, H919: 1, H923: 1},
         H986: {H921: 0.5},
         H923: {H921: 1, H920: 0.5, H925: 1},
+        H920: {H923: 0.5},
         H925: {checkpoint2: 1},
         checkpoint2: {H925: 1, H927: 1, H985:1, checkpoint3:1},
         H927: {H931: 1, checkpoint2: 1},

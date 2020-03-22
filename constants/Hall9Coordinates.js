@@ -17,8 +17,8 @@ export function Hall9Coordinates () {
         }
     }
     rooms["H903"] = {
-        x: "157",
-        y: "71",
+        x: "190",
+        y: "126",
         nearestPoint: {
             x: "184",
             y: "168"
@@ -49,8 +49,8 @@ export function Hall9Coordinates () {
         }
     }
     rooms["H909"] = {
-        x: "635",
-        y: "219",
+        x: "549",
+        y: "124",
         nearestPoint: {
             x: "558",
             y: "170"
