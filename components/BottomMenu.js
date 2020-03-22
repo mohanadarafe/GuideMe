@@ -79,7 +79,7 @@ function BottomMenu(props) {
 
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
-            name: selectedBuildings
+            name: selectedBuilding
         })
     }
 
@@ -132,10 +132,12 @@ function BottomMenu(props) {
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToPreferenceMenu} />
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
-                <Button style={styles.btnGetDirection, { left: "100%", }}
+                <View style={styles.btnGetDirection}>
+                <Button style={{ left: "100%", }}
                     color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
                     <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
                 </Button>
+                </View>
             </View>
         );
     }

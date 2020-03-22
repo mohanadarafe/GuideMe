@@ -7,7 +7,6 @@ import { Icon, Button } from "native-base";
 function Nearby(props) {
 
     const goBack = () => {
-        console.log("pressed");
         props.navigation.goBack();
     }
 
