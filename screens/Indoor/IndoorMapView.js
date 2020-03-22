@@ -7,53 +7,56 @@ import { HallFloorX } from "../../assets/floormaps/hall/HallFloorX";
 import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
 
 function IndoorMapView() {
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [selectedFloor, setSelectedFloor] = React.useState("");
+  const [selectedBuilding, setSelectedBuilding] = React.useState("");
+  const [selectedFloor, setSelectedFloor] = React.useState("");
 
-    const getBuildingSelected = async () => {
-        let name = await AsyncStorage.getItem("buildingSelected");
-        setSelectedBuilding(name);
-    };
+  const getBuildingSelected = async () => {
+    let name = await AsyncStorage.getItem("buildingSelected");
+    setSelectedBuilding(name);
+  };
 
-    const getFloorSelected = async () => {
-        let name = await AsyncStorage.getItem("floorSelected");
-        setSelectedFloor(name);
-    };
+  const getFloorSelected = async () => {
+    let name = await AsyncStorage.getItem("floorSelected");
+    setSelectedFloor(name);
+  };
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            getBuildingSelected();
-            getFloorSelected();
-        }, 1);
-        return () => clearInterval(intervalId);
-    });
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getBuildingSelected();
+      getFloorSelected();
+    }, 1);
+    return () => clearInterval(intervalId);
+  });
 
-    return (
-        <View>
-            <ScrollView>
-                <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >              
-                    {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
-                        <HallFloorX />
-                    }
-                    {selectedBuilding === "Hall Building" && selectedFloor === "9" &&
-                        <HallFloor9 />
-                    }
-                    {selectedBuilding === "JMSB" && selectedFloor === "1" &&
-                        <JMSBFloor1 />
-                    }
-                    {selectedBuilding === "JMSB" && selectedFloor === "2" &&
-                        <JMSBFloor2 />
-                    }
-                    {selectedBuilding === "JMSB" && selectedFloor !== "1" && selectedFloor !== "2" &&
-                        <JMSBFloorX />
-                    }
-                    {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" &&
-                        <HallFloorX />
-                    }
-                </ScrollView>
-            </ScrollView>
-        </View>
-    );  
+  return (
+    <View testID="insideScrollView">
+      <ScrollView>
+        <ScrollView
+          maximumZoomScale={2}
+          horizontal={true}
+          minimumZoomScale={0.25}
+        >
+          {selectedBuilding === "Hall Building" && selectedFloor !== "9" && (
+            <HallFloorX />
+          )}
+          {selectedBuilding === "Hall Building" && selectedFloor === "9" && (
+            <HallFloor9 />
+          )}
+          {selectedBuilding === "JMSB" && selectedFloor === "1" && (
+            <JMSBFloor1 />
+          )}
+          {selectedBuilding === "JMSB" && selectedFloor === "2" && (
+            <JMSBFloor2 />
+          )}
+          {selectedBuilding === "JMSB" &&
+            selectedFloor !== "1" &&
+            selectedFloor !== "2" && <JMSBFloorX />}
+          {selectedBuilding !== "JMSB" &&
+            selectedBuilding !== "Hall Building" && <HallFloorX />}
+        </ScrollView>
+      </ScrollView>
+    </View>
+  );
 }
 
 export default IndoorMapView;

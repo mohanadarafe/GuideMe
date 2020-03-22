@@ -88,7 +88,7 @@ function BottomMenu({ navigation }, props) {
   };
   if (getInside) {
     return (
-      <View style={styles.insideBuildingContainer}>
+      <View testID="insideView" style={styles.insideBuildingContainer}>
         <Icon
           name="ios-arrow-up"
           style={styles.arrowUp}
@@ -119,7 +119,7 @@ function BottomMenu({ navigation }, props) {
   }
   if (selectedBuilding) {
     return (
-      <View style={styles.container}>
+      <View testID="getInside" style={styles.container}>
         <Icon
           name="ios-arrow-up"
           style={styles.arrowUp}
@@ -178,7 +178,7 @@ function BottomMenu({ navigation }, props) {
       <View
         style={styles.container}
         data-test="BottomMenu"
-        testID={props.testID}
+        testID="iconBottomInital"
       >
         <Icon
           name="ios-arrow-up"
