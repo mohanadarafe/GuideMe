@@ -37,11 +37,7 @@ DoubleSearch.propTypes = {
 
 /**
  * Overall :
- * TODO: 1.  The Double Search is not taking in consideration the values passed from the previous screens/contexts. 
- * TODO: 2.  The current Location is hard to implicitely call if it's not a choice in the dropdown list.
- * FIXME: Potential fix: After resolving 1. we can right away call setCoordinatesFrom(getCoordinates(objectPassed.name) and 
- *        setCoordinatesTo(getCoordinates(objectPassed.name)) where objectPassed is the object passed from the previous screens.
- * TODO: 3.  Algorithm for another Classrom, refers to B) and fetchData() - 3
+ * TODO: 1.  Algorithm for another Classrom, refers to B) and fetchData() - 3
  * 
  * A.U
  * @param {*} props 
@@ -51,7 +47,7 @@ function DoubleSearch (props) {
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState("");
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
-    const [currentLocationCoords, setCurrentLocationCoords] = React.useState({latitude: null, longitude: null});
+    const [currentLocationCoords, setCurrentLocationCoords] = React.useState({ latitude: null, longitude: null });
 
     /**
      * Description: Method to go back to the previous screen.
@@ -75,20 +71,20 @@ function DoubleSearch (props) {
      */
     const goToPreviewDirectionScreen = () => {
         if (to.name == from.name) {
-            return alert("Origin and destination are the same. Please try Again.")
+            return alert("Origin and destination are the same. Please try Again.");
         }
         //TODO: Refer To A)
-        else if (from.name == "Current Location" && currentLocationCoords) {
-            props.navigation.navigate("PreviewDirections", {From: currentLocationCoords, To: coordinatesTo});
+        else if (currentLocationCoords.latitude && currentLocationCoords.longitude) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
         }
         else if (from.name == "Current Location" && !currentLocationCoords) {
             return alert("Error: Are location services on?");
         }
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", {From: coordinatesFrom, To: coordinatesTo});
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
         }
         else {
-            return alert ("The destination field is missing or you typed an invalid location. Please try again.")
+            return alert("The destination field is missing or you typed an invalid location. Please try again.");
         }
     };
 
@@ -103,29 +99,29 @@ function DoubleSearch (props) {
      * A.U
      * @param {*} name 
      */
-    const getCoordinates =  (name) => {
+    const getCoordinates = (name) => {
 
         var list = buildingData();
         for (var key in list) {
-          if (list[key].name.includes(name)){
+            if (list[key].name.includes(name)) {
                 return list[key].coordinates;
-          }
+            }
         }
         return null;
-    }
+    };
 
-    const getCurrentLocation = () => { navigator.geolocation.getCurrentPosition(
-        ({ coords }) => {
-            setCurrentLocationCoords({
-                latitude: coords.latitude,
-                longitude: coords.longitude
-            })  
-        },
-        (error) => alert('Error: Are location services on?'),
-        { enableHighAccuracy: true }
-      )
-    }
-
+    const getCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            ({ coords }) => {
+                setCurrentLocationCoords({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
+                });
+            },
+            (error) => alert("Error: Are location services on?"),
+            { enableHighAccuracy: true }
+        );
+    };
 
     let fromName = from.name;
     let toName = to.name;
@@ -133,22 +129,27 @@ function DoubleSearch (props) {
     if (fromName !== undefined)
         AsyncStorage.setItem("fromLocation", fromName.toString());
 
-    if (toName !== undefined) 
+    if (toName !== undefined)
         AsyncStorage.setItem("toLocation", toName.toString());
-    
+
     if (toName === undefined && fromName === undefined) {
         toName = "";
         AsyncStorage.setItem("fromLocation", toName.toString());
         AsyncStorage.setItem("toLocation", selectDestinationName());
     }
 
-/**
- * Used an useEffect to fetch the currentLocation
- * A.U
- */
+    /**
+     * Used an useEffect to fetch the currentLocation
+     * A.U
+     */
     useEffect(() => {
-        if(from.name == "Current Location") {
+        if (from.name == "Current Location" || from.name === undefined) {
             getCurrentLocation();
+        }
+        if (to.name === undefined) {
+            const initialTo = props.navigation.getParam("destinationName", "Destination");
+            setCoordinatesTo(getCoordinates(initialTo));
+            setTo({ name: initialTo });
         }
     });
 
@@ -169,11 +170,11 @@ function DoubleSearch (props) {
      */
     var originItems = fetchData();
     var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
-    originItems.unshift({"id": 0, "name": "Current Location"})
+    originItems.unshift({ "id": 0, "name": "Current Location" });
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
-            {/* <View style={styles.topBackground} /> FIXME: Because you used absolute positioning, this is useless...*/} 
+            {/* <View style={styles.topBackground} /> FIXME: Because you used absolute positioning, this is useless...*/}
             <View style={styles.backArrowContainer}>
                 <Button transparent style={styles.backArrow} onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
@@ -185,28 +186,28 @@ function DoubleSearch (props) {
             <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
             <View style={styles.searchbarsContainer}>
-                <View style = {styles.originSearchContainer}>
+                <View style={styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
-                        onTextChange={val => setFrom(val)} //Refer TODO: A)
-                        onItemSelect={item => {setFrom(item); setCoordinatesFrom(getCoordinates(item.name));  }}
-                        defaultIndex = {0} //Refer TODO: A)
+                        onTextChange={val => val} //Refer TODO: A)
+                        onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
+                        defaultIndex={0} //Refer TODO: A)
                         textInputStyle={styles.textInputStyle}
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
                         items={originItems}
-                        placeholder= {"Starting Position"} 
-                        placeholderTextColor = {"grey"}
-                        textInputProps = {{
-                            keyboardAppearance: "dark", 
+                        placeholder={"Current Position"}
+                        placeholderTextColor={"grey"}
+                        textInputProps={{
+                            keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
                             clearTextOnFocus: false,
                         }}
                     />
                 </View>
-                <View style = {styles.destinationSearchContainer}>
+                <View style={styles.destinationSearchContainer}>
                     <Text style={styles.searchBarLabels}>To: </Text>
                     <SearchableDropdown
                         onTextChange={val => val}
@@ -216,18 +217,18 @@ function DoubleSearch (props) {
                         containerStyle={styles.containerStyle}
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor = {"grey"}
+                        placeholderTextColor={"grey"}
                         items={destinationItems}
-                        placeholder={selectDestinationName()}
-                        textInputProps = {{
-                            keyboardAppearance: "dark", 
+                        placeholder={props.navigation.getParam("destinationName", "Destination")}
+                        textInputProps={{
+                            keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
                             clearTextOnFocus: false,
                         }}
                     />
                 </View>
-            </View>     
-            <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>       
+            </View>
+            <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
         </View >
     );
 }
@@ -346,7 +347,7 @@ export const styles = StyleSheet.create({
     svgContainer: {
         width: "100%",
         bottom: "10%",
-        flex: 1,  
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
         top: "15%"
