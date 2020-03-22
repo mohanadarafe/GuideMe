@@ -4,6 +4,7 @@ import { DifferentBuildingDirections } from "../../../components/IndoorDirection
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
 import { getFloorNumber, ConvertToHall8Floor, dijkstra } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 import { ClassGraph } from "../../../constants/ClassGraph";
+import { Class9Graph } from "../../../constants/ClassGraph9";
 
 describe("DifferentBuildingDirections component", () => {
     test("renders correctly", () => {
@@ -14,14 +15,16 @@ describe("DifferentBuildingDirections component", () => {
     test("dijkstra behaves well", () => {
         const testCases = [
             {from: "H863", to: "elevator"},
+            {from: "H964", to: "elevator"},
         ]
         const results = [
-            "H863", "H861", "H859", "elevator"
+            ["H863", "H861", "H859", "elevator"],
+            ["H964", "H962", "elevator"]
         ]
 
-        testCases.forEach(element => {
-            const path = dijkstra(ClassGraph(), element.from, element.to).path;
-            expect(path).toEqual(results);
+        testCases.forEach((element, index) => {
+            const path = dijkstra(getFloorNumber(element.from) == 9 ? Class9Graph() : ClassGraph(), element.from, element.to).path;
+            expect(path).toEqual(results[index]);
         });
     })
 
