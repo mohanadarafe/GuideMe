@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
@@ -9,7 +10,7 @@ import { FloorMenu } from "./FloorMenu";
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-function BottomMenu({ navigation }, props) {
+function BottomMenu ({ navigation }, props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -217,4 +218,5 @@ export const styles = StyleSheet.create({
         left: "15%",
     }
 });
+
 export { BottomMenu };
