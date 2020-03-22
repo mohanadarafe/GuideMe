@@ -13,6 +13,7 @@ coverage/**/*
 __tests__/unit/__snapshots__
 --tests__/__snapshots__
 gmaps_api/apiKey.js
+sonar-scanner-4.2.0.1873-macosx
 
 # macOS
 .DS_Store
