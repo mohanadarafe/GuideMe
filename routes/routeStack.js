@@ -8,10 +8,10 @@ import PreviewDirections from "../screens/PreviewDirections";
 import PreferenceMenu from "../screens/PreferenceMenu";
 import IndoorMapView from "../screens/Indoor/IndoorMapView";
 import Nearby from "../screens/Nearby";
+import ShuttleBus from "../screens/ShuttleBus";
 
 // Add screens here
 const screens = {
-
     Map: {
         screen: HomeMap,
         navigationOptions: {
@@ -33,14 +33,12 @@ const screens = {
     buildingMoreDetails: {
         screen: MoreDetails,
     },
-
     DoubleSearch: {
         screen: DoubleSearch,
         navigationOptions: {
             headerShown: false,
         }
     },
-
     PreferenceMenu: {
         screen: PreferenceMenu,
         navigationOptions: {
@@ -48,7 +46,6 @@ const screens = {
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
     },
-
     MoreDetails: {
         screen: MoreDetails,
         navigationOptions: {
@@ -56,22 +53,25 @@ const screens = {
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
     },
-
-    IndoorMapView:{
+    IndoorMapView: {
         screen: IndoorMapView,
         navigationOptions: {
             headerShown: false,
         }
     },
-    Nearby:{
+    Nearby: {
         screen: Nearby,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
-    }
-
-
+    },
+    ShuttleBus: {
+        screen: ShuttleBus,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
 };
 
 const HomeStack = createStackNavigator(screens);
