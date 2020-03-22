@@ -1,22 +1,30 @@
 import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
+import { ClassGraph9 } from '../../../constants/ClassGraph9';
 import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
+import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 
 export function DifferentBuildingDirections(props) {
-    const rooms = props.rooms;
-    const graph = ClassGraph();
+    var rooms = props.rooms;
+    var graph = ClassGraph();
     var goTo = props.from;
     var tempGoTo = props.from;
 
     if (props.from.includes(" ")) {
+        const floor = getFloorNumber(props.to);
         tempGoTo = goTo;
-        goTo = ConvertToHall8Floor(props.to);
+        graph = floor == 9 ? ClassGraph9() : ClassGraph();
+        rooms = floor == 9 ? Hall9Coordinates() : rooms;
+        goTo = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
     }
 
     if (props.to.includes(" ")) {
+        const floor = getFloorNumber(props.from);
         tempGoTo = goTo;
-        goTo = ConvertToHall8Floor(props.from);
+        graph = floor == 9 ? ClassGraph9() : ClassGraph();
+        rooms = floor == 9 ? Hall9Coordinates() : rooms;
+        goTo = floor == 9 ? props.from : ConvertToHall8Floor(props.from);
     }
 
     const pathToElevator = dijkstra(graph, goTo, "elevator").path;

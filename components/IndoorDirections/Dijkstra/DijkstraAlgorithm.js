@@ -97,6 +97,10 @@ export const ConvertToHall8Floor = (name) => {
     if (name) {
         const num = name.match(/\d+/g).map(Number);
         const numToString = num.toString();
+        
+        if(numToString.charAt(0) == 9) {
+            return name;
+        }
         if (numToString.length == 3) {
             return name.replace(numToString.charAt(0), "8");
         }

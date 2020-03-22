@@ -56,6 +56,7 @@ describe("DifferentBuildingDirections component", () => {
             "H123",
             "H1055",
             "H1347",
+            "H925",
         ]
         const results = [
             "H829",
@@ -63,6 +64,7 @@ describe("DifferentBuildingDirections component", () => {
             "H823",
             "H855",
             "H847",
+            "H925"
         ]
         testCases.forEach((element, index) => {
             expect(ConvertToHall8Floor(element)).toEqual(results[index])
