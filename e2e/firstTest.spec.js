@@ -5,6 +5,26 @@ describe("Main screen", () => {
   beforeEach(async () => {
     await reloadApp();
   });
+
+  /** TEST 4
+   * The following source code represents the following automated test scenario
+   * 1. Load the app
+   * 2. Display main screen
+   * 3. Click on Hall Building from the Map
+   * 4. Checks if the bottom menu changed
+   * 5. Click on the bottom menu
+   * 6. Verify the moreInfoPage is present
+   * 7. Scroll through the different departments and faculities
+   *
+   */
+  it.skip("Scroll more info of Hall Building", async () => {
+    await element(by.id("search")).tapAtPoint({ x: 165, y: 370 });
+    await expect(element(by.id("getInside"))).toExist();
+    await element(by.id("getInside")).tapAtPoint({ x: 30, y: 40 });
+    await expect(element(by.id("moreInfoScrollView"))).toExist();
+    await element(by.id("moreInfoScrollView")).swipe("up");
+  });
+
   /** TEST 3
    * The following source code represents the following automated test scenario
    * 1. Load the app
@@ -49,21 +69,20 @@ describe("Main screen", () => {
     await element(by.id("insideView")).tapAtPoint({ x: 350, y: 45 });
   });
 
-  /** TEST 2
+  /** TEST 2 Go to directions instead
    * The following source code represents the following automated test scenario
    * 1. Load the app
    * 2. Display main screen
    * 3. Click on the searchbar
    * 4. Type the query: "hall building"
    * 5. Select the corresponding item from the dropdown list
-   * 6. Click on the bottom menu (not yet implemented)
-   * 7. Scroll down and read the information provided (not yet implemented)
+   * 6. Click Get DIRECTIONS button
    */
-  it.skip("Should click on the searchbar and type: hall building", async () => {
+  it.skip("Should click on the searchbar and type: hall building and get directions", async () => {
     await element(by.id("search")).tap();
     await element(by.id("search")).typeText("hall building");
     await element(by.id("search")).tapAtPoint({ x: 200, y: 75 });
     await expect(element(by.id("iconBottom2"))).toExist();
-    await element(by.id("iconBottom2")).tapAtPoint({ x: 30, y: 40 });
+    await element(by.id("iconBottom2")).tapAtPoint({ x: 350, y: 45 });
   });
 });
