@@ -32,13 +32,7 @@ function BottomMenu (props) {
 
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
-        if (searchItem.length > 13) {
-            var upadatedSearchItem = searchItem.substring(0, 13) + "...";
-            setDestination(upadatedSearchItem);
-        }
-        else {
-            setDestination(searchItem);
-        }
+        setDestination(searchItem);
     };
 
     const getPersonaType = async () => {
@@ -74,16 +68,16 @@ function BottomMenu (props) {
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
             name: selectedBuilding
-        })
-    }
+        });
+    };
 
     const goToInsideBuilding = () => {
-        props.navigation.navigate("IndoorMapView" ,{selectedBuilding:selectedBuilding})
-    }
+        props.navigation.navigate("IndoorMapView", { selectedBuilding: selectedBuilding });
+    };
 
     const goToNearby = () => {
-        props.navigation.navigate("Nearby")
-    }
+        props.navigation.navigate("Nearby");
+    };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -99,23 +93,23 @@ function BottomMenu (props) {
 
     const nameMethodTravel = () => {
         switch (methodTravel) {
-            case 'driving':
+            case "driving":
                 return "Driving";
 
-            case 'walking':
+            case "walking":
                 return "Walking";
 
-            case 'transit':
+            case "transit":
                 return "Transit";
 
-            case 'bicycling':
+            case "bicycling":
                 return "Bicycling";
 
             default:
                 return "Driving";
         }
         // return methodTravel;
-    }
+    };
 
     if (previewDirections) {
         return (
@@ -124,20 +118,28 @@ function BottomMenu (props) {
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
-                <Button style={{ left: "100%", }}
-                    color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
-                    <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
-                </Button>
+                    <Button style={{ left: "100%", }}
+                        color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
+                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
+                    </Button>
                 </View>
             </View>
         );
     }
 
     if (selectedBuilding) {
+        if (selectedBuilding.length > 13) {
+            var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
+
+        }
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                {selectedBuilding.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
+                    : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                }
                 <Text style={styles.shortLabel}>More info</Text>
                 <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
                     <Text style={styles.btnText}>Get Inside</Text>
@@ -147,10 +149,16 @@ function BottomMenu (props) {
     }
 
     if (destination) {
+        if (destination.length > 13) {
+            var updatedDestination = destination.substring(0, 13) + "...";
+        }
         return (
             <View style={styles.container} testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{destination}</Text>
+                {destination.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+                    : <Text style={styles.mainLabel}>{destination}</Text>
+                }
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
