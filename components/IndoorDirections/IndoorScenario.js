@@ -21,10 +21,10 @@ export function IndoorScenario(props) {
             case "DIFFERENT_BUILDING":
                 return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
                 break;
+            case "NOT_INDOOR":
+                break;
         }
     }
-
-    
     return(
         <G></G>
     );
@@ -41,6 +41,11 @@ export const whichPathToTake = (from, to) => {
         const different_building = "DIFFERENT_BUILDING";
         const same_floor = "SAME_FLOOR";
         const different_floor = "DIFFERENT_FLOOR";
+        const not_indoor = "NOT_INDOOR";
+
+        if (from.includes(" ") && to.includes(" ")) {
+            return not_indoor;
+        }
     
         if (from.charAt(0) !== to.charAt(0) && from.length != to.length) {
             return different_building;
