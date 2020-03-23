@@ -30,13 +30,6 @@ function BottomMenu ({ navigation }, props) {
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
         setDestination(searchItem);
-        // if(searchItem.length > 13){
-        //     var upadatedSearchItem = searchItem.substring(0,13) + "...";
-        //     setDestination(upadatedSearchItem);
-        // }
-        // else{
-        //     setDestination(searchItem);
-        // }
     };
 
     // //TODO: Will be used to detect when a user pressed on the map view
@@ -80,10 +73,16 @@ function BottomMenu ({ navigation }, props) {
     };
 
     if (getInside) {
+        if (selectedBuilding.length > 13){
+            var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
+        }
         return (
             <View style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                {selectedBuilding.length > 13
+                ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
+                : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                }
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnleave}>
                     <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
@@ -100,10 +99,17 @@ function BottomMenu ({ navigation }, props) {
     }
 
     if (selectedBuilding) {
+        if (selectedBuilding.length > 13){
+            var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
+            
+        }
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                {selectedBuilding.length > 13
+                ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
+                : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                }
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btn}>
                     <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
@@ -117,10 +123,16 @@ function BottomMenu ({ navigation }, props) {
     }
 
     else if (destination) {
+        if (destination.length > 13){
+            var updatedDestination = destination.substring(0, 13) + "...";
+        }
         return (
             <View style={styles.container} testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{destination}</Text>
+                {destination.length > 13
+                ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+                : <Text style={styles.mainLabel}>{destination}</Text>
+                }                
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
