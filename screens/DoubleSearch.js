@@ -48,7 +48,7 @@ function DoubleSearch (props) {
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState({ latitude: null, longitude: null });
-    const [isCurrentLocationFetched, setIsCurrentLocationFetched]  = React.useState(false);
+    const [isCurrentLocationFetched, setIsCurrentLocationFetched] = React.useState(false);
 
     /**
      * Description: Method to go back to the previous screen.
@@ -87,8 +87,8 @@ function DoubleSearch (props) {
             return alert("The destination field is missing or you typed an invalid location. Please try again.");
         }
     };
-    
-    const destinationName =  props.navigation.getParam("destinationName", "Destination");
+
+    const destinationName = props.navigation.getParam("destinationName", "Destination");
 
     /**
      * Algorithm to find the coordinates of a given building name.
@@ -228,11 +228,11 @@ function DoubleSearch (props) {
                     />
                 </View>
             </View>
-            {( isCurrentLocationFetched || coordinatesFrom != null ) &&
-            <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            {(isCurrentLocationFetched || coordinatesFrom != null) &&
+                <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
-            {( coordinatesFrom == null  && !isCurrentLocationFetched)  &&
-            <Button transparent style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled ={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            {(coordinatesFrom == null && !isCurrentLocationFetched) &&
+                <Button transparent style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
         </View >
     );
@@ -271,7 +271,6 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "14%",
-        // backgroundColor: "yellow",
         position: "absolute"
     },
     originSearchContainer: {

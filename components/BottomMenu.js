@@ -118,9 +118,9 @@ function BottomMenu (props) {
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
-                    <Button style={{ left: "100%", }}
+                    <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
-                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
+                        <Text style={styles.btnText}>Start</Text>
                     </Button>
                 </View>
             </View>
@@ -162,7 +162,7 @@ function BottomMenu (props) {
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
-                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
+                        <Text style={styles.btnText}>Get Directions</Text>
                     </Button>
                 </View>
             </View>
@@ -231,6 +231,9 @@ export const styles = StyleSheet.create({
         left: "57%",
         top: "5.5%",
         color: "#FFFFFF"
+    },
+    btnGetDirectionPosition: {
+        left: "100%"
     },
     btnleave: {
         position: "absolute",

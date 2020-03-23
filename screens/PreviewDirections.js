@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
-import { View, Button, Text, Icon } from "native-base";
+import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-import { api_key } from "../gmaps_api/apiKey"
+import { api_key } from "../gmaps_api/apiKey";
 
 /**
  * Description: This method act as an interface. After taking the leg of the response
@@ -39,7 +39,7 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
             overviewPolyline: null
         },
         steps: []
-    }
+    };
     directionObject.steps = jsonLeg.steps.map(step => {
 
         return {
@@ -56,14 +56,14 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
             },
             htmlInstructions: instructionsHtmlStyle + step.html_instructions + "</div>",
             travelMode: step.travel_mode
-        }
+        };
     });
 
     //Making sure the last instructions doesn't break the consistency of the layout ... I know the line is ugly but I dont see any other way.
     directionObject.steps[directionObject.steps.length - 1].htmlInstructions = directionObject.steps[directionObject.steps.length - 1].htmlInstructions.replace("<div style=\"font-size:0.9em\">", instructionsHtmlStyle);
 
     return directionObject;
-}
+};
 
 /**
  * Description: This method decodes the value of a hashed polylines 
@@ -79,9 +79,9 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
         return {
             latitude: point[0],
             longitude: point[1]
-        }
+        };
     }));
-}
+};
 
 
 
@@ -95,14 +95,14 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * FIXME: 1. PreviewDirection and Direction, the headers in the Direction is not properly changing his UI
  *           more specifically the height.
  */
-function PreviewDirections(props) {
+function PreviewDirections (props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const [isRefreshed, setIsRefreshed] = React.useState(true);
     const mapRef = useRef(null);
 
-    
+
     /* Read the params from the navigation state */
     const { params } = props.navigation.state;
 
@@ -116,14 +116,10 @@ function PreviewDirections(props) {
     }
     const origin = `${fromCoordinates.latitude},${fromCoordinates.longitude}`;
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
-    
-    
-    // //Temp origins/destination
-    // const origin = "45.494381,-73.578425";
-    // const destination = "45.457984,-73.639834";
+
     // The variables retrived from the preference page 
     const personaType = params ? params.personaType : null;
-    const mobilityType = params ? params.mobilityType : null; 
+    const mobilityType = params ? params.mobilityType : null;
     var transportType = params ? params.transportType : null;
 
     /**
@@ -131,33 +127,33 @@ function PreviewDirections(props) {
          * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
          * @param {*} transportType 
         */
-        const fetchData = async (transportType) => {
-            try {
-                // The following line is commented to avoid unecessary requests on the direcitons API. 
-                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}&mode=${transportType}`);
-                const jsonResponse = await resp.json();
-                if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
+    const fetchData = async (transportType) => {
+        try {
+            // The following line is commented to avoid unecessary requests on the direcitons API. 
+            // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}&mode=${transportType}`);
+            const jsonResponse = await resp.json();
+            if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
                 let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 setdetailedInstructionsObject(filteredInstruction);
-                }
-                else { //Error handling
-                    alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
-                    goBackPressHandler(); 
-                }
-            } catch (error) {
-                alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
-                goBackPressHandler(); 
             }
-        };  
-   /**
-     * Description: Go back to previous screen method.
-     * Using Stack Navigator
-     */
+            else { //Error handling
+                alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
+                goBackPressHandler();
+            }
+        } catch (error) {
+            alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
+            goBackPressHandler();
+        }
+    };
+    /**
+      * Description: Go back to previous screen method.
+      * Using Stack Navigator
+      */
     const goBackPressHandler = () => {
         props.navigation.goBack();
     };
@@ -174,7 +170,7 @@ function PreviewDirections(props) {
                 { latitude: 45.493622, longitude: -73.577003 }, { latitude: 45.497092, longitude: -73.5788 }],
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
-    }
+    };
     /**
      * Description: This method will update the region to fit all coordinates of the overall path 
      *              by taking an array of polylines. 
@@ -185,23 +181,23 @@ function PreviewDirections(props) {
             mapRef.current.fitToCoordinates(
                 polylines,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
-            
+
         }, 100);
-    }
+    };
     /**
      * This component will update the preview Map after the user made some selection.
      * FIXME: A) Not Too Secure, the user can call the fetchMethod non stop once he comes from 
      * that context, so maybe conditional rendering with the color and disabled it to only allow one
      * API Call.
      */
-    const refreshPreviewMap= () => {
+    const refreshPreviewMap = () => {
         if (transportType) {
-        fetchData(transportType);
-        setIsRefreshed(false);
+            fetchData(transportType);
+            setIsRefreshed(false);
         }
     };
 
-    useEffect(() => {      
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -225,7 +221,7 @@ function PreviewDirections(props) {
             </MapView>
 
             <View style={styles.navigationHeader}>
-                <View style={{ top: "15%" }}>
+                <View style={styles.navigationHeaderNestedView}>
                     <TouchableOpacity onPress={goBackPressHandler}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
@@ -253,10 +249,9 @@ function PreviewDirections(props) {
             </View>
             <BottomMenu previewMode={true} navigation={props.navigation} directionResponse={detailedInstructionsObject ? detailedInstructionsObject : null} />
             {/* {isRefreshed && */}
-            <TouchableOpacity style = {styles.refresh} onPress = {refreshPreviewMap}>
-                <Icon name="ios-refresh" style = {styles.icon}></Icon>
+            <TouchableOpacity style={styles.refresh} onPress={refreshPreviewMap}>
+                <Icon name="ios-refresh" style={styles.icon}></Icon>
             </TouchableOpacity>
-            {/* } */}
             {/* {!isRefreshed &&  //Refer to FIXME: A)
             <TouchableOpacity style = {styles.disabledRefresh} disabled = {true}>
             <Icon name="ios-refresh" style = {styles.icon}></Icon>
@@ -284,18 +279,17 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         position: "absolute"
     },
+    navigationHeaderNestedView: {
+        top: "15%"
+    },
     directionText: {
         justifyContent: "center",
         alignItems: "center"
     },
-    DirectionTextHeader: {
-        color: "white",
-        fontSize: 25
-    },
     refresh: {
         width: 60,
         height: 60,
-        borderRadius: 100/2,
+        borderRadius: 100 / 2,
         backgroundColor: "#f0b400",
         justifyContent: "center",
         alignItems: "center",
@@ -306,7 +300,7 @@ export const styles = StyleSheet.create({
     disabledRefresh: {
         width: 60,
         height: 60,
-        borderRadius: 100/2,
+        borderRadius: 100 / 2,
         backgroundColor: "gray",
         justifyContent: "center",
         alignItems: "center",
@@ -371,16 +365,16 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         width: "25%"
     },
-    addressContainer:{
+    addressContainer: {
         top: "2%",
         flexDirection: "row",
-        alignItems: "center" 
+        alignItems: "center"
     },
-    lowerHeaderContainer:{
-        flexDirection: "column", 
+    lowerHeaderContainer: {
+        flexDirection: "column",
         width: "100%",
-        top: "5%" 
-    }   
+        top: "5%"
+    }
 
 });
 
