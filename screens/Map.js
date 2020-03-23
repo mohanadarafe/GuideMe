@@ -56,8 +56,7 @@ function Map ({ navigation }) {
     });
 
     return (
-        <View data-test="MapComponent">
-            
+        <View testID="mapview" data-test="MapComponent">
                 <View>
                     <MapView
                         data-test="MapViewComponent"
@@ -76,9 +75,7 @@ function Map ({ navigation }) {
                     {/* FixMe: need to add permission for Location in this file <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
                     </View> */}
-                </View>
-            
-        
+                </View>      
             <BottomMenu navigation={navigation} />
         </View>
     );

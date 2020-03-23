@@ -10,7 +10,8 @@ import { Button } from "react-native-paper";
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-function BottomMenu(props) {
+
+function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -30,21 +31,14 @@ function BottomMenu(props) {
     };
 
     const getDestination = async () => {
-
-        let name = await AsyncStorage.getItem("toLocation");
-        setDestination(name);
-
-        // FIXME: Causing some synchronization issues, Baddredine will place it elsewhere
-
-        // let searchItem = await AsyncStorage.getItem("toLocation");
-        // if(searchItem.length > 13){
-        //     var upadatedSearchItem = searchItem.substring(0,13) + "...";
-        //     setDestination(upadatedSearchItem);
-        // }
-        // else{
-        //     setDestination(searchItem);
-        // }
-
+        let searchItem = await AsyncStorage.getItem("toLocation");
+        if (searchItem.length > 13) {
+            var upadatedSearchItem = searchItem.substring(0, 13) + "...";
+            setDestination(upadatedSearchItem);
+        }
+        else {
+            setDestination(searchItem);
+        }
     };
 
     const getPersonaType = async () => {
@@ -89,10 +83,6 @@ function BottomMenu(props) {
 
     const goToNearby = () => {
         props.navigation.navigate("Nearby")
-    }
-
-    const currentAltitude = async () => {
-        let altitude = await AsyncStorage.getItem('altitude');
     }
 
     useEffect(() => {
@@ -158,7 +148,7 @@ function BottomMenu(props) {
 
     if (destination) {
         return (
-            <View style={styles.container}>
+            <View style={styles.container} testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 <Text style={styles.mainLabel}>{destination}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
@@ -172,7 +162,7 @@ function BottomMenu(props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu">
+            <View style={styles.container} data-test="BottomMenu" testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
