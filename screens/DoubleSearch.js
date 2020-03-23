@@ -45,9 +45,10 @@ DoubleSearch.propTypes = {
 function DoubleSearch (props) {
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
-    const [coordinatesFrom, setCoordinatesFrom] = React.useState("");
+    const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState({ latitude: null, longitude: null });
+    const [isCurrentLocationFetched, setIsCurrentLocationFetched]  = React.useState(false);
 
     /**
      * Description: Method to go back to the previous screen.
@@ -79,10 +80,6 @@ function DoubleSearch (props) {
         else if (from.name == "Current Location" && currentLocationCoords.latitude && currentLocationCoords.longitude) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
         }
-        //TODO: Refer To A)
-        else if (currentLocationCoords.latitude && currentLocationCoords.longitude) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
-        }
         else if (from.name == "Current Location" && !currentLocationCoords) {
             return alert("Error: Are location services on?");
         }
@@ -107,6 +104,10 @@ function DoubleSearch (props) {
             if (list[key].name.includes(name)) {
                 return list[key].coordinates;
             }
+        }
+        if (name == "Current Location" && currentLocationCoords) {
+            getCurrentLocation();
+            setIsCurrentLocationFetched(true);
         }
         return null;
     };
@@ -144,9 +145,7 @@ function DoubleSearch (props) {
      * A.U
      */
     useEffect(() => {
-        if (from.name == "Current Location" || from.name === undefined) {
-            getCurrentLocation();
-        }
+
         if (to.name === undefined) {
             const initialTo = props.navigation.getParam("destinationName", "Destination");
             setCoordinatesTo(getCoordinates(initialTo));
@@ -176,7 +175,6 @@ function DoubleSearch (props) {
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
-            {/* <View style={styles.topBackground} /> FIXME: Because you used absolute positioning, this is useless...*/}
             <View style={styles.backArrowContainer}>
                 <Button transparent style={styles.backArrow} onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
@@ -200,7 +198,7 @@ function DoubleSearch (props) {
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
                         items={originItems}
-                        placeholder={"Current Position"}
+                        placeholder={"Starting Position"}
                         placeholderTextColor={"grey"}
                         textInputProps={{
                             keyboardAppearance: "dark",
@@ -230,7 +228,12 @@ function DoubleSearch (props) {
                     />
                 </View>
             </View>
+            {( isCurrentLocationFetched || coordinatesFrom != null ) &&
             <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            }
+            {( coordinatesFrom == null  && !isCurrentLocationFetched)  &&
+            <Button transparent style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled ={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            }
         </View >
     );
 }
@@ -337,6 +340,15 @@ export const styles = StyleSheet.create({
         bottom: "8%",
         justifyContent: "center",
         backgroundColor: "#3ACCE1",
+        borderRadius: 10,
+    },
+    routeButtonDisabled: {
+        width: "90%",
+        height: "8%",
+        fontSize: 25,
+        bottom: "8%",
+        justifyContent: "center",
+        backgroundColor: "grey",
         borderRadius: 10,
     },
     searchBarLabels: {

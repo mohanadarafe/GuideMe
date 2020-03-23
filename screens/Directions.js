@@ -20,7 +20,7 @@ function Directions (props) {
 
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
-    const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
+    const [isFirstInstruction, setIsFirstInstruction] = React.useState(true);
     const mapRef = useRef(null);
  
     /* 2. Read the params from the navigation state */
@@ -30,6 +30,9 @@ function Directions (props) {
     useEffect(() => {
         if (instructionIndex  == 0) {
             setIsFirstInstruction(true); //When Direction enabled, we are at the first instruction.
+        }
+        else if(instructionIndex >= destinationResponse.steps.length - 1) {
+            setIsLastInstruction(true);
         }
       });
     
