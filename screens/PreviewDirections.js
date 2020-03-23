@@ -132,7 +132,6 @@ function PreviewDirections(props) {
          * @param {*} transportType 
         */
         const fetchData = async (transportType) => {
-            console.log("Fetching");
             try {
                 // The following line is commented to avoid unecessary requests on the direcitons API. 
                 // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)

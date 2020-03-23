@@ -73,15 +73,18 @@ function DoubleSearch (props) {
         if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.");
         }
+        else if (coordinatesFrom && coordinatesTo) {
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
+        }
+        else if (from.name == "Current Location" && currentLocationCoords.latitude && currentLocationCoords.longitude) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
+        }
         //TODO: Refer To A)
         else if (currentLocationCoords.latitude && currentLocationCoords.longitude) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
         }
         else if (from.name == "Current Location" && !currentLocationCoords) {
             return alert("Error: Are location services on?");
-        }
-        else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
         }
         else {
             return alert("The destination field is missing or you typed an invalid location. Please try again.");
