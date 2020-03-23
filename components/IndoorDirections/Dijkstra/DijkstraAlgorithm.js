@@ -105,10 +105,10 @@ export const ConvertToHall8Floor = (name) => {
         if(numToString.charAt(0) == 9) {
             return name;
         }
-        if (numToString.length == 3) {
+        else if (numToString.length == 3) {
             return name.replace(numToString.charAt(0), "8");
         }
-        if (numToString.length == 4) {
+        else if (numToString.length == 4) {
             return name.replace(numToString.substring(0,2), "8");
         }
     }  
