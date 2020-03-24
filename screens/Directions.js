@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity} from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline, Circle } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import CurrentLocationButton from "../components/CurrentLocationButton";
@@ -20,26 +20,29 @@ function Directions (props) {
 
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
-    const [isFirstInstruction, setIsFirstInstruction] = React.useState(false);
+    const [isFirstInstruction, setIsFirstInstruction] = React.useState(true);
     const mapRef = useRef(null);
- 
+
     /* 2. Read the params from the navigation state */
     const { params } = props.navigation.state;
     const destinationResponse = params ? params.destinationResponse : null;
 
     useEffect(() => {
-        if (instructionIndex  == 0) {
+        if (instructionIndex == 0) {
             setIsFirstInstruction(true); //When Direction enabled, we are at the first instruction.
         }
-      });
-    
-      /**
-       * Description: Go back method
-       * Using Stack navigator.
-       */
+        else if (instructionIndex >= destinationResponse.steps.length - 1) {
+            setIsLastInstruction(true);
+        }
+    });
+
+    /**
+     * Description: Go back method
+     * Using Stack navigator.
+     */
     const goBackPressHandler = () => {
         props.navigation.goBack();
-    }
+    };
     /**
      * Description: This method will update the region to fit all coordinates of the a specific (index) step of the instruction. 
      * @param {*} index 
@@ -49,9 +52,9 @@ function Directions (props) {
             mapRef.current.fitToCoordinates(
                 destinationResponse.steps[index].polylines,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
-            
+
         }, 100);
-    }
+    };
 
     /**
      * Description: The map has to be initialized to the first instruction.
@@ -63,7 +66,7 @@ function Directions (props) {
                 destinationResponse.steps[0].polylines,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
-    }
+    };
     /**
      * Description: This method will increment the instructionIndex so that we can render the next instruction 
      * in the MapView. 
@@ -74,26 +77,26 @@ function Directions (props) {
      * 2. We update the mapView by calling updateMapRegionToInstruction with the index incremented.
      */
     const goToNextInstruction = () => {
-        if(instructionIndex >= destinationResponse.steps.length - 1) {
+        if (instructionIndex >= destinationResponse.steps.length - 1) {
             setIsLastInstruction(true);
         } else {
-        setInstructionIndex(instructionIndex + 1);
-        setIsFirstInstruction(false);
-        updateMapRegionToInstruction(instructionIndex + 1);      
+            setInstructionIndex(instructionIndex + 1);
+            setIsFirstInstruction(false);
+            updateMapRegionToInstruction(instructionIndex + 1);
         }
-    }
+    };
     /**
      * Same as goToNextInstruction but for previous instruction
      */
     const goToPreviousInstruction = () => {
-        if(instructionIndex == 0) {
+        if (instructionIndex == 0) {
             setIsFirstInstruction(true);
         } else {
-        setInstructionIndex(instructionIndex - 1);
-        setIsLastInstruction(false);
-        updateMapRegionToInstruction(instructionIndex - 1);
+            setInstructionIndex(instructionIndex - 1);
+            setIsLastInstruction(false);
+            updateMapRegionToInstruction(instructionIndex - 1);
         }
-    }
+    };
 
     return (
         <View>
@@ -105,62 +108,62 @@ function Directions (props) {
                 showsCompass={true}
                 showsBuildings={true}
                 onLayout={initMapRegion}
-                showsIndoors = {false}
-                // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
+                showsIndoors={false}
+            // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
             >
                 <Polyline
-                coordinates = {destinationResponse ? destinationResponse.generalRouteInfo.overviewPolyline : []}
-                strokeWidth = {6}
-                strokeColor = "pink"
+                    coordinates={destinationResponse ? destinationResponse.generalRouteInfo.overviewPolyline : []}
+                    strokeWidth={6}
+                    strokeColor="pink"
                 />
             </MapView>
-            <View style ={styles.circleCurrentLocation}>
-                <CurrentLocationButton mapReference ={mapRef}/>
+            <View style={styles.circleCurrentLocation}>
+                <CurrentLocationButton mapReference={mapRef} />
             </View>
             <View style={styles.navigationHeader}>
-                <View style={{ top: "15%" }}>
-                    <TouchableOpacity onPress = {goBackPressHandler}>                    
+                <View style={styles.navigationHeaderNestedView}>
+                    <TouchableOpacity onPress={goBackPressHandler}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
                         <Text style={styles.DirectionTextHeaderStyle}>Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View>
-                    <View style = {styles.detailedInstructions}>
-                        <HTML 
-                        html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions: "Invalid"} 
-                        /> 
-                        <View style = {{flexDirection: "row", top: "2%", justifyContent: "space-between", width: "90%"}}>
-                        <Text style = {styles.stepMetrics}>Duration: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration: "N/A"}</Text></Text>
-                        <Text style = {styles.stepMetrics}>Distance: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance: "N/A"}</Text></Text>
-                        <Text style = {styles.stepMetrics}>By: <Text style ={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode: "N/A"}</Text></Text>
+                    <View style={styles.detailedInstructions}>
+                        <HTML
+                            html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "Invalid"}
+                        />
+                        <View style={styles.infoMetrics}>
+                            <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
+                            <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
+                            <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
+                        </View>
                     </View>
-                </View>
                 </View>
             </View>
             {isFirstInstruction &&
-                <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled = {true}>
+                <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled={true}>
                     <View>
-                        <Icon name="arrow-back" style={{color: "grey"}}/>
+                        <Icon name="arrow-back" style={styles.disabledArrow} />
                     </View>
                 </TouchableOpacity>
             }
             {!isFirstInstruction &&
-                <TouchableOpacity style={styles.arrowLeftDirection} onPress = {goToPreviousInstruction}>
+                <TouchableOpacity style={styles.arrowLeftDirection} onPress={goToPreviousInstruction}>
                     <View>
                         <Icon name="arrow-back" />
                     </View>
                 </TouchableOpacity>
             }
             {isLastInstruction &&
-                <TouchableOpacity style={styles.arrowRightDirectionDisabled} disabled = {true}>
+                <TouchableOpacity style={styles.arrowRightDirectionDisabled} disabled={true}>
                     <View >
-                        <Icon name="arrow-forward" style={{color: "grey"}} />
+                        <Icon name="arrow-forward" style={styles.disabledArrow} />
                     </View>
                 </TouchableOpacity>
             }
             {!isLastInstruction &&
-                <TouchableOpacity style={styles.arrowRightDirection} onPress = {goToNextInstruction}>
+                <TouchableOpacity style={styles.arrowRightDirection} onPress={goToNextInstruction}>
                     <View >
                         <Icon name="arrow-forward" />
                     </View>
@@ -188,6 +191,9 @@ export const styles = StyleSheet.create({
         backgroundColor: "#3F8796",
         position: "absolute"
     },
+    navigationHeaderNestedView: {
+        top: "15%"
+    },
     directionTextHeader: {
         justifyContent: "center",
         alignItems: "center"
@@ -202,7 +208,7 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 2,
         top: "10%"
     },
-    backIcon: { 
+    backIcon: {
         color: "white",
         left: "5%",
         top: "40%"
@@ -267,6 +273,9 @@ export const styles = StyleSheet.create({
         borderColor: "grey",
         borderRadius: 5
     },
+    disabledArrow: {
+        color: "grey"
+    },
     arrowRightDirectionDisabled: {
         top: "90%",
         left: "84%",
@@ -292,12 +301,18 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    stepMetrics : {
+    infoMetrics: {
+        flexDirection: "row",
+        top: "2%",
+        justifyContent: "space-between",
+        width: "90%"
+    },
+    stepMetrics: {
         fontSize: 18,
         color: "white"
     },
     stepMetricsValues: {
-        fontWeight: "bold", 
+        fontWeight: "bold",
         color: "yellow"
     }
 });

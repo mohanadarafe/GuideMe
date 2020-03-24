@@ -2,13 +2,16 @@ import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
 import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
+import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
+import { Class9Graph } from '../../../constants/ClassGraph9';
 
 export function DifferentFloorDirections(props) {
-    const rooms = props.rooms;
+    const floorFrom = getFloorNumber(props.from);
+    const floorTo = getFloorNumber(props.to);
     const graph = ClassGraph();
 
-    const pathToElevator = dijkstra(graph, ConvertToHall8Floor(props.from), "elevator").path;
-    const pathToClass = dijkstra(graph, "elevator", ConvertToHall8Floor(props.to)).path;
+    const pathToElevator = dijkstra(floorFrom == 9 ? Class9Graph() : graph, floorFrom == 9 ? props.from : ConvertToHall8Floor(props.from), "elevator").path;
+    const pathToClass = dijkstra(floorTo == 9 ? Class9Graph() : graph, "elevator", floorTo == 9 ? props.to : ConvertToHall8Floor(props.to)).path;
 
     var getNextRoomElevator = (index) => {
         if (index < pathToElevator.length){
@@ -22,6 +25,7 @@ export function DifferentFloorDirections(props) {
         }
     }
 
+    var rooms = floorFrom == 9 ? Hall9Coordinates() : props.rooms;
     const linesToElevator = [];
     pathToElevator.forEach((element, index) => {
         if (index < pathToElevator.length - 1) {
@@ -29,6 +33,7 @@ export function DifferentFloorDirections(props) {
         }
     });
 
+    rooms = floorTo == 9 ? Hall9Coordinates() : props.rooms;
     const linesToClass = [];
     pathToClass.forEach((element, index) => {
         if (index < pathToClass.length - 1) {
@@ -39,10 +44,11 @@ export function DifferentFloorDirections(props) {
 
     // Go to elevator
     if(props.floor == getFloorNumber(props.from)) {
-        const tempClassName = ConvertToHall8Floor(props.from);
+        rooms = floorFrom == 9 ? Hall9Coordinates() : props.rooms;
+        var className = ConvertToHall8Floor(props.from.toString());
         return(
             <G>
-                <Line x1={rooms[tempClassName.toString()].x} y1={rooms[tempClassName.toString()].y} x2={rooms[tempClassName.toString()].nearestPoint.x} y2={rooms[tempClassName.toString()].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToElevator.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
@@ -51,14 +57,15 @@ export function DifferentFloorDirections(props) {
         )
     } 
     if(props.floor == getFloorNumber(props.to)) {
-        const tempClassName = ConvertToHall8Floor(props.to);
+        rooms = floorTo == 9 ? Hall9Coordinates() : props.rooms;
+        var className = ConvertToHall8Floor(props.to.toString());
         return(
             <G>
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToClass.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
-                <Line x1={rooms[tempClassName.toString()].x} y1={rooms[tempClassName.toString()].y} x2={rooms[tempClassName.toString()].nearestPoint.x} y2={rooms[tempClassName.toString()].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
             </G>
         )
     }

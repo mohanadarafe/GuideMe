@@ -10,7 +10,8 @@ import { Button } from "react-native-paper";
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-function BottomMenu(props) {
+
+function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -30,21 +31,8 @@ function BottomMenu(props) {
     };
 
     const getDestination = async () => {
-
-        let name = await AsyncStorage.getItem("toLocation");
-        setDestination(name);
-
-        // FIXME: Causing some synchronization issues, Baddredine will place it elsewhere
-
-        // let searchItem = await AsyncStorage.getItem("toLocation");
-        // if(searchItem.length > 13){
-        //     var upadatedSearchItem = searchItem.substring(0,13) + "...";
-        //     setDestination(upadatedSearchItem);
-        // }
-        // else{
-        //     setDestination(searchItem);
-        // }
-
+        let searchItem = await AsyncStorage.getItem("toLocation");
+        setDestination(searchItem);
     };
 
     const getPersonaType = async () => {
@@ -81,11 +69,11 @@ function BottomMenu(props) {
         props.navigation.navigate("MoreDetails", {
             name: selectedBuilding
         });
-    }
+    };
 
     const goToInsideBuilding = () => {
-        props.navigation.navigate("IndoorMapView" ,{selectedBuilding:selectedBuilding})
-    }
+        props.navigation.navigate("IndoorMapView", { selectedBuilding: selectedBuilding });
+    };
 
     const goToNearby = () => {
         props.navigation.navigate("Nearby", {bottomMenu: true});
@@ -109,22 +97,23 @@ function BottomMenu(props) {
 
     const nameMethodTravel = () => {
         switch (methodTravel) {
-            case 'DRIVING':
+            case "driving":
                 return "Driving";
 
-            case 'WALKING':
+            case "walking":
                 return "Walking";
 
-            case 'BUS':
-                return "Bus";
+            case "transit":
+                return "Transit";
 
-            case 'SHUTTLE_BUS':
-                return "Shuttle Bus";
+            case "bicycling":
+                return "Bicycling";
 
             default:
                 return "Driving";
         }
-    }
+        // return methodTravel;
+    };
 
     if (previewDirections) {
         return (
@@ -133,20 +122,28 @@ function BottomMenu(props) {
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
-                <Button style={{ left: "100%", }}
-                    color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
-                    <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Start</Text>
-                </Button>
+                    <Button style={styles.btnGetDirectionPosition}
+                        color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
+                        <Text style={styles.btnText}>Start</Text>
+                    </Button>
                 </View>
             </View>
         );
     }
 
     if (selectedBuilding) {
+        if (selectedBuilding.length > 13) {
+            var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
+
+        }
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                {selectedBuilding.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
+                    : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+                }
                 <Text style={styles.shortLabel}>More info</Text>
                 <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
                     <Text style={styles.btnText}>Get Inside</Text>
@@ -156,14 +153,20 @@ function BottomMenu(props) {
     }
 
     if (destination) {
+        if (destination.length > 13) {
+            var updatedDestination = destination.substring(0, 13) + "...";
+        }
         return (
-            <View style={styles.container}>
+            <View style={styles.container} testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-                <Text style={styles.mainLabel}>{destination}</Text>
+                {destination.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+                    : <Text style={styles.mainLabel}>{destination}</Text>
+                }
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
-                        <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
+                        <Text style={styles.btnText}>Get Directions</Text>
                     </Button>
                 </View>
             </View>
@@ -171,7 +174,7 @@ function BottomMenu(props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu">
+            <View style={styles.container} data-test="BottomMenu" testID={props.testID}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
@@ -232,6 +235,9 @@ export const styles = StyleSheet.create({
         left: "57%",
         top: "5.5%",
         color: "#FFFFFF"
+    },
+    btnGetDirectionPosition: {
+        left: "100%"
     },
     btnleave: {
         position: "absolute",
