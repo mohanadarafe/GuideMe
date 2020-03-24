@@ -35,7 +35,14 @@
       "!**/coverage/**",
       "!**/node_modules/**",
       "!**/babel.config.js",
-      "!**/jest.setup.js"
+      "!**/jest.setup.js",
+      "!**/web-build/register-service-worker.js",
+      "!react-native.config.js",
+      "!**/e2e/init.js",
+      "!**/assets/floormaps/hall/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/web-build/register-service-worker.js"
     ]
   },
   "dependencies": {
