@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, AsyncStorage, FlatList, Dimensions } from "react-native";
 import { Icon, Button } from "native-base";
+import { Feather } from "@expo/vector-icons";
 
 
 
 function Nearby(props) {
 
+    const [fromBottomMenu, setFromBottoMenu] = React.useState({fromBottomMenu: bottomMenu?bottomMenu:null});
+
     const goBack = () => {
+        setFromBottoMenu(null);
+        console.log(bottomMenu);
         props.navigation.goBack();
-    }
+    };
+
+    const goToMenu = () => {
+        props.navigation.openDrawer();
+    };
+
+    const bottomMenu = props.navigation.getParam("bottomMenu", "null");
+    console.log(bottomMenu);
 
     // const data = [{ key: "A" }, { key: "B" }, { key: "C" }];
     // const numColumns = 2;
@@ -34,8 +46,12 @@ function Nearby(props) {
 
     return (
         <View style={styles.container}>
-            <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
-
+            {bottomMenu
+                ? <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+                : <Button transparent style={styles.menuButton} onPress={goToMenu}>
+                    <Feather name="menu" style={styles.icon} />
+                </Button>
+            }
             <Text style={styles.mainLabel}>Points of Interest</Text>
 
             {/* <FlatList
@@ -90,6 +106,30 @@ export const styles = StyleSheet.create({
         flexWrap: 'wrap',
         top: "50%"
     },
+
+    icon: {
+        height: "100%",
+        width: "100%",
+        flexDirection: "row",
+        left: "6%",
+        color: "#FFFFFF",
+        fontSize: 35
+
+},
+menuButton: {
+    height: "100%",
+    width: "100%",
+    flexDirection: "row",
+},
+menuButtonContainer: {
+    width: "100%",
+    height: "6%",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignContent: "center",
+    alignItems: "center",
+    top: "7%"
+},
 });
 
 export default Nearby;

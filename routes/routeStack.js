@@ -7,7 +7,7 @@ import MapDirections from "../screens/Directions";
 import PreviewDirections from "../screens/PreviewDirections";
 import PreferenceMenu from "../screens/PreferenceMenu";
 import IndoorMapView from "../screens/Indoor/IndoorMapView";
-import Nearby from "../screens/Nearby";
+import Nearby from "../screens/Menu/Nearby";
 
 // Add screens here
 const screens = {
@@ -76,4 +76,4 @@ const screens = {
 
 const HomeStack = createStackNavigator(screens);
 
-export default createAppContainer(HomeStack);
+export default HomeStack;

@@ -1,5 +1,5 @@
 import React from "react";
-import Navigator from "./routes/routeStack";
+import Navigator from "./routes/drawer";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
 

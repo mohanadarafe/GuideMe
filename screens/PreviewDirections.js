@@ -100,18 +100,24 @@ function PreviewDirections(props) {
     const mapRef = useRef(null);
 
     /* Read the params from the navigation state */
-    const { params } = props.navigation.state;
+   
 
     // The variables retrieved from DoubleSearch
-    const fromCoordinates = params ? params.From : null;
-    const toCoordinates = params ? params.To : null;
+    const fromCoordinates = props.navigation.getParam("From","null");
+    const toCoordinates = props.navigation.getParam("To","null");
+
+    console.log(fromCoordinates);
+    console.log(toCoordinates);
+
+
     //TODO: Error handling when the value given is null.
     const origin = `${fromCoordinates.latitude},${fromCoordinates.longitude}`;
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
+    
     // The variables retrived from the preference page 
-    const personaType = params ? params.personaType : null;
-    const mobilityType = params ? params.mobilityType : null; 
-    const transportType = params ? params.transportType : null;
+    // const personaType = params ? params.personaType : null;
+    // const mobilityType = params ? params.mobilityType : null; 
+    // const transportType = params ? params.transportType : null;
 
     /**
      * Description: Go back to previous screen method.

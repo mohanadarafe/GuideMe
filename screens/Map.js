@@ -72,7 +72,7 @@ function Map ({ navigation }) {
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
-                    <Search />
+                    <Search navigation={navigation} />
                     {/* FixMe: need to add permission for Location in this file <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
                     </View> */}

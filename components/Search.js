@@ -21,7 +21,7 @@ function fetchData () {
   return searchInfo;
 }
 
-function Search () {
+function Search (props) {
   // eslint-disable-next-line no-unused-vars
   const [buildingName, setBuildingName] = React.useState("");
   const [from, setFrom] = React.useState("");
@@ -53,12 +53,16 @@ function Search () {
     setData(fetchData());
   }, []);
 
+  const goToMenu = () => {
+    props.navigation.openDrawer();
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonStyle}>
         <TouchableOpacity>
           <View>
-            <Icon name='menu' size={30}></Icon>
+            <Icon name='menu' size={30} onPress={goToMenu}></Icon>
           </View>
         </TouchableOpacity>
       </View>

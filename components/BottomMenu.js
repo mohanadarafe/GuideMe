@@ -80,7 +80,7 @@ function BottomMenu(props) {
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
             name: selectedBuilding
-        })
+        });
     }
 
     const goToInsideBuilding = () => {
@@ -88,7 +88,7 @@ function BottomMenu(props) {
     }
 
     const goToNearby = () => {
-        props.navigation.navigate("Nearby")
+        props.navigation.navigate("Nearby", {bottomMenu: true});
     }
 
     const currentAltitude = async () => {
