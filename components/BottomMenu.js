@@ -57,7 +57,7 @@ function BottomMenu({ navigation }, props) {
   });
   if (iconSelected && selectedBuilding) {
     return (
-      <View style={styles.moreDetails}>
+      <View testID="bottomArrowIcon" style={styles.moreDetails}>
         <MoreDetails name={selectedBuilding} navigation={navigation} />
         <Icon
           name="ios-arrow-down"
