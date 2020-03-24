@@ -1,4 +1,5 @@
 import React from "react";
+import { TouchableOpacity } from "react-native";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import SideMenu from "../screens/SideMenu";
@@ -33,7 +34,8 @@ const Drawer = createDrawerNavigator({
         screen: ShuttleBus,
         navigationOptions: {
             title: "Shuttle Bus",
-            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="bus-clock" size={22} color={tintColor} />
+            
+            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="bus-clock" size={22} color={tintColor} />,
         }
     },
 
@@ -41,7 +43,9 @@ const Drawer = createDrawerNavigator({
         screen: NearbyStack,
         navigationOptions: {
             title: "Points of Interest",
-            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="food-fork-drink" size={22} color={tintColor}/>
+            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="food-fork-drink" size={22} color={tintColor}/>,
+            headerRight: (<TouchableOpacity onPress={() => navigation.navigate("Nearby",{sideMenu:true})}></TouchableOpacity>
+              )
         }
     },
 
@@ -72,6 +76,9 @@ const Drawer = createDrawerNavigator({
     contentOptions: {
         activeBackgroundColor: "rgba( 77, 164, 253, 0.2)",
         activeTintColor: "#4DA4FD",
+        labelStyle: {
+            fontFamily: "encodeSansExpanded",
+          },
         itemsContainerStyle: {
             marginTop: 16,
             marginHorizontal: 8

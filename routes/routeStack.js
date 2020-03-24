@@ -63,13 +63,13 @@ const screens = {
             headerShown: false,
         }
     },
-    Nearby:{
-        screen: Nearby,
-        navigationOptions:{
-            headerShown: false,
-            ...TransitionPresets.ModalSlideFromBottomIOS
-        }
-    }
+    // Nearby:{
+    //     screen: Nearby,
+    //     navigationOptions:{
+    //         headerShown: false,
+    //         ...TransitionPresets.ModalSlideFromBottomIOS
+    //     }
+    // }
 
 
 };

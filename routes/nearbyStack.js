@@ -8,7 +8,6 @@ const screens = {
         screen: Nearby,
         navigationOptions:{
             headerShown: false,
-            ...TransitionPresets.ModalSlideFromBottomIOS
         }
     }
 

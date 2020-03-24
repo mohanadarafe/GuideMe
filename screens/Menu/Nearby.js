@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, AsyncStorage, FlatList, Dimensions } from "react-native";
 import { Icon, Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 
 function Nearby(props) {
 
-    const [fromBottomMenu, setFromBottoMenu] = React.useState({fromBottomMenu: bottomMenu?bottomMenu:null});
+    // const [fromBottomMenu, setFromBottoMenu] = React.useState({ fromBottomMenu: bottomMenu ? bottomMenu : null });
 
     const goBack = () => {
-        setFromBottoMenu(null);
-        console.log(bottomMenu);
-        props.navigation.goBack();
+        // setFromBottoMenu(null);
+        // console.log(bottomMenu);
+        props.navigation.navigate("Map");
     };
 
     const goToMenu = () => {
@@ -20,7 +21,7 @@ function Nearby(props) {
     };
 
     const bottomMenu = props.navigation.getParam("bottomMenu", "null");
-    console.log(bottomMenu);
+    const sideMenu = props.navigation.getParam("sideMenu", "null");
 
     // const data = [{ key: "A" }, { key: "B" }, { key: "C" }];
     // const numColumns = 2;
@@ -46,12 +47,15 @@ function Nearby(props) {
 
     return (
         <View style={styles.container}>
-            {bottomMenu
-                ? <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
-                : <Button transparent style={styles.menuButton} onPress={goToMenu}>
+
+                    {/* <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} /> */}
+            <View style={styles.menuButtonContainer}>
+                <Button transparent style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
                 </Button>
-            }
+            </View>
+
+
             <Text style={styles.mainLabel}>Points of Interest</Text>
 
             {/* <FlatList
@@ -106,7 +110,6 @@ export const styles = StyleSheet.create({
         flexWrap: 'wrap',
         top: "50%"
     },
-
     icon: {
         height: "100%",
         width: "100%",
@@ -114,22 +117,21 @@ export const styles = StyleSheet.create({
         left: "6%",
         color: "#FFFFFF",
         fontSize: 35
-
-},
-menuButton: {
-    height: "100%",
-    width: "100%",
-    flexDirection: "row",
-},
-menuButtonContainer: {
-    width: "100%",
-    height: "6%",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    alignContent: "center",
-    alignItems: "center",
-    top: "7%"
-},
+    },
+    menuButton: {
+        height: "100%",
+        width: "100%",
+        flexDirection: "row",
+    },
+    menuButtonContainer: {
+        width: "100%",
+        height: "6%",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        alignContent: "center",
+        alignItems: "center",
+        top: "7%"
+    },
 });
 
 export default Nearby;
