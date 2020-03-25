@@ -1,13 +1,16 @@
 import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
+import { Class9Graph } from '../../../constants/ClassGraph9';
 import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
+import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 
 export function SameFloorDirections(props) {
-    const rooms = props.rooms;
-    const graph = ClassGraph();
-    const from = ConvertToHall8Floor(props.from);
-    const to = ConvertToHall8Floor(props.to);
+    const floor = getFloorNumber(props.from);
+    const rooms = floor == 9 ? Hall9Coordinates() : props.rooms;
+    const graph = floor == 9 ? Class9Graph() : ClassGraph();
+    const from = floor == 9 ? props.from : ConvertToHall8Floor(props.from);
+    const to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
     const route = dijkstra(graph, from, to).path;
 
     var getNextRoom = (index) => {
@@ -23,7 +26,7 @@ export function SameFloorDirections(props) {
         }
     });
 
-    if(props.floor == getFloorNumber(props.to)) {
+    if(props.floor == floor) {
         return(
             <G>
                 <Line x1={rooms[from].x} y1={rooms[from].y} x2={rooms[from].nearestPoint.x} y2={rooms[from].nearestPoint.y} stroke="blue" strokeWidth="5"/>
