@@ -4,13 +4,11 @@ import { Icon } from "native-base";
 import MoreDetails from "../screens/MoreDetails";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-
 function BottomMenu({ navigation }, props) {
   const [selectedBuilding, setSelectedBuilding] = React.useState("");
   const [iconSelected, setIconSelected] = React.useState(false);
@@ -18,31 +16,24 @@ function BottomMenu({ navigation }, props) {
   const [getInside, setGetInside] = React.useState(false);
   const [destination, setDestination] = React.useState("");
   //const [mapPressed, setmapPressed] = React.useState("");
-
   AsyncStorage.setItem("toggle", switchVal.toString());
   AsyncStorage.setItem("getInsideBuilding", getInside.toString());
-
   const getBuildingSelected = async () => {
     let name = await AsyncStorage.getItem("buildingSelected");
     setSelectedBuilding(name);
   };
-
   const getDestination = async () => {
     let searchItem = await AsyncStorage.getItem("toLocation");
     setDestination(searchItem);
   };
-
   // //TODO: Will be used to detect when a user pressed on the map view
   // const getMapPressed = async () => {
   //     let pressed = await AsyncStorage.getItem("mapPressed");
   //     setmapPressed(pressed);
   // };
-
   const currentAltitude = async () => {
     let altitude = await AsyncStorage.getItem("altitude");
   };
-
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       getBuildingSelected();
@@ -51,7 +42,6 @@ function BottomMenu({ navigation }, props) {
     }, 1);
     return () => clearInterval(intervalId);
   });
-
   if (iconSelected && selectedBuilding) {
     return (
       <View testID="bottomArrowIcon" style={styles.moreDetails}>
@@ -67,202 +57,93 @@ function BottomMenu({ navigation }, props) {
       </View>
     );
   }
-};
-
-// //TODO: Will be used to detect when a user pressed on the map view
-// const getMapPressed = async () => {
-//     let pressed = await AsyncStorage.getItem("mapPressed");
-//     setmapPressed(pressed);
-// };
-
-if (getInside) {
-  if (selectedBuilding.length > 13) {
-    var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
-  }
-  return (
-    <View style={styles.insideBuildingContainer}>
-      <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-      {selectedBuilding.length > 13
-        ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
-        : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-      }
-      <Text style={styles.shortLabel}>More info</Text>
-      <View style={styles.btnleave}>
-        <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
-          setGetInside(false);
-        }}>
-          <Text style={styles.btnText}>Exit Building</Text>
-        </Button>
-      </View>
-      <View style={styles.changeFloor}>
-        <FloorMenu />
-      </View>
-    </View>
-  );
-}
-
-if (selectedBuilding) {
-  if (selectedBuilding.length > 13) {
-    var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
-
-  }
-  return (
-    <View style={styles.container}>
-      <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-      {selectedBuilding.length > 13
-        ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
-        : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-      }
-      <Text style={styles.shortLabel}>More info</Text>
-      <View style={styles.btn}>
-        <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
-          setGetInside(true);
-        }}>
-          <Text style={styles.btnText}>Get Inside</Text>
-        </Button>
-      </View>
-    </View>
-  );
-}
-
-else if (destination) {
-  if (destination.length > 13) {
-    var updatedDestination = destination.substring(0, 13) + "...";
-  }
-  return (
-    <View style={styles.container} testID={props.testID}>
-      <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
-      {destination.length > 13
-        ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
-        : <Text style={styles.mainLabel}>{destination}</Text>
-      }
-      <Text style={styles.shortLabel}>More info</Text>
-      <View style={styles.btnGetDirection}>
-        <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
-          <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
-        </Button>
-      </View>
-    </View>
-  );
-}
-
-const goToDoubleSearchBar = () => {
-  navigation.navigate("DoubleSearch", { destinationName: destination });
-};
-if (getInside) {
-  return (
-    <View testID="insideView" style={styles.insideBuildingContainer}>
-      <Icon
-        name="ios-arrow-up"
-        style={styles.arrowUp}
-        onPress={() => {
-          setIconSelected(true);
-        }}
-      />
-      <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-      <Text style={styles.shortLabel}>More info</Text>
-      <View style={styles.btnleave}>
-        <Button
-          style={styles.btnleave}
-          color={"#3ACCE1"}
-          uppercase={false}
-          mode="contained"
-          onPress={() => {
+  const goToDoubleSearchBar = () => {
+    navigation.navigate("DoubleSearch", { destinationName: destination });
+  };
+  if (getInside) {
+    if (selectedBuilding.length > 13) {
+      var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
+    }
+    return (
+      <View testID="insideView" style={styles.insideBuildingContainer}>
+        <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+        {selectedBuilding.length > 13
+          ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
+          : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+        }
+        <Text style={styles.shortLabel}>More info</Text>
+        <View style={styles.btnleave}>
+          <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
             setGetInside(false);
-          }}
-        >
-          <Text style={styles.btnText}>Exit Building</Text>
-        </Button>
+          }}>
+            <Text style={styles.btnText}>Exit Building</Text>
+          </Button>
+        </View>
+        <View style={styles.changeFloor}>
+          <FloorMenu />
+        </View>
       </View>
-      <View style={styles.changeFloor}>
-        <FloorMenu />
-      </View>
-    </View>
-  );
-}
-if (selectedBuilding) {
-  return (
-    <View testID="getInside" style={styles.container}>
-      <Icon
-        name="ios-arrow-up"
-        style={styles.arrowUp}
-        onPress={() => {
-          setIconSelected(true);
-        }}
-      />
-      <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-      <Text style={styles.shortLabel}>More info</Text>
-      <View style={styles.btn}>
-        <Button
-          style={styles.btn}
-          color={"#3ACCE1"}
-          uppercase={false}
-          mode="contained"
-          onPress={() => {
+    );
+  }
+  if (selectedBuilding) {
+    if (selectedBuilding.length > 13) {
+      var updatedSelectedBuilding = selectedBuilding.substring(0, 13) + "...";
+
+    }
+    return (
+      <View testID="getInside" style={styles.container}>
+        <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+        {selectedBuilding.length > 13
+          ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
+          : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
+        }
+        <Text style={styles.shortLabel}>More info</Text>
+        <View style={styles.btn}>
+          <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={() => {
             setGetInside(true);
-          }}
-        >
-          <Text style={styles.btnText}>Get Inside</Text>
-        </Button>
+          }}>
+            <Text style={styles.btnText}>Get Inside</Text>
+          </Button>
+        </View>
       </View>
-    </View>
-  );
-} else if (destination) {
-  return (
-    <View style={styles.container} testID="iconBottom2">
-      <Icon
-        name="ios-arrow-up"
-        style={styles.arrowUp}
-        onPress={() => {
-          setIconSelected(true);
-        }}
-      />
-      <Text style={styles.mainLabel}>{destination}</Text>
-      <Text style={styles.shortLabel}>More info</Text>
-      <View style={styles.btnGetDirection}>
-        <Button
-          style={styles.btnGetDirection}
-          color={"#3ACCE1"}
-          uppercase={false}
-          mode="contained"
-          onPress={goToDoubleSearchBar}
-        >
-          <Text
-            style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}
-          >
-            Get Directions
-            </Text>
-        </Button>
+    );
+  }
+  else if (destination) {
+    if (destination.length > 13) {
+      var updatedDestination = destination.substring(0, 13) + "...";
+    }
+    return (
+      <View style={styles.container} testID="iconBottom2">
+        <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+        {destination.length > 13
+          ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+          : <Text style={styles.mainLabel}>{destination}</Text>
+        }
+        <Text style={styles.shortLabel}>More info</Text>
+        <View style={styles.btnGetDirection}>
+          <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+            <Text style={{ color: "#FFFFFF", fontFamily: "encodeSansExpanded" }}>Get Directions</Text>
+          </Button>
+        </View>
       </View>
-    </View>
-  );
-} else {
-  return (
-    <View
-      style={styles.container}
-      data-test="BottomMenu"
-      testID="iconBottomInital"
-    >
-      <Icon
-        name="ios-arrow-up"
-        style={styles.arrowUp}
-        onPress={() => {
-          setIconSelected(true);
-        }}
-      />
-      <Text style={styles.mainLabel}>Nearby</Text>
-      <Text style={styles.shortLabel}>Food, drinks & more</Text>
-      <View testID="toggleButton" style={styles.toggle}>
-        <Switch
-          value={switchVal}
-          onValueChange={val => setSwitchVal(val)}
-        ></Switch>
+    );
+  }
+  else {
+    return (
+      <View style={styles.container} data-test="BottomMenu" testID="iconBottomInital">
+        <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+        <Text style={styles.mainLabel}>Nearby</Text>
+        <Text style={styles.shortLabel}>Food, drinks & more</Text>
+        <View testID="toggleButton" style={styles.toggle}>
+          <Switch
+            value={switchVal}
+            onValueChange={(val) => setSwitchVal(val)}>
+          </Switch>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
-
-
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
@@ -291,7 +172,7 @@ export const styles = StyleSheet.create({
   arrowUp: {
     color: "#ffffff",
     left: "5%",
-    top: "7%"
+    top: "7%",
   },
   toggle: {
     position: "absolute",
@@ -314,7 +195,7 @@ export const styles = StyleSheet.create({
     position: "absolute",
     left: "62%",
     top: "5.5%",
-    color: "#FFFFFF"
+    color: "#FFFFFF",
   },
   btnText: {
     color: "#FFFFFF",
@@ -346,8 +227,7 @@ export const styles = StyleSheet.create({
   },
   changeFloor: {
     top: "12.5%",
-    left: "15%"
+    left: "15%",
   }
 });
-
 export { BottomMenu };

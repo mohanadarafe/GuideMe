@@ -64,8 +64,11 @@ describe("Main screen", () => {
     */
   it.skip("Scroll more info of Hall Building", async () => {
     await element(by.id("search")).tapAtPoint({ x: 165, y: 370 });
+
+    //ISSUE
     await expect(element(by.id("getInside"))).toExist();
     await element(by.id("getInside")).tapAtPoint({ x: 30, y: 40 });
+
     await expect(element(by.id("moreInfoScrollView"))).toExist();
     await element(by.id("moreInfoScrollView")).swipe("up");
 
@@ -88,6 +91,7 @@ describe("Main screen", () => {
     await element(by.id("search")).tap();
     await element(by.id("search")).typeText("hall building");
     await element(by.id("search")).tapAtPoint({ x: 200, y: 75 });
+
     await expect(element(by.id("iconBottom2"))).toExist();
     await element(by.id("iconBottom2")).tapAtPoint({ x: 350, y: 45 });
   });
