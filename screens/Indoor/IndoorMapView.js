@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, ScrollView, AsyncStorage, StyleSheet, Text} from "react-native";
+import { View, ScrollView, AsyncStorage, StyleSheet, Text } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { JMSBFloor1 } from "../../assets/floormaps/mb/JMSBFloor1";
@@ -9,7 +9,7 @@ import { HallFloorX } from "../../assets/floormaps/hall/HallFloorX";
 import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
 import { FloorMenu } from "../../components/FloorMenu";
 
-function IndoorMapView(props) {
+function IndoorMapView (props) {
 
     const [selectedFloor, setSelectedFloor] = React.useState("");
 
@@ -19,15 +19,15 @@ function IndoorMapView(props) {
     };
 
     const goBack = () => {
-        props.navigation.goBack()
-    }
+        props.navigation.goBack();
+    };
 
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
             name: selectedBuilding,
             navigation: props.navigation,
-        })
-    }
+        });
+    };
 
     const selectedBuilding = props.navigation.getParam("selectedBuilding", "null");
 
@@ -41,7 +41,7 @@ function IndoorMapView(props) {
     return (
         <View>
             <ScrollView>
-                <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >              
+                <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
                     {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
                         <HallFloorX />
                     }
@@ -67,15 +67,15 @@ function IndoorMapView(props) {
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
-                    <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
-                        <Text style={styles.btnText}>Exit Building</Text>
-                    </Button>
+                <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                    <Text style={styles.btnText}>Exit Building</Text>
+                </Button>
                 <View style={styles.changeFloor}>
                     <FloorMenu />
                 </View>
             </View>
         </View>
-    );  
+    );
 }
 
 export const styles = StyleSheet.create({
@@ -110,7 +110,7 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-     btnleave: {
+    btnleave: {
         position: "absolute",
         left: "62%",
         top: "5.5%",

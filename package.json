@@ -39,7 +39,14 @@
       "!**/web-build/register-service-worker.js",
       "!react-native.config.js",
       "!**/e2e/init.js",
-      "!**/assets/floormaps/hall/*.js"
+      "!**/assets/floormaps/hall/*.js",
+      "!**/services/getApiKey.js",
+      "!**/config.js",
+      "!**/App.js",
+      "!**/routes/routeStack.js",
+      "!**/constants/buildingCoordinates.js",
+      "!**/screens/Directions.js",
+      "!**/screens/PreviewDirections.js"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/web-build/register-service-worker.js"
