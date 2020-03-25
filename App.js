@@ -14,15 +14,10 @@ const getFonts = () => {
 export default function App () {
   console.disableYellowBox = true;
   const [isReady, setIsReady] = React.useState(false);
-  // const [apiKey, setApiKey] = React.useState(null);
-
-  // const getApiKey = async () => {
-  //   let apiKey = await AsyncStorage.getItem("apiKey");
-  //   console.log(apiKey);
-  // };
-  retrieveApiKey();
-  if (!isReady) {
-    return (
+  
+  retrieveApiKey(); //Retrieving ApiKey on App startup.
+  if(!isReady) {
+    return(
       <AppLoading
         startAsync={getFonts}
         onFinish={() => setIsReady(true)}

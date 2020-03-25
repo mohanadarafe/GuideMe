@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
@@ -129,8 +129,8 @@ function PreviewDirections (props) {
         */
         const fetchData = async (transportType) => {
             try {
+                // Retrieving the apiKey from the AsyncStorage.
                 let keyId = await AsyncStorage.getItem("apiKeyId");
-                // console.log(apiKey);
                 // The following line is commented to avoid unecessary requests on the direcitons API. 
                 // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
                  let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
