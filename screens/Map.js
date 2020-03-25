@@ -30,6 +30,8 @@ const mapPosition = {
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * This is our main screen which includes all the components inside a map.
+ * FIXME: When the app refreshes, a random component appears on in the upper
+ *        half of the screen for miliseconds...
  */
 function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
@@ -55,7 +57,6 @@ function Map ({ navigation }) {
 
     return (
         <View testID="mapview" data-test="MapComponent">
-            {getInsideBuild === "false" &&
                 <View>
                     <MapView
                         data-test="MapViewComponent"
@@ -65,24 +66,17 @@ function Map ({ navigation }) {
                         showsUserLocation={true}
                         showsCompass={true}
                         showsBuildings={true}
-                    // TODO: remove the dropdown list whenever you press on the map
-                    // onPress={() => setmapPressed("true")}
+                        showsIndoors={false}
                     >
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
-                    <Search testID="search" />
-                    <View style={styles.CurrentBuildingLocation}>
+                    <Search />
+                    {/* FixMe: need to add permission for Location in this file <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
-                    </View>
-                </View>
-            }
-            {getInsideBuild === "true" &&
-                <View>
-                    <IndoorMapView />
-                </View>
-            }
-            <BottomMenu navigation={navigation} testID="bottomMenu" />
+                    </View> */}
+                </View>      
+            <BottomMenu navigation={navigation} />
         </View>
     );
 }
@@ -90,6 +84,8 @@ function Map ({ navigation }) {
 Map.propTypes = {
     navigation: PropTypes.any,
 };
+
+
 
 export const styles = StyleSheet.create({
     map: {

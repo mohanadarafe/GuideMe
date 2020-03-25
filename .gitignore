@@ -15,6 +15,7 @@ __tests__/unit/__snapshots__
 __tests__/unit/Directions/__snapshots__
 gmaps_api/apiKey.js
 bin
+.env
 
 # macOS
 .DS_Store
