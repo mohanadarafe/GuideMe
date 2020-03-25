@@ -32,7 +32,13 @@ function BottomMenu (props) {
 
     const getDestination = async () => {
         let searchItem = await AsyncStorage.getItem("toLocation");
-        setDestination(searchItem);
+        // if (searchItem.length > 13) {
+        //     var upadatedSearchItem = searchItem.substring(0, 13) + "...";
+        //     setDestination(upadatedSearchItem);
+        // }
+        // else {
+            setDestination(searchItem);
+        // }
     };
 
     const getPersonaType = async () => {
