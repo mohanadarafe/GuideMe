@@ -29,8 +29,8 @@ function Nearby(props) {
         props.navigation.openDrawer();
     };
 
-    const bottomMenu = props.navigation.getParam("bottomMenu", "null");
-    console.log("bottom:" + bottomMenu);
+    // const bottomMenu = props.navigation.getParam("bottomMenu", "null");
+    // console.log("bottom:" + bottomMenu);
 
     const data = [
         { key: 'a', rate:'1'}, { key: 'b', rate:'2' }, { key: 'c', rate:'3' }, { key: 'd', rate:'4' }, { key: 'e',rate:'5' }, { key: 'f',rate:'6' }, { key: 'g',rate:'7' }, { key: 'h',rate:'8' }, { key: 'i', rate:'9' }, { key: 'j', rate:'10' },
@@ -88,7 +88,6 @@ export const styles = StyleSheet.create({
         fontSize: 54,
         position: "absolute"
     },
-
     list: {
         justifyContent: 'center',
         flexDirection: 'row',
@@ -116,7 +115,6 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         top: "7%"
     },
-
     flatListContainer: {
         height: "73%",
         bottom: "5%"
@@ -139,13 +137,10 @@ export const styles = StyleSheet.create({
         marginVertical:"3%"
     },
     itemTextContainer:{
-        // backgroundColor:"#AC33FF",
         width:"100%",
         height: "35%",
         flexDirection: "column",
-        justifyContent: "center"
-        
-        
+        justifyContent: "center"  
     },
     itemImageContainer: {
         backgroundColor: "#FFF",
