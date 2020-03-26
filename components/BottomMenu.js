@@ -11,7 +11,7 @@ import { Button } from "react-native-paper";
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
 
-function BottomMenu (props) {
+function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -132,15 +132,15 @@ function BottomMenu (props) {
 
         }
         return (
-            <View testID="getInside" style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
+            <View style={styles.container}>
+                <Icon testID="getInsideIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 {selectedBuilding.length > 13
                     ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
                     : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 }
                 <Text style={styles.shortLabel}>More info</Text>
-                <Button style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
+                <Button testID="getInsideButton" style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
                     <Text style={styles.btnText}>Get Inside</Text>
                 </Button>
             </View>
@@ -152,7 +152,7 @@ function BottomMenu (props) {
             var updatedDestination = destination.substring(0, 13) + "...";
         }
         return (
-            <View style={styles.container} testID="iconBottom2">
+            <View style={styles.container} >
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 {destination.length > 13
                     ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
@@ -160,7 +160,7 @@ function BottomMenu (props) {
                 }
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
-                    <Button style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+                    <Button testID="getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
                         <Text style={styles.btnText}>Get Directions</Text>
                     </Button>
                 </View>
@@ -169,11 +169,11 @@ function BottomMenu (props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu" testID="iconBottomInital">
+            <View style={styles.container} data-test="BottomMenu" testID="bottomMenuInitalView">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
-                <View testID="toggleButton" style={styles.toggle}>
+                <View testID="intialBottomMenuToggleButton" style={styles.toggle}>
                     <Switch
                         value={switchVal}
                         onValueChange={(val) => setSwitchVal(val)}>

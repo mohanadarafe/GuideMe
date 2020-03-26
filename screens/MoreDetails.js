@@ -2,41 +2,31 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-  SectionList
-} from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { sgwRooms } from "../constants/sgwRooms";
 import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
 import { AppLoading } from "expo";
-
 export const renderSeparator = () => {
   return (
     <View
       style={{
         height: 1,
         width: "100%",
-        backgroundColor: "#353A50"
+        backgroundColor: "#353A50",
       }}
     />
   );
 };
-
 /**
- *
+ * 
  * @param {*} buildingName Name of building to get data of
  */
 export function fetchData(buildingName) {
   const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
   return modeDetailsInfo;
 }
-
 /**
  * The following function flattens a list of data incoming from fetchData
  * @param {*} data double array of data incoming
@@ -74,49 +64,39 @@ export function createLists(data, departments, services, accesibility, number) {
     }
   }
 }
-
-
-
 /**
  * The following screen renders information on a selected building.
- *
+ * 
  * US7 - As a user, I would like to know the departments provided inside a building.
  * US8 - As a user, I would like to know the services provided inside a building.
  * US9 - As a user, I would like to know the accessibility of a building.
- *
+ * 
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
 function MoreDetails(props) {
   const [data, setData] = React.useState();
-
   const goBack = () => {
     props.navigation.goBack();
   }
-
   const name = props.navigation.getParam("name", "null");
-
   const goToDoubleSearchBar = () => {
     props.navigation.navigate("DoubleSearch", { destinationName: name });
   };
-
   const getBuildingInfo = buildingData();
   var departments = [];
   var services = [];
   var accesibility = [];
   var number;
-
   useEffect(() => {
     setData(fetchData(name));
   }, []);
-
 
   createLists(data, departments, services, accesibility, number);
   if (data) {
     return (
       <View style={styles.container} data-test="MoreDetailsComponent">
-
-        <SafeAreaView testID="moreInfoScrollView" style={styles.buttonContainer}>
+        <SafeAreaView style={styles.buttonContainer}>
           <Button transparent style={styles.mapButton}>
             <View style={styles.iconContainer}>
               <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
@@ -126,7 +106,6 @@ function MoreDetails(props) {
               <Text style={styles.mapPinLabel}>{getBuildingInfo[name].address}</Text>
             </View>
           </Button>
-
           <Button transparent style={styles.phoneButton}>
             <View style={styles.iconContainer}>
               <Icon type="Feather" name="phone" style={styles.phone}></Icon>
@@ -136,34 +115,27 @@ function MoreDetails(props) {
               <Text style={styles.mapPinLabel}>{getBuildingInfo[name].phone != undefined ? getBuildingInfo[name].phone : "N/A"}</Text>
             </View>
           </Button>
-
-          <Button transparent style={styles.phoneButton}>
-            <View style={styles.iconContainer}>
-              <Icon type="Feather" name="phone" style={styles.phone}></Icon>
-            </View>
-            <SafeAreaView style={styles.separator}></SafeAreaView>
-            <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>
-                {getBuildingInfo[props.name].phone != undefined
-                  ? getBuildingInfo[props.name].phone
-                  : "N/A"}
-              </Text>
-            </View>
-          </Button>
-
-          <Button style={styles.directionButton} onPress={goToDoubleSearchBar}>
-            <Text style={{ color: "white" }}>Get Directions</Text>
-          </Button>
+          <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
         </SafeAreaView>
-
+        <View style={styles.imageContainer}>
+          <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
+        </View>
         <Text style={styles.mainLabel}>{name}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
-
-        <Text style={styles.mainLabel}>{props.name}</Text>
-        <Text style={styles.reviewLabel}>19 Reviews</Text>
-
+        <SafeAreaView testID="moreInfoScrollView" style={styles.scrollTextContainer}>
+          <SectionList
+            sections={[
+              { title: "Departments ", data: departments },
+              { title: "Services", data: services },
+              { title: "Accessibility", data: accesibility },
+            ]}
+            renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
+            renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+            keyExtractor={(item, index) => index}
+            ItemSeparatorComponent={renderSeparator}
+          />
+        </SafeAreaView>
         <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
-
       </View>
     );
   }
@@ -348,5 +320,4 @@ export const styles = StyleSheet.create({
     position: "absolute"
   },
 });
-
 export default MoreDetails;
