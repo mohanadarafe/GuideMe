@@ -9,14 +9,14 @@ import { HallFloorX } from "../../assets/floormaps/hall/HallFloorX";
 import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
 import { FloorMenu } from "../../components/FloorMenu";
 
-function IndoorMapView (props) {
+function IndoorMapView(props) {
 
     const [selectedFloor, setSelectedFloor] = React.useState("");
 
-  const getFloorSelected = async () => {
-    let name = await AsyncStorage.getItem("floorSelected");
-    setSelectedFloor(name);
-  };
+    const getFloorSelected = async () => {
+        let name = await AsyncStorage.getItem("floorSelected");
+        setSelectedFloor(name);
+    };
 
     const goBack = () => {
         props.navigation.goBack();
@@ -39,7 +39,7 @@ function IndoorMapView (props) {
     });
 
     return (
-        <View testID="InsideScrollView">
+        <View testID="indoorMapFloorScrollView">
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
                     {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
@@ -63,11 +63,11 @@ function IndoorMapView (props) {
                 </ScrollView>
             </ScrollView>
 
-            <View testID="insideView" style={styles.insideBuildingContainer}>
+            <View style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
-                <Button style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                <Button testID="indoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>
