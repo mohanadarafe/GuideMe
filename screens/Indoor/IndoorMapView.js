@@ -39,7 +39,7 @@ function IndoorMapView (props) {
     });
 
     return (
-        <View>
+        <View testID="InsideScrollView">
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
                     {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
@@ -63,7 +63,7 @@ function IndoorMapView (props) {
                 </ScrollView>
             </ScrollView>
 
-            <View style={styles.insideBuildingContainer}>
+            <View testID="insideView" style={styles.insideBuildingContainer}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>

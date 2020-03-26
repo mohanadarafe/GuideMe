@@ -96,6 +96,4 @@ describe("Main screen", () => {
     await element(by.id("iconBottom2")).tapAtPoint({ x: 350, y: 45 });
   });
 
-
-
 });

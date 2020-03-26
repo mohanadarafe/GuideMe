@@ -116,7 +116,7 @@ function MoreDetails(props) {
     return (
       <View style={styles.container} data-test="MoreDetailsComponent">
 
-        <SafeAreaView style={styles.buttonContainer}>
+        <SafeAreaView testID="moreInfoScrollView" style={styles.buttonContainer}>
           <Button transparent style={styles.mapButton}>
             <View style={styles.iconContainer}>
               <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
@@ -162,7 +162,7 @@ function MoreDetails(props) {
         <Text style={styles.mainLabel}>{props.name}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
 
-        <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+        <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
 
       </View>
     );

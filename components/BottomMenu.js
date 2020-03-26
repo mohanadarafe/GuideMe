@@ -152,7 +152,7 @@ function BottomMenu (props) {
             var updatedDestination = destination.substring(0, 13) + "...";
         }
         return (
-            <View style={styles.container} testID={props.testID}>
+            <View style={styles.container} testID="iconBottom2">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
                 {destination.length > 13
                     ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
@@ -169,11 +169,11 @@ function BottomMenu (props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu" testID={props.testID}>
+            <View style={styles.container} data-test="BottomMenu" testID="iconBottomInital">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
-                <View style={styles.toggle}>
+                <View testID="toggleButton" style={styles.toggle}>
                     <Switch
                         value={switchVal}
                         onValueChange={(val) => setSwitchVal(val)}>
@@ -183,6 +183,7 @@ function BottomMenu (props) {
         );
     }
 }
+
 export const styles = StyleSheet.create({
     container: {
         width: "100%",
@@ -272,4 +273,5 @@ export const styles = StyleSheet.create({
         left: "15%",
     }
 });
+
 export { BottomMenu };
