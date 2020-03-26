@@ -33,19 +33,7 @@ export const renderSeparator = () => {
  * @param {*} buildingName Name of building to get data of
  */
 export function fetchData(buildingName) {
-  const modeDetailsInfo = MapData(
-    {
-      passBuildingName: buildingName,
-      buildingName: false,
-      classRooms: false,
-      departments: true,
-      services: true,
-      accesibility: true,
-      flatten: false
-    },
-    sgwRooms(),
-    buildingData()
-  );
+  const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
   return modeDetailsInfo;
 }
 
@@ -87,6 +75,8 @@ export function createLists(data, departments, services, accesibility, number) {
   }
 }
 
+
+
 /**
  * The following screen renders information on a selected building.
  *
@@ -100,8 +90,14 @@ export function createLists(data, departments, services, accesibility, number) {
 function MoreDetails(props) {
   const [data, setData] = React.useState();
 
+  const goBack = () => {
+    props.navigation.goBack();
+  }
+
+  const name = props.navigation.getParam("name", "null");
+
   const goToDoubleSearchBar = () => {
-    props.navigation.navigate("DoubleSearch", { destinationName: props.name });
+    props.navigation.navigate("DoubleSearch", { destinationName: name });
   };
 
   const getBuildingInfo = buildingData();
@@ -111,13 +107,15 @@ function MoreDetails(props) {
   var number;
 
   useEffect(() => {
-    setData(fetchData(props.name));
+    setData(fetchData(name));
   }, []);
+
 
   createLists(data, departments, services, accesibility, number);
   if (data) {
     return (
       <View style={styles.container} data-test="MoreDetailsComponent">
+
         <SafeAreaView style={styles.buttonContainer}>
           <Button transparent style={styles.mapButton}>
             <View style={styles.iconContainer}>
@@ -125,9 +123,17 @@ function MoreDetails(props) {
             </View>
             <View style={styles.separator}></View>
             <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>
-                {getBuildingInfo[props.name].address}
-              </Text>
+              <Text style={styles.mapPinLabel}>{getBuildingInfo[name].address}</Text>
+            </View>
+          </Button>
+
+          <Button transparent style={styles.phoneButton}>
+            <View style={styles.iconContainer}>
+              <Icon type="Feather" name="phone" style={styles.phone}></Icon>
+            </View>
+            <SafeAreaView style={styles.separator}></SafeAreaView>
+            <View style={styles.buttonTextContainer}>
+              <Text style={styles.mapPinLabel}>{getBuildingInfo[name].phone != undefined ? getBuildingInfo[name].phone : "N/A"}</Text>
             </View>
           </Button>
 
@@ -150,47 +156,27 @@ function MoreDetails(props) {
           </Button>
         </SafeAreaView>
 
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.buildingImage}
-            source={require("./../assets/Hall_Building.png")}
-          />
-        </View>
+        <Text style={styles.mainLabel}>{name}</Text>
+        <Text style={styles.reviewLabel}>19 Reviews</Text>
 
         <Text style={styles.mainLabel}>{props.name}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
 
-        <SafeAreaView
-          testID="moreInfoScrollView"
-          style={styles.scrollTextContainer}
-        >
-          <SectionList
-            sections={[
-              { title: "Departments ", data: departments },
-              { title: "Services", data: services },
-              { title: "Accessibility", data: accesibility }
-            ]}
-            renderItem={({ item }) => (
-              <Text style={styles.listItem}>{item}</Text>
-            )}
-            renderSectionHeader={({ section }) => (
-              <Text style={styles.sectionHeader}>{section.title}</Text>
-            )}
-            keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={renderSeparator}
-          />
-        </SafeAreaView>
+        <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+
       </View>
     );
   }
-  return <AppLoading />;
+  return (<AppLoading />);
 }
 export const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "space-between",
     height: "100%",
-    width: "100%"
+    width: "100%",
+    backgroundColor: "#2A2E43",
+
   },
   mainLabel: {
     color: "#FFFFFF",
@@ -213,7 +199,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: "32%",
     top: "32%",
-    position: "absolute"
+    position: "absolute",
   },
   directionButton: {
     width: "90%",
@@ -222,7 +208,7 @@ export const styles = StyleSheet.create({
     bottom: "8%",
     justifyContent: "center",
     backgroundColor: "#3ACCE1",
-    borderRadius: 10
+    borderRadius: 10,
   },
   imageContainer: {
     width: "100%",
@@ -244,18 +230,18 @@ export const styles = StyleSheet.create({
   },
   mapPin: {
     color: "#FFFFFF",
-    position: "absolute"
+    position: "absolute",
   },
   mapPinLabel: {
     color: "#FFFFFF",
     fontSize: 13,
     fontFamily: "encodeSansExpanded",
-    position: "absolute"
+    position: "absolute",
   },
   phoneButton: {
     bottom: "17%",
     height: "8%",
-    width: "100%"
+    width: "100%",
   },
   phone: {
     position: "absolute",
@@ -273,7 +259,7 @@ export const styles = StyleSheet.create({
     width: "16%",
     backgroundColor: "#353A50",
     borderRadius: 10,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   buttonTextContainer: {
     height: "100%",
@@ -284,7 +270,7 @@ export const styles = StyleSheet.create({
   separator: {
     height: "100%",
     width: "4%",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   departmentTitle: {
     position: "absolute",
@@ -295,7 +281,7 @@ export const styles = StyleSheet.create({
   departmentText: {
     color: "#FFFFFF",
     fontSize: 12,
-    fontFamily: "encodeSansExpanded"
+    fontFamily: "encodeSansExpanded",
   },
   servicesTitle: {
     position: "absolute",
@@ -338,14 +324,14 @@ export const styles = StyleSheet.create({
     height: 44,
     paddingLeft: 22,
     fontFamily: "encodeSansExpanded",
-    color: "#D3D3D3"
+    color: "#D3D3D3",
   },
   buttonContainer: {
     flexDirection: "column",
     justifyContent: "flex-end",
     height: "100%",
     width: "90%",
-    alignItems: "center"
+    alignItems: "center",
   },
   PreferenceMenu: {
     width: "100%",
@@ -354,7 +340,13 @@ export const styles = StyleSheet.create({
     backgroundColor: "#2A2E43",
     alignItems: "center",
     justifyContent: "space-between"
-  }
+  },
+  arrowDown: {
+    color: "#ffffff",
+    top: "5%",
+    fontSize: 54,
+    position: "absolute"
+  },
 });
 
 export default MoreDetails;

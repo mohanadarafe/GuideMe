@@ -9,103 +9,231 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-
+/**
+ * FIXME: 
+ * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
+ * 2) TODO: - Services and departments should not be in the searchItems.
+ *      Thus different parameters need to be sent to MapData()
+ * 3) TODO: Algorithm for classrooms and refers to B)
+ * 
+ * A.U
+ */
 function fetchData () {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
 
+
 /**
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
  * US14 - As a user, I should be able to set my current location as the starting point.
  *
- * The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
+ * Description: The following function renders a preference menu with 2 search bars. The "from" conatains the current location which 
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 DoubleSearch.propTypes = {
     navigation: PropTypes.object
 };
 
+/**
+ * Overall :
+ * TODO: 1.  Algorithm for another Classrom, refers to B) and fetchData() - 3
+ * 
+ * A.U
+ * @param {*} props 
+ */
 function DoubleSearch (props) {
-    const [data, setData] = React.useState();
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
+    const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
+    const [coordinatesTo, setCoordinatesTo] = React.useState("");
+    const [currentLocationCoords, setCurrentLocationCoords] = React.useState({ latitude: null, longitude: null });
+    const [isCurrentLocationFetched, setIsCurrentLocationFetched] = React.useState(false);
 
-    const goToBackToMoreDetails = () => {
+    /**
+     * Description: Method to go back to the previous screen.
+     * Using Stack navigator.
+     */
+    const goBack = () => {
         props.navigation.goBack();
     };
-    const getDirectionScreen = () => {
-        props.navigation.navigate("MapDirections");
+    /**
+     * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
+     * Particularity: 
+     * 1. We use Stack navigator
+     * 2. Error Handling to prevent unwanted behavior in rendering of map in subsequent screens (PreviewDirection &
+     * Direction).
+     *      - The same address for origin and destination is not accepted
+     *      - If the Current Direction is wanted, fetch the proper coordinates
+     *      - If there's no destination, refuse search
+     *      - A value selected beyond the search Items displayed by the dropdown is not accepted.
+     * 
+     * A.U
+     */
+    const goToPreviewDirectionScreen = () => {
+        if (to.name == from.name) {
+            return alert("Origin and destination are the same. Please try Again.");
+        }
+        else if (coordinatesFrom && coordinatesTo) {
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
+        }
+        else if (from.name == "Current Location" && currentLocationCoords.latitude && currentLocationCoords.longitude) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
+        }
+        else if (from.name == "Current Location" && !currentLocationCoords) {
+            return alert("Error: Are location services on?");
+        }
+        else {
+            return alert("The destination field is missing or you typed an invalid location. Please try again.");
+        }
     };
 
-    const selectDestinationName = () => {
-        return props.navigation.getParam("destinationName", "null");
+    const destinationName = props.navigation.getParam("destinationName", "Destination");
+
+    /**
+     * Algorithm to find the coordinates of a given building name.
+     * returns longitude and latitude
+     * TODO: B) Another algorithm or extend this one to take in consideration classrooms.
+     * A.U
+     * @param {*} name 
+     */
+    const getCoordinates = (name) => {
+
+        var list = buildingData();
+        for (var key in list) {
+            if (list[key].name.includes(name)) {
+                return list[key].coordinates;
+            }
+        }
+        if (name == "Current Location" && currentLocationCoords) {
+            getCurrentLocation();
+            setIsCurrentLocationFetched(true);
+        }
+        return null;
+    };
+
+    const getCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            ({ coords }) => {
+                setCurrentLocationCoords({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
+                });
+            },
+            (error) => alert("Error: Are location services on?"),
+            { enableHighAccuracy: true }
+        );
     };
 
     let fromName = from.name;
     let toName = to.name;
 
-    if (fromName !== undefined) {
+    if (fromName !== undefined)
         AsyncStorage.setItem("fromLocation", fromName.toString());
-    }
-    if (toName !== undefined) {
+
+    if (toName !== undefined)
         AsyncStorage.setItem("toLocation", toName.toString());
-    }
+
     if (toName === undefined && fromName === undefined) {
         toName = "";
         AsyncStorage.setItem("fromLocation", toName.toString());
-        AsyncStorage.setItem("toLocation", selectDestinationName());
+        AsyncStorage.setItem("toLocation", destinationName);
     }
 
+    /**
+     * Used an useEffect to fetch the currentLocation
+     * A.U
+     */
     useEffect(() => {
-        setData(fetchData());
-    }, []);
+
+        if (to.name === undefined) {
+            const initialTo = props.navigation.getParam("destinationName", "Destination");
+            setCoordinatesTo(getCoordinates(initialTo));
+            setTo({ name: initialTo });
+        }
+    });
+
+    /**
+     * FIXME: Refers to fetchData()
+     * TODO: A) the unshift method is called to add at the start of the array the value of Current Location.
+     *          However, one could argue that we don't want to make them select Current Location as it's not 
+     *          intuitive. However, I do not know how to fetch the data if no item is selected in the 
+     *          dropdown. 
+     *          This is very important since the onTextChange props returns nothing when we are not writing or 
+     *          when nothing was passed or selected. This is annoying since if the user selected something and then changed his
+     *          mind and select nothing, the item passed is the previous value!
+     * 
+     * Clues: I left some clue about what could be investigated with the tag Refer TODO: A). So just Ctr+F that.
+     * Overall: As of now, The user has to select the Current Location for the double search to fetch the current Location coordinates. 
+     *
+     * A.U
+     */
+    var originItems = fetchData();
+    var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
+    originItems.unshift({ "id": 0, "name": "Current Location" });
+
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
-            <View style={styles.topBackground} />
-
-            <View style={styles.svgContainer}>
-                <DoubleSearchSVG />
-            </View>
-            <View style={styles.searchbarContainer}>
-                <Text style={styles.titleLabel}>Starting Point & Destination</Text>
-                <Text style={styles.searchBarLabels}>From: </Text>
-                <SearchableDropdown
-                    onTextChange={val => val}
-                    onItemSelect={item => setFrom(item)}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor={"#000"}
-                    items={data}
-                    placeholder="Current Location"
-                    resetValue={false}
-                />
-                <View style={{ width: "100%", height: "3%" }}></View>
-                <Text style={styles.searchBarLabels}>To: </Text>
-                <SearchableDropdown
-                    onTextChange={val => val}
-                    onItemSelect={item => setTo(item)}
-                    textInputStyle={styles.textInputStyle}
-                    itemStyle={styles.itemStyle}
-                    containerStyle={styles.containerStyle}
-                    itemTextStyle={styles.itemTextStyle}
-                    itemsContainerStyle={styles.itemsContainerStyle}
-                    placeholderTextColor={"#000"}
-                    items={data}
-                    placeholder={selectDestinationName()}
-                    resetValue={false}
-                />
-            </View>
-            <Button transparent style={styles.routeButton} onPress={getDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             <View style={styles.backArrowContainer}>
-                <Button transparent style={styles.backArrow} onPress={goToBackToMoreDetails}>
+                <Button transparent style={styles.backArrow} onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>
+            <View style={styles.svgContainer}>
+                <DoubleSearchSVG />
+            </View>
+            <Text style={styles.titleLabel}>Starting Point & Destination</Text>
+
+            <View style={styles.searchbarsContainer}>
+                <View style={styles.originSearchContainer}>
+                    <Text style={styles.searchBarLabels}>From: </Text>
+                    <SearchableDropdown
+                        onTextChange={val => val} //Refer TODO: A)
+                        onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
+                        defaultIndex={0} //Refer TODO: A)
+                        textInputStyle={styles.textInputStyle}
+                        itemStyle={styles.itemStyle}
+                        containerStyle={styles.containerStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        itemsContainerStyle={styles.itemsContainerStyle}
+                        items={originItems}
+                        placeholder={"Starting Position"}
+                        placeholderTextColor={"grey"}
+                        textInputProps={{
+                            keyboardAppearance: "dark",
+                            clearButtonMode: "while-editing",
+                            clearTextOnFocus: false,
+                        }}
+                    />
+                </View>
+                <View style={styles.destinationSearchContainer}>
+                    <Text style={styles.searchBarLabels}>To: </Text>
+                    <SearchableDropdown
+                        onTextChange={val => val}
+                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
+                        textInputStyle={styles.textInputStyle}
+                        itemStyle={styles.itemStyle}
+                        containerStyle={styles.containerStyle}
+                        itemTextStyle={styles.itemTextStyle}
+                        itemsContainerStyle={styles.itemsContainerStyle}
+                        placeholderTextColor={"grey"}
+                        items={destinationItems}
+                        placeholder={destinationName}
+                        textInputProps={{
+                            keyboardAppearance: "dark",
+                            clearButtonMode: "while-editing",
+                            clearTextOnFocus: false,
+                        }}
+                    />
+                </View>
+            </View>
+            {(isCurrentLocationFetched || coordinatesFrom != null) &&
+                <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            }
+            {(coordinatesFrom == null && !isCurrentLocationFetched) &&
+                <Button transparent style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            }
         </View >
     );
 }
@@ -115,7 +243,8 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         height: "100%",
         width: "100%",
-        backgroundColor: "#2A2E43"
+        backgroundColor: "#2A2E43",
+        flexDirection: "column"
     },
     topBackground: {
         width: "100%",
@@ -123,22 +252,38 @@ export const styles = StyleSheet.create({
         backgroundColor: "#353A50"
     },
     titleLabel: {
-        color: "white",
-        fontSize: 20,
+        color: "#FFF",
+        fontSize: 23,
         fontFamily: "encodeSansExpanded",
         paddingBottom: 10,
+        top: "14%",
         bottom: "2%",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        justifyContent: "center",
+        position: "absolute"
     },
-    searchbarContainer: {
-        position: "absolute",
+    searchbarsContainer: {
         width: "100%",
         height: "100%",
         flexDirection: "column",
         justifyContent: "flex-start",
+        flex: 1,
         alignContent: "center",
         alignItems: "center",
-        top: "14%"
+        top: "14%",
+        position: "absolute"
+    },
+    originSearchContainer: {
+        top: "5%",
+        flexDirection: "column",
+        width: "100%",
+        left: "5%"
+    },
+    destinationSearchContainer: {
+        flexDirection: "column",
+        width: "100%",
+        left: "5%",
+        top: "7%",
     },
     textInputStyle: {
         padding: 12,
@@ -170,12 +315,9 @@ export const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
         left: "10%"
     },
     backArrowContainer: {
-        position: "absolute",
         width: "100%",
         height: "6%",
         flexDirection: "column",
@@ -183,14 +325,6 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "7%"
-    },
-    moreDetails: {
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        backgroundColor: "#2A2E43",
-        alignItems: "center",
-        justifyContent: "space-between"
     },
     icon: {
         position: "absolute",
@@ -207,20 +341,29 @@ export const styles = StyleSheet.create({
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
     },
+    routeButtonDisabled: {
+        width: "90%",
+        height: "8%",
+        fontSize: 25,
+        bottom: "8%",
+        justifyContent: "center",
+        backgroundColor: "grey",
+        borderRadius: 10,
+    },
     searchBarLabels: {
         color: "#FFFFFF",
         opacity: 0.3,
         alignSelf: "flex-start",
-        left: "8%",
         fontSize: 20,
-        paddingVertical: 10,
-        bottom: "2%"
+        paddingVertical: 5
     },
     svgContainer: {
         width: "100%",
+        bottom: "10%",
         flex: 1,
-        flexDirection: "row",
         justifyContent: "center",
+        alignItems: "center",
+        top: "15%"
     }
 });
 
