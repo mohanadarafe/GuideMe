@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { sgwRooms } from "../constants/sgwRooms";
@@ -9,7 +9,7 @@ import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
 import { AppLoading } from "expo";
 
-const renderSeparator = () => {
+export const renderSeparator = () => {
     return (
         <View
             style={{
@@ -25,7 +25,7 @@ const renderSeparator = () => {
  * 
  * @param {*} buildingName Name of building to get data of
  */
-function fetchData (buildingName) {
+export function fetchData(buildingName) {
     const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
     return modeDetailsInfo;
 }
@@ -38,7 +38,7 @@ function fetchData (buildingName) {
  * @param {*} accesibility array of accesibility
  * @param {*} number phone number
  */
-function createLists (data, departments, services, accesibility, number) {
+export function createLists(data, departments, services, accesibility, number) {
     if (data) {
         for (let i = 0; i < data.length; i++) {
             for (let j = 0; j < data[i].length; j++) {
@@ -68,6 +68,8 @@ function createLists (data, departments, services, accesibility, number) {
     }
 }
 
+
+
 /**
  * The following screen renders information on a selected building.
  * 
@@ -78,9 +80,18 @@ function createLists (data, departments, services, accesibility, number) {
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails (props) {
-
+function MoreDetails(props) {
     const [data, setData] = React.useState();
+
+    const goBack = () => {
+        props.navigation.goBack();
+    }
+
+    const name = props.navigation.getParam("name", "null");
+
+    const goToDoubleSearchBar = () => {
+        props.navigation.navigate("DoubleSearch", { destinationName: name });
+    };
 
     const getBuildingInfo = buildingData();
     var departments = [];
@@ -89,11 +100,11 @@ function MoreDetails (props) {
     var number;
 
     useEffect(() => {
-        setData(fetchData(props.name));
+        setData(fetchData(name));
     }, []);
 
+ 
     createLists(data, departments, services, accesibility, number);
-
     if (data) {
         return (
             <View style={styles.container} data-test="MoreDetailsComponent">
@@ -105,7 +116,7 @@ function MoreDetails (props) {
                         </View>
                         <View style={styles.separator}></View>
                         <View style={styles.buttonTextContainer}>
-                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].address}</Text>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[name].address}</Text>
                         </View>
                     </Button>
 
@@ -115,18 +126,18 @@ function MoreDetails (props) {
                         </View>
                         <SafeAreaView style={styles.separator}></SafeAreaView>
                         <View style={styles.buttonTextContainer}>
-                            <Text style={styles.mapPinLabel}>{getBuildingInfo[props.name].phone != undefined ? getBuildingInfo[props.name].phone : "N/A"}</Text>
+                            <Text style={styles.mapPinLabel}>{getBuildingInfo[name].phone != undefined ? getBuildingInfo[name].phone : "N/A"}</Text>
                         </View>
                     </Button>
 
-                    <Button style={styles.directionButton}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+                    <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
                 </SafeAreaView>
 
                 <View style={styles.imageContainer}>
                     <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
                 </View>
 
-                <Text style={styles.mainLabel}>{props.name}</Text>
+                <Text style={styles.mainLabel}>{name}</Text>
                 <Text style={styles.reviewLabel}>19 Reviews</Text>
 
                 <SafeAreaView style={styles.scrollTextContainer}>
@@ -143,21 +154,22 @@ function MoreDetails (props) {
                     />
                 </SafeAreaView>
 
-                <Text style={styles.shortLabel}>Description</Text>
+                <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+
             </View>
         );
     }
     return (<AppLoading />);
 }
 export const styles = StyleSheet.create({
-
     container: {
         alignItems: "center",
         justifyContent: "space-between",
         height: "100%",
-        width: "100%"
+        width: "100%",
+        backgroundColor: "#2A2E43",
+        
     },
-
     mainLabel: {
         color: "#FFFFFF",
         left: "5%",
@@ -165,36 +177,22 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "16%"
+        top: "21%"
     },
-
-    shortLabel: {
-        position: "absolute",
-        left: "5%",
-        top: "27%",
-        color: "#FFFFFF",
-        fontSize: 22,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded",
-        opacity: 0.3
-    },
-
     reviewLabel: {
         position: "absolute",
-        top: "21%",
+        top: "27%",
         left: "5%",
         color: "#FFFFFF",
         fontSize: 20,
         fontFamily: "encodeSansExpanded"
     },
-
     scrollTextContainer: {
         width: "100%",
         height: "32%",
         top: "32%",
         position: "absolute",
     },
-
     directionButton: {
         width: "90%",
         height: "8%",
@@ -204,123 +202,103 @@ export const styles = StyleSheet.create({
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
     },
-
     imageContainer: {
         width: "100%",
-        height: "25%",
+        height: "32%",
         top: "0%",
         position: "absolute",
         opacity: 0.3
     },
-
     buildingImage: {
         width: "100%",
         height: "100%",
         top: "0%",
         position: "relative"
     },
-
     mapButton: {
         bottom: "19%",
         height: "8%",
         width: "100%"
-
     },
-
     mapPin: {
         color: "#FFFFFF",
         position: "absolute",
     },
-
     mapPinLabel: {
         color: "#FFFFFF",
         fontSize: 13,
         fontFamily: "encodeSansExpanded",
         position: "absolute",
     },
-
     phoneButton: {
         bottom: "17%",
         height: "8%",
         width: "100%",
     },
-
     phone: {
         position: "absolute",
         color: "#FFFFFF",
         alignSelf: "center"
     },
-
     phoneLabel: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 13,
         fontFamily: "encodeSansExpanded"
     },
-
     iconContainer: {
         height: "100%",
         width: "16%",
         backgroundColor: "#353A50",
         borderRadius: 10,
         justifyContent: "center",
-
     },
-
     buttonTextContainer: {
         height: "100%",
         width: "80%",
         justifyContent: "center",
         alignSelf: "flex-end"
     },
-
     separator: {
         height: "100%",
         width: "4%",
         justifyContent: "center",
     },
-
     departmentTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     departmentText: {
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded",
     },
-
     servicesTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     servicesText: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded"
     },
-
     accessibilitiesTitle: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 16,
         fontFamily: "encodeSansExpanded"
     },
-
     accessibilitiesText: {
         position: "absolute",
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded"
     },
-
     sectionHeader: {
         paddingTop: 2,
         paddingLeft: 22,
@@ -332,7 +310,6 @@ export const styles = StyleSheet.create({
         backgroundColor: "#353A50",
         fontFamily: "encodeSansExpanded"
     },
-
     listItem: {
         padding: 10,
         fontSize: 12,
@@ -348,6 +325,20 @@ export const styles = StyleSheet.create({
         width: "90%",
         alignItems: "center",
     },
-
+    PreferenceMenu: {
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        backgroundColor: "#2A2E43",
+        alignItems: "center",
+        justifyContent: "space-between"
+    },
+    arrowDown: {
+        color: "#ffffff",
+        top: "5%",
+        fontSize: 54,
+        position: "absolute"
+    },
 });
-export { MoreDetails };
+
+export default MoreDetails;

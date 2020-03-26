@@ -1,12 +1,14 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
+import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
 import IndoorMapView from "./Indoor/IndoorMapView";
+import PropTypes from "prop-types";
 
 const mapPosition = {
     sgwCoord: {
@@ -28,10 +30,16 @@ const mapPosition = {
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * This is our main screen which includes all the components inside a map.
+ * FIXME: When the app refreshes, a random component appears on in the upper
+ *        half of the screen for miliseconds...
  */
-function Map () {
+function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
+    const [mapPressed, setmapPressed] = React.useState("");
+
+    //TODO: To have a functionality for when the user presses on the map
+    AsyncStorage.setItem("mapPressed", mapPressed);
 
     const campusSelected = async () => {
         let tog = await AsyncStorage.getItem("toggle");
@@ -48,8 +56,7 @@ function Map () {
     });
 
     return (
-        <View data-test="MapComponent">
-            {getInsideBuild === "false" &&
+        <View testID="mapview" data-test="MapComponent">
                 <View>
                     <MapView
                         data-test="MapViewComponent"
@@ -59,28 +66,36 @@ function Map () {
                         showsUserLocation={true}
                         showsCompass={true}
                         showsBuildings={true}
+                        showsIndoors={false}
                     >
                         <BuildingHighlight />
                         <BuildingIdentification />
                     </MapView>
                     <Search />
-                </View> 
-            }
-            {getInsideBuild === "true" &&
-                <View>
-                    <IndoorMapView />
-                </View>
-            }
-            <BottomMenu />
+                    {/* FixMe: need to add permission for Location in this file <View style={styles.CurrentBuildingLocation}>
+                        <CurrentBuildingLocation />
+                    </View> */}
+                </View>      
+            <BottomMenu navigation={navigation} />
         </View>
     );
 }
 
+Map.propTypes = {
+    navigation: PropTypes.any,
+};
+
+
+
 export const styles = StyleSheet.create({
     map: {
         height: "100%"
+    },
+    CurrentBuildingLocation: {
+        position: "absolute",
+        top: "82%",
+        left: "80%"
     }
-
 });
 
 export default Map;

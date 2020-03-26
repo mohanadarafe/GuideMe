@@ -1,22 +1,37 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
-import Svg, { G, Path, Text, Rect, Use, Symbol, Defs } from "react-native-svg"
+import Svg, { G, Path, Text, Use, Symbol, Defs } from "react-native-svg";
 import { HallClass } from "./HallClassrooms/HallClass";
+import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario.js";
 
 export function HallFloorX() {
   const [floorNumber, setFloorNumber] = React.useState("");
+  const [to, setTo] = React.useState("");
+  const [from, setFrom] = React.useState("");
 
   const floorSelected = async () => {
     let name = await AsyncStorage.getItem("floorSelected");
     setFloorNumber(name);
   };
 
+  const getFromLocation = async () => {
+    let name = await AsyncStorage.getItem("fromLocation");
+    setFrom(name);
+  };
+
+  const getToLocation = async () => {
+    let name = await AsyncStorage.getItem("toLocation");
+    setTo(name);
+  };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       floorSelected();
-    }, 100);
+      getFromLocation();
+      getToLocation();
+    }, 1);
     return () => clearInterval(intervalId);
-  })
+  });
 
   return (
     <Svg width={1024} height={1024}>
@@ -285,7 +300,7 @@ export function HallFloorX() {
           strokeWidth={0}
           stroke="#000"
         >
-          {"H" + floorNumber + "28"}
+          {"H" + floorNumber + "29"}
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
@@ -295,7 +310,7 @@ export function HallFloorX() {
           strokeWidth={0}
           stroke="#000"
         >
-          {"H" + floorNumber + "29"}
+          {"H" + floorNumber + "28"}
         </Text>
         <Text
           fontFamily="'Trebuchet MS', Gadget, sans-serif"
@@ -868,7 +883,12 @@ export function HallFloorX() {
           d="M459.538 426.23h53.846M514.153 611.23h-54.615"
         />
       </G>
-      <HallClass floor={8} />
+      <G>
+        {from !== null && to !==null &&
+          <IndoorScenario floor={floorNumber} from={from} to={to} />
+        }
+      </G>
+      <HallClass floor={floorNumber} />
     </Svg>
   );
 }
