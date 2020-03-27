@@ -43,6 +43,7 @@
       "!**/services/getApiKey.js",
       "!**/config.js",
       "!**/App.js",
+      "!**/database.config.js",
       "!**/routes/routeStack.js",
       "!**/constants/buildingCoordinates.js",
       "!**/screens/Directions.js",
