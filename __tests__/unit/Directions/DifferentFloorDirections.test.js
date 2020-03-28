@@ -2,37 +2,15 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { DifferentFloorDirections } from "../../../components/IndoorDirections/TypesOfDirections/DifferentFloorDirections";
 import { HallXCoordinates } from "../../../constants/HallXCoordinates";
-import { getFloorNumber, ConvertToHall8Floor } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
+import { getFloorNumber, ConvertToHall8Floor, dijkstra } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
+import { Class9Graph } from "../../../constants/ClassGraph9";
+import { ClassGraph } from "../../../constants/ClassGraph";
 
 describe("DifferentFloorDirections component", () => {
     test("renders correctly", () => {
         const tree = renderer.create(<DifferentFloorDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"H535"}/>).toJSON();
         expect(tree).toMatchSnapshot();
     });
-
-    test("returns correct floor from classroom", () => {
-        const testCases = [
-            "H829",
-            "H531",
-            "H123",
-            "H1055",
-            "H1347",
-            "MB3.125",
-            "MB12.246",
-        ]
-        const results = [
-            "8",
-            "5",
-            "1",
-            "10",
-            "13",
-            "3",
-            "12"
-        ]
-        testCases.forEach((element, index) => {
-            expect(getFloorNumber(element)).toEqual(results[index])
-        });
-    })
 
     test("returns correct class name", () => {
         const testCases = [
@@ -41,6 +19,8 @@ describe("DifferentFloorDirections component", () => {
             "H123",
             "H1055",
             "H1347",
+            "H920",
+            "H937-1"
         ]
         const results = [
             "H829",
@@ -48,9 +28,30 @@ describe("DifferentFloorDirections component", () => {
             "H823",
             "H855",
             "H847",
+            "H920",
+            "H937-1"
         ]
         testCases.forEach((element, index) => {
             expect(ConvertToHall8Floor(element)).toEqual(results[index])
+        });
+    })
+
+    // The following test ensures the user is guided from a classroom
+    // to another classroom in a different floor
+    test("dijkstra in different floors", () => {
+        const testCases = [
+            {from: "H863", to: "elevator"},
+            {from: "elevator", to: "H907"}
+        ]
+        const results = [
+            ["H863", "H861", "H859", "elevator"],
+            ["elevator", "H962", "checkpoint7", "H914", "checkpoint1", "H906", "H907"],
+        ]
+
+        testCases.forEach((element, index) => {
+            var isFloor9 = getFloorNumber(element.from) == 9 || getFloorNumber(element.to) == 9;
+            const path = dijkstra(isFloor9 ? Class9Graph() : ClassGraph(), element.from, element.to).path;
+            expect(path).toEqual(results[index]);
         });
     })
 });
