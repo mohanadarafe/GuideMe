@@ -1,7 +1,8 @@
 export function buildingData () {
   var buildings = [];
   buildings["B Annex"] = {
-    name: "B Annex",
+    name: "B Building",
+    fullName: "B Annex",
     address: "2160 Rue Bishop, Montreal, QC, H3G 2E9",
     departments: null,
     services: ["Engineering and Computer Science Association"],
@@ -18,7 +19,8 @@ export function buildingData () {
     }
   };
   buildings["C Annex"] = {
-    name: "CI Annex",
+    name: "CI Building",
+    fullName: "CI Annex",
     address: "2149 Rue Mackay, Montreal, QC, H3G 2J2",
     departments: ["School of Community and Public Affairs"],
     services: null,
@@ -33,7 +35,8 @@ export function buildingData () {
     }
   };
   buildings["CL Annex"] = {
-    name: "CL Annex",
+    name: "CL Building",
+    fullName: "CL Annex",
     address: "1665 Rue Ste-Catherine O. Montreal, QC, H3H 1L9",
     departments: null,
     services: ["Concordia Continuing Education"],
@@ -48,7 +51,8 @@ export function buildingData () {
     }
   };
   buildings["D Annex"] = {
-    name: "D Annex",
+    name: "D Building",
+    fullName: "D Annex",
     address: "2140 Rue Bishop, Montreal, QC, H3G 2E9",
     departments: ["Theological Studies"],
     services: null,
@@ -63,7 +67,8 @@ export function buildingData () {
     }
   };
   buildings["EN Annex"] = {
-    name: "EN Annex",
+    name: "EN Building",
+    fullName: "EN Annex",
     address: "2155 Rue Guy, Montreal, QC, H3H 2L9",
     departments: null,
     services: null,
@@ -78,7 +83,8 @@ export function buildingData () {
     }
   };
   buildings["EV Building"] = {
-    name: "Engineering, Computer Science and Visual Arts Integrated Complex",
+    name: "EV Building",
+    fullName: "Engineering, Computer Science and Visual Arts Integrated Complex",
     address: "1515 Rue St Catherine O. Montreal, QC, H3G 2W1",
     departments: [
       "Gina Cody School of Engineering and Computer Science",
@@ -99,7 +105,8 @@ export function buildingData () {
     }
   };
   buildings["FA Annex"] = {
-    name: "FA Annex",
+    name: "FA Building",
+    fullName: "FA Annex",
     address: "2060 Rue Mackay, QC, H3G 2J1",
     departments: ["Department of Religions and Cultures"],
     services: null,
@@ -113,8 +120,9 @@ export function buildingData () {
       longitude:-73.579468
     }
   };
-  buildings["FG Building"] = {
-    name: "Faubourg Building",
+  buildings["FB Building"] = {
+    name: "FB Building",
+    fullName: "Faubourg Building",
     address: "1250 Rue Guy, QC, H3G 2T4",
     departments: [
       "Concordia Continuing Education",
@@ -140,7 +148,8 @@ export function buildingData () {
     }
   };
   buildings["GM Building"] = {
-    name: "Guy-De Maisonneuve Building",
+    name: "GM Building",
+    fullName: "Guy-De Maisonneuve Building",
     address: "1550 Rue de Maisonneuve O., Montreal, QC, H3G 1N1",
     departments: ["Contemporary Dance", "Music", "Theatre"],
     services: [
@@ -163,7 +172,8 @@ export function buildingData () {
     }
   };
   buildings["Grey Nuns"] = {
-    name: "Grey Nuns Building",
+    name: "GN Building",
+    fullName: "Grey Nuns Building",
     address: "1190 Rue Guy, Montreal, QC, H3H 2L4",
     departments: null,
     services: [
@@ -184,7 +194,8 @@ export function buildingData () {
     }
   };
   buildings["GN Annex"] = {
-    name: "Grey Nuns Annex",
+    name: "GA Building",
+    fullName: "Grey Nuns Annex",
     address: "1211-1215 Rue St. Mathieu, Montreal, QC, H3H 2S2",
     departments: ["Department of Education"],
     services: null,
@@ -200,6 +211,7 @@ export function buildingData () {
   };
   buildings["GS Building"] = {
     name: "GS Building",
+    fullName: "Guy-Sherbrooke Building",
     address: "1538 Sherbrook St O., Montreal, QC, H3H 2L9",
     departments: null,
     services: null,
@@ -214,7 +226,8 @@ export function buildingData () {
     }
   };
   buildings["Hall Building"] = {
-    name: "Henry F. Hall Building",
+    name: "H Building",
+    fullName: "Henry F. Hall Building",
     address: "1455 De Maisonneuve Blvd O., Montreal, QC, H3G 1M8",
     departments: [
       "Classics, Moden Languages and Linguistics",
@@ -241,7 +254,8 @@ export function buildingData () {
     }
   };
   buildings["JMSB"] = {
-    name: "John Molson Building",
+    name: "MB Building",
+    fullName: "John Molson Building",
     address: "1450 Rue Guy, Montreal, QC, H3H 0A1",
     departments: [
       "Accountancy",
@@ -261,7 +275,8 @@ export function buildingData () {
     }
   };
   buildings["K Annex"] = {
-    name: "K Annex",
+    name: "K Building",
+    fullName: "K Annex",
     address: "2150 Rue Bishop, Montreal, QC, H3G 2E9",
     departments: null,
     services: ["Theological Studies"],
@@ -276,7 +291,8 @@ export function buildingData () {
     }
   };
   buildings["LB Building"] = {
-    name: "JW McConnell Building",
+    name: "LB Buidling",
+    fullName: "JW McConnell Building",
     address: "1400 De Maisonneuve Blvd. O. Montreal, QC, H3G 1M8",
     departments: [
       "English",
@@ -305,9 +321,9 @@ export function buildingData () {
       longitude:-73.578093
     }
   };
-  buildings["LD"] = {
-    //or k building?
+  buildings["LD Building"] = {
     name: "LD Building",
+    fullName: "LD Building",
     address: "1424 Rue Bishop, Montreal, QC, H3G 1M8",
     departments: null,
     services: ["CSU Day Care & Nursery"],
@@ -321,8 +337,9 @@ export function buildingData () {
       longitude:-73.577312
     }
   };
-  buildings["LS"] = {
-    name: "Learning Square",
+  buildings["LS Building"] = {
+    name: "LS Building",
+    fullName: "Learning Square",
     address: "1535 De Maisonneuve Blvd. W. Montreal, QC, H3G 1M9",
     departments: null,
     services: ["IT Services -- 1st Floor", "IT Services -- 2nd Floor"],
@@ -337,7 +354,8 @@ export function buildingData () {
     }
   };
   buildings["M Annex"] = {
-    name: "M Annex",
+    name: "M Building",
+    fullName: "M Annex",
     address: "2135 Rue Mackay, Montreal, QC, H3G 2J2",
     departments: null,
     services: null,
@@ -352,7 +370,8 @@ export function buildingData () {
     }
   };
   buildings["MI Annex"] = {
-    name: "MI Annex",
+    name: "MI Building",
+    fullName: "MI Annex",
     address: "2130 Rue Bishop, Montreal, QC, H3H 2E9",
     departments: null,
     services: ["ACUMAE", "SCOMM", "CUSSU", "CUUSS-TS", "CULEU", "CUPEU"],
@@ -367,7 +386,8 @@ export function buildingData () {
     }
   };
   buildings["MT Building"] = {
-    name: "Montefiore Building",
+    name: "MT Building",
+    fullName: "Montefiore Building",
     address: "1195 Rue Guy, Montreal, QC, H3H 2K7",
     departments: null,
     services: ["Conference Services"],
@@ -382,7 +402,8 @@ export function buildingData () {
     }
   };
   buildings["MU Annex"] = {
-    name: "MU Annex",
+    name: "MU Building",
+    fullName: "MU Annex",
     address: "2170 Rue Bishop, Montreal, QC, H3H 2E9",
     departments: null,
     services: ["Simone de Beauvoir Institute"],
@@ -398,6 +419,7 @@ export function buildingData () {
   };
   buildings["OS Building"] = {
     name: "OS Building",
+    fullName: "Collège O'Sullivan de Montréal",
     address: "1191 Rue de la Montagne, Montreal, QC, H3H 1Z2",
     departments: null,
     services: null,
@@ -412,7 +434,8 @@ export function buildingData () {
     }
   };
   buildings["P Annex"] = {
-    name: "P Annex",
+    name: "P Building",
+    fullName: "P Annex",
     address: "2020 Rue Mackay, Montreal, QC, H3G 2M2",
     departments: null,
     services: null,
@@ -427,7 +450,8 @@ export function buildingData () {
     }
   };
   buildings["PR Annex"] = {
-    name: "PR Annex",
+    name: "PR Building",
+    fullName: "PR Annex",
     address: "2100 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: null,
     services: null,
@@ -437,7 +461,8 @@ export function buildingData () {
     }
   };
   buildings["Q Annex"] = {
-    name: "Q Annex",
+    name: "Q Building",
+    fullName: "Q Annex",
     address: "2010 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: null,
     services: ["Ethnic Students' Association"],
@@ -452,7 +477,8 @@ export function buildingData () {
     }
   };
   buildings["R Annex"] = {
-    name: "R Annex",
+    name: "R Building",
+    fullName: "R Annex",
     address: "2050 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: ["Religions and Cultures"],
     services: null,
@@ -467,7 +493,8 @@ export function buildingData () {
     }
   };
   buildings["RR Annex"] = {
-    name: "RR Annex",
+    name: "RR Building",
+    fullName: "RR Annex",
     address: "2040 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: ["Liberal Arts College"],
     services: null,
@@ -477,7 +504,8 @@ export function buildingData () {
     }
   };
   buildings["S Annex"] = {
-    name: "S Annex",
+    name: "S Building",
+    fullName: "S Annex",
     address: "2145 Rue Mackay, Montreal, QC, H3G 2J2",
     departments: ["Department of Philosophy"],
     services: null,
@@ -492,7 +520,8 @@ export function buildingData () {
     }
   };
   buildings["SB Building"] = {
-    name: "Samuel Bronfman Building",
+    name: "SB Building",
+    fullName: "Samuel Bronfman Building",
     address: "1590 Rue Docteur Penfield, Montreal, QC, H3G 1C5",
     departments: null,
     services: ["Arts and Services Research Groups"],
@@ -507,7 +536,8 @@ export function buildingData () {
     }
   };
   buildings["T Annex"] = {
-    name: "T Annex",
+    name: "T Building",
+    fullName: "T Annex",
     address: "2030 Rue Mackay, Montreal, QC, H3G 1C5",
     departments: null,
     services: ["Graduate Students Association"],
@@ -522,7 +552,8 @@ export function buildingData () {
     }
   };
   buildings["TD"] = {
-    name: "Toronto Dominion Building",
+    name: "TD",
+    fullName: "Toronto Dominion Building",
     address: "1410 Rue Guy, Montreal, QC, H3H 2L7",
     departments: null,
     services: ["CUSP"],
@@ -537,7 +568,8 @@ export function buildingData () {
     }
   };
   buildings["V Annex"] = {
-    name: "V Annex",
+    name: "V Building",
+    fullName: "V Annex",
     address: "1410 Rue Guy, Montreal, QC, H3H 2L7",
     departments: null,
     services: ["CUTV", "Centre 2110"],
@@ -552,7 +584,8 @@ export function buildingData () {
     }
   };
   buildings["VA Building"] = {
-    name: "Visual Arts Building",
+    name: "VA Building",
+    fullName: "Visual Arts Building",
     address: "1395 Rene-Levesque Blvd. O. Montreal, QC, H3G 2M5",
     departments: [
       "Studio Arts",
@@ -572,7 +605,8 @@ export function buildingData () {
     }
   };
   buildings["X Annex"] = {
-    name: "X Annex",
+    name: "X Building",
+    fullName: "X Annex",
     address: "2080 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: null,
     services: ["Concordia Internation"],
@@ -587,7 +621,8 @@ export function buildingData () {
     }
   };
   buildings["Z Annex"] = {
-    name: "Z Annex",
+    name: "Z Building",
+    fullName: "Z Annex",
     address: "2090 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: null,
     services: ["Concordia Internation"],
@@ -602,7 +637,8 @@ export function buildingData () {
     }
   };
   (buildings["AD Building"] = {
-    name: "Administration Building",
+    name: "AD Building",
+    fullName: "Administration Building",
     address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
     departments: ["Faculty of Arts and Science"],
     services: [
@@ -624,7 +660,8 @@ export function buildingData () {
     }
   }),
     (buildings["BB Building"] = {
-      name: "BB Annex",
+      name: "BB Building",
+      fullName: "BB Annex",
       address: "3502 Avenue Belmore, Montréal, QC, H4B 2B9",
       departments: null,
       services: ["CPE Les P’tits Profs Daycare"],
@@ -639,7 +676,8 @@ export function buildingData () {
       }
     }),
     (buildings["BH Building"] = {
-      name: "BH Annex",
+      name: "BH Building",
+      fullName: "BH Annex",
       address: "3500 Avenue Belmore, Montréal, QC, H4B 2B9",
       departments: null,
       services: ["CPE Les P’tits Profs Daycare"],
@@ -654,7 +692,8 @@ export function buildingData () {
       }
     }),
     (buildings["CC Bulding"] = {
-      name: "Central Building",
+      name: "CC Building",
+      fullName: "Central Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: [
@@ -672,7 +711,8 @@ export function buildingData () {
       }
     }),
     (buildings["CJ Building"] = {
-      name: "Communication Studies and Journalism Building",
+      name: "CJ Building",
+      fullName: "Communication Studies and Journalism Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Communication Studies", "Journalism"],
       services: ["Campus Retail Stores"],
@@ -687,7 +727,8 @@ export function buildingData () {
       }
     }),
     (buildings["DO Building"] = {
-      name: "Stinger Dome (Seasonal)",
+      name: "DO Building",
+      fullName: "Stinger Dome (Seasonal)",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Stingers Team"],
       services: null,
@@ -703,7 +744,8 @@ export function buildingData () {
       }
     }),
     (buildings["FC Building"] = {
-      name: "F.C. Smith Building",
+      name: "FC Building",
+      fullName: "F.C. Smith Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: [
@@ -722,7 +764,8 @@ export function buildingData () {
       }
     }),
     (buildings["GE Building"] = {
-      name: "Centre for Structural and Functional Genomics",
+      name: "GE Building",
+      fullName: "Centre for Structural and Functional Genomics",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Centre for Structural and Functional Genomics"],
@@ -737,7 +780,8 @@ export function buildingData () {
       }
     }),
     (buildings["HA Building"] = {
-      name: "Hingston Hall, Wing HA",
+      name: "HA Building",
+      fullName: "Hingston Hall, Wing HA",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Student Residence"],
@@ -752,7 +796,8 @@ export function buildingData () {
       }
     }),
     (buildings["HB Building"] = {
-      name: "Hingston Hall, Wing HB",
+      name: "HB Building",
+      fullName: "Hingston Hall, Wing HB",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Student Residence"],
@@ -767,7 +812,8 @@ export function buildingData () {
       }
     }),
     (buildings["HC Building"] = {
-      name: "Hingston Hall, Wing HC",
+      name: "HC Building",
+      fullName: "Hingston Hall, Wing HC",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Student Residence"],
@@ -782,7 +828,8 @@ export function buildingData () {
       }
     }),
     (buildings["HU Building"] = {
-      name: "Applied Science Hub",
+      name: "HU Building",
+      fullName: "Applied Science Hub",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: null,
@@ -797,7 +844,8 @@ export function buildingData () {
       }
     }),
     (buildings["JR Building"] = {
-      name: "Jetsuit Residence",
+      name: "JR Building",
+      fullName: "Jetsuit Residence",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Student Residence"],
@@ -812,7 +860,8 @@ export function buildingData () {
       }
     }),
     (buildings["PC Building"] = {
-      name: "Perform Centre",
+      name: "PC Building",
+      fullName: "Perform Centre",
       address: "7200 Sherbrooke St WMontreal, QC, H4B 1R2",
       departments: null,
       services: ["Perform Centre"],
@@ -827,7 +876,8 @@ export function buildingData () {
       }
     }),
     (buildings["PS Building"] = {
-      name: "Physical Services Building",
+      name: "PS Building",
+      fullName: "Physical Services Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Environmental Health and Safety", "Facilities Management"],
@@ -842,7 +892,8 @@ export function buildingData () {
       }
     }),
     (buildings["PT Building"] = {
-      name: "Oscar Peterson Concert Hall",
+      name: "PT Building",
+      fullName: "Oscar Peterson Concert Hall",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Oscar Peterson Concert Hall"],
       services: ["Concert Hall"],
@@ -857,7 +908,8 @@ export function buildingData () {
       }
     }),
     (buildings["PY Building"] = {
-      name: "Psychology Building",
+      name: "PY Building",
+      fullName: "Psychology Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [
         "Psychology",
@@ -875,7 +927,8 @@ export function buildingData () {
       }
     }),
     (buildings["QA Building"] = {
-      name: "Quadrangle",
+      name: "QA Building",
+      fullName: "Quadrangle",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: null,
@@ -890,7 +943,8 @@ export function buildingData () {
       }
     }),
     (buildings["RA Building"] = {
-      name: "Recreation and Athletics Complex",
+      name: "RA Building",
+      fullName: "Recreation and Athletics Complex",
       address: "7200 Sherbrooke St WMontreal, QC, H4B 1R2",
       departments: null,
       services: ["Ed Meagher Arena", "Gymnasium"],
@@ -905,7 +959,8 @@ export function buildingData () {
       }
     }),
     (buildings["RF Building"] = {
-      name: "Loyola Jesuit Hall and Conference Centre",
+      name: "RF Building",
+      fullName: "Loyola Jesuit Hall and Conference Centre",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: [
@@ -923,7 +978,8 @@ export function buildingData () {
       }
     }),
     (buildings["SC Building"] = {
-      name: "Student Centre",
+      name: "SC Building",
+      fullName: "Student Centre",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Campus Centre", "Food Services", "Cafeteria", "Cafe"],
@@ -938,7 +994,8 @@ export function buildingData () {
       }
     }),
     (buildings["SH Building"] = {
-      name: "Solar House",
+      name: "SH Building",
+      fullName: "Solar House",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: null,
@@ -953,7 +1010,8 @@ export function buildingData () {
       }
     }),
     (buildings["SI Building"] = {
-      name: "St. Ignatius of Loyola Church",
+      name: "SI Building",
+      fullName: "St. Ignatius of Loyola Church",
       address: "4455 Rue West Broadway, Montréal, QC H4B 2A7",
       departments: null,
       services: null,
@@ -968,7 +1026,8 @@ export function buildingData () {
       }
     }),
     (buildings["SP Building"] = {
-      name: "Richard J. Renaud Science Complex",
+      name: "SP Building",
+      fullName: "Richard J. Renaud Science Complex",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [
         "Biology",
@@ -996,7 +1055,8 @@ export function buildingData () {
       }
     }),
     (buildings["TA Building"] = {
-      name: "Terrebonne Building",
+      name: "TA Building",
+      fullName: "Terrebonne Building",
       address: "7079 Terrebonne, Montreal, QC, H4B 1E1",
       departments: null,
       services: null,
@@ -1011,7 +1071,8 @@ export function buildingData () {
       }
     }),
     (buildings["VE Building"] = {
-      name: "Vanier Extension",
+      name: "VE Building",
+      fullName: "Vanier Extension",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Applied Human Sciences"],
       services: ["Library"],
@@ -1026,7 +1087,8 @@ export function buildingData () {
       }
     }),
     (buildings["VL Building"] = {
-      name: "Vanier Library Building",
+      name: "VL Building",
+      fullName: "Vanier Library Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: null,
       services: ["Library"],
