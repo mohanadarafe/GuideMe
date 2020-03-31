@@ -100,8 +100,8 @@ export function buildingData () {
     hasInfocenter: true,
     hasParking: false,
     coordinates:{
-      latitude:45.495376,
-      longitude:-73.577997
+      latitude: 45.496495,
+      longitude:-73.578258
     }
   };
   buildings["FA Annex"] = {
@@ -317,8 +317,8 @@ export function buildingData () {
     hasInfocenter: true,
     hasParking: true,
     coordinates:{
-      latitude:45.498678,
-      longitude:-73.578093
+      latitude:45.497192,
+      longitude:-73.577883,
     }
   };
   buildings["LD Building"] = {
