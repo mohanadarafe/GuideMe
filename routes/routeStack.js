@@ -70,8 +70,7 @@ const screens = {
     //         ...TransitionPresets.ModalSlideFromBottomIOS
     //     }
     // }
-
-
+    
 };
 
 const HomeStack = createStackNavigator(screens);

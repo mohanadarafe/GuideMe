@@ -21,21 +21,13 @@ export const renderItem = ({ item, index }) => {
 
 function Nearby(props) {
 
-    // const goBack = () => {
-    //     props.navigation.navigate("Map");
-    // };
-
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
-
-    // const bottomMenu = props.navigation.getParam("bottomMenu", "null");
-    // console.log("bottom:" + bottomMenu);
-
     const data = [
         { key: 'a', rate:'1'}, { key: 'b', rate:'2' }, { key: 'c', rate:'3' }, { key: 'd', rate:'4' }, { key: 'e',rate:'5' }, { key: 'f',rate:'6' }, { key: 'g',rate:'7' }, { key: 'h',rate:'8' }, { key: 'i', rate:'9' }, { key: 'j', rate:'10' },
     ];
-    // const numColumns = 2;
+    const numColumns = 2;
 
     return (
         <View style={styles.container}>
@@ -59,6 +51,7 @@ function Nearby(props) {
                     contentContainerStyle={styles.list}
                     data={data}
                     renderItem={renderItem}
+
 
                 />
             </View>
@@ -92,7 +85,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap',
-    },
+     },
     icon: {
         height: "100%",
         width: "100%",

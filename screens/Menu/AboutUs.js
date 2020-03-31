@@ -23,6 +23,8 @@ function AboutUs(props) {
         props.navigation.openDrawer();
     };
 
+    
+    
     const data = [{
         title: "Team - Github",
         data: ["Mohanad Arafe - mohanadarafe",
