@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
@@ -85,9 +86,6 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
 };
 
 
-
-
-
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
@@ -102,6 +100,14 @@ function PreviewDirections (props) {
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const [isRefreshed, setIsRefreshed] = React.useState(true);
     const mapRef = useRef(null);
+
+    /**
+      * Description: Go back to previous screen method.
+      * Using Stack Navigator
+      */
+    const goBackPressHandler = () => {
+        props.navigation.goBack();
+    };
 
     /* Read the params from the navigation state */
     const { params } = props.navigation.state;
@@ -118,8 +124,6 @@ function PreviewDirections (props) {
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
 
     // The variables retrived from the preference page 
-    const personaType = params ? params.personaType : null;
-    const mobilityType = params ? params.mobilityType : null;
     var transportType = params ? params.transportType : null;
 
     /**
@@ -127,15 +131,15 @@ function PreviewDirections (props) {
          * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
          * @param {*} transportType 
         */
-        const fetchData = async (transportType) => {
-            try {
-                // Retrieving the apiKey from the AsyncStorage.
-                let keyId = await AsyncStorage.getItem("apiKeyId");
-                // The following line is commented to avoid unecessary requests on the direcitons API. 
-                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
-                const jsonResponse = await resp.json();
-                if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
+    const fetchData = async (transportType) => {
+        try {
+            // Retrieving the apiKey from the AsyncStorage.
+            let keyId = await AsyncStorage.getItem("apiKeyId");
+            // The following line is commented to avoid unecessary requests on the direcitons API. 
+            // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
+            const jsonResponse = await resp.json();
+            if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
@@ -152,13 +156,7 @@ function PreviewDirections (props) {
             goBackPressHandler();
         }
     };
-    /**
-      * Description: Go back to previous screen method.
-      * Using Stack Navigator
-      */
-    const goBackPressHandler = () => {
-        props.navigation.goBack();
-    };
+
 
     /**
      * Description: The map has to be initialized to a certain area of the map.
@@ -203,7 +201,7 @@ function PreviewDirections (props) {
         fetchData();
     }, []);
 
-    
+
 
     return (
         <View>
