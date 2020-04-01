@@ -10,7 +10,7 @@ import { buildingData } from "../constants/buildingData";
  * The following function colors the campus buildings.
  */
 
-function BuildingHighlight() {
+function BuildingHighlight () {
     const [buildingName, setBuildingName] = React.useState("");
     AsyncStorage.setItem("buildingSelected", buildingName);
     var buildings = buildingData();
