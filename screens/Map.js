@@ -76,6 +76,7 @@ function Map({ navigation }) {
                         <CurrentBuildingLocation />
                 </View>
             <BottomMenu navigation={navigation} />
+            </View>
         </View>
     );
 }
