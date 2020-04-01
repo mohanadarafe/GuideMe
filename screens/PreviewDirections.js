@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
@@ -87,9 +86,6 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
 };
 
 
-
-
-
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
@@ -104,6 +100,14 @@ function PreviewDirections (props) {
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const [isRefreshed, setIsRefreshed] = React.useState(true);
     const mapRef = useRef(null);
+
+    /**
+      * Description: Go back to previous screen method.
+      * Using Stack Navigator
+      */
+    const goBackPressHandler = () => {
+        props.navigation.goBack();
+    };
 
     /* Read the params from the navigation state */
 
@@ -120,8 +124,6 @@ function PreviewDirections (props) {
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
 
     // The variables retrived from the preference page 
-    const personaType = params ? params.personaType : null;
-    const mobilityType = params ? params.mobilityType : null;
     var transportType = params ? params.transportType : null;
 
     /**
@@ -154,13 +156,7 @@ function PreviewDirections (props) {
             goBackPressHandler();
         }
     };
-    /**
-      * Description: Go back to previous screen method.
-      * Using Stack Navigator
-      */
-    const goBackPressHandler = () => {
-        props.navigation.goBack();
-    };
+
 
     /**
      * Description: The map has to be initialized to a certain area of the map.

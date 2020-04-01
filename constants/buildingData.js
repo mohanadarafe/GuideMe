@@ -12,9 +12,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497856,
-      longitude:-73.579588
+    coordinates: {
+      latitude: 45.497856,
+      longitude: -73.579588
 
     }
   };
@@ -29,9 +29,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.497467,
-      longitude:-73.579925
+    coordinates: {
+      latitude: 45.497467,
+      longitude: -73.579925
     }
   };
   buildings["CL Annex"] = {
@@ -45,9 +45,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.494259,
-      longitude:-73.579007
+    coordinates: {
+      latitude: 45.494259,
+      longitude: -73.579007
     }
   };
   buildings["D Annex"] = {
@@ -61,9 +61,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497827,
-      longitude:-73.579409
+    coordinates: {
+      latitude: 45.497827,
+      longitude: -73.579409
     }
   };
   buildings["EN Annex"] = {
@@ -77,9 +77,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496944,
-      longitude:-73.579555
+    coordinates: {
+      latitude: 45.496944,
+      longitude: -73.579555
     }
   };
   buildings["EV Building"] = {
@@ -99,9 +99,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
+    coordinates: {
       latitude: 45.496495,
-      longitude:-73.578258
+      longitude: -73.578258
     }
   };
   buildings["FA Annex"] = {
@@ -115,9 +115,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496874,
-      longitude:-73.579468
+    coordinates: {
+      latitude: 45.496874,
+      longitude: -73.579468
     }
   };
   buildings["FB Building"] = {
@@ -142,9 +142,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.494666,
-      longitude:-73.577603
+    coordinates: {
+      latitude: 45.494666,
+      longitude: -73.577603
     }
   };
   buildings["GM Building"] = {
@@ -166,13 +166,13 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.495983,
-      longitude:-73.578824
+    coordinates: {
+      latitude: 45.495983,
+      longitude: -73.578824
     }
   };
   buildings["Grey Nuns"] = {
-    name: "GN Building",
+    name: "Grey Nuns",
     fullName: "Grey Nuns Building",
     address: "1190 Rue Guy, Montreal, QC, H3H 2L4",
     departments: null,
@@ -188,9 +188,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.493622,
-      longitude:-73.577003
+    coordinates: {
+      latitude: 45.493622,
+      longitude: -73.577003
     }
   };
   buildings["GN Annex"] = {
@@ -204,9 +204,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.494123,
-      longitude:-73.577870
+    coordinates: {
+      latitude: 45.494123,
+      longitude: -73.577870
     }
   };
   buildings["GS Building"] = {
@@ -220,13 +220,13 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496620,
-      longitude:-73.581402
+    coordinates: {
+      latitude: 45.496620,
+      longitude: -73.581402
     }
   };
   buildings["Hall Building"] = {
-    name: "H Building",
+    name: "Hall Building",
     fullName: "Henry F. Hall Building",
     address: "1455 De Maisonneuve Blvd O., Montreal, QC, H3G 1M8",
     departments: [
@@ -248,9 +248,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.497092,
-      longitude:-73.578800
+    coordinates: {
+      latitude: 45.497092,
+      longitude: -73.578800
     }
   };
   buildings["JMSB"] = {
@@ -269,9 +269,9 @@ export function buildingData () {
       "John Molson Executive Centre",
       "Performing Arts Facilities"
     ],
-    coordinates:{
-      latitude:45.495304,
-      longitude:-73.579044
+    coordinates: {
+      latitude: 45.495304,
+      longitude: -73.579044
     }
   };
   buildings["K Annex"] = {
@@ -285,13 +285,13 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497777,
-      longitude:-73.579531
+    coordinates: {
+      latitude: 45.497777,
+      longitude: -73.579531
     }
   };
   buildings["LB Building"] = {
-    name: "LB Buidling",
+    name: "LB Building",
     fullName: "JW McConnell Building",
     address: "1400 De Maisonneuve Blvd. O. Montreal, QC, H3G 1M8",
     departments: [
@@ -316,9 +316,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: true,
-    coordinates:{
-      latitude:45.497192,
-      longitude:-73.577883,
+    coordinates: {
+      latitude: 45.497192,
+      longitude: -73.577883,
     }
   };
   buildings["LD Building"] = {
@@ -332,9 +332,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496697,
-      longitude:-73.577312
+    coordinates: {
+      latitude: 45.496697,
+      longitude: -73.577312
     }
   };
   buildings["LS Building"] = {
@@ -348,9 +348,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496380,
-      longitude:-73.579511
+    coordinates: {
+      latitude: 45.496380,
+      longitude: -73.579511
     }
   };
   buildings["M Annex"] = {
@@ -364,9 +364,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497368,
-      longitude:-73.579777
+    coordinates: {
+      latitude: 45.497368,
+      longitude: -73.579777
     }
   };
   buildings["MI Annex"] = {
@@ -380,9 +380,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497807,
-      longitude:-73.579261
+    coordinates: {
+      latitude: 45.497807,
+      longitude: -73.579261
     }
   };
   buildings["MT Building"] = {
@@ -396,9 +396,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.494442,
-      longitude:-73.576108
+    coordinates: {
+      latitude: 45.494442,
+      longitude: -73.576108
     }
   };
   buildings["MU Annex"] = {
@@ -412,9 +412,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497963,
-      longitude:-73.579506
+    coordinates: {
+      latitude: 45.497963,
+      longitude: -73.579506
     }
   };
   buildings["OS Building"] = {
@@ -428,9 +428,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497444,
-      longitude:-73.573472
+    coordinates: {
+      latitude: 45.497444,
+      longitude: -73.573472
     }
   };
   buildings["P Annex"] = {
@@ -444,9 +444,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496745,
-      longitude:-73.579113
+    coordinates: {
+      latitude: 45.496745,
+      longitude: -73.579113
     }
   };
   buildings["PR Annex"] = {
@@ -455,9 +455,9 @@ export function buildingData () {
     address: "2100 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: null,
     services: null,
-    coordinates:{
-      latitude:45.497066,
-      longitude:-73.579790
+    coordinates: {
+      latitude: 45.497066,
+      longitude: -73.579790
     }
   };
   buildings["Q Annex"] = {
@@ -471,9 +471,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496648,
-      longitude:-73.579094
+    coordinates: {
+      latitude: 45.496648,
+      longitude: -73.579094
     }
   };
   buildings["R Annex"] = {
@@ -487,9 +487,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496826,
-      longitude:-73.579389
+    coordinates: {
+      latitude: 45.496826,
+      longitude: -73.579389
     }
   };
   buildings["RR Annex"] = {
@@ -498,9 +498,9 @@ export function buildingData () {
     address: "2040 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: ["Liberal Arts College"],
     services: null,
-    coordinates:{
-      latitude:45.496796,
-      longitude:-73.579259
+    coordinates: {
+      latitude: 45.496796,
+      longitude: -73.579259
     }
   };
   buildings["S Annex"] = {
@@ -514,9 +514,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497423,
-      longitude:-73.579851
+    coordinates: {
+      latitude: 45.497423,
+      longitude: -73.579851
     }
   };
   buildings["SB Building"] = {
@@ -530,9 +530,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496600,
-      longitude:-73.586090
+    coordinates: {
+      latitude: 45.496600,
+      longitude: -73.586090
     }
   };
   buildings["T Annex"] = {
@@ -546,9 +546,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496710,
-      longitude:-73.579270
+    coordinates: {
+      latitude: 45.496710,
+      longitude: -73.579270
     }
   };
   buildings["TD"] = {
@@ -562,9 +562,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.495245,
-      longitude:-73.578429
+    coordinates: {
+      latitude: 45.495245,
+      longitude: -73.578429
     }
   };
   buildings["V Annex"] = {
@@ -578,9 +578,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497101,
-      longitude:-73.579907
+    coordinates: {
+      latitude: 45.497101,
+      longitude: -73.579907
     }
   };
   buildings["VA Building"] = {
@@ -599,9 +599,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.495543,
-      longitude:-73.573795
+    coordinates: {
+      latitude: 45.495543,
+      longitude: -73.573795
     }
   };
   buildings["X Annex"] = {
@@ -615,9 +615,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496940,
-      longitude:-73.579593
+    coordinates: {
+      latitude: 45.496940,
+      longitude: -73.579593
     }
   };
   buildings["Z Annex"] = {
@@ -631,9 +631,9 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496981,
-      longitude:-73.579705
+    coordinates: {
+      latitude: 45.496981,
+      longitude: -73.579705
     }
   };
   (buildings["AD Building"] = {
@@ -654,9 +654,9 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: true,
-    coordinates:{
-      latitude:45.457984,
-      longitude:-73.639834
+    coordinates: {
+      latitude: 45.457984,
+      longitude: -73.639834
     }
   }),
     (buildings["BB Building"] = {
@@ -670,9 +670,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459793,
-        longitude:-73.639174
+      coordinates: {
+        latitude: 45.459793,
+        longitude: -73.639174
       }
     }),
     (buildings["BH Building"] = {
@@ -686,12 +686,12 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459819,
-        longitude:-73.639152
+      coordinates: {
+        latitude: 45.459819,
+        longitude: -73.639152
       }
     }),
-    (buildings["CC Bulding"] = {
+    (buildings["CC Building"] = {
       name: "CC Building",
       fullName: "Central Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
@@ -705,9 +705,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.458204,
-        longitude:-73.640300
+      coordinates: {
+        latitude: 45.458204,
+        longitude: -73.640300
       }
     }),
     (buildings["CJ Building"] = {
@@ -721,9 +721,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.457478,
-        longitude:-73.640354
+      coordinates: {
+        latitude: 45.457478,
+        longitude: -73.640354
       }
     }),
     (buildings["DO Building"] = {
@@ -738,9 +738,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458710,
-        longitude:-73.640581
+      coordinates: {
+        latitude: 45.458710,
+        longitude: -73.640581
       }
     }),
     (buildings["FC Building"] = {
@@ -758,9 +758,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458493,
-        longitude:-73.639287
+      coordinates: {
+        latitude: 45.458493,
+        longitude: -73.639287
       }
     }),
     (buildings["GE Building"] = {
@@ -774,9 +774,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.457017,
-        longitude:-73.640432
+      coordinates: {
+        latitude: 45.457017,
+        longitude: -73.640432
       }
     }),
     (buildings["HA Building"] = {
@@ -790,9 +790,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459356,
-        longitude:-73.641270
+      coordinates: {
+        latitude: 45.459356,
+        longitude: -73.641270
       }
     }),
     (buildings["HB Building"] = {
@@ -806,9 +806,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459308,
-        longitude:-73.641849
+      coordinates: {
+        latitude: 45.459308,
+        longitude: -73.641849
       }
     }),
     (buildings["HC Building"] = {
@@ -822,9 +822,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459663,
-        longitude:-73.642080
+      coordinates: {
+        latitude: 45.459663,
+        longitude: -73.642080
       }
     }),
     (buildings["HU Building"] = {
@@ -838,9 +838,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.458513,
-        longitude:-73.641921
+      coordinates: {
+        latitude: 45.458513,
+        longitude: -73.641921
       }
     }),
     (buildings["JR Building"] = {
@@ -854,9 +854,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.458740,
-        longitude:-73.640506
+      coordinates: {
+        latitude: 45.458740,
+        longitude: -73.640506
       }
     }),
     (buildings["PC Building"] = {
@@ -870,9 +870,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: true,
-      coordinates:{
-        latitude:45.458740,
-        longitude:-73.640506
+      coordinates: {
+        latitude: 45.458740,
+        longitude: -73.640506
       }
     }),
     (buildings["PS Building"] = {
@@ -886,9 +886,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459636,
-        longitude:-73.639758
+      coordinates: {
+        latitude: 45.459636,
+        longitude: -73.639758
       }
     }),
     (buildings["PT Building"] = {
@@ -902,9 +902,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459308,
-        longitude:-73.638941
+      coordinates: {
+        latitude: 45.459308,
+        longitude: -73.638941
       }
     }),
     (buildings["PY Building"] = {
@@ -921,9 +921,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.458938,
-        longitude:-73.640467
+      coordinates: {
+        latitude: 45.458938,
+        longitude: -73.640467
       }
     }),
     (buildings["QA Building"] = {
@@ -937,9 +937,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458778,
-        longitude:-73.640581
+      coordinates: {
+        latitude: 45.458778,
+        longitude: -73.640581
       }
     }),
     (buildings["RA Building"] = {
@@ -953,9 +953,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.456774,
-        longitude:-73.637610
+      coordinates: {
+        latitude: 45.456774,
+        longitude: -73.637610
       }
     }),
     (buildings["RF Building"] = {
@@ -972,9 +972,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458489,
-        longitude:-73.641028
+      coordinates: {
+        latitude: 45.458489,
+        longitude: -73.641028
       }
     }),
     (buildings["SC Building"] = {
@@ -988,9 +988,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459131,
-        longitude:-73.639251
+      coordinates: {
+        latitude: 45.459131,
+        longitude: -73.639251
       }
     }),
     (buildings["SH Building"] = {
@@ -1004,9 +1004,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459298,
-        longitude:-73.642478
+      coordinates: {
+        latitude: 45.459298,
+        longitude: -73.642478
       }
     }),
     (buildings["SI Building"] = {
@@ -1020,9 +1020,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.457832,
-        longitude:73.642584
+      coordinates: {
+        latitude: 45.457832,
+        longitude: 73.642584
       }
     }),
     (buildings["SP Building"] = {
@@ -1049,9 +1049,9 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.457881,
-        longitude:-73.641565
+      coordinates: {
+        latitude: 45.457881,
+        longitude: -73.641565
       }
     }),
     (buildings["TA Building"] = {
@@ -1065,9 +1065,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459992,
-        longitude:-73.640897
+      coordinates: {
+        latitude: 45.459992,
+        longitude: -73.640897
       }
     }),
     (buildings["VE Building"] = {
@@ -1081,9 +1081,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459026,
-        longitude:-73.638606
+      coordinates: {
+        latitude: 45.459026,
+        longitude: -73.638606
       }
     }),
     (buildings["VL Building"] = {
@@ -1098,9 +1098,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.459026,
-        longitude:-73.638606
+      coordinates: {
+        latitude: 45.459026,
+        longitude: -73.638606
       }
     });
   return buildings;
