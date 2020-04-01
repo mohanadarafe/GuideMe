@@ -1,9 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Paragraph } from 'react-native-paper';
+import { Paragraph } from "react-native-paper";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
 /**
  * Description: This is the about page for an
@@ -24,12 +25,12 @@ export const renderSeparator = () => {
     );
 };
 
-function AboutUs(props) {
+function AboutUs (props) {
 
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
-    
+
     const data = [{
         title: "Team - Github",
         data: ["Mohanad Arafe - mohanadarafe",
@@ -42,7 +43,7 @@ function AboutUs(props) {
             "Shirwa Warsame - shirwarsame",
             "Hussain Witwit - hussainwitwit"
         ]
-    }]
+    }];
 
     return (
         <View style={styles.container}>
@@ -56,12 +57,12 @@ function AboutUs(props) {
             <Text style={styles.aboutLabel}>Our App</Text>
 
             <View style={styles.scrollViewTextContainer}>
-            <ScrollView style={styles.scrollTextAbout}>
-                 <Paragraph style={styles.aboutText}>GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling.
+                <ScrollView style={styles.scrollTextAbout}>
+                    <Paragraph style={styles.aboutText}>GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling.
                   </Paragraph>
-                 </ScrollView>
+                </ScrollView>
             </View>
-           
+
             <Text style={styles.teamLabel}>Our Team</Text>
 
             <SafeAreaView style={styles.scrollTextContainer}>
@@ -77,6 +78,11 @@ function AboutUs(props) {
     );
 }
 
+AboutUs.propTypes = {
+    navigation: PropTypes.object,
+    openDrawer: PropTypes.func
+};
+
 export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
@@ -84,12 +90,12 @@ export const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         backgroundColor: "#2A2E43",
-        flex:1
+        flex: 1
     },
-    scollTextAbout:{
-        flex:1
+    scollTextAbout: {
+        flex: 1
     },
-    scrollViewTextContainer:{
+    scrollViewTextContainer: {
         bottom: "57%",
         height: 150,
         width: 415,
@@ -125,7 +131,7 @@ export const styles = StyleSheet.create({
         position: "absolute",
         fontSize: 18,
         fontFamily: "encodeSansExpanded",
-        top:"43%"
+        top: "43%"
     },
     icon: {
         height: "100%",

@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import PropTypes from "prop-types";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -16,7 +17,7 @@ import { Feather } from "@expo/vector-icons";
  */
 
 
-function NearbyInterest(props) {
+function NearbyInterest (props) {
 
     const goToMenu = () => {
         props.navigation.openDrawer();
@@ -28,7 +29,7 @@ function NearbyInterest(props) {
 
     // Static data for now 
     const data = [
-        { key: 'a', rate: '1' }, { key: 'b', rate: '2' }, { key: 'c', rate: '3' }, { key: 'd', rate: '4' }, { key: 'e', rate: '5' }, { key: 'f', rate: '6' }, { key: 'g', rate: '7' }, { key: 'h', rate: '8' }, { key: 'i', rate: '9' }, { key: 'j', rate: '10' },
+        { key: "a", rate: "1" }, { key: "b", rate: "2" }, { key: "c", rate: "3" }, { key: "d", rate: "4" }, { key: "e", rate: "5" }, { key: "f", rate: "6" }, { key: "g", rate: "7" }, { key: "h", rate: "8" }, { key: "i", rate: "9" }, { key: "j", rate: "10" },
     ];
 
     const formatData = (data, numColumns) => {
@@ -39,13 +40,13 @@ function NearbyInterest(props) {
 
         while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
 
-            data.push({ key: 'blank-${numberOfElementsLastRow}', empty: true });
+            data.push({ key: "blank-${numberOfElementsLastRow}", empty: true });
 
             numberOfElementsLastRow = numberOfElementsLastRow + 1;
         }
 
         return data;
-    }
+    };
 
     const numColumns = 2;
 
@@ -69,7 +70,7 @@ function NearbyInterest(props) {
                     data={formatData(data, numColumns)}
                     numColumns={numColumns}
                     keyExtractor={(item) => {
-                        return item.key
+                        return item.key;
                     }}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity onPress={goToNearbyInterestDetails}>
@@ -96,6 +97,12 @@ function NearbyInterest(props) {
         </View >
     );
 }
+
+NearbyInterest.propTypes = {
+    navigation: PropTypes.object,
+    openDrawer: PropTypes.func,
+    navigate: PropTypes.func
+};
 
 export const styles = StyleSheet.create({
     container: {
@@ -155,7 +162,7 @@ export const styles = StyleSheet.create({
         maxWidth: 223,
         height: 200,
         maxHeight: 200,
-        backgroundColor: '#353A50',
+        backgroundColor: "#353A50",
         borderRadius: 10
     },
     itemText: {

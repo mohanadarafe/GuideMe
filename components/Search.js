@@ -57,7 +57,7 @@ function Search (props) {
 
   const goToMenu = () => {
     props.navigation.openDrawer();
-  }
+  };
 
   return (
     <View style={styles.container} testID={props.testID}>
@@ -85,7 +85,8 @@ function Search (props) {
 }
 
 Search.propTypes = {
-  testID: PropTypes.string
+  testID: PropTypes.string,
+  navigation: PropTypes.object
 };
 
 export const styles = StyleSheet.create({

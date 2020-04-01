@@ -2,9 +2,9 @@ import { createStackNavigator } from "react-navigation-stack";
 import ShuttleBus from "../screens/Menu/ShuttleBus";
 
 const screens = {
-    ShuttleBus:{
+    ShuttleBus: {
         screen: ShuttleBus,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
         }
     }

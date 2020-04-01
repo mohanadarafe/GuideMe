@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -33,7 +34,7 @@ const mapPosition = {
  * FIXME: When the app refreshes, a random component appears on in the upper
  *        half of the screen for miliseconds...
  */
-function Map({ navigation }) {
+function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native"
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import PropTypes from "prop-types";
 
 /**
 
@@ -30,7 +31,7 @@ export const renderSeparator = () => {
     );
 };
 
-function CourseSchedule(props) {
+function CourseSchedule (props) {
 
     const goToMenu = () => {
         props.navigation.openDrawer();
@@ -38,20 +39,20 @@ function CourseSchedule(props) {
 
     const goToCourseSchedule = () => {
         props.navigation.navigate("CourseScheduleDetails");
-    }
+    };
 
     // TODO: Static data for now just to layout the SectionList 
     const data = [{
         title: "Wed, Feb 5",
         data: ["SOEN 357 Lecture", "SOEN 357 Tutorial", "SOEN 345 Lecture"
         ]
-    }]
+    }];
 
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
                 <Button transparent style={styles.menuButton} onPress={goToMenu}>
-                <Feather name="menu" style={styles.icon} />
+                    <Feather name="menu" style={styles.icon} />
                 </Button>
             </View>
             <Text style={styles.mainLabel}>My Course Schedule</Text>
@@ -70,6 +71,12 @@ function CourseSchedule(props) {
     );
 }
 
+CourseSchedule.propTypes = {
+    navigation: PropTypes.object,
+    openDrawer: PropTypes.func,
+    navigate: PropTypes.func
+};
+
 export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
@@ -87,12 +94,12 @@ export const styles = StyleSheet.create({
         top: "15%"
     },
     icon: {
-            height: "100%",
-            width: "100%",
-            flexDirection: "row",
-            left: "6%",
-            color: "#FFFFFF",
-            fontSize: 35
+        height: "100%",
+        width: "100%",
+        flexDirection: "row",
+        left: "6%",
+        color: "#FFFFFF",
+        fontSize: 35
     },
     menuButton: {
         height: "100%",

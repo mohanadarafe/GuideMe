@@ -2,15 +2,13 @@ import { createStackNavigator } from "react-navigation-stack";
 import Settings from "../screens/Menu/Settings";
 
 const screens = {
-    
-    Settings:{
+
+    Settings: {
         screen: Settings,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
         }
     }
-
-
 };
 
 const SettingsStack = createStackNavigator(screens);

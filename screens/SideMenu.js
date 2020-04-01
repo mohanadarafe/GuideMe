@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { View, ImageBackground, StyleSheet, Text } from "react-native";
@@ -10,7 +11,7 @@ import { DrawerNavigatorItems } from "react-navigation-drawer";
  * Only accesible from the main map view.
  */
 
-function SideMenu(props) {
+function SideMenu (props) {
     return (
 
         <ScrollView>
@@ -19,10 +20,10 @@ function SideMenu(props) {
                 style={styles.backgroundImage}
             >
                 <View style={styles.textContainer}>
-                <Text style={styles.nameLabel}>John Appleseed</Text>
-                <Text style={styles.emailLabel}>johnappleseed@gmail.com</Text>
+                    <Text style={styles.nameLabel}>John Appleseed</Text>
+                    <Text style={styles.emailLabel}>johnappleseed@gmail.com</Text>
                 </View>
-              
+
             </ImageBackground>
             <ImageBackground
                 source={require("../assets/separator_line.png")}
@@ -31,7 +32,7 @@ function SideMenu(props) {
                 <DrawerNavigatorItems {...props} />
             </View>
         </ScrollView>
-    )
+    );
 }
 
 export const styles = StyleSheet.create({
@@ -70,7 +71,7 @@ export const styles = StyleSheet.create({
     emailLabel: {
         color: "#A9A9A9",
         fontSize: 13,
-        flex:1,
+        flex: 1,
         fontFamily: "encodeSansExpanded",
         bottom: "40%",
         marginHorizontal: "8%"

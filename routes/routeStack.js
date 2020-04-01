@@ -55,7 +55,7 @@ const screens = {
         }
     },
 
-    IndoorMapView:{
+    IndoorMapView: {
         screen: IndoorMapView,
         navigationOptions: {
             headerShown: false,

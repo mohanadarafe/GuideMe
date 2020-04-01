@@ -23,7 +23,7 @@ export const renderSeparator = () => {
  * 
  * @param {*} buildingName Name of building to get data of
  */
-export function fetchData(buildingName) {
+export function fetchData (buildingName) {
   const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
   return modeDetailsInfo;
 }
@@ -35,7 +35,7 @@ export function fetchData(buildingName) {
  * @param {*} accesibility array of accesibility
  * @param {*} number phone number
  */
-export function createLists(data, departments, services, accesibility, number) {
+export function createLists (data, departments, services, accesibility, number) {
   if (data) {
     for (let i = 0; i < data.length; i++) {
       for (let j = 0; j < data[i].length; j++) {
@@ -74,11 +74,11 @@ export function createLists(data, departments, services, accesibility, number) {
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails(props) {
+function MoreDetails (props) {
   const [data, setData] = React.useState();
   const goBack = () => {
     props.navigation.goBack();
-  }
+  };
   const name = props.navigation.getParam("name", "null");
   const goToDoubleSearchBar = () => {
     props.navigation.navigate("DoubleSearch", { destinationName: name });

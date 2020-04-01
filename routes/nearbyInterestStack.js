@@ -1,17 +1,17 @@
-import { createStackNavigator} from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import NearbyInterest from "../screens/Menu/NearbyInterest";
 import NearbyInterestDetails from "../screens/Menu/NearbyInterestDetails";
 
 const screens = {
-    NearbyInterest:{
+    NearbyInterest: {
         screen: NearbyInterest,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
         }
     },
-    NearbyInterestDetails:{
+    NearbyInterestDetails: {
         screen: NearbyInterestDetails,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
         }
     }

@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Switch } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
+import PropTypes from "prop-types";
 
 /**
  * Description: This method holds the toggle switches 
@@ -10,14 +11,14 @@ import { ScrollView } from "react-native-gesture-handler";
  * also have accessibility to a Google Account Login screen.
  */
 
-function Settings(props) {
+function Settings (props) {
 
     const [switchVal1, setSwitchVal1] = React.useState(false);
     const [switchVal2, setSwitchVal2] = React.useState(false);
 
     const switchLabel1 = switchVal1 ? "ON" : "OFF";
     const switchLabel2 = switchVal2 ? "ON" : "OFF";
- 
+
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -57,6 +58,11 @@ function Settings(props) {
         </View >
     );
 }
+
+Settings.propTypes = {
+    navigation: PropTypes.object,
+    openDrawer: PropTypes.func,
+};
 
 export const styles = StyleSheet.create({
     container: {

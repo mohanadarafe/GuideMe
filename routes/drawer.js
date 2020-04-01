@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/display-name */
 import React from "react";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
@@ -22,12 +24,12 @@ import { Dimensions } from "react-native";
  */
 
 const Drawer = createDrawerNavigator({
-    
+
     Home: {
         screen: HomeStack,
         navigationOptions: {
             title: "Map",
-            drawerIcon: ({ tintColor }) => <Feather name="home"  size={22} color={tintColor} />
+            drawerIcon: ({ tintColor }) => <Feather name="home" size={22} color={tintColor} />
         }
     },
 
@@ -43,7 +45,7 @@ const Drawer = createDrawerNavigator({
         screen: ShuttleBus,
         navigationOptions: {
             title: "Shuttle Bus",
-            
+
             drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="bus-clock" size={22} color={tintColor} />,
         }
     },
@@ -52,7 +54,7 @@ const Drawer = createDrawerNavigator({
         screen: NearbyStack,
         navigationOptions: {
             title: "Points of Interest",
-            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="food-fork-drink" size={22} color={tintColor}/>,
+            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="food-fork-drink" size={22} color={tintColor} />,
 
         }
     },
@@ -69,7 +71,7 @@ const Drawer = createDrawerNavigator({
         screen: AboutUs,
         navigationOptions: {
             title: "About Us",
-            drawerIcon: ({ tintColor }) => <Feather name="info" size={22} color={tintColor}/>
+            drawerIcon: ({ tintColor }) => <Feather name="info" size={22} color={tintColor} />
         }
     },
 
@@ -84,7 +86,7 @@ const Drawer = createDrawerNavigator({
         activeTintColor: "#4DA4FD",
         labelStyle: {
             fontFamily: "encodeSansExpanded",
-          },
+        },
         itemsContainerStyle: {
             marginTop: 16,
             marginHorizontal: 8
