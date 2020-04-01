@@ -3,6 +3,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import { View, ImageBackground, StyleSheet, Text } from "react-native";
 import { DrawerNavigatorItems } from "react-navigation-drawer";
 
+/**
+ * Description: The side menu method's rendering 
+ * holds the tab for many screens such as Course Schedule
+ * , Shuttle Bus, Points of Interest, etc,. to create the side menu. 
+ * Only accesible from the main map view.
+ */
+
 function SideMenu(props) {
     return (
 

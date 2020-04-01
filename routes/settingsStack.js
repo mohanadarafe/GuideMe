@@ -1,4 +1,4 @@
-import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import Settings from "../screens/Menu/Settings";
 
 const screens = {

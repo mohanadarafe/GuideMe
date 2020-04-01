@@ -1,4 +1,4 @@
-import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import ShuttleBus from "../screens/Menu/ShuttleBus";
 
 const screens = {
@@ -8,8 +8,6 @@ const screens = {
             headerShown: false,
         }
     }
-
-
 };
 
 const ShuttleBusStack = createStackNavigator(screens);

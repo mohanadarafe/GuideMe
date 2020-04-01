@@ -1,7 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, AsyncStorage, FlatList, Dimension, TouchableOpacity } from "react-native";
-import { Icon, Button } from "native-base";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+
+/**
+ * US34 - As a user, I would like to see the nearest outdoor points of interest #14
+ * US35 - As a user, I would like to get the direction to the chosen nearest point of interest #15
+ * US36 - As a user, I would like to see a detailed description of the selected places #29
+ * 
+ * Description: This screen will presents the layout 
+ * for the display of the point of interests. The points 
+ * of interest information will be retrieved from the Google Places API.
+ * The screen is composed on a flatList to create a grid, and have 
+ * an pressable item for each points of interest
+ */
 
 
 function NearbyInterest(props) {
@@ -13,20 +25,26 @@ function NearbyInterest(props) {
     const goToNearbyInterestDetails = () => {
         props.navigation.navigate("NearbyInterestDetails");
     };
+
+    // Static data for now 
     const data = [
         { key: 'a', rate: '1' }, { key: 'b', rate: '2' }, { key: 'c', rate: '3' }, { key: 'd', rate: '4' }, { key: 'e', rate: '5' }, { key: 'f', rate: '6' }, { key: 'g', rate: '7' }, { key: 'h', rate: '8' }, { key: 'i', rate: '9' }, { key: 'j', rate: '10' },
     ];
 
     const formatData = (data, numColumns) => {
+
         const numberOfFullRows = Math.floor(data.length / numColumns);
+
         let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
+
         while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
+
             data.push({ key: 'blank-${numberOfElementsLastRow}', empty: true });
+
             numberOfElementsLastRow = numberOfElementsLastRow + 1;
         }
 
         return data;
-
     }
 
     const numColumns = 2;

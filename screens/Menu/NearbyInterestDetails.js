@@ -17,9 +17,10 @@ function NearbyInterestDetails(props) {
                 <Icon name="md-arrow-round-back" style={styles.icon} />
                 </Button>
             </View>
-            <Text style={styles.mainLabel}>Point of Interests Details</Text>
 
-            <Button transparent style={styles.routeButton} ><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+            <Text style={styles.mainLabel}>Point of Interests Details</Text>
+            
+            <Button transparent style={styles.routeButton} ><Text style={styles.viewRouteText}>View Route</Text></Button>
         </View >
     );
 }
@@ -70,6 +71,10 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#3ACCE1",
         borderRadius: 10,
+    },
+    viewRouteText: {
+        color: "white",
+        fontSize: 14,    
     }
 });
 

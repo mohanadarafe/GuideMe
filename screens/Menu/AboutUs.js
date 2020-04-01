@@ -2,8 +2,15 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Paragraph } from 'react-native-paper';
-import { Icon, Button } from "native-base";
+import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+
+/**
+ * Description: This is the about page for an
+ * informative summary about the application 
+ * and the info on the team memebers that have 
+ * participation of this application. Github usernames included.
+ */
 
 export const renderSeparator = () => {
     return (
@@ -22,8 +29,6 @@ function AboutUs(props) {
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
-
-    
     
     const data = [{
         title: "Team - Github",
@@ -51,7 +56,7 @@ function AboutUs(props) {
             <Text style={styles.aboutLabel}>Our App</Text>
 
             <View style={styles.scrollViewTextContainer}>
-            <ScrollView style={{flex:1}}>
+            <ScrollView style={styles.scrollTextAbout}>
                  <Paragraph style={styles.aboutText}>GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling.
                   </Paragraph>
                  </ScrollView>
@@ -68,8 +73,6 @@ function AboutUs(props) {
                     ItemSeparatorComponent={renderSeparator}
                 />
             </SafeAreaView>
-
-
         </View >
     );
 }
@@ -81,6 +84,9 @@ export const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         backgroundColor: "#2A2E43",
+        flex:1
+    },
+    scollTextAbout:{
         flex:1
     },
     scrollViewTextContainer:{

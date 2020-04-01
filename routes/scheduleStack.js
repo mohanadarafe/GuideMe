@@ -1,4 +1,4 @@
-import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import CourseSchedule from "../screens/Menu/CourseSchedule";
 import CourseScheduleDetails from "../screens/Menu/CourseScheduleDetails";
 
@@ -16,8 +16,6 @@ const screens = {
             headerShown: false,
         }
     }
-
-
 };
 
 const CourseScheduleStack = createStackNavigator(screens);

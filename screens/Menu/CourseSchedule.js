@@ -1,8 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
-import { Icon, Button } from "native-base";
+import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
+/**
+
+ * US22 - As a user, I would like to connect my direction to next class to my google calendar. #31
+ * US23 - As a user, when connecting the direction to the next class in my google calendar, I would like to map those directions to multiple calendars. #32
+ * US24 - As a user, I would like to find the location of a classroom from the next calendar event.
+ * 
+ * Description: The CourseSchedule method will 
+ * render the screen for the CourseSchedule screen, 
+ * which is composed of a scroll list that will hold
+ * the information of the courses retrived from the Google Calendar API.
+ * The items from the sectionList will be pressable for the uesr 
+ * to navigate to the detail screen and get the directions to the class.
+ */
 
 export const renderSeparator = () => {
     return (

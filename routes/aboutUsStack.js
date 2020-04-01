@@ -1,4 +1,4 @@
-import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
+import { createStackNavigator } from "react-navigation-stack";
 import AboutUs from "../screens/Menu/AboutUs";
 
 const screens = {
@@ -9,8 +9,6 @@ const screens = {
             headerShown: false,
         }
     }
-
-
 };
 
 const AboutUsStack = createStackNavigator(screens);

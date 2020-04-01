@@ -1,10 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
-import { Icon, Button } from "native-base";
+import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 
-
+/**
+ * Description: This method holds the toggle switches 
+ * that will compose the setting screen. The screen will have 
+ * also have accessibility to a Google Account Login screen.
+ */
 
 function Settings(props) {
 
@@ -17,12 +21,6 @@ function Settings(props) {
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
-
-
-      
-        
-
-   
 
     return (
         <View style={styles.container}>
