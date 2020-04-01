@@ -1,19 +1,18 @@
 import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
 import CourseSchedule from "../screens/Menu/CourseSchedule";
-import SideMenuMoreDetails from "../screens/Menu/SideMenuMoreDetails";
+import CourseScheduleDetails from "../screens/Menu/CourseScheduleDetails";
 
 const screens = {
-    
-    CourseSchedule:{
+
+    CourseSchedule: {
         screen: CourseSchedule,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
         }
     },
-
-    SideMenuMoreDetails: {
-        screen: SideMenuMoreDetails, 
-        navigationOptions:{
+    CourseScheduleDetails: {
+        screen: CourseScheduleDetails,
+        navigationOptions: {
             headerShown: false,
         }
     }

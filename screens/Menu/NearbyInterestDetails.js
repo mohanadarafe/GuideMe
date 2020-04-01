@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Icon, Button } from "native-base";
-import { Feather } from "@expo/vector-icons";
 
 
-function SideMenuMoreDetails(props) {
+
+function NearbyInterestDetails(props) {
 
     const goBack = () => {
         props.navigation.goBack();
@@ -17,7 +17,7 @@ function SideMenuMoreDetails(props) {
                 <Icon name="md-arrow-round-back" style={styles.icon} />
                 </Button>
             </View>
-            <Text style={styles.mainLabel}>Class Details</Text>
+            <Text style={styles.mainLabel}>Point of Interests Details</Text>
 
             <Button transparent style={styles.routeButton} ><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
         </View >
@@ -73,4 +73,4 @@ export const styles = StyleSheet.create({
     }
 });
 
-export default SideMenuMoreDetails;
+export default NearbyInterestDetails;

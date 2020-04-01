@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import SideMenu from "../screens/SideMenu";
 import HomeStack from "./routeStack";
-import NearbyStack from "./nearbyStack";
+import NearbyStack from "./nearbyInterestStack";
 import CourseScheduleStack from "./scheduleStack";
 import ShuttleBus from "./shuttleBusStack";
 import Settings from "./settingsStack";
@@ -39,7 +39,7 @@ const Drawer = createDrawerNavigator({
         }
     },
 
-    Nearby: {
+    NearbyInterest: {
         screen: NearbyStack,
         navigationOptions: {
             title: "Points of Interest",

@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export const renderSeparator = () => {
     return (
@@ -21,8 +22,8 @@ function CourseSchedule(props) {
         props.navigation.openDrawer();
     };
 
-    const goToMoreDetails = () => {
-        props.navigation.navigate("SideMenuMoreDetails");
+    const goToCourseSchedule = () => {
+        props.navigation.navigate("CourseScheduleDetails");
     }
 
     // TODO: Static data for now just to layout the SectionList 
@@ -44,9 +45,9 @@ function CourseSchedule(props) {
             <SafeAreaView style={styles.scrollTextContainer}>
                 <SectionList
                     sections={data}
-                    renderItem={({ item }) => <Text style={styles.listItem} onPress={goToMoreDetails} >{item}</Text>}
+                    renderItem={({ item }) => <TouchableOpacity onPress={goToCourseSchedule}><Text style={styles.listItem}>{item}</Text></TouchableOpacity>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(index) => index}
                     ItemSeparatorComponent={renderSeparator}
                 />
             </SafeAreaView>
