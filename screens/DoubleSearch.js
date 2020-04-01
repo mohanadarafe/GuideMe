@@ -18,7 +18,7 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
  * 
  * A.U
  */
-function fetchData () {
+function fetchData() {
     const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
     return searchInfo;
 }
@@ -42,7 +42,7 @@ DoubleSearch.propTypes = {
  * A.U
  * @param {*} props 
  */
-function DoubleSearch (props) {
+function DoubleSearch(props) {
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
@@ -229,10 +229,10 @@ function DoubleSearch (props) {
                 </View>
             </View>
             {(isCurrentLocationFetched || coordinatesFrom != null) &&
-                <Button transparent style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+                <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
             {(coordinatesFrom == null && !isCurrentLocationFetched) &&
-                <Button transparent style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
+                <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
         </View >
     );

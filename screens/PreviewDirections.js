@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-// import { api_key } from "../gmaps_api/apiKey";
+
+
 
 /**
  * Description: This method act as an interface. After taking the leg of the response
@@ -102,7 +103,6 @@ function PreviewDirections (props) {
     const [isRefreshed, setIsRefreshed] = React.useState(true);
     const mapRef = useRef(null);
 
-
     /* Read the params from the navigation state */
    
 
@@ -127,13 +127,15 @@ function PreviewDirections (props) {
          * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
          * @param {*} transportType 
         */
-    const fetchData = async (transportType) => {
-        try {
-            // The following line is commented to avoid unecessary requests on the direcitons API. 
-            // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${api_key.id}&mode=${transportType}`);
-            const jsonResponse = await resp.json();
-            if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
+        const fetchData = async (transportType) => {
+            try {
+                // Retrieving the apiKey from the AsyncStorage.
+                let keyId = await AsyncStorage.getItem("apiKeyId");
+                // The following line is commented to avoid unecessary requests on the direcitons API. 
+                // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
+                 let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
+                const jsonResponse = await resp.json();
+                if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
@@ -200,6 +202,8 @@ function PreviewDirections (props) {
     useEffect(() => {
         fetchData();
     }, []);
+
+    
 
     return (
         <View>
