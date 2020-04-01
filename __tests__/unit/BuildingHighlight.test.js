@@ -39,7 +39,7 @@ describe("Building Highlight component", () => {
       expect(setState).toHaveBeenCalledWith("LB Building");
       expect(setState).toHaveBeenCalledWith("GM Building");
       expect(setState).toHaveBeenCalledWith("EV Building");
-      expect(setState).toHaveBeenCalledWith("JMSB");
+      expect(setState).toHaveBeenCalledWith("MB Building");
       expect(setState).toHaveBeenCalledWith("SP Building");
       expect(setState).toHaveBeenCalledWith("CJ Building");
       expect(setState).toHaveBeenCalledWith("CC Building");
