@@ -172,7 +172,7 @@ export function buildingData () {
     }
   };
   buildings["Grey Nuns"] = {
-    name: "GN Building",
+    name: "Grey Nuns",
     fullName: "Grey Nuns Building",
     address: "1190 Rue Guy, Montreal, QC, H3H 2L4",
     departments: null,
@@ -226,7 +226,7 @@ export function buildingData () {
     }
   };
   buildings["Hall Building"] = {
-    name: "H Building",
+    name: "Hall Building",
     fullName: "Henry F. Hall Building",
     address: "1455 De Maisonneuve Blvd O., Montreal, QC, H3G 1M8",
     departments: [
@@ -291,7 +291,7 @@ export function buildingData () {
     }
   };
   buildings["LB Building"] = {
-    name: "LB Buidling",
+    name: "LB Building",
     fullName: "JW McConnell Building",
     address: "1400 De Maisonneuve Blvd. O. Montreal, QC, H3G 1M8",
     departments: [
@@ -691,7 +691,7 @@ export function buildingData () {
         longitude:-73.639152
       }
     }),
-    (buildings["CC Bulding"] = {
+    (buildings["CC Building"] = {
       name: "CC Building",
       fullName: "Central Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",

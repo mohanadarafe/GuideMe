@@ -103,6 +103,14 @@ function PreviewDirections (props) {
     const [isRefreshed, setIsRefreshed] = React.useState(true);
     const mapRef = useRef(null);
 
+    /**
+      * Description: Go back to previous screen method.
+      * Using Stack Navigator
+      */
+     const goBackPressHandler = () => {
+        props.navigation.goBack();
+    };
+
     /* Read the params from the navigation state */
     const { params } = props.navigation.state;
 
@@ -118,8 +126,6 @@ function PreviewDirections (props) {
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
 
     // The variables retrived from the preference page 
-    const personaType = params ? params.personaType : null;
-    const mobilityType = params ? params.mobilityType : null;
     var transportType = params ? params.transportType : null;
 
     /**
@@ -152,13 +158,7 @@ function PreviewDirections (props) {
             goBackPressHandler();
         }
     };
-    /**
-      * Description: Go back to previous screen method.
-      * Using Stack Navigator
-      */
-    const goBackPressHandler = () => {
-        props.navigation.goBack();
-    };
+
 
     /**
      * Description: The map has to be initialized to a certain area of the map.
