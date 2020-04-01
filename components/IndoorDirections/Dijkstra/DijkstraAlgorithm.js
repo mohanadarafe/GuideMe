@@ -71,8 +71,16 @@ const lowestCostNode = (costs, processed) => {
  */
 export const getFloorNumber = (name) => {
     if (name) {
+        if (name.match(/\b[^\d\W]+\b/g)) {
+            return name;
+        }
+        
         const num = name.match(/\d+/g).map(Number);
-
+        
+        if (name.includes("_")) {
+            const room = num[0].toString();
+            return room[0];
+        }
         if(num.length > 1) {
             return num[0].toString();
         }
@@ -97,10 +105,14 @@ export const ConvertToHall8Floor = (name) => {
     if (name) {
         const num = name.match(/\d+/g).map(Number);
         const numToString = num.toString();
-        if (numToString.length == 3) {
+        
+        if(numToString.charAt(0) == 9) {
+            return name;
+        }
+        else if (numToString.length == 3) {
             return name.replace(numToString.charAt(0), "8");
         }
-        if (numToString.length == 4) {
+        else if (numToString.length == 4) {
             return name.replace(numToString.substring(0,2), "8");
         }
     }  
