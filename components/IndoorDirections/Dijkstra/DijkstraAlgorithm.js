@@ -102,7 +102,7 @@ export const getFloorNumber = (name) => {
  * @param {*} name | classroom name
  */
 export const ConvertToHall8Floor = (name) => {
-    if (name) {
+    if (!name.includes(" ")) {
         const num = name.match(/\d+/g).map(Number);
         const numToString = num.toString();
         

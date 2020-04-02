@@ -2,7 +2,7 @@ import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
 import { Class9Graph } from '../../../constants/ClassGraph9';
-import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
+import { dijkstra, getFloorNumber, ConvertToHall8Floor, ConvertPointOfInterest, shortestPathToInterest } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 
 export function SameFloorDirections(props) {
@@ -10,8 +10,16 @@ export function SameFloorDirections(props) {
     const rooms = floor == 9 ? Hall9Coordinates() : props.rooms;
     const graph = floor == 9 ? Class9Graph() : ClassGraph();
     const from = floor == 9 ? props.from : ConvertToHall8Floor(props.from);
-    const to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
-    const route = dijkstra(graph, from, to).path;
+    var to = "";
+    var route = null;
+
+    if (props.interest == true) {
+        to = ConvertPointOfInterest(props.to)
+        route = shortestPathToInterest(graph, from, to);
+    } else {
+        to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
+        route = dijkstra(graph, from, to).path;
+    }
 
     var getNextRoom = (index) => {
         if (index < route.length){
