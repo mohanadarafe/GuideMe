@@ -1,10 +1,10 @@
 import React from "react";
-import Nearby from "../../screens/Nearby";
+import Settings from "../../screens/Menu/Settings";
 import renderer from "react-test-renderer";
 
-describe("Nearby component", () => {
+describe("Settings component", () => {
     test("renders correctly", () => {
-        const tree = renderer.create(<Nearby />).toJSON();
+        const tree = renderer.create(<Settings />).toJSON();
         expect(tree).toMatchSnapshot();
     });
 });

@@ -1,7 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
-import MoreDetails from "../screens/MoreDetails";
 import { Button } from "react-native-paper";
 
 
@@ -11,7 +11,7 @@ import { Button } from "react-native-paper";
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
 
-function BottomMenu(props) {
+function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
@@ -76,8 +76,12 @@ function BottomMenu(props) {
     };
 
     const goToNearby = () => {
-        props.navigation.navigate("Nearby");
+        props.navigation.navigate("Nearby", { bottomMenu: true });
     };
+
+    // const currentAltitude = async () => {
+    //     let altitude = await AsyncStorage.getItem("altitude");
+    // };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -86,7 +90,6 @@ function BottomMenu(props) {
             getPersonaType();
             getMobility();
             getMethodTravel();
-            //getMapPressed();
         }, 1);
         return () => clearInterval(intervalId);
     });
