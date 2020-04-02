@@ -30,37 +30,13 @@ function NearbyInterest(props) {
 
     // Static data for now 
     const data = [
-        { key: "a", rate: "1" }, { key: "b", rate: "2" }, { key: "c", rate: "3" }, { key: "d", rate: "4" }, { key: "e", rate: "5" }, { key: "f", rate: "6" }, { key: "g", rate: "7" }, { key: "h", rate: "8" }, { key: "i", rate: "9" }, { key: "j", rate: "10" },
+        { key: "a", rate: "1" }, { key: "b", rate: "2" }, { key: "c", rate: "3" }, { key: "d", rate: "4" }, { key: "e", rate: "5" }, { key: "f", rate: "6" }, { key: "g", rate: "7" }, { key: "h", rate: "8" }, { key: "i", rate: "9" }, { key: "j", rate: "10" }, { key: "j", rate: "11" }
     ];
-    /**
-     * The following function balancesthe grid of the flatlist so that theres always a full row
-     * @param  {} data
-     * @param  {} numColumns
-     */
-    const formatData = (data, numColumns) => {
-
-        if (numColumns != 0) {
-
-            const numberOfFullRows = Math.floor(data.length / numColumns);
-
-            let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
-
-            while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-
-                data.push({ key: "blank-${numberOfElementsLastRow}", empty: true });
-
-                numberOfElementsLastRow = numberOfElementsLastRow + 1;
-            }
-        }
-
-        return data;
-    };
 
     const numColumns = 2;
 
     return (
         <View style={styles.container}>
-
             <View style={styles.menuButtonContainer}>
                 <Button transparent style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
@@ -75,7 +51,7 @@ function NearbyInterest(props) {
                 <FlatList
                     onEndReachedThreshold={0}
                     contentContainerStyle={styles.list}
-                    data={formatData(data, numColumns)}
+                    data={data}
                     numColumns={numColumns}
                     keyExtractor={(item) => {
                         return item.key;
@@ -83,10 +59,6 @@ function NearbyInterest(props) {
                     renderItem={({ item, index }) => (
                         <TouchableOpacity onPress={goToNearbyInterestDetails}>
                             <View key={index}>
-                                {item.empty === true &&
-                                    <View style={styles.itemContainer, styles.itemInvisible}></View>
-                                }
-                                {item.empty !== true &&
                                     <View style={styles.itemContainer}>
                                         <View style={styles.itemImageContainer}>
                                         </View>
@@ -95,11 +67,9 @@ function NearbyInterest(props) {
                                             <Text style={styles.itemText}>Rating of place: {item.rate}</Text>
                                         </View>
                                     </View>
-                                }
                             </View>
                         </TouchableOpacity>
                     )}
-
                 />
             </View>
         </View >
@@ -192,9 +162,6 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "65%",
     },
-    itemInvisible: {
-        backgroundColor: "transparent"
-    }
 });
 
 export default NearbyInterest;
