@@ -18,6 +18,6 @@ const screens = {
     }
 };
 
-const CourseScheduleStack = createStackNavigator(screens);
+const scheduleStack = createStackNavigator(screens);
 
-export default CourseScheduleStack; 
+export default scheduleStack; 

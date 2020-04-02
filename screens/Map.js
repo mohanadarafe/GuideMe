@@ -72,7 +72,7 @@ function Map ({ navigation }) {
                     <BuildingHighlight />
                     <BuildingIdentification />
                 </MapView>
-                <Search testID="searchBar" />
+                <Search testID="searchBar" navigation={navigation} />
                 <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
                 </View>

@@ -10,6 +10,6 @@ const screens = {
     }
 };
 
-const ShuttleBusStack = createStackNavigator(screens);
+const shuttleBusStack = createStackNavigator(screens);
 
-export default ShuttleBusStack; 
+export default shuttleBusStack; 

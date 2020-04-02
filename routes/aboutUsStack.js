@@ -11,6 +11,6 @@ const screens = {
     }
 };
 
-const AboutUsStack = createStackNavigator(screens);
+const aboutUsStack = createStackNavigator(screens);
 
-export default AboutUsStack; 
+export default aboutUsStack; 

@@ -110,7 +110,7 @@ function PreviewDirections (props) {
     };
 
     /* Read the params from the navigation state */
-
+    const { params } = props.navigation.state;
 
     // The variables retrieved from DoubleSearch
     const fromCoordinates = params ? params.From : null;

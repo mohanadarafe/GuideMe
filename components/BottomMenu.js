@@ -79,9 +79,9 @@ function BottomMenu (props) {
         props.navigation.navigate("Nearby", { bottomMenu: true });
     };
 
-    const currentAltitude = async () => {
-        let altitude = await AsyncStorage.getItem("altitude");
-    };
+    // const currentAltitude = async () => {
+    //     let altitude = await AsyncStorage.getItem("altitude");
+    // };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -90,7 +90,6 @@ function BottomMenu (props) {
             getPersonaType();
             getMobility();
             getMethodTravel();
-            //getMapPressed();
         }, 1);
         return () => clearInterval(intervalId);
     });

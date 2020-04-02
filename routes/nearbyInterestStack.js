@@ -17,6 +17,6 @@ const screens = {
     }
 };
 
-const NearbyStack = createStackNavigator(screens);
+const nearbyInterestStack = createStackNavigator(screens);
 
-export default NearbyStack; 
+export default nearbyInterestStack; 

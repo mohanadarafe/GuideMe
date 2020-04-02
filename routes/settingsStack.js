@@ -11,6 +11,6 @@ const screens = {
     }
 };
 
-const SettingsStack = createStackNavigator(screens);
+const settingsStack = createStackNavigator(screens);
 
-export default SettingsStack; 
+export default settingsStack; 

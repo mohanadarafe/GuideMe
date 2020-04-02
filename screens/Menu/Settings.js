@@ -16,8 +16,8 @@ function Settings (props) {
     const [switchVal1, setSwitchVal1] = React.useState(false);
     const [switchVal2, setSwitchVal2] = React.useState(false);
 
-    const switchLabel1 = switchVal1 ? "ON" : "OFF";
-    const switchLabel2 = switchVal2 ? "ON" : "OFF";
+    var switchLabel1 = switchVal1 ? "ON" : "OFF";
+    var switchLabel2 = switchVal2 ? "ON" : "OFF";
 
     const goToMenu = () => {
         props.navigation.openDrawer();
@@ -112,15 +112,15 @@ export const styles = StyleSheet.create({
     },
     container1Text: {
         color: "#FFF",
-        marginHorizontal: 20,
-        marginVertical: 5,
+        marginHorizontal: "10%",
+        marginVertical: "2%",
         fontSize: 18,
         fontFamily: "encodeSansExpanded"
     },
     container1SubText: {
         color: "#FFF",
         opacity: 0.3,
-        marginHorizontal: 20,
+        marginHorizontal: "10%",
         fontFamily: "encodeSansExpanded"
     },
     container2: {
@@ -133,15 +133,15 @@ export const styles = StyleSheet.create({
     },
     container2Text: {
         color: "#FFF",
-        marginHorizontal: 20,
-        marginVertical: 5,
+        marginHorizontal: "10%",
+        marginVertical: "2%",
         fontSize: 18,
         fontFamily: "encodeSansExpanded"
     },
     container2SubText: {
         color: "#FFF",
         opacity: 0.3,
-        marginHorizontal: 20,
+        marginHorizontal: "10%",
         fontFamily: "encodeSansExpanded"
     },
     scrollContainer: {
@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
     toggle: {
         position: "absolute",
         left: "80%",
-        top: "25%"
+        top: "30%"
     },
 });
 

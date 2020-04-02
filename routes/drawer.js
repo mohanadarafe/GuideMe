@@ -4,14 +4,15 @@ import React from "react";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createAppContainer } from "react-navigation";
 import SideMenu from "../screens/SideMenu";
-import HomeStack from "./routeStack";
-import NearbyStack from "./nearbyInterestStack";
-import CourseScheduleStack from "./scheduleStack";
-import ShuttleBus from "./shuttleBusStack";
-import Settings from "./settingsStack";
-import AboutUs from "./aboutUsStack";
+import routeStack from "./routeStack";
+import nearbyInterestStack from "./nearbyInterestStack";
+import scheduleStack from "./scheduleStack";
+import shuttleBusStack from "./shuttleBusStack";
+import settingsStack from "./settingsStack";
+import aboutUsStack from "./aboutUsStack";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
+
 
 /**
  * Description: This constant is taking a createDrawerNavigator
@@ -25,24 +26,24 @@ import { Dimensions } from "react-native";
 
 const Drawer = createDrawerNavigator({
 
-    Home: {
-        screen: HomeStack,
+    routeStack: {
+        screen: routeStack,
         navigationOptions: {
             title: "Map",
             drawerIcon: ({ tintColor }) => <Feather name="home" size={22} color={tintColor} />
         }
     },
 
-    CourseSchedule: {
-        screen: CourseScheduleStack,
+    scheduleStack: {
+        screen: scheduleStack,
         navigationOptions: {
             title: "Course Schedule",
             drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="calendar" size={22} color={tintColor} />
         }
     },
 
-    ShuttleBus: {
-        screen: ShuttleBus,
+    shuttleBusStack: {
+        screen: shuttleBusStack,
         navigationOptions: {
             title: "Shuttle Bus",
 
@@ -50,8 +51,8 @@ const Drawer = createDrawerNavigator({
         }
     },
 
-    NearbyInterest: {
-        screen: NearbyStack,
+    nearbyInterestStack: {
+        screen: nearbyInterestStack,
         navigationOptions: {
             title: "Points of Interest",
             drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="food-fork-drink" size={22} color={tintColor} />,
@@ -59,16 +60,16 @@ const Drawer = createDrawerNavigator({
         }
     },
 
-    Settings: {
-        screen: Settings,
+    settingsStack: {
+        screen: settingsStack,
         navigationOptions: {
             title: "Settings",
             drawerIcon: ({ tintColor }) => <Feather name="settings" size={22} color={tintColor} />
         }
     },
 
-    AboutUs: {
-        screen: AboutUs,
+    aboutUsStack: {
+        screen: aboutUsStack,
         navigationOptions: {
             title: "About Us",
             drawerIcon: ({ tintColor }) => <Feather name="info" size={22} color={tintColor} />

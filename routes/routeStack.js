@@ -63,6 +63,6 @@ const screens = {
     },
 };
 
-const HomeStack = createStackNavigator(screens);
+const routeStack = createStackNavigator(screens);
 
-export default HomeStack;
+export default routeStack;
