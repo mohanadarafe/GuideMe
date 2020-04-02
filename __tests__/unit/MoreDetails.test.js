@@ -11,12 +11,6 @@ describe("MoreDetails component", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    test("render seperator renders correctly", () => {
-        const render = renderSeparator();
-        const style = render.props.style;
-        expect(style.backgroundColor).toEqual('#353A50');
-    });
-
     test("fetch data returns list of data", () => {
         const data = fetchData("JMSB");
         var response = [
