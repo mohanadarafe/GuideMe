@@ -6,10 +6,10 @@ import MapDirections from "../screens/Directions";
 import PreviewDirections from "../screens/PreviewDirections";
 import PreferenceMenu from "../screens/PreferenceMenu";
 import IndoorMapView from "../screens/Indoor/IndoorMapView";
-import CourseScheduleDetails from "../screens/Menu/CourseScheduleDetails";
 
 // Add screens here
 const screens = {
+
     Map: {
         screen: HomeMap,
         navigationOptions: {
