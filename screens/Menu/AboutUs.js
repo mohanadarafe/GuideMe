@@ -13,18 +13,6 @@ import PropTypes from "prop-types";
  * participation of this application. Github usernames included.
  */
 
-export const renderSeparator = () => {
-    return (
-        <View
-            style={{
-                height: 1,
-                width: "100%",
-                backgroundColor: "#353A50",
-            }}
-        />
-    );
-};
-
 function AboutUs (props) {
 
     const goToMenu = () => {
@@ -71,7 +59,7 @@ function AboutUs (props) {
                     renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
-                    ItemSeparatorComponent={renderSeparator}
+                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
                 />
             </SafeAreaView>
         </View >
@@ -180,6 +168,11 @@ export const styles = StyleSheet.create({
         paddingLeft: 22,
         fontFamily: "encodeSansExpanded",
         color: "#D3D3D3",
+    },
+    line: {
+        height: 1,
+        width: "100%",
+        backgroundColor: "#353A50",
     },
 
 });

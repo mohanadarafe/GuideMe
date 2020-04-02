@@ -10,6 +10,10 @@ function CourseScheduleDetails (props) {
         props.navigation.goBack();
     };
 
+    // const goToDoubleSearch = () => {
+    //     props.navigation.navigate("DoubleSearch");
+    // }
+
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
@@ -20,7 +24,7 @@ function CourseScheduleDetails (props) {
 
             <Text style={styles.mainLabel}>Class Details</Text>
 
-            <Button transparent style={styles.routeButton} ><Text style={styles.viewRouteText}>View Route</Text></Button>
+            <Button transparent style={styles.routeButton}><Text style={styles.viewRouteText}>View Route</Text></Button>
         </View >
     );
 }

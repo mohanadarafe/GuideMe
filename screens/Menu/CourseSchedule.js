@@ -19,17 +19,7 @@ import PropTypes from "prop-types";
  * to navigate to the detail screen and get the directions to the class.
  */
 
-export const renderSeparator = () => {
-    return (
-        <View
-            style={{
-                height: 1,
-                width: "100%",
-                backgroundColor: "#353A50",
-            }}
-        />
-    );
-};
+
 
 function CourseSchedule (props) {
 
@@ -56,14 +46,13 @@ function CourseSchedule (props) {
                 </Button>
             </View>
             <Text style={styles.mainLabel}>My Course Schedule</Text>
-
             <SafeAreaView style={styles.scrollTextContainer}>
                 <SectionList
                     sections={data}
                     renderItem={({ item }) => <TouchableOpacity onPress={goToCourseSchedule}><Text style={styles.listItem}>{item}</Text></TouchableOpacity>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(index) => index}
-                    ItemSeparatorComponent={renderSeparator}
+                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
                 />
             </SafeAreaView>
 
@@ -140,6 +129,11 @@ export const styles = StyleSheet.create({
         paddingLeft: 22,
         fontFamily: "encodeSansExpanded",
         color: "#D3D3D3",
+    },
+    line: {
+        height: 1,
+        width: "100%",
+        backgroundColor: "#353A50",
     },
 
 });
