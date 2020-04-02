@@ -3,7 +3,9 @@ import { View, Text, StyleSheet } from "react-native";
 import { Icon, Button } from "native-base";
 import PropTypes from "prop-types";
 
-
+/**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ */
 function CourseScheduleDetails (props) {
 
     const goBack = () => {

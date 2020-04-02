@@ -11,6 +11,11 @@ import { DrawerNavigatorItems } from "react-navigation-drawer";
  * Only accesible from the main map view.
  */
 
+ /**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ *  @param  {} props drawerNavigator is passed in the following prop
+ */
+
 function SideMenu (props) {
     return (
 

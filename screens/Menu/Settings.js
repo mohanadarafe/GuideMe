@@ -11,6 +11,9 @@ import PropTypes from "prop-types";
  * also have accessibility to a Google Account Login screen.
  */
 
+ /**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ */
 function Settings (props) {
 
     const [switchVal1, setSwitchVal1] = React.useState(false);

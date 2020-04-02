@@ -13,6 +13,9 @@ import PropTypes from "prop-types";
  * participation of this application. Github usernames included.
  */
 
+ /**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ */
 function AboutUs (props) {
 
     const goToMenu = () => {

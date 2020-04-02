@@ -15,7 +15,9 @@ import PropTypes from "prop-types";
  * The screen is composed on a flatList to create a grid, and have 
  * an pressable item for each points of interest
  */
-
+/**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ */
 function NearbyInterest(props) {
 
     const goToMenu = () => {
@@ -30,7 +32,11 @@ function NearbyInterest(props) {
     const data = [
         { key: "a", rate: "1" }, { key: "b", rate: "2" }, { key: "c", rate: "3" }, { key: "d", rate: "4" }, { key: "e", rate: "5" }, { key: "f", rate: "6" }, { key: "g", rate: "7" }, { key: "h", rate: "8" }, { key: "i", rate: "9" }, { key: "j", rate: "10" },
     ];
-
+    /**
+     * The following function balancesthe grid of the flatlist so that theres always a full row
+     * @param  {} data
+     * @param  {} numColumns
+     */
     const formatData = (data, numColumns) => {
 
         if (numColumns != 0) {

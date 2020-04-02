@@ -20,7 +20,9 @@ import PropTypes from "prop-types";
  */
 
 
-
+/**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ */
 function CourseSchedule (props) {
 
     const goToMenu = () => {

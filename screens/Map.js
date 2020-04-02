@@ -8,7 +8,6 @@ import { BottomMenu } from "../components/BottomMenu";
 import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
-import IndoorMapView from "./Indoor/IndoorMapView";
 import PropTypes from "prop-types";
 
 const mapPosition = {

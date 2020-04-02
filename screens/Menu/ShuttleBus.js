@@ -4,6 +4,9 @@ import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
+/**Prop passed
+ * @param  {} navigation props.navigation is the name of the object from Navigator library
+ */
 function ShuttleBus (props) {
 
     const goToMenu = () => {
