@@ -136,6 +136,9 @@ export function sgwRooms () {
       "H963",
       "H986",
       "H990",
+      "Men's Washroom",
+      "Women's Washroom",
+      "Water Fountain"
     ]
   };
   return rooms;

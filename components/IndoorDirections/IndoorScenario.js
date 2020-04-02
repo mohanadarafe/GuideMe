@@ -5,6 +5,7 @@ import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDire
 import { SameFloorDirections } from './TypesOfDirections/SameFloorDirections';
 import { DifferentBuildingDirections } from './TypesOfDirections/DifferentBuildingDirections';
 import { getFloorNumber } from './Dijkstra/DijkstraAlgorithm';
+import { InterestDirections } from './TypesOfDirections/InterestDirections';
 
 export function IndoorScenario(props) {
     const rooms = HallXCoordinates();
@@ -20,6 +21,9 @@ export function IndoorScenario(props) {
                 break;
             case "DIFFERENT_BUILDING":
                 return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
+                break;
+            case "INTEREST":
+                return <InterestDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
                 break;
             case "NOT_INDOOR":
                 break;
@@ -42,6 +46,11 @@ export const whichPathToTake = (from, to) => {
         const same_floor = "SAME_FLOOR";
         const different_floor = "DIFFERENT_FLOOR";
         const not_indoor = "NOT_INDOOR";
+        const interest = "INTEREST";
+
+        if (to.includes("Washroom") || to.includes("Water")) {
+            return interest;
+        }
 
         if (from.includes(" ") && to.includes(" ")) {
             return not_indoor;

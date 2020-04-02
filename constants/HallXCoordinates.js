@@ -40,6 +40,14 @@ export function HallXCoordinates (floorNumber) {
             y: "217"
         }
     },
+    rooms["women_washroom"] = {
+        x: "385",
+        y: "267",
+        nearestPoint: {
+            x: "385",
+            y: "217"
+        }
+    },
     rooms["H807"] = {
         x: "471",
         y: "155",
@@ -67,6 +75,14 @@ export function HallXCoordinates (floorNumber) {
     rooms["H811"] = {
         x: "654",
         y: "155",
+        nearestPoint: {
+            x: "654",
+            y: "216"
+        }
+    },
+    rooms["men_washroom"] = {
+        x: "654",
+        y: "256",
         nearestPoint: {
             x: "654",
             y: "216"
@@ -186,7 +202,7 @@ export function HallXCoordinates (floorNumber) {
     },
     rooms["H837"] = {
         x: "648",
-        y: "806",
+        y: "866",
         nearestPoint: {
             x: "646",
             y: "802"

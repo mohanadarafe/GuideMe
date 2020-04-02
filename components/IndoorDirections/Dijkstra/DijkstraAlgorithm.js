@@ -117,3 +117,31 @@ export const ConvertToHall8Floor = (name) => {
         }
     }  
 }
+
+export const ConvertPointOfInterest = (name) => {
+    if (name) {
+        switch (name) {
+            case "Men's Washroom":
+                return "men_washroom"
+                break;
+            case "Women's Washroom":
+                return "women_washroom"
+                break;
+            case "Water Fountain":
+                return "water"
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+export const shortestPathToInterest = (graph, from, to) => {
+    if (to == "women_washroom" || to == "men_washroom") {
+        return dijkstra(graph, from, to).path;
+    }
+
+    if (to == "water") {
+        console.log("attends");
+    }
+}
