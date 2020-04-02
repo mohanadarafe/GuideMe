@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
@@ -47,8 +47,7 @@ function DoubleSearch(props) {
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
-    const [currentLocationCoords, setCurrentLocationCoords] = React.useState({ latitude: null, longitude: null });
-    const [isCurrentLocationFetched, setIsCurrentLocationFetched] = React.useState(false);
+    const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
 
     /**
      * Description: Method to go back to the previous screen.
@@ -74,56 +73,73 @@ function DoubleSearch(props) {
         if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.");
         }
+        else if (from.name == "Current Location" && currentLocationCoords) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
+        }
+        //Same Building Indoor Scenario.
+        else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
+            return alert("Same Building Indoor Scenario");
+        }
+        // //Di
+        // else if (coordinatesFrom.isClassRoom && coordinatesTo.isClassRoom) {
+        //     props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
+        // }
         else if (coordinatesFrom && coordinatesTo) {
             props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
         }
-        else if (from.name == "Current Location" && currentLocationCoords.latitude && currentLocationCoords.longitude) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
-        }
-        else if (from.name == "Current Location" && !currentLocationCoords) {
-            return alert("Error: Are location services on?");
-        }
         else {
-            return alert("The destination field is missing or you typed an invalid location. Please try again.");
+            return alert("The destination or origin field is missing or invalid. Please try again.");
         }
     };
 
     const destinationName = props.navigation.getParam("destinationName", "Destination");
 
     /**
-     * Algorithm to find the coordinates of a given building name.
+     * Algorithm to find the coordinates of a given building name or classroom name.
      * returns longitude and latitude
-     * TODO: B) Another algorithm or extend this one to take in consideration classrooms.
+     * 
      * A.U
      * @param {*} name 
      */
     const getCoordinates = (name) => {
 
-        var list = buildingData();
-        for (var key in list) {
-            if (list[key].name.includes(name)) {
-                return list[key].coordinates;
+        let buildingList = buildingData();
+        let classRoomsList = sgwRooms();
+        if (/\d/.test(name)) {
+            for (var key in classRoomsList) {
+                if(classRoomsList[key].room.includes(name)) {
+                const buildingCoords = buildingList[key].coordinates;
+                const isClassroom = {isClassRoom: true};
+                const result = {...buildingCoords, ...isClassroom};
+                return result;
+                }
             }
         }
-        if (name == "Current Location" && currentLocationCoords) {
-            getCurrentLocation();
-            setIsCurrentLocationFetched(true);
+        for (var key in buildingList) {
+            if (buildingList[key].name.includes(name)) {
+                return buildingList[key].coordinates;
+            }
+        }
+        if (name == "Current Location") {
+            //getCurrentLocation();
+            getPosition().then(({coords}) => {
+            setCurrentLocationCoords({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
+                })
+            })
+            .catch((err) => {
+            alert (err.message);
+            });
         }
         return null;
     };
 
-    const getCurrentLocation = () => {
-        navigator.geolocation.getCurrentPosition(
-            ({ coords }) => {
-                setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                });
-            },
-            (error) => alert("Error: Are location services on?"),
-            { enableHighAccuracy: true }
-        );
-    };
+    var getPosition = function (options) {
+        return new Promise(function (resolve, reject) {
+          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+        });
+      }
 
     let fromName = from.name;
     let toName = to.name;
@@ -228,10 +244,10 @@ function DoubleSearch(props) {
                     />
                 </View>
             </View>
-            {(isCurrentLocationFetched || coordinatesFrom != null) &&
+            {(currentLocationCoords || coordinatesFrom != null) &&
                 <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
-            {(coordinatesFrom == null && !isCurrentLocationFetched) &&
+            {(coordinatesFrom == null && !currentLocationCoords) &&
                 <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
         </View >

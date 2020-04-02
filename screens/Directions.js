@@ -27,6 +27,21 @@ function Directions (props) {
     const { params } = props.navigation.state;
     const destinationResponse = params ? params.destinationResponse : null;
 
+    //TODO: INDOOR-OUTDOOR: In this case, we redirect the Directions to the IndoorMap, it also means its the different building scenario.
+    // Also, when exiting the indoorView, we should be brought back here! Also append indoorMap at the first element.
+    if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+       alert("The origin is a classroom, but not the destination");
+    }
+    //TODO: INDOOR-OUTDOOR: In this case, after the last instruction is shown, the indoor mapView should be displayed.
+    if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+       alert("The destination is a classroom, but not the origin");
+    }
+    //TODO: INDOOR-OUTDOOR: In this case, it's a mix of the two previous ifs: We redirect to indoorMap and then add the indoorMapView should appended 
+    // after last instruction.
+    if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+       alert("Both the destination and the origin are classrooms");
+    }
+
     useEffect(() => {
         if (instructionIndex == 0) {
             setIsFirstInstruction(true); //When Direction enabled, we are at the first instruction.
@@ -35,6 +50,7 @@ function Directions (props) {
             setIsLastInstruction(true);
         }
     });
+
 
     /**
      * Description: Go back method
@@ -141,7 +157,8 @@ function Directions (props) {
                     </View>
                 </View>
             </View>
-            {isFirstInstruction &&
+            {//TODO: Add GetInside Button or Icon for the cases explained before. Refer to TODO:INDOOR-OUTDOOR:
+            isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled={true}>
                     <View>
                         <Icon name="arrow-back" style={styles.disabledArrow} />

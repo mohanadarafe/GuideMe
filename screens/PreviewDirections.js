@@ -29,11 +29,13 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
             totalDistance: jsonLeg.distance.text,
             totalDuration: jsonLeg.duration.text,
             startAddress: jsonLeg.start_address,
+            isStartAddressClassRoom: false,
             startLocation: {
                 latitude: jsonLeg.start_location.lat,
                 longitude: jsonLeg.start_location.lng,
             },
             endAddress: jsonLeg.end_address,
+            isEndAddressClassRoom: false,
             endLocation: {
                 latitude: jsonLeg.end_location.lat,
                 longitude: jsonLeg.end_location.lng
@@ -115,7 +117,7 @@ function PreviewDirections (props) {
     // The variables retrieved from DoubleSearch
     const fromCoordinates = params ? params.From : null;
     const toCoordinates = params ? params.To : null;
-    // //TODO: Uncomment this section
+
     if (!fromCoordinates || !toCoordinates) {
         alert("Sorry, could not load directions. The Starting Point or Destination might be wrong. Please Try again.");
         goBackPressHandler();
@@ -145,6 +147,8 @@ function PreviewDirections (props) {
                 updateMapRegionToOverallPath(decodedPoints);
                 let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
+                filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? true : false;
+                filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? true : false;
                 setdetailedInstructionsObject(filteredInstruction);
             }
             else { //Error handling
