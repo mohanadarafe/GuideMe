@@ -235,8 +235,10 @@ function PreviewDirections (props) {
                     <View style={styles.directionTextHeader}>
                         <Text style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
                         <View style={styles.lineHeader}></View>
-                    </View>
-                    <View style={styles.lowerHeaderContainer}>
+                    </View> 
+                </View>
+                <View style={styles.lowerHeaderContainer}>
+                    <View style ={{flexDirection: "column", alignItems: "center", justifyContent:"center", height: "100%"}}>
                         <View style={styles.addressContainer}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
@@ -287,7 +289,9 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        top: "15%"
+        top: "15%",
+        height: "50%",
+        flexDirection: "column",
     },
     directionText: {
         justifyContent: "center",
@@ -321,14 +325,15 @@ export const styles = StyleSheet.create({
     DirectionTextHeader: {
         color: "#FFFFFF",
         fontSize: 25,
-        fontWeight: "bold",
+        // fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
     },
     directionLabels: {
         fontWeight: "normal",
-        fontSize: 14,
+        fontSize: 20,
         color: "white",
-        width: "70%"
+        fontWeight: "bold",
+        width: "70%",
     },
     directionLabelContainer: {
         width: "100%",
@@ -373,14 +378,14 @@ export const styles = StyleSheet.create({
         width: "25%"
     },
     addressContainer: {
-        top: "2%",
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "center"
     },
     lowerHeaderContainer: {
         flexDirection: "column",
         width: "100%",
-        top: "5%"
+        height: "50%",
     }
 
 });
