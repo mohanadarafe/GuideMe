@@ -45,10 +45,10 @@ function IndoorMapView(props) {
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
                     {((selectedBuilding === "Hall Building" && selectedFloor !== "9") || (from !== null && to !== null && selectedFloor !== "9")) &&
-                        <HallFloorX />
+                        <HallFloorX from={from} to={to} />
                     }
                     {((selectedBuilding === "Hall Building" && selectedFloor === "9") || (from !== null && to !== null && selectedFloor === "9")) &&
-                        <HallFloor9 />
+                        <HallFloor9 from={from} to={to} />
                     }
                     {selectedBuilding === "JMSB" && selectedFloor === "1" &&
                         <JMSBFloor1 />

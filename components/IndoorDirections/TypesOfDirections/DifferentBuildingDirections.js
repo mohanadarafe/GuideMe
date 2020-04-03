@@ -56,7 +56,7 @@ export function DifferentBuildingDirections(props) {
     });
 
     // Go to elevator
-    if(props.floor == getFloorNumber(goTo)) {
+    if(props.floor == getFloorNumber(tempGoTo)) {
         rooms = props.floor == 9 ? Hall9Coordinates() : rooms;
         return(
             <G>
