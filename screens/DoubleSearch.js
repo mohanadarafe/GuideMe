@@ -78,7 +78,7 @@ function DoubleSearch(props) {
         }
         //Same Building Indoor Scenario.
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
-            return alert("Same Building Indoor Scenario");
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
         // //Di
         // else if (coordinatesFrom.isClassRoom && coordinatesTo.isClassRoom) {
@@ -244,10 +244,10 @@ function DoubleSearch(props) {
                     />
                 </View>
             </View>
-            {(currentLocationCoords || coordinatesFrom != null) &&
+            {(currentLocationCoords || coordinatesFrom != null) && 
                 <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
-            {(coordinatesFrom == null && !currentLocationCoords) &&
+            {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&
                 <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
         </View >

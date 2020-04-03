@@ -29,7 +29,9 @@ function IndoorMapView(props) {
         });
     };
 
-    const selectedBuilding = props.navigation.getParam("selectedBuilding", "null");
+    const selectedBuilding = props.navigation.getParam("selectedBuilding", "Hall Building");
+    const from = props.navigation.getParam("From", null);
+    const to = props.navigation.getParam("To", null);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -42,10 +44,10 @@ function IndoorMapView(props) {
         <View testID="indoorMapFloorScrollView">
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
-                    {selectedBuilding === "Hall Building" && selectedFloor !== "9" &&
+                    {((selectedBuilding === "Hall Building" && selectedFloor !== "9") || (from !== null && to !== null && selectedFloor !== "9")) &&
                         <HallFloorX />
                     }
-                    {selectedBuilding === "Hall Building" && selectedFloor === "9" &&
+                    {((selectedBuilding === "Hall Building" && selectedFloor === "9") || (from !== null && to !== null && selectedFloor === "9")) &&
                         <HallFloor9 />
                     }
                     {selectedBuilding === "JMSB" && selectedFloor === "1" &&
