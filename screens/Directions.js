@@ -24,6 +24,7 @@ function Directions (props) {
     const [indoorScenario1, setIndoorScenario1] = React.useState(false);
     const [indoorScenario2, setIndoorScenario2] = React.useState(false);
     const [indoorScenario3, setIndoorScenario3] = React.useState(false);
+    const [inside, setInside] = React.useState(true);
     const mapRef = useRef(null);
 
     /* 2. Read the params from the navigation state */
@@ -33,14 +34,17 @@ function Directions (props) {
     const indoorScenarios = () => {
     //TODO: INDOOR-OUTDOOR: In this case, we redirect the Directions to the IndoorMap, it also means its the different building scenario.
     // Also, when exiting the indoorView, we should be brought back here! Also append indoorMap at the first element.
+    //TODO: Pass building name (key) to IndoorMapView
     if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
         setIndoorScenario1(true);
-       alert("The origin is a classroom, but not the destination");
+        if (inside) {
+            props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })
+            setInside(false);
+        }
     }
     //TODO: INDOOR-OUTDOOR: In this case, after the last instruction is shown, the indoor mapView should be displayed.
     else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
-        setIndoorScenario2(true);
-       alert("The destination is a classroom, but not the origin");
+       setIndoorScenario2(true);
     }
     //TODO: INDOOR-OUTDOOR: In this case, it's a mix of the two previous ifs: We redirect to indoorMap and then add the indoorMapView should appended 
     // after last instruction.
@@ -178,7 +182,7 @@ function Directions (props) {
             isFirstInstruction && (indoorScenario1 || indoorScenario3) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View>
-                        <Icon type="FontAwesome5" name="building" />
+                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })}} />
                     </View>
                 </TouchableOpacity> 
             }
@@ -193,7 +197,7 @@ function Directions (props) {
             isLastInstruction && (indoorScenario2 || indoorScenario3) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View >
-                        <Icon type="FontAwesome5" name="building" />
+                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.startAddress, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom })}} />
                     </View>
                 </TouchableOpacity>
             }
