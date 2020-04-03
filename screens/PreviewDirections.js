@@ -117,6 +117,8 @@ function PreviewDirections (props) {
     // The variables retrieved from DoubleSearch
     const fromCoordinates = params ? params.From : null;
     const toCoordinates = params ? params.To : null;
+    const fromName = params ? params.fromName : null;
+    const toName = params ? params.toName : null;
 
     if (!fromCoordinates || !toCoordinates) {
         alert("Sorry, could not load directions. The Starting Point or Destination might be wrong. Please Try again.");
@@ -135,7 +137,6 @@ function PreviewDirections (props) {
         */
     const fetchData = async (transportType) => {
         try {
-            console.log(fromCoordinates.isClassRoom, toCoordinates.isClassRoom);
             // Retrieving the apiKey from the AsyncStorage.
             let keyId = await AsyncStorage.getItem("apiKeyId");
             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
@@ -206,7 +207,7 @@ function PreviewDirections (props) {
     }, []);
 
 
-
+    //TODO: Update Styling for To and From Titles.
     return (
         <View>
             <MapView
@@ -241,14 +242,14 @@ function PreviewDirections (props) {
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>From: </Text>
                             </View>
-                            <Text style={styles.directionLabels}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.startAddress : "N/A"}</Text>
+                            <Text style={styles.directionLabels}>{fromName ? fromName : "N/A"}</Text>
                         </View>
                         <View style={styles.addressContainer}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>To: </Text>
                             </View>
-                            <Text style={styles.directionLabels}>{detailedInstructionsObject ? detailedInstructionsObject.generalRouteInfo.endAddress : "N/A"}</Text>
+                            <Text style={styles.directionLabels}>{toName ? toName : "N/A"}</Text>
                         </View>
                     </View>
                 </View>

@@ -96,14 +96,14 @@ function DoubleSearch(props) {
             return alert("Origin and destination are the same. Please try Again.");
         }
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
         }
-        //Same Building Indoor Scenario.
+        //FIXME: Should be on DoubleSearchContext.
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName:from.name, toName:to.name });
         }
         else {
             return alert("The destination or origin field is missing or invalid. Please try again.");
@@ -230,7 +230,6 @@ function DoubleSearch(props) {
                             keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
                             clearTextOnFocus: false,
-                            // onTextChange: text => console.log(text)
                         }}
                     />
                 </View>
