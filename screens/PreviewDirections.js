@@ -29,13 +29,13 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
             totalDistance: jsonLeg.distance.text,
             totalDuration: jsonLeg.duration.text,
             startAddress: jsonLeg.start_address,
-            isStartAddressClassRoom: false,
+            isStartAddressClassRoom: null,
             startLocation: {
                 latitude: jsonLeg.start_location.lat,
                 longitude: jsonLeg.start_location.lng,
             },
             endAddress: jsonLeg.end_address,
-            isEndAddressClassRoom: false,
+            isEndAddressClassRoom: null,
             endLocation: {
                 latitude: jsonLeg.end_location.lat,
                 longitude: jsonLeg.end_location.lng
@@ -135,20 +135,20 @@ function PreviewDirections (props) {
         */
     const fetchData = async (transportType) => {
         try {
+            console.log(fromCoordinates.isClassRoom, toCoordinates.isClassRoom);
             // Retrieving the apiKey from the AsyncStorage.
             let keyId = await AsyncStorage.getItem("apiKeyId");
-            // The following line is commented to avoid unecessary requests on the direcitons API. 
-            // FIXME: To make it work, you need two things ; 1. Uncomment the line 2. get the Api key from Alain :)
             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
             const jsonResponse = await resp.json();
             if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
+                //Command Pattern
                 let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
-                filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? true : false;
-                filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? true : false;
+                filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? fromCoordinates.isClassRoom : null;
+                filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? toCoordinates.isClassRoom : null;
                 setdetailedInstructionsObject(filteredInstruction);
             }
             else { //Error handling
