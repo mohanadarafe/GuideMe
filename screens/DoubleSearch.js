@@ -14,7 +14,6 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
  * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
  * 2) TODO: - Services and departments should not be in the searchItems.
  *      Thus different parameters need to be sent to MapData()
- * 3) TODO: Algorithm for classrooms and refers to B)
  * 
  * A.U
  */
@@ -36,6 +35,17 @@ DoubleSearch.propTypes = {
 };
 
 /**
+ * FIXME: Refers to fetchData()
+ *
+ * A.U
+ */
+var originItems = fetchData();
+var destinationItems = [];
+destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
+originItems.unshift({ "id": 0, "name": "Current Location" });
+
+
+/**
  * Overall :
  * TODO: 1.  Algorithm for another Classrom, refers to B) and fetchData() - 3
  * 
@@ -48,7 +58,6 @@ function DoubleSearch(props) {
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
-
     /**
      * Description: Method to go back to the previous screen.
      * Using Stack navigator.
@@ -56,6 +65,19 @@ function DoubleSearch(props) {
     const goBack = () => {
         props.navigation.goBack();
     };
+
+    /**
+     * FIXME: On stand by for now.
+     */
+    const getInitialItemNumber = async () => {
+        let destinationItems = [];
+        destinationItems = fetchData();
+        return await destinationItems.forEach(element => {
+            if (element.name === name) {
+                return element.id - 1;
+            }
+        })
+    }
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
      * Particularity: 
@@ -73,17 +95,13 @@ function DoubleSearch(props) {
         if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.");
         }
-        else if (from.name == "Current Location" && currentLocationCoords) {
+        else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
         }
         //Same Building Indoor Scenario.
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
-        // //Di
-        // else if (coordinatesFrom.isClassRoom && coordinatesTo.isClassRoom) {
-        //     props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
-        // }
         else if (coordinatesFrom && coordinatesTo) {
             props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
         }
@@ -93,6 +111,23 @@ function DoubleSearch(props) {
     };
 
     const destinationName = props.navigation.getParam("destinationName", "Destination");
+    const value = props.navigation.getParam("destinationIndex", "");
+    // console.log(value);
+    /**
+     * 
+     */
+    const fetchCurrentPosition = () => {
+        
+        getPosition().then(({coords}) => {
+            setCurrentLocationCoords({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
+                })
+            })
+            .catch((err) => {
+            alert (err.message);
+            });
+    }
 
     /**
      * Algorithm to find the coordinates of a given building name or classroom name.
@@ -121,16 +156,7 @@ function DoubleSearch(props) {
             }
         }
         if (name == "Current Location") {
-            //getCurrentLocation();
-            getPosition().then(({coords}) => {
-            setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                })
-            })
-            .catch((err) => {
-            alert (err.message);
-            });
+            fetchCurrentPosition();           
         }
         return null;
     };
@@ -167,27 +193,10 @@ function DoubleSearch(props) {
             setCoordinatesTo(getCoordinates(initialTo));
             setTo({ name: initialTo });
         }
+        if (from.name === undefined) {
+            fetchCurrentPosition();
+        }
     });
-
-    /**
-     * FIXME: Refers to fetchData()
-     * TODO: A) the unshift method is called to add at the start of the array the value of Current Location.
-     *          However, one could argue that we don't want to make them select Current Location as it's not 
-     *          intuitive. However, I do not know how to fetch the data if no item is selected in the 
-     *          dropdown. 
-     *          This is very important since the onTextChange props returns nothing when we are not writing or 
-     *          when nothing was passed or selected. This is annoying since if the user selected something and then changed his
-     *          mind and select nothing, the item passed is the previous value!
-     * 
-     * Clues: I left some clue about what could be investigated with the tag Refer TODO: A). So just Ctr+F that.
-     * Overall: As of now, The user has to select the Current Location for the double search to fetch the current Location coordinates. 
-     *
-     * A.U
-     */
-    var originItems = fetchData();
-    var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
-    originItems.unshift({ "id": 0, "name": "Current Location" });
-
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
@@ -207,7 +216,7 @@ function DoubleSearch(props) {
                     <SearchableDropdown
                         onTextChange={val => val} //Refer TODO: A)
                         onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={0} //Refer TODO: A)
+                        defaultIndex={"0"} //Refer TODO: A)
                         textInputStyle={styles.textInputStyle}
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
@@ -216,10 +225,12 @@ function DoubleSearch(props) {
                         items={originItems}
                         placeholder={"Starting Position"}
                         placeholderTextColor={"grey"}
+                        onEndEditing = {text => console.log(text)}
                         textInputProps={{
                             keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
                             clearTextOnFocus: false,
+                            // onTextChange: text => console.log(text)
                         }}
                     />
                 </View>
@@ -229,6 +240,7 @@ function DoubleSearch(props) {
                         onTextChange={val => val}
                         onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
                         textInputStyle={styles.textInputStyle}
+                        defaultIndex={(String)(value)} //Refer TODO: A)
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
                         itemTextStyle={styles.itemTextStyle}

@@ -21,26 +21,34 @@ function Directions (props) {
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(true);
+    const [indoorScenario1, setIndoorScenario1] = React.useState(false);
+    const [indoorScenario2, setIndoorScenario2] = React.useState(false);
+    const [indoorScenario3, setIndoorScenario3] = React.useState(false);
     const mapRef = useRef(null);
 
     /* 2. Read the params from the navigation state */
     const { params } = props.navigation.state;
     const destinationResponse = params ? params.destinationResponse : null;
 
+    const indoorScenarios = () => {
     //TODO: INDOOR-OUTDOOR: In this case, we redirect the Directions to the IndoorMap, it also means its the different building scenario.
     // Also, when exiting the indoorView, we should be brought back here! Also append indoorMap at the first element.
     if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+        setIndoorScenario1(true);
        alert("The origin is a classroom, but not the destination");
     }
     //TODO: INDOOR-OUTDOOR: In this case, after the last instruction is shown, the indoor mapView should be displayed.
-    if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+    else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+        setIndoorScenario2(true);
        alert("The destination is a classroom, but not the origin");
     }
     //TODO: INDOOR-OUTDOOR: In this case, it's a mix of the two previous ifs: We redirect to indoorMap and then add the indoorMapView should appended 
     // after last instruction.
-    if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+    else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+        setIndoorScenario3(true);
        alert("Both the destination and the origin are classrooms");
     }
+}
 
     useEffect(() => {
         if (instructionIndex == 0) {
@@ -49,6 +57,7 @@ function Directions (props) {
         else if (instructionIndex >= destinationResponse.steps.length - 1) {
             setIsLastInstruction(true);
         }
+        indoorScenarios();
     });
 
 
@@ -163,7 +172,15 @@ function Directions (props) {
                     <View>
                         <Icon name="arrow-back" style={styles.disabledArrow} />
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> 
+            }
+            {//TODO:Add OnPress
+            isFirstInstruction && (indoorScenario1 || indoorScenario3) &&
+                <TouchableOpacity style={styles.indoorBuilding}>
+                    <View>
+                        <Icon type="FontAwesome5" name="building" />
+                    </View>
+                </TouchableOpacity> 
             }
             {!isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirection} onPress={goToPreviousInstruction}>
@@ -172,8 +189,16 @@ function Directions (props) {
                     </View>
                 </TouchableOpacity>
             }
+            {//TODO: Add onPress()
+            isLastInstruction && (indoorScenario2 || indoorScenario3) &&
+                <TouchableOpacity style={styles.indoorBuilding}>
+                    <View >
+                        <Icon type="FontAwesome5" name="building" />
+                    </View>
+                </TouchableOpacity>
+            }
             {isLastInstruction &&
-                <TouchableOpacity style={styles.arrowRightDirectionDisabled} disabled={true}>
+                <TouchableOpacity style={styles.arrowRightDirectionDisabled}>
                     <View >
                         <Icon name="arrow-forward" style={styles.disabledArrow} />
                     </View>
@@ -310,6 +335,17 @@ export const styles = StyleSheet.create({
         position: "absolute",
         top: "80%",
         left: "80%"
+    },
+    indoorBuilding: {
+        position: "absolute",
+        top: "70%",
+        left: "80%",
+        width: 60,
+        height: 60,
+        borderRadius: 100/2,
+        backgroundColor: "#f0b400",
+        justifyContent: "center",
+        alignItems: "center"
     },
     detailedInstructions: {
         top: "15%",
