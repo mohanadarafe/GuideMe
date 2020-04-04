@@ -23,7 +23,7 @@ import { BottomMenu } from "../components/BottomMenu";
  */
 const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
 
-    const instructionsHtmlStyle = "<div style=\"font-size:1.4em;color:white;\">";
+    const instructionsHtmlStyle = "<div style=\"font-size:1.2em;color:white;\">";
     var directionObject = {
         generalRouteInfo: {
             totalDistance: jsonLeg.distance.text,
@@ -286,7 +286,7 @@ function PreviewDirections (props) {
                     </View> 
                 </View>
                 <View style={styles.lowerHeaderContainer}>
-                    <View style ={{flexDirection: "column", alignItems: "center", justifyContent:"center", height: "100%"}}>
+                    <View style ={styles.fortmatLowerHeader}>
                         <View style={styles.addressContainer}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
@@ -328,9 +328,14 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        top: "15%",
-        height: "50%",
-        flexDirection: "column",
+        marginTop: 25,
+        flexDirection: "column"
+    },
+    fortmatLowerHeader: {
+        flexDirection: "column", 
+        alignItems: "center", 
+        justifyContent:"center", 
+        height: "100%",
     },
     directionText: {
         justifyContent: "center",
@@ -422,8 +427,9 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     lowerHeaderContainer: {
-        flexDirection: "column",
         width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
         height: "50%",
     }
 

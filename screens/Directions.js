@@ -165,15 +165,17 @@ function Directions (props) {
                         <Text style={styles.DirectionTextHeaderStyle}>Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View>
+                </View>
+                <View style = {styles.lowerHeader}>
                     <View style={styles.detailedInstructions}>
-                        <HTML
-                            html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "Invalid"}
-                        />
-                        <View style={styles.infoMetrics}>
-                            <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
-                            <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
-                            <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
-                        </View>
+                            <HTML
+                                html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "<div style=\"font-size:1.6em;color:white;\">Invalid.</div>"}
+                            />
+                            <View style={styles.infoMetrics}>
+                                <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
+                                <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
+                                <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
+                            </View>
                     </View>
                 </View>
             </View>
@@ -241,15 +243,23 @@ export const styles = StyleSheet.create({
         height: "25%",
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#3F8796",
+        backgroundColor: "#2A2E43",
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        top: "15%"
+        height: "38%",
+        marginTop: 25,
+        flexDirection: "column",
+    },
+    lowerHeader: {
+        flexDirection: "column", 
+        width: "100%", 
+        maxHeight:"60%",
+        backgroundColor:"#2A2E43"
     },
     directionTextHeader: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     DirectionTextHeaderStyle: {
         color: "white",
@@ -359,21 +369,21 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     detailedInstructions: {
-        top: "15%",
-        width: "100%",
-        flexDirection: "column",
+        // width: "100%",
+        // flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        height: "100%"
     },
     infoMetrics: {
         flexDirection: "row",
-        top: "2%",
         justifyContent: "space-between",
         width: "90%"
     },
     stepMetrics: {
         fontSize: 18,
-        color: "white"
+        color: "white",
+        marginTop: 10
     },
     stepMetricsValues: {
         fontWeight: "bold",
