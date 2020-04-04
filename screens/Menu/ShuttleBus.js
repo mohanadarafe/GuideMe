@@ -1,9 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
+import { ShuttleBusTimes } from "../../constants/shuttleBusTimes";
+
+
+const getItem = () => (
+    <View style={styles.iconStyle}>
+    </View>
+);
+
+const ICON_SIZE = 35;
 
 
 /**Prop passed
@@ -11,17 +21,14 @@ import SegmentedControlTab from "react-native-segmented-control-tab";
  */
 function ShuttleBus (props) {
     const [selectedTab, setSelectedTab] = React.useState(0);
+    const getShuttleBusTimes = ShuttleBusTimes();
+    const sgw = "SGW";
+    const loyola = "Loyola";
+
 
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
-
-    // TODO: Remove this code (only here to test tabs)
-    // if (selectedTab === 0) {
-    //     alert("I am in SGW");
-    // } else {
-    //     alert("I am in Loyola");
-    // }
 
     return (
         <View style={styles.container}>
@@ -51,7 +58,22 @@ function ShuttleBus (props) {
                     onTabPress={tab => { setSelectedTab(tab); }}
                 />
                 {selectedTab === 0 && (
-                    <Text style={styles.tabContent}> Tab one</Text>
+                    <View style={styles.tabContent}>
+                         <SafeAreaView style={styles.buttonContainer}>
+                        <Button transparent style={styles.mapButton}>
+                            <View style={styles.iconContainer}>
+                                <MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.mapPin} />
+                            </View>
+                            <View style={styles.separator}></View>
+                            <View style={styles.buttonTextContainer}>
+                                <Text style={styles.mapPinLabel}>Shuttle bus direction to Loyola</Text>
+                                <Text> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
+                            </View>
+                        </Button>
+                        // </SafeAreaView>
+                    </View>
+                    // <Text style={styles.tabContent}> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
+
                 )}
                 {selectedTab === 1 && (
                     <Text style={styles.tabContent}> Tab two</Text>
@@ -166,7 +188,51 @@ export const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 18,
         margin: 24,
-        bottom: "50%"
+        bottom: "100%",
+    },
+    mapPin: {
+        color: "#FFFFFF",
+        position: "absolute",
+    },
+    iconContainer: {
+        height: "150%",
+        width: ICON_SIZE * 2,
+        backgroundColor: "#353A50",
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    buttonContainer: {
+        top: "40%",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        height: "100%",
+        width: "90%",
+        alignItems: "center",
+    },
+    separator: {
+        height: "100%",
+        width: "4%",
+        justifyContent: "center",
+    },
+    mapPinLabel: {
+        color: "#FFFFFF",
+        fontSize: 13,
+        fontFamily: "encodeSansExpanded",
+        position: "absolute",
+    },
+    smallLabel: {
+        color: "#FFFFFF",
+        fontSize: 10,
+        fontFamily: "encodeSansExpanded",
+        bottom: "10%"
+        // position: "absolute",
+    },
+    buttonTextContainer: {
+        height: "100%",
+        width: "80%",
+        justifyContent: "center",
+        alignSelf: "flex-end",
     },
 });
 
