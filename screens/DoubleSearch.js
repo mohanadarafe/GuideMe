@@ -244,7 +244,7 @@ function DoubleSearch(props) {
                         containerStyle={styles.containerStyle}
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor={"grey"}
+                        placeholderTextColor={"black"}
                         items={destinationItems}
                         placeholder={destinationName}
                         textInputProps={{
