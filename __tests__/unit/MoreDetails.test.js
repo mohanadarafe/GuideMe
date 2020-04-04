@@ -1,6 +1,6 @@
 import React from "react";
-import MoreDetails, { createLists, renderSeparator, fetchData } from "../../screens/MoreDetails";
 import renderer from "react-test-renderer";
+import MoreDetails, { createLists, fetchData } from "../../screens/MoreDetails";
 
 describe("MoreDetails component", () => {
     test("renders correctly", () => {

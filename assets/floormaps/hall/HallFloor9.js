@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
-import Svg, { G, Path, Text, Line} from "react-native-svg";
+import Svg, { G, Path, Text } from "react-native-svg";
 import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario";
 import { Hall9Coordinates } from "../../../constants/Hall9Coordinates";
 
