@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
@@ -16,19 +16,46 @@ const getItem = () => (
 const ICON_SIZE = 35;
 
 
-/**Prop passed
+/** Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 function ShuttleBus (props) {
     const [selectedTab, setSelectedTab] = React.useState(0);
+    const [currentTime, setCurrentTime] = React.useState(null);
+    const [currentDay, setCurrentDay] = React.useState(null);
+    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
     const getShuttleBusTimes = ShuttleBusTimes();
     const sgw = "SGW";
     const loyola = "Loyola";
 
-
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
+
+    const getCurrentTime = () => {
+        let hour = new Date().getHours();
+        let minutes = new Date().getMinutes();
+        //set current time 
+        setCurrentTime({ hour, minutes });
+
+        days.map((item, key) => {
+            if (key == new Date().getDay()) {
+                //set current day
+                setCurrentDay(item);
+            }
+        });
+    };
+
+    console.log(currentTime);
+    console.log(currentDay);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getCurrentTime();
+        }, 10000);
+        return () => clearInterval(intervalId);
+    });
 
     return (
         <View style={styles.container}>
@@ -59,18 +86,18 @@ function ShuttleBus (props) {
                 />
                 {selectedTab === 0 && (
                     <View style={styles.tabContent}>
-                         <SafeAreaView style={styles.buttonContainer}>
+                        {/* <SafeAreaView style={styles.buttonContainer}> */}
                         <Button transparent style={styles.mapButton}>
                             <View style={styles.iconContainer}>
                                 <MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.mapPin} />
                             </View>
                             <View style={styles.separator}></View>
                             <View style={styles.buttonTextContainer}>
-                                <Text style={styles.mapPinLabel}>Shuttle bus direction to Loyola</Text>
-                                <Text> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
+                                <Text style={styles.mapPinLabel}></Text>
+                                {/* <Text> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text> */}
                             </View>
                         </Button>
-                        // </SafeAreaView>
+                        {/* </SafeAreaView> */}
                     </View>
                     // <Text style={styles.tabContent}> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
 
