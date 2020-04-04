@@ -35,7 +35,7 @@ function Settings (props) {
             </View>
             <Text style={styles.mainLabel}>Settings</Text>
             <View style={styles.scrollContainer}>
-                <ScrollView>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.container1}>
                         <Text style={styles.container1Text}>Notifications</Text>
                         <Text style={styles.container1SubText}>Current Status is {switchLabel1}</Text>
@@ -47,7 +47,7 @@ function Settings (props) {
                         </View>
                     </View>
                     <View style={styles.container2}>
-                        <Text style={styles.container2Text}>Google Calendar Sync</Text>
+                        <Text adjustsFontSizeToFit style={styles.container2Text}>Google Calendar Sync</Text>
                         <Text style={styles.container2SubText}>Current Status is {switchLabel2}</Text>
                         <View style={styles.toggle}>
                             <Switch
@@ -148,14 +148,17 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded"
     },
     scrollContainer: {
-        height: 700,
-        width: 415,
+        height: "78%",
+        width: "100%"
     },
     toggle: {
         position: "absolute",
         left: "80%",
         top: "30%"
     },
+    scrollViewFlex:{
+        flexGrow: 1
+    }
 });
 
 export default Settings;

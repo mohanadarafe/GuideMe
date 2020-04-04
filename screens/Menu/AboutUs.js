@@ -1,7 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Paragraph } from "react-native-paper";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
@@ -35,6 +33,9 @@ function AboutUs (props) {
             "Hussain Witwit - hussainwitwit"
         ]
     }];
+    const textParagraph = [{
+        data: ["GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling."]
+    }];
 
     return (
         <View style={styles.container}>
@@ -48,10 +49,12 @@ function AboutUs (props) {
             <Text style={styles.aboutLabel}>Our App</Text>
 
             <View style={styles.scrollViewTextContainer}>
-                <ScrollView style={styles.scrollTextAbout}>
-                    <Paragraph style={styles.aboutText}>GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling.
-                  </Paragraph>
-                </ScrollView>
+            <SectionList
+                    sections={textParagraph}
+                    renderItem={({ item }) => <Text style={styles.paragraphText}>{item}</Text>}
+                    keyExtractor={(index) => index}
+                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
+                />
             </View>
 
             <Text style={styles.teamLabel}>Our Team</Text>
@@ -83,13 +86,10 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         flex: 1
     },
-    scollTextAbout: {
-        flex: 1
-    },
     scrollViewTextContainer: {
-        bottom: "57%",
-        height: 150,
-        width: 415,
+         bottom: "59%",
+        height:"15%",
+        width: "95%",
     },
     mainLabel: {
         color: "#FFFFFF",
@@ -170,13 +170,21 @@ export const styles = StyleSheet.create({
         height: 44,
         paddingLeft: 22,
         fontFamily: "encodeSansExpanded",
-        color: "#D3D3D3",
+        color: "#FFF",
     },
     line: {
         height: 1,
         width: "100%",
         backgroundColor: "#353A50",
     },
+    paragraphText:{
+        padding: 10,
+        fontSize: 14,
+        fontFamily: "encodeSansExpanded",
+        color: "#FFF",
+        textAlign: "center",
+        lineHeight: 30
+    }
 
 });
 
