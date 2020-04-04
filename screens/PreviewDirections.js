@@ -21,7 +21,7 @@ import { BottomMenu } from "../components/BottomMenu";
  * Returns an object with nested attributes.
  * @param {*} jsonLeg 
  */
-const getFilteredDetailedInstructions = (jsonLeg) => {
+const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
 
     const instructionsHtmlStyle = "<div style=\"font-size:1.4em;color:white;\">";
     var directionObject = {
@@ -44,24 +44,65 @@ const getFilteredDetailedInstructions = (jsonLeg) => {
         },
         steps: []
     };
-    directionObject.steps = jsonLeg.steps.map(step => {
-
-        return {
-            distance: step.distance.text,
-            duration: step.duration.text,
-            polylines: decodedPolylinesAlgo(step.polyline.points),
-            startLocation: {
-                latitude: step.start_location.lat,
-                longitude: step.end_location.lng
-            },
-            endLocation: {
-                latitude: step.end_location.lat,
-                longitude: step.end_location.lng
-            },
-            htmlInstructions: instructionsHtmlStyle + step.html_instructions + "</div>",
-            travelMode: step.travel_mode
-        };
-    });
+    if (transportType != "transit") {
+        directionObject.steps = jsonLeg.steps.map(step => {
+            return {
+                distance: step.distance.text,
+                duration: step.duration.text,
+                polylines: decodedPolylinesAlgo(step.polyline.points),
+                startLocation: {
+                    latitude: step.start_location.lat,
+                    longitude: step.end_location.lng
+                },
+                endLocation: {
+                    latitude: step.end_location.lat,
+                    longitude: step.end_location.lng
+                },
+                htmlInstructions: instructionsHtmlStyle + step.html_instructions + "</div>",
+                travelMode: step.travel_mode
+            };
+        });
+    } else {
+        jsonLeg.steps.forEach(transitStep => {
+            if (transitStep.steps) {
+                transitStep.steps.forEach(atomicStep => {
+                    directionObject.steps.push({
+                        distance: atomicStep.distance.text,
+                        duration: atomicStep.duration.text,
+                        polylines: decodedPolylinesAlgo(atomicStep.polyline.points),
+                        startLocation: {
+                            latitude: atomicStep.start_location.lat,
+                            longitude: atomicStep.end_location.lng
+                        },
+                        endLocation: {
+                            latitude: atomicStep.end_location.lat,
+                            longitude: atomicStep.end_location.lng
+                        },
+                        htmlInstructions: instructionsHtmlStyle + atomicStep.html_instructions + "</div>",
+                        travelMode: atomicStep.travel_mode
+                    })
+                })
+            } else {
+                directionObject.steps.push({
+                    distance: transitStep.distance.text,
+                    duration: transitStep.duration.text,
+                    polylines: decodedPolylinesAlgo(transitStep.polyline.points),
+                    startLocation: {
+                        latitude: transitStep.start_location.lat,
+                        longitude: transitStep.end_location.lng
+                    },
+                    endLocation: {
+                        latitude: transitStep.end_location.lat,
+                        longitude: transitStep.end_location.lng
+                    },
+                    htmlInstructions: instructionsHtmlStyle + transitStep.html_instructions + "</div>",
+                    travelMode: transitStep.travel_mode
+                })
+            }
+        });
+        console.log(directionObject.steps)
+        // return null;
+    }
 
     //Making sure the last instructions doesn't break the consistency of the layout ... I know the line is ugly but I dont see any other way.
     directionObject.steps[directionObject.steps.length - 1].htmlInstructions = directionObject.steps[directionObject.steps.length - 1].htmlInstructions.replace("<div style=\"font-size:0.9em\">", instructionsHtmlStyle);
@@ -93,14 +134,15 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * Description: This is our main screen which includes all the components inside a map.
- * FIXME: 1. PreviewDirection and Direction, the headers in the Direction is not properly changing his UI
+ * FIXME: 1. Direction, the headers in the Direction is not properly changing his UI
  *           more specifically the height.
+ * 
  */
 function PreviewDirections (props) {
 
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
-    const [isRefreshed, setIsRefreshed] = React.useState(true);
+    const [outdoorTransportType, setOutdoorTransportType] = React.useState("driving");
     const mapRef = useRef(null);
 
     /**
@@ -111,42 +153,37 @@ function PreviewDirections (props) {
         props.navigation.goBack();
     };
 
-    /* Read the params from the navigation state */
-    const { params } = props.navigation.state;
 
-    // The variables retrieved from DoubleSearch
-    const fromCoordinates = params ? params.From : null;
-    const toCoordinates = params ? params.To : null;
-    const fromName = params ? params.fromName : null;
-    const toName = params ? params.toName : null;
-
+    const fromCoordinates = props.navigation.getParam("From", null);
+    const toCoordinates = props.navigation.getParam("To", null);
+    const fromName = props.navigation.getParam("fromName", null);
+    const toName = props.navigation.getParam("toName", null);
     if (!fromCoordinates || !toCoordinates) {
         alert("Sorry, could not load directions. The Starting Point or Destination might be wrong. Please Try again.");
         goBackPressHandler();
     }
     const origin = `${fromCoordinates.latitude},${fromCoordinates.longitude}`;
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
-
     // The variables retrived from the preference page 
-    var transportType = params ? params.transportType : null;
 
     /**
          * Description: fetchData() is an async method that makes the API request to Google Maps.
          * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
          * @param {*} transportType 
         */
-    const fetchData = async (transportType) => {
+    const fetchData = async () => {
         try {
             // Retrieving the apiKey from the AsyncStorage.
             let keyId = await AsyncStorage.getItem("apiKeyId");
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
+            console.log(outdoorTransportType);
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${outdoorTransportType}`);
             const jsonResponse = await resp.json();
             if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
                 //Command Pattern
-                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0]);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0], outdoorTransportType);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? fromCoordinates.isClassRoom : null;
                 filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? toCoordinates.isClassRoom : null;
@@ -189,25 +226,21 @@ function PreviewDirections (props) {
 
         }, 100);
     };
-    /**
-     * This component will update the preview Map after the user made some selection.
-     * FIXME: A) Not Too Secure, the user can call the fetchMethod non stop once he comes from 
-     * that context, so maybe conditional rendering with the color and disabled it to only allow one
-     * API Call.
-     */
-    const refreshPreviewMap = () => {
-        if (transportType) {
-            fetchData(transportType);
-            setIsRefreshed(false);
-        }
+
+    const fetchTransportType = async () => {
+        let name = await AsyncStorage.getItem("thirdCategory");
+        setOutdoorTransportType(name);
     };
 
     useEffect(() => {
+        const intervalId = setInterval(() => {
+            fetchTransportType();
+        }, 1);
         fetchData();
-    }, []);
+        return () => clearInterval(intervalId);
+    }, [outdoorTransportType]);
 
-
-    //TODO: Update Styling for To and From Titles.
+    console.log(detailedInstructionsObject ? detailedInstructionsObject.steps.length : "Error");
     return (
         <View>
             <MapView
@@ -244,7 +277,7 @@ function PreviewDirections (props) {
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>From: </Text>
                             </View>
-                            <Text style={styles.directionLabels}>{fromName ? fromName : "N/A"}</Text>
+                            <Text style={styles.directionLabels}>{fromName ? fromName: "N/A"}</Text>
                         </View>
                         <View style={styles.addressContainer}>
                             <View style={styles.iconAndTextContainter}>
@@ -257,15 +290,6 @@ function PreviewDirections (props) {
                 </View>
             </View>
             <BottomMenu previewMode={true} navigation={props.navigation} directionResponse={detailedInstructionsObject ? detailedInstructionsObject : null} />
-            {/* {isRefreshed && */}
-            <TouchableOpacity style={styles.refresh} onPress={refreshPreviewMap}>
-                <Icon name="ios-refresh" style={styles.icon}></Icon>
-            </TouchableOpacity>
-            {/* {!isRefreshed &&  //Refer to FIXME: A)
-            <TouchableOpacity style = {styles.disabledRefresh} disabled = {true}>
-            <Icon name="ios-refresh" style = {styles.icon}></Icon>
-            </TouchableOpacity>  
-            } */}
         </View>
     );
 }
