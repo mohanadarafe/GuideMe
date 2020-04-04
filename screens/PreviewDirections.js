@@ -49,7 +49,10 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
             return {
                 distance: step.distance.text,
                 duration: step.duration.text,
-                polylines: decodedPolylinesAlgo(step.polyline.points),
+                polylines: {
+                    values: decodedPolylinesAlgo(step.polyline.points),
+                    color: (step.travel_mode == "DRIVING" | step.travel_mode == "BICYCLING") ? "blue" : "black"
+                },
                 startLocation: {
                     latitude: step.start_location.lat,
                     longitude: step.end_location.lng
@@ -69,7 +72,10 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                     directionObject.steps.push({
                         distance: atomicStep.distance.text,
                         duration: atomicStep.duration.text,
-                        polylines: decodedPolylinesAlgo(atomicStep.polyline.points),
+                        polylines: {
+                            values: decodedPolylinesAlgo(atomicStep.polyline.points),
+                            color: atomicStep.travel_mode == "WALKING" ? "black" : "blue"
+                        },
                         startLocation: {
                             latitude: atomicStep.start_location.lat,
                             longitude: atomicStep.end_location.lng
@@ -86,7 +92,10 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                 directionObject.steps.push({
                     distance: transitStep.distance.text,
                     duration: transitStep.duration.text,
-                    polylines: decodedPolylinesAlgo(transitStep.polyline.points),
+                    polylines: {
+                        values: decodedPolylinesAlgo(transitStep.polyline.points),
+                        color: transitStep.transit_details.line.color
+                    },
                     startLocation: {
                         latitude: transitStep.start_location.lat,
                         longitude: transitStep.end_location.lng
@@ -240,7 +249,6 @@ function PreviewDirections (props) {
         return () => clearInterval(intervalId);
     }, [outdoorTransportType]);
 
-    console.log(detailedInstructionsObject ? detailedInstructionsObject.steps.length : "Error");
     return (
         <View>
             <MapView
@@ -253,11 +261,18 @@ function PreviewDirections (props) {
                 onLayout={initMapRegion}
                 showsIndoors={false}
             >
-                <Polyline
-                    coordinates={decodedPolylines}
-                    strokeWidth={6}
-                    strokeColor="pink"
-                />
+                {detailedInstructionsObject ? detailedInstructionsObject.steps.map(step => (
+                    <Polyline 
+                        coordinates = {step.polylines.values}
+                        strokeWidth = {5}
+                        strokeColor = {step.polylines.color}
+                    />     
+                    )) : <Polyline
+                        coordinates={decodedPolylines}
+                        strokeWidth={5}
+                        strokeColor="pink"
+                     /> 
+                }
             </MapView>
 
             <View style={styles.navigationHeader}>

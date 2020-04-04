@@ -79,7 +79,7 @@ function Directions (props) {
     const updateMapRegionToInstruction = (index) => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
-                destinationResponse.steps[index].polylines,
+                destinationResponse.steps[index].polylines.values,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
 
         }, 100);
@@ -92,7 +92,7 @@ function Directions (props) {
     const initMapRegion = () => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
-                destinationResponse.steps[0].polylines,
+                destinationResponse.steps[0].polylines.values,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
     };
@@ -140,11 +140,18 @@ function Directions (props) {
                 showsIndoors={false}
             // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
             >
-                <Polyline
-                    coordinates={destinationResponse ? destinationResponse.generalRouteInfo.overviewPolyline : []}
-                    strokeWidth={6}
-                    strokeColor="pink"
-                />
+                {destinationResponse ? destinationResponse.steps.map(step => (
+                    <Polyline 
+                        coordinates = {step.polylines.values}
+                        strokeWidth = {5}
+                        strokeColor = {step.polylines.color}
+                    />     
+                    )) : <Polyline
+                        coordinates={decodedPolylines}
+                        strokeWidth={5}
+                        strokeColor="pink"
+                     /> 
+                }
             </MapView>
             <View style={styles.circleCurrentLocation}>
                 <CurrentLocationButton mapReference={mapRef} />
