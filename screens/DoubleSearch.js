@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
@@ -65,19 +65,6 @@ function DoubleSearch(props) {
     const goBack = () => {
         props.navigation.goBack();
     };
-
-    /**
-     * FIXME: On stand by for now.
-     */
-    const getInitialItemNumber = async () => {
-        let destinationItems = [];
-        destinationItems = fetchData();
-        return await destinationItems.forEach(element => {
-            if (element.name === name) {
-                return element.id - 1;
-            }
-        })
-    }
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
      * Particularity: 
@@ -150,10 +137,8 @@ function DoubleSearch(props) {
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
                 return buildingList[key].coordinates;
-            } else if (buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
-                return buildingList[key].coordinates; 
             }
         }
         if (name == "Current Location") {

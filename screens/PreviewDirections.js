@@ -49,7 +49,7 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                 duration: step.duration.text,
                 polylines: {
                     values: decodedPolylinesAlgo(step.polyline.points),
-                    color: (step.travel_mode == "DRIVING" | step.travel_mode == "BICYCLING") ? "blue" : "black"
+                    color: (step.travel_mode == "DRIVING" || step.travel_mode == "BICYCLING") ? "blue" : "black"
                 },
                 startLocation: {
                     latitude: step.start_location.lat,
@@ -236,8 +236,9 @@ function PreviewDirections (props) {
      */
     const fetchTransportType = async () => {
         let name = await AsyncStorage.getItem("thirdCategory");
-        if (name != null)
+        if (name != null) {
         setOutdoorTransportType(name);
+        }
     };
     /**
      * The useEffect is a hook that will constantly (every second) calls fetchTransportType in case teh value of the transport changes
@@ -379,7 +380,6 @@ export const styles = StyleSheet.create({
         fontWeight: "normal",
         fontSize: 20,
         color: "white",
-        fontWeight: "bold",
         width: "70%",
     },
     directionLabelContainer: {
