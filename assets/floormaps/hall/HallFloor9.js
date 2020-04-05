@@ -6,8 +6,8 @@ import { Hall9Coordinates } from "../../../constants/Hall9Coordinates";
 
 export function HallFloor9(props) {
     const [floorNumber, setFloorNumber] = React.useState("");
-    const [to, setTo] = React.useState(props.from);
-    const [from, setFrom] = React.useState(props.to);
+    const [to, setTo] = React.useState(props.to);
+    const [from, setFrom] = React.useState(props.from);
     const rooms = Hall9Coordinates();
 
     const floorSelected = async () => {

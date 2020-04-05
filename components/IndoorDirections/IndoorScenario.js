@@ -13,7 +13,7 @@ export function IndoorScenario(props) {
 
     if (props.from && props.to) {
         const routeToTake = whichPathToTake(props.from.toString(), props.to.toString());
-        
+       
         switch (routeToTake) {
             //There are two cases here:
             //CASE I: From VL to H 
@@ -76,7 +76,7 @@ export const whichPathToTake = (from, to) => {
             return not_indoor;
         }
     
-        if (from.charAt(0) !== to.charAt(0) && from.length != to.length) {
+        if ((from.includes(" ") || to.includes(" ")) && from.length != to.length) {
             return different_building;
         }
     
