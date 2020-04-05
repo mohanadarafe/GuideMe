@@ -31,35 +31,48 @@ function Directions (props) {
     const { params } = props.navigation.state;
     const destinationResponse = params ? params.destinationResponse : null;
 
+    /**
+     * This method is called after the first render and call the proper indoor scenario if we there's a classroom in either from or to.
+     * 
+     * Scenarios: 
+     * 1. If the origin is a classroom, then, we have to go to Indoor Directions first.
+     * 2. If the destination is a classrom, then, we start with Outdoor Directions.
+     * 3. If both origin and destination are clasrooms, we have to go to Indoor Directions first.
+     * 
+     * Impact later on:
+     * We added conditional rendering to give users the opportunity to go back in the Indoor mode.
+     * In scenario 1: We add the button at the first instruction of outdoor
+     * In secnario 2: We add the button at the last instruction of outdoor
+     * In scenario 3: We add the button at both the first and last instructions of outdoour
+     * 
+     */
     const indoorScenarios = () => {
-    //TODO: INDOOR-OUTDOOR: In this case, we redirect the Directions to the IndoorMap, it also means its the different building scenario.
-    // Also, when exiting the indoorView, we should be brought back here! Also append indoorMap at the first element.
-    //TODO: Pass building name (key) to IndoorMapView
-    if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
-        setIndoorScenario1(true);
-        if (inside) {
-            props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })
-            setInside(false);
+        if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+            setIndoorScenario1(true);
+            if (inside) {
+                props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })
+                setInside(false);
+            }
+        }
+        else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+        setIndoorScenario2(true);
+        }
+        else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+            setIndoorScenario3(true);
+            if (inside) {
+                props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true });
+                setInside(false);
+            }
         }
     }
-    //TODO: INDOOR-OUTDOOR: In this case, after the last instruction is shown, the indoor mapView should be displayed.
-    else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
-       setIndoorScenario2(true);
-    }
-    //TODO: INDOOR-OUTDOOR: In this case, it's a mix of the two previous ifs: We redirect to indoorMap and then add the indoorMapView should appended 
-    // after last instruction.
-    else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
-        setIndoorScenario3(true);
-        if (inside) {
-            props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true });
-            setInside(false);
-        }
-    }
-}
-
+    /**
+     * The useEffect is a hook that will set the state FirstInstruction and LastInstruction to true when the conditions are met.
+     * Also, it calls the indoor scenario.
+     * FIXME: I think the if and if else are not doing anything. To review. Is this method called multiple times or only once? A.J.U.U
+     */
     useEffect(() => {
         if (instructionIndex == 0) {
-            setIsFirstInstruction(true); //When Direction enabled, we are at the first instruction.
+            setIsFirstInstruction(true);
         }
         else if (instructionIndex >= destinationResponse.steps.length - 1) {
             setIsLastInstruction(true);
@@ -182,7 +195,7 @@ function Directions (props) {
                     </View>
                 </View>
             </View>
-            {//TODO: Add GetInside Button or Icon for the cases explained before. Refer to TODO:INDOOR-OUTDOOR:
+            {
             isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled={true}>
                     <View>
@@ -221,7 +234,7 @@ function Directions (props) {
                     </View>
                 </TouchableOpacity>
             }
-            {//TODO: Add onPress()
+            {
             isLastInstruction && (indoorScenario2) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View >

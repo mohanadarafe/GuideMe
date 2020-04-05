@@ -7,8 +7,6 @@ import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
 
-
-
 /**
  * Description: This method act as an interface. After taking the leg of the response
  * called jsonLeg as argument, the method will create an object that will 
@@ -109,8 +107,6 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                 })
             }
         });
-        console.log(directionObject.steps)
-        // return null;
     }
 
     //Making sure the last instructions doesn't break the consistency of the layout ... I know the line is ugly but I dont see any other way.
@@ -184,7 +180,6 @@ function PreviewDirections (props) {
         try {
             // Retrieving the apiKey from the AsyncStorage.
             let keyId = await AsyncStorage.getItem("apiKeyId");
-            console.log(outdoorTransportType);
             let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${outdoorTransportType}`);
             const jsonResponse = await resp.json();
             if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
@@ -235,12 +230,21 @@ function PreviewDirections (props) {
 
         }, 100);
     };
-
+    /**
+     * This method will fetch the value of the transport Type that is set in the asyncStorange.
+     * By default, the value is driving. 
+     */
     const fetchTransportType = async () => {
         let name = await AsyncStorage.getItem("thirdCategory");
+        if (name != null)
         setOutdoorTransportType(name);
     };
-
+    /**
+     * The useEffect is a hook that will constantly (every second) calls fetchTransportType in case teh value of the transport changes
+     * in the PreferenceMenu context. When that happens, the state outdoorTransportType will change which will trigger the fetchData() 
+     * method to be call again. This logic must be implemented in the IndoorMap context since we want to know the other two fields: 
+     * persona and mobility type.
+     */
     useEffect(() => {
         const intervalId = setInterval(() => {
             fetchTransportType();
@@ -369,7 +373,6 @@ export const styles = StyleSheet.create({
     DirectionTextHeader: {
         color: "#FFFFFF",
         fontSize: 25,
-        // fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
     },
     directionLabels: {

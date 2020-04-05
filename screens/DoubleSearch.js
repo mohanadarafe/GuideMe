@@ -112,7 +112,6 @@ function DoubleSearch(props) {
 
     const destinationName = props.navigation.getParam("destinationName", "Destination");
     const value = props.navigation.getParam("destinationIndex", "");
-    // console.log(value);
     /**
      * 
      */
@@ -225,7 +224,6 @@ function DoubleSearch(props) {
                         items={originItems}
                         placeholder={"Starting Position"}
                         placeholderTextColor={"grey"}
-                        onEndEditing = {text => console.log(text)}
                         textInputProps={{
                             keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
