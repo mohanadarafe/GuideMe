@@ -95,6 +95,14 @@ function BuildingHighlight () {
                 onPress={() => setBuildingName(buildings["Grey Nuns"].name)}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
+
+            <Polygon
+                id="tap_vl"
+                coordinates={coord.vl.coordinates}
+                tappable={true}
+                onPress={() => setBuildingName(buildings["VL Building"].name)}
+                fillColor="rgba(76, 79, 98, 0.7)"
+            />
         </View>
     );
 }

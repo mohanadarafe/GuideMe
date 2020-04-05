@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
-import CurrentLocationButton from "../../components/CurrentLocationButton";
+import React from "react";
 import renderer from "react-test-renderer";
+import CurrentLocationButton from "../../components/CurrentLocationButton";
 
 describe("CurrentLocationButton component", () => {
     test("renders correctly", () => {
