@@ -265,13 +265,13 @@ function PreviewDirections (props) {
                 onLayout={initMapRegion}
                 showsIndoors={false}
             >
-                {detailedInstructionsObject ? detailedInstructionsObject.steps.map(step => (
-                    <Polyline 
+                {detailedInstructionsObject ? detailedInstructionsObject.steps.map((step, index) => (
+                    <Polyline key={index}
                         coordinates = {step.polylines.values}
                         strokeWidth = {5}
                         strokeColor = {step.polylines.color}
                     />     
-                    )) : <Polyline
+                    )) : <Polyline 
                         coordinates={decodedPolylines}
                         strokeWidth={5}
                         strokeColor="pink"

@@ -152,6 +152,8 @@ function DoubleSearch(props) {
         for (var key in buildingList) {
             if (buildingList[key].name.includes(name)) {
                 return buildingList[key].coordinates;
+            } else if (buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
+                return buildingList[key].coordinates; 
             }
         }
         if (name == "Current Location") {
@@ -195,7 +197,7 @@ function DoubleSearch(props) {
         if (from.name === undefined) {
             fetchCurrentPosition();
         }
-    });
+    }, []);
 
     return (
         <View style={styles.container} data-test="DoubleSearch">

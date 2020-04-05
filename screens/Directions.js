@@ -24,7 +24,7 @@ function Directions (props) {
     const [indoorScenario1, setIndoorScenario1] = React.useState(false);
     const [indoorScenario2, setIndoorScenario2] = React.useState(false);
     const [indoorScenario3, setIndoorScenario3] = React.useState(false);
-    const [inside, setInside] = React.useState(true);
+    const [isFromAClassRoom, setIsFromAClassRoom] = React.useState(true);
     const mapRef = useRef(null);
 
     /* 2. Read the params from the navigation state */
@@ -52,9 +52,9 @@ function Directions (props) {
     const indoorScenarios = () => {
         if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
             setIndoorScenario1(true);
-            if (inside) {
+            if (isFromAClassRoom) {
                 props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })
-                setInside(false);
+                setIsFromAClassRoom(false);
             }
         }
         else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
@@ -62,9 +62,9 @@ function Directions (props) {
         }
         else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
             setIndoorScenario3(true);
-            if (inside) {
+            if (isFromAClassRoom) {
                 props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true });
-                setInside(false);
+                setIsFromAClassRoom(false);
             }
         }
     }
@@ -159,8 +159,8 @@ function Directions (props) {
                 showsIndoors={false}
             // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
             >
-                {destinationResponse ? destinationResponse.steps.map(step => (
-                    <Polyline 
+                {destinationResponse ? destinationResponse.steps.map((step, index) => (
+                    <Polyline key={index}
                         coordinates = {step.polylines.values}
                         strokeWidth = {5}
                         strokeColor = {step.polylines.color}
