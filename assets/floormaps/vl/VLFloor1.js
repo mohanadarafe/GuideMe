@@ -4,9 +4,9 @@ import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScena
 import { AsyncStorage } from "react-native";
 
 function VLFloor1(props) {
-const [floorNumber, setFloorNumber] = React.useState("");
-  const [to, setTo] = React.useState(props.to);
-  const [from, setFrom] = React.useState(props.from);
+  const [floorNumber, setFloorNumber] = React.useState("");
+  const to = props.to;
+  const from = props.from;
 
   const floorSelected = async () => {
     let name = await AsyncStorage.getItem("floorSelected");

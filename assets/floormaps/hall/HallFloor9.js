@@ -2,13 +2,11 @@ import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
 import Svg, { G, Path, Text } from "react-native-svg";
 import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario";
-import { Hall9Coordinates } from "../../../constants/Hall9Coordinates";
 
 export function HallFloor9(props) {
     const [floorNumber, setFloorNumber] = React.useState("");
-    const [to, setTo] = React.useState(props.to);
-    const [from, setFrom] = React.useState(props.from);
-    const rooms = Hall9Coordinates();
+    const to = props.to;
+    const from = props.from;
 
     const floorSelected = async () => {
       let name = await AsyncStorage.getItem("floorSelected");
