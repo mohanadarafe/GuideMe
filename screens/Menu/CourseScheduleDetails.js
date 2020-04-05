@@ -12,21 +12,20 @@ function CourseScheduleDetails (props) {
         props.navigation.goBack();
     };
 
-    // const goToDoubleSearch = () => {
-    //     props.navigation.navigate("DoubleSearch");
-    // }
+    const CourseScheduleDetailsScreen = true; 
+    const goToDoubleSearch = () => {
+        props.navigation.navigate("DoubleSearch", {CourseScheduleDetailsScreen: CourseScheduleDetailsScreen});
+    }
 
     return (
         <View style={styles.container}>
-            <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goBack}>
-                    <Icon name="md-arrow-round-back" style={styles.icon} />
+             <View style={styles.backArrowContainer}>
+                <Button transparent style={styles.backArrow} onPress={goBack}>
+                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>
-
             <Text style={styles.mainLabel}>Class Details</Text>
-
-            <Button transparent style={styles.routeButton}><Text style={styles.viewRouteText}>View Route</Text></Button>
+            <Button transparent style={styles.routeButton} onPress={goToDoubleSearch}><Text style={styles.viewRouteText}>View Route</Text></Button>
         </View >
     );
 }
@@ -60,11 +59,6 @@ export const styles = StyleSheet.create({
         color: "#FFFFFF",
         fontSize: 35
     },
-    menuButton: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-    },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
@@ -86,7 +80,22 @@ export const styles = StyleSheet.create({
     viewRouteText: {
         color: "white",
         fontSize: 14
-    }
+    },
+    backArrow: {
+        height: "100%",
+        width: "100%",
+        flexDirection: "row",
+        left: "10%"
+    },
+    backArrowContainer: {
+        width: "100%",
+        height: "6%",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        alignContent: "center",
+        alignItems: "center",
+        top: "7%"
+    },
 });
 
 export default CourseScheduleDetails;

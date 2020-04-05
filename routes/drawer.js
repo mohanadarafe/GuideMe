@@ -46,7 +46,6 @@ const Drawer = createDrawerNavigator({
         screen: shuttleBusStack,
         navigationOptions: {
             title: "Shuttle Bus",
-
             drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="bus-clock" size={22} color={tintColor} />,
         }
     },

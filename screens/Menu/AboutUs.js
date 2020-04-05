@@ -64,7 +64,7 @@ function AboutUs (props) {
                     sections={data}
                     renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
+                    keyExtractor={(index) => index}
                     ItemSeparatorComponent={ () => <View style={styles.line}/>}
                 />
             </SafeAreaView>

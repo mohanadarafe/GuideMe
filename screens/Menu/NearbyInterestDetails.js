@@ -13,6 +13,11 @@ function NearbyInterestDetails(props) {
         props.navigation.goBack();
     }
 
+    const NearbyInterestDetailsScreen = true; 
+    const goToDoubleSearch = () => {
+        props.navigation.navigate("DoubleSearch", {NearbyInterestDetailsScreen: NearbyInterestDetailsScreen});
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
@@ -23,7 +28,7 @@ function NearbyInterestDetails(props) {
 
             <Text style={styles.mainLabel}>Point of Interests Details</Text>
             
-            <Button transparent style={styles.routeButton} ><Text style={styles.viewRouteText}>View Route</Text></Button>
+            <Button transparent style={styles.routeButton} onPress={goToDoubleSearch}><Text style={styles.viewRouteText}>View Route</Text></Button>
         </View >
     );
 }

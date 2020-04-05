@@ -76,7 +76,7 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        props.navigation.navigate("Nearby", { bottomMenu: true });
+        props.navigation.navigate("NearbyInterest", { bottomMenu: "map view" });
     };
 
     // const currentAltitude = async () => {

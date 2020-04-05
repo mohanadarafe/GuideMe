@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { Button } from "native-base";
+import { Icon, Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
@@ -20,6 +20,27 @@ import PropTypes from "prop-types";
  */
 function NearbyInterest(props) {
 
+
+    const fromBottomMenu = props.navigation.getParam("bottomMenu", "null");
+    console.log("fromBottomMenu: "+fromBottomMenu);
+  
+    const [ fromScreen, setFromScreen ] = React.useState({fromMap: fromBottomMenu});
+
+    //  const setFromScreenValue = async () => {
+    //     setFromScreen({fromMap: fromBottomMenu})
+    //  };
+
+    // useEffect(() => {
+    //    setFromScreenValue()
+    //   }, []);
+
+     console.log("fromScreen: "+fromScreen.fromMap);
+
+     console.log("fromSideMenu "+props.fromSideMenu);
+
+    //  var from = fromBottomMenu? fromBottomMenu: props.fromSideMenu
+    //  console.log("from what screen: "+from);
+
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -28,19 +49,32 @@ function NearbyInterest(props) {
         props.navigation.navigate("NearbyInterestDetails");
     };
 
+    const goBack = () => {
+        props.navigation.navigate("Map");
+        //  setFromScreen({fromMap: false});
+    };
+
+    
+
     // Static data for now 
     const data = [
         { key: "a", rate: "1" }, { key: "b", rate: "2" }, { key: "c", rate: "3" }, { key: "d", rate: "4" }, { key: "e", rate: "5" }, { key: "f", rate: "6" }, { key: "g", rate: "7" }, { key: "h", rate: "8" }, { key: "i", rate: "9" }, { key: "j", rate: "10" }, { key: "j", rate: "11" }
     ];
 
     const numColumns = 2;
+  
 
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
+                { fromBottomMenu === "map view" &&
+                    <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack}/>
+                }
+                { props.fromSideMenu === "side menu" &&
                 <Button transparent style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
                 </Button>
+                }
             </View>
 
 
@@ -59,14 +93,14 @@ function NearbyInterest(props) {
                     renderItem={({ item, index }) => (
                         <TouchableOpacity onPress={goToNearbyInterestDetails}>
                             <View key={index}>
-                                    <View style={styles.itemContainer}>
-                                        <View style={styles.itemImageContainer}>
-                                        </View>
-                                        <View style={styles.itemTextContainer}>
-                                            <Text style={styles.itemText}>Name of place: {item.key}</Text>
-                                            <Text style={styles.itemText}>Rating of place: {item.rate}</Text>
-                                        </View>
+                                <View style={styles.itemContainer}>
+                                    <View style={styles.itemImageContainer}>
                                     </View>
+                                    <View style={styles.itemTextContainer}>
+                                        <Text style={styles.itemText}>Name of place: {item.key}</Text>
+                                        <Text style={styles.itemText}>Rating of place: {item.rate}</Text>
+                                    </View>
+                                </View>
                             </View>
                         </TouchableOpacity>
                     )}
@@ -98,14 +132,18 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         top: "15%"
     },
+    list: {
+        flexDirection: "column"
+    },
     arrowDown: {
         color: "#ffffff",
         top: "5%",
         fontSize: 54,
         position: "absolute"
     },
-    list: {
-        flexDirection: "column"
+    backButton: {
+        // height: "100%",
+        // alignSelf: "center"
     },
     icon: {
         height: "100%",
