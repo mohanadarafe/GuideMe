@@ -1,4 +1,4 @@
-export function sgwRooms () {
+export function ClassRooms () {
   var rooms = [];
   rooms["VL Building"] = {
     room: [

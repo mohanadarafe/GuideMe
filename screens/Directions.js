@@ -44,6 +44,9 @@ function Directions (props) {
      * In scenario 1: We add the button at the first instruction of outdoor
      * In secnario 2: We add the button at the last instruction of outdoor
      * In scenario 3: We add the button at both the first and last instructions of outdoour
+     * The other scenario is in the DoubleSearch context and it's a special case of scenario 3. In that
+     * case, we have two classrooms but from the same building. We will never go into PreviewDirections 
+     * & Directions.
      * 
      */
     const indoorScenarios = () => {

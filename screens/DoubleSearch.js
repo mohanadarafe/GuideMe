@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "../components/MapData";
-import { sgwRooms } from "../constants/sgwRooms";
+import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
@@ -18,7 +18,7 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
  * A.U
  */
 function fetchData() {
-    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
+    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
     return searchInfo;
 }
 
@@ -88,6 +88,7 @@ function DoubleSearch(props) {
      *      - If the Current Direction is wanted, fetch the proper coordinates
      *      - If there's no destination, refuse search
      *      - A value selected beyond the search Items displayed by the dropdown is not accepted.
+     * 3. Added the scenario in which we have two classrooms from the same building. We go in IndoorMapView
      * 
      * A.U
      */
@@ -98,7 +99,6 @@ function DoubleSearch(props) {
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
         }
-        //FIXME: Should be on DoubleSearchContext.
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
@@ -138,7 +138,7 @@ function DoubleSearch(props) {
     const getCoordinates = (name) => {
 
         let buildingList = buildingData();
-        let classRoomsList = sgwRooms();
+        let classRoomsList = ClassRooms();
         if (/\d/.test(name)) {
             for (var key in classRoomsList) {
                 if(classRoomsList[key].room.includes(name)) {
