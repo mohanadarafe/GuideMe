@@ -1,10 +1,10 @@
+import { Icon, Text, View } from "native-base";
+import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import MapView, { PROVIDER_GOOGLE, Polyline, Circle } from "react-native-maps";
-import { View, Text, Icon } from "native-base";
-import CurrentLocationButton from "../components/CurrentLocationButton";
+import MapView, { Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import HTML from "react-native-render-html";
-import PropTypes from "prop-types";
+import CurrentLocationButton from "../components/CurrentLocationButton";
 
 
 /**
