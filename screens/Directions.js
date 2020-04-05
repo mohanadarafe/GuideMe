@@ -21,20 +21,68 @@ function Directions (props) {
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
     const [isFirstInstruction, setIsFirstInstruction] = React.useState(true);
+    const [indoorScenario1, setIndoorScenario1] = React.useState(false);
+    const [indoorScenario2, setIndoorScenario2] = React.useState(false);
+    const [indoorScenario3, setIndoorScenario3] = React.useState(false);
+    const [isFromAClassRoom, setIsFromAClassRoom] = React.useState(true);
     const mapRef = useRef(null);
 
     /* 2. Read the params from the navigation state */
     const { params } = props.navigation.state;
     const destinationResponse = params ? params.destinationResponse : null;
 
+    /**
+     * This method is called after the first render and call the proper indoor scenario if we there's a classroom in either from or to.
+     * 
+     * Scenarios: 
+     * 1. If the origin is a classroom, then, we have to go to Indoor Directions first.
+     * 2. If the destination is a classrom, then, we start with Outdoor Directions.
+     * 3. If both origin and destination are clasrooms, we have to go to Indoor Directions first.
+     * 
+     * Impact later on:
+     * We added conditional rendering to give users the opportunity to go back in the Indoor mode.
+     * In scenario 1: We add the button at the first instruction of outdoor
+     * In secnario 2: We add the button at the last instruction of outdoor
+     * In scenario 3: We add the button at both the first and last instructions of outdoour
+     * The other scenario is in the DoubleSearch context and it's a special case of scenario 3. In that
+     * case, we have two classrooms but from the same building. We will never go into PreviewDirections 
+     * & Directions.
+     * 
+     */
+    const indoorScenarios = () => {
+        if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+            setIndoorScenario1(true);
+            if (isFromAClassRoom) {
+                props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })
+                setIsFromAClassRoom(false);
+            }
+        }
+        else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+        setIndoorScenario2(true);
+        }
+        else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
+            setIndoorScenario3(true);
+            if (isFromAClassRoom) {
+                props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true });
+                setIsFromAClassRoom(false);
+            }
+        }
+    }
+    /**
+     * The useEffect is a hook that will set the state FirstInstruction and LastInstruction to true when the conditions are met.
+     * Also, it calls the indoor scenario.
+     * FIXME: I think the if and if else are not doing anything. To review. Is this method called multiple times or only once? A.J.U.U
+     */
     useEffect(() => {
         if (instructionIndex == 0) {
-            setIsFirstInstruction(true); //When Direction enabled, we are at the first instruction.
+            setIsFirstInstruction(true);
         }
         else if (instructionIndex >= destinationResponse.steps.length - 1) {
             setIsLastInstruction(true);
         }
+        indoorScenarios();
     });
+
 
     /**
      * Description: Go back method
@@ -50,7 +98,7 @@ function Directions (props) {
     const updateMapRegionToInstruction = (index) => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
-                destinationResponse.steps[index].polylines,
+                destinationResponse.steps[index].polylines.values,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
 
         }, 100);
@@ -63,7 +111,7 @@ function Directions (props) {
     const initMapRegion = () => {
         setTimeout(() => {
             mapRef.current.fitToCoordinates(
-                destinationResponse.steps[0].polylines,
+                destinationResponse.steps[0].polylines.values,
                 { edgePadding: { bottom: 100, right: 50, left: 50, top: 300 }, animated: true, });
         }, 100);
     };
@@ -111,11 +159,18 @@ function Directions (props) {
                 showsIndoors={false}
             // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
             >
-                <Polyline
-                    coordinates={destinationResponse ? destinationResponse.generalRouteInfo.overviewPolyline : []}
-                    strokeWidth={6}
-                    strokeColor="pink"
-                />
+                {destinationResponse ? destinationResponse.steps.map((step, index) => (
+                    <Polyline key={index}
+                        coordinates = {step.polylines.values}
+                        strokeWidth = {5}
+                        strokeColor = {step.polylines.color}
+                    />     
+                    )) : <Polyline
+                        coordinates={decodedPolylines}
+                        strokeWidth={5}
+                        strokeColor="pink"
+                     /> 
+                }
             </MapView>
             <View style={styles.circleCurrentLocation}>
                 <CurrentLocationButton mapReference={mapRef} />
@@ -129,24 +184,51 @@ function Directions (props) {
                         <Text style={styles.DirectionTextHeaderStyle}>Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View>
+                </View>
+                <View style = {styles.lowerHeader}>
                     <View style={styles.detailedInstructions}>
-                        <HTML
-                            html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "Invalid"}
-                        />
-                        <View style={styles.infoMetrics}>
-                            <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
-                            <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
-                            <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
-                        </View>
+                            <HTML
+                                html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "<div style=\"font-size:1.6em;color:white;\">Invalid.</div>"}
+                            />
+                            <View style={styles.infoMetrics}>
+                                <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
+                                <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
+                                <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
+                            </View>
                     </View>
                 </View>
             </View>
-            {isFirstInstruction &&
+            {
+            isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled={true}>
                     <View>
                         <Icon name="arrow-back" style={styles.disabledArrow} />
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> 
+            }
+            {
+            isFirstInstruction && (indoorScenario1) &&
+                <TouchableOpacity style={styles.indoorBuilding}>
+                    <View>
+                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })}} />
+                    </View>
+                </TouchableOpacity> 
+            }
+            {
+            (isFirstInstruction && indoorScenario3) &&
+                <TouchableOpacity style={styles.indoorBuilding}>
+                    <View>
+                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true })}} />
+                    </View>
+                </TouchableOpacity> 
+            }
+            {
+            (isLastInstruction && indoorScenario3) &&
+                <TouchableOpacity style={styles.indoorBuilding}>
+                    <View>
+                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isLast: true })}} />
+                    </View>
+                </TouchableOpacity> 
             }
             {!isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirection} onPress={goToPreviousInstruction}>
@@ -155,8 +237,16 @@ function Directions (props) {
                     </View>
                 </TouchableOpacity>
             }
+            {
+            isLastInstruction && (indoorScenario2) &&
+                <TouchableOpacity style={styles.indoorBuilding}>
+                    <View >
+                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.startAddress, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom })}} />
+                    </View>
+                </TouchableOpacity>
+            }
             {isLastInstruction &&
-                <TouchableOpacity style={styles.arrowRightDirectionDisabled} disabled={true}>
+                <TouchableOpacity style={styles.arrowRightDirectionDisabled}>
                     <View >
                         <Icon name="arrow-forward" style={styles.disabledArrow} />
                     </View>
@@ -188,15 +278,23 @@ export const styles = StyleSheet.create({
         height: "25%",
         flex: 1,
         flexDirection: "column",
-        backgroundColor: "#3F8796",
+        backgroundColor: "#2A2E43",
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        top: "15%"
+        height: "38%",
+        marginTop: 25,
+        flexDirection: "column",
+    },
+    lowerHeader: {
+        flexDirection: "column", 
+        width: "100%", 
+        maxHeight:"60%",
+        backgroundColor:"#2A2E43"
     },
     directionTextHeader: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     DirectionTextHeaderStyle: {
         color: "white",
@@ -294,22 +392,33 @@ export const styles = StyleSheet.create({
         top: "80%",
         left: "80%"
     },
-    detailedInstructions: {
-        top: "15%",
-        width: "100%",
-        flexDirection: "column",
+    indoorBuilding: {
+        position: "absolute",
+        top: "70%",
+        left: "80%",
+        width: 60,
+        height: 60,
+        borderRadius: 100/2,
+        backgroundColor: "#f0b400",
         justifyContent: "center",
         alignItems: "center"
     },
+    detailedInstructions: {
+        // width: "100%",
+        // flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%"
+    },
     infoMetrics: {
         flexDirection: "row",
-        top: "2%",
         justifyContent: "space-between",
         width: "90%"
     },
     stepMetrics: {
         fontSize: 18,
-        color: "white"
+        color: "white",
+        marginTop: 10
     },
     stepMetricsValues: {
         fontWeight: "bold",

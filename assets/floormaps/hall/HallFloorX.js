@@ -4,31 +4,19 @@ import Svg, { G, Path, Text, Use, Symbol, Defs } from "react-native-svg";
 import { HallClass } from "./HallClassrooms/HallClass";
 import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario.js";
 
-export function HallFloorX() {
+export function HallFloorX(props) {
   const [floorNumber, setFloorNumber] = React.useState("");
-  const [to, setTo] = React.useState("");
-  const [from, setFrom] = React.useState("");
+  const to = props.to;
+  const from = props.from;
 
   const floorSelected = async () => {
     let name = await AsyncStorage.getItem("floorSelected");
     setFloorNumber(name);
   };
 
-  const getFromLocation = async () => {
-    let name = await AsyncStorage.getItem("fromLocation");
-    setFrom(name);
-  };
-
-  const getToLocation = async () => {
-    let name = await AsyncStorage.getItem("toLocation");
-    setTo(name);
-  };
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       floorSelected();
-      getFromLocation();
-      getToLocation();
     }, 1);
     return () => clearInterval(intervalId);
   });
@@ -885,7 +873,7 @@ export function HallFloorX() {
       </G>
       <G>
         {from !== null && to !==null &&
-          <IndoorScenario floor={floorNumber} from={from} to={to} />
+          <IndoorScenario floor={floorNumber} from={from} to={to} building={"Hall Building"} />
         }
       </G>
       <HallClass floor={floorNumber} />

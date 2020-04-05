@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
-import { sgwRooms } from "../constants/sgwRooms";
+import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 import PropTypes from "prop-types";
 
@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
  */
 
 function fetchData () {
-  const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
+  const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
   return searchInfo;
 }
 
