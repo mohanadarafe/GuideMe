@@ -873,7 +873,7 @@ export function HallFloorX(props) {
       </G>
       <G>
         {from !== null && to !==null &&
-          <IndoorScenario floor={floorNumber} from={from} to={to} />
+          <IndoorScenario floor={floorNumber} from={from} to={to} building={"Hall Building"} />
         }
       </G>
       <HallClass floor={floorNumber} />

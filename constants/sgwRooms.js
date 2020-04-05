@@ -1,5 +1,10 @@
 export function sgwRooms () {
   var rooms = [];
+  rooms["VL Building"] = {
+    room: [
+      "VL103"
+    ]
+  }
   rooms["Hall Building"] = {
     room: [
       "H501",

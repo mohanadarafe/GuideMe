@@ -35,6 +35,10 @@ const jmsbFloors = [
   { label: "15", value: "15" }
 ];
 
+const vlFloors = [
+  { label: "1", value: "1" }
+];
+
 export function FloorMenu() {
   const [floorNumber, setFloorNumber] = React.useState("1");
   const [selectedBuilding, setSelectedBuilding] = React.useState("");
@@ -69,6 +73,17 @@ export function FloorMenu() {
         <SwitchSelector
           style={styles.selector}
           options={jmsbFloors}
+          initial={0}
+          buttonColor={"#3ACCE1"}
+          onPress={value => {
+            setFloorNumber(value);
+          }}
+        />
+      )}
+      {selectedBuilding === "VL Building" && (
+        <SwitchSelector
+          style={styles.selector}
+          options={vlFloors}
           initial={0}
           buttonColor={"#3ACCE1"}
           onPress={value => {

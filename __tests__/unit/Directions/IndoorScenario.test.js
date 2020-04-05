@@ -27,6 +27,8 @@ describe("IndoorScenario component", () => {
             {from: "H1025", to: "H1157"},
             {from: "H961_7", to: "H906"},
             {from: "H961_7", to: "H801"},
+            {from: "VL102", to: "H801"},
+            {from: "H937", to: "VL102"},
             {from: "H961_7", to: "Grey Nuns Annex"},
             {from: "EN Annex", to: "Grey Nuns Annex"},
         ]
@@ -38,6 +40,8 @@ describe("IndoorScenario component", () => {
             "DIFFERENT_FLOOR",
             "SAME_FLOOR",
             "DIFFERENT_FLOOR",
+            "DIFFERENT_CAMPUS",
+            "DIFFERENT_CAMPUS",
             "DIFFERENT_BUILDING",
             "NOT_INDOOR"
         ]

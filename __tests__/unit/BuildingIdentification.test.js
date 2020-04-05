@@ -10,6 +10,6 @@ describe("Building Identification component", () => {
 
     test("number of markers", () => {
         const tree = renderer.create(<BuildingIdentification />).toJSON();
-        expect(tree.children.length).toBe(10);
+        expect(tree.children.length).toBe(11);
     });
 });

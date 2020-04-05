@@ -4,14 +4,22 @@ import { ClassGraph } from '../../../constants/ClassGraph';
 import { Class9Graph } from '../../../constants/ClassGraph9';
 import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
+import { LoyolaGraph } from '../../../constants/LoyolaGraph';
 
 export function SameFloorDirections(props) {
-    const floor = getFloorNumber(props.from);
+    const floor = props.from == "exit" ? 1 : getFloorNumber(props.from);
     const rooms = floor == 9 ? Hall9Coordinates() : props.rooms;
-    const graph = floor == 9 ? Class9Graph() : ClassGraph();
-    const from = floor == 9 ? props.from : ConvertToHall8Floor(props.from);
-    const to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
-    const route = dijkstra(graph, from, to).path;
+    var graph = floor == 9 ? Class9Graph() : ClassGraph();
+    var from = floor == 9 ? props.from : ConvertToHall8Floor(props.from);
+    var to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
+    var route = dijkstra(graph, from, to).path;
+
+    if (props.loy) {
+        graph = LoyolaGraph();
+        from = props.from;
+        to = props.to;
+        route = dijkstra(graph, from, to).path;
+    }
 
     var getNextRoom = (index) => {
         if (index < route.length){

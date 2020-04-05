@@ -50,6 +50,10 @@ function Directions (props) {
     // after last instruction.
     else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
         setIndoorScenario3(true);
+        if (inside) {
+            props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true });
+            setInside(false);
+        }
     }
 }
 
