@@ -315,4 +315,5 @@ export const styles = StyleSheet.create({
     backgroundColor: "#353A50",
   },
 });
+
 export default MoreDetails;
