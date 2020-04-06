@@ -48,7 +48,7 @@ export default {
             { latitude: 45.495200, longitude: -73.578530 },
             { latitude: 45.495523, longitude: -73.579198 }
         ],
-        name: "JMSB"
+        name: "MB Building"
     },
     "gn": {
         coordinates: [

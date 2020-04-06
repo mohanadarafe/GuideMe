@@ -69,7 +69,7 @@ export function FloorMenu() {
           }}
         />
       )}
-      {selectedBuilding === "JMSB" && (
+      {selectedBuilding === "MB Building" && (
         <SwitchSelector
           style={styles.selector}
           options={jmsbFloors}
@@ -91,7 +91,7 @@ export function FloorMenu() {
           }}
         />
       )}
-      {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" && (
+      {selectedBuilding !== "MB Building" && selectedBuilding !== "Hall Building" && (
         <SwitchSelector
           id="floor_select_none"
           style={styles.selector}
