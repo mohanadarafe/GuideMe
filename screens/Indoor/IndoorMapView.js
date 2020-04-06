@@ -56,16 +56,16 @@ function IndoorMapView(props) {
                     {((selectedBuilding === "Hall Building" && selectedFloor == "9") || (((from != null && from.includes("H") && isFirst != null) || (to != null && to.includes("H") && isLast != null)) && selectedFloor == "9")) &&
                         <HallFloor9 from={from ? from : null} to={to ? to : null} />
                     }
-                    {selectedBuilding === "JMSB" && selectedFloor === "1" &&
+                    {selectedBuilding === "MB Building" && selectedFloor === "1" &&
                         <JMSBFloor1 />
                     }
-                    {selectedBuilding === "JMSB" && selectedFloor === "2" &&
+                    {selectedBuilding === "MB Building" && selectedFloor === "2" &&
                         <JMSBFloor2 />
                     }
-                    {selectedBuilding === "JMSB" && selectedFloor !== "1" && selectedFloor !== "2" &&
+                    {selectedBuilding === "MB Building" && selectedFloor !== "1" && selectedFloor !== "2" &&
                         <JMSBFloorX />
                     }
-                    {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" && selectedBuilding !== "VL Building" &&
+                    {selectedBuilding !== "MB Building" && selectedBuilding !== "Hall Building" && selectedBuilding !== "VL Building" &&
                         <HallFloorX />
                     }
                 </ScrollView>
