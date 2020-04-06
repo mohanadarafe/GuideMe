@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
@@ -108,7 +108,7 @@ function MoreDetails (props) {
           <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
         </SafeAreaView>
         <View style={styles.imageContainer}>
-          <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
+          <ImageBackground style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
         </View>
         <Text style={styles.mainLabel}>{name}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
@@ -122,7 +122,7 @@ function MoreDetails (props) {
             renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
             renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
             keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={ () => <View style={styles.line}/>}
+            ItemSeparatorComponent={() => <View style={styles.line} />}
           />
         </SafeAreaView>
         <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
@@ -313,6 +313,6 @@ export const styles = StyleSheet.create({
     height: 1,
     width: "100%",
     backgroundColor: "#353A50",
-},
+  },
 });
 export default MoreDetails;
