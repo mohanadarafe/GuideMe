@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ImageBackground, SafeAreaView, SectionList } from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
@@ -108,7 +108,7 @@ function MoreDetails (props) {
           <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
         </SafeAreaView>
         <View style={styles.imageContainer}>
-          <ImageBackground style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
+          <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
         </View>
         <Text style={styles.mainLabel}>{name}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
