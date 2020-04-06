@@ -43,6 +43,7 @@ const screens = {
         screen: PreferenceMenu,
         navigationOptions: {
             headerShown: false,
+            ...TransitionPresets.ModalSlideFromBottomIOS
         }
     },
 

@@ -75,7 +75,9 @@ function DoubleSearch(props) {
             props.navigation.goBack();
             props.navigation.navigate("NearbyInterestDetails")
         }
-        props.navigation.goBack();
+        else{
+            props.navigation.goBack();
+        }
     };
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
