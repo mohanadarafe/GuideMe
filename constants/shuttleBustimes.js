@@ -29,8 +29,7 @@ export const ShuttleBusTimes = () => {
             {
                 hour: 9,
                 minutes: 10
-            },
-            {
+            }, {
                 hour: 9,
                 minutes: 30
             }, {
@@ -389,3 +388,4 @@ export const ShuttleBusTimes = () => {
         };
     return schedule;
 };
+

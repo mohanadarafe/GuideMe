@@ -5,16 +5,11 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
-import { ShuttleBusTimes } from "../../constants/shuttleBusTimes";
+import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
 
-
-const getItem = () => (
-    <View style={styles.iconStyle}>
-    </View>
-);
+//TODO: create a hook called results that takes as a parameter getNextStops in the useEffect()
 
 const ICON_SIZE = 35;
-
 
 /** Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
@@ -23,7 +18,11 @@ function ShuttleBus (props) {
     const [selectedTab, setSelectedTab] = React.useState(0);
     const [currentTime, setCurrentTime] = React.useState(null);
     const [currentDay, setCurrentDay] = React.useState(null);
-    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+    const [campus, setCampus] = React.useState("SGW");
+
+
+    const weekDays = ["monday", "tuesday", "wednesday", "thursday"];
+    const friday = ["friday"];
 
     const getShuttleBusTimes = ShuttleBusTimes();
     const sgw = "SGW";
@@ -34,12 +33,12 @@ function ShuttleBus (props) {
     };
 
     const getCurrentTime = () => {
-        let hour = new Date().getHours();
-        let minutes = new Date().getMinutes();
+        let currentHour = new Date().getHours();
+        let currentMinutes = new Date().getMinutes();
         //set current time 
-        setCurrentTime({ hour, minutes });
+        setCurrentTime({ Hour: currentHour, Minutes: currentMinutes });
 
-        days.map((item, key) => {
+        weekDays.map((item, key) => {
             if (key == new Date().getDay()) {
                 //set current day
                 setCurrentDay(item);
@@ -47,15 +46,65 @@ function ShuttleBus (props) {
         });
     };
 
-    console.log(currentTime);
-    console.log(currentDay);
+    /**
+     * Function that calculates the time difference between the current time and the times of the next
+     * shuttle bus stops
+     * @param {*} nextStop 
+     */
+    const calculateTimeDifference = (nextStop) => {
+        var diffHours = nextStop.hour - currentTime.Hour;
+        var diffMinutes = nextStop.minutes - currentTime.Minutes;
+        return ({
+            Hours: diffHours,
+            Minutes: Math.abs(diffMinutes)
+        });
+    };
+
+    /**
+     * Function that sorts through the shuttle bus schedule and compares the time/day to the current time/day
+     */
+    const getNextStops = () => {
+        var scheduleTimes = [];
+        var nextStops = [];
+        let index = 0;
+        var results = [];
+        if (currentDay && weekDays.includes(currentDay.toString())) {
+            scheduleTimes = getShuttleBusTimes[campus].MondayToThursday; //TODO: CHANGE THIS BACK TO CAMPUS
+        }
+        else if (currentDay && friday.includes(currentDay.toString())) {
+            scheduleTimes = getShuttleBusTimes[campus].Friday; //TODO: CHANGE THIS BACK TO CAMPUS
+        }
+        else {
+            return alert("There is no shuttle bus on weekends. Please check back during the week!");
+        }
+        for (var key in scheduleTimes) {
+            if (scheduleTimes[key].hour >= currentTime.Hour && scheduleTimes[key].minutes >= currentTime.Minutes) {
+                nextStops = scheduleTimes.slice(index, scheduleTimes.length - 1);
+                break;
+            }
+            index++;
+        }
+        if (nextStops.length > 0) {
+            results = nextStops.map((element) => {
+                return ({
+                    timeDifference: calculateTimeDifference(element),
+                    hour: element.hour,
+                    minutes: element.minutes
+                });
+            });
+        }
+        console.log(results, campus);
+    };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             getCurrentTime();
-        }, 10000);
+        }, 1000);
+        if (currentTime && currentDay && campus) {
+            getNextStops(); //setResult(getNextStops())
+        }
         return () => clearInterval(intervalId);
-    });
+    }, [currentTime, currentDay, campus]);
 
     return (
         <View style={styles.container}>
@@ -82,24 +131,33 @@ function ShuttleBus (props) {
                     tabTextStyle={styles.tabTextStyle}
                     activeTabStyle={styles.activeTabStyle}
                     activeTabTextStyle={styles.activeTabTextStyle}
-                    onTabPress={tab => { setSelectedTab(tab); }}
+                    onTabPress={tab => {
+                        setSelectedTab(tab);
+                        if (tab === 0) {
+                            setCampus("SGW");
+                        }
+                        else if (tab === 1) {
+                            setCampus("Loyola");
+                        }
+                    }}
                 />
                 {selectedTab === 0 && (
-                    <View style={styles.tabContent}>
-                        {/* <SafeAreaView style={styles.buttonContainer}> */}
-                        <Button transparent style={styles.mapButton}>
-                            <View style={styles.iconContainer}>
-                                <MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.mapPin} />
-                            </View>
-                            <View style={styles.separator}></View>
-                            <View style={styles.buttonTextContainer}>
-                                <Text style={styles.mapPinLabel}></Text>
-                                {/* <Text> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text> */}
-                            </View>
-                        </Button>
-                        {/* </SafeAreaView> */}
-                    </View>
-                    // <Text style={styles.tabContent}> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
+                    <Text style={styles.tabContent}> Tab one</Text>
+                    // <View style={styles.tabContent}>
+                    //     <SafeAreaView style={styles.buttonContainer}>
+                    //     <Button transparent style={styles.mapButton}>
+                    //         <View style={styles.iconContainer}>
+                    //             <MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.mapPin} />
+                    //         </View>
+                    //         <View style={styles.separator}></View>
+                    //         <View style={styles.buttonTextContainer}>
+                    //             <Text style={styles.mapPinLabel}></Text>
+                    //             {/* <Text> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text> */}
+                    //         </View>
+                    //     </Button>
+                    //     {/* </SafeAreaView> */}
+                    // </View>
+                    // // <Text style={styles.tabContent}> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
 
                 )}
                 {selectedTab === 1 && (
