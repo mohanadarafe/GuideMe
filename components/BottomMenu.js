@@ -13,7 +13,6 @@ import { Button } from "react-native-paper";
 
 function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("");
@@ -156,7 +155,7 @@ function BottomMenu (props) {
         }
         return (
             <View style={styles.container} >
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", {name: destination})}} />
                 {destination.length > 13
                     ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
                     : <Text style={styles.mainLabel}>{destination}</Text>
