@@ -1,8 +1,9 @@
-import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from "react-native";
-import { Button } from "native-base";
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
+import { Icon, Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
+import { BottomMenu } from "../../components/BottomMenu";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -19,13 +20,48 @@ import PropTypes from "prop-types";
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 function NearbyInterest(props) {
+   
+    const [fromScreen, setFromScreen] = React.useState();
+    /**
+     * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
+     * @param  {} =>{letname=awaitAsyncStorage.getItem("sideMenu)"
+     * @param  {} ;setFromScreen(name)
+     */
+    const getFromScreen = async () => {
+        let name = await AsyncStorage.getItem("sideMenu");
+        setFromScreen(name);
+    };
 
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getFromScreen();
+        }, 1);
+        return () => clearInterval(intervalId);
+    });
+
+    /**
+     * The method will slide the side menu from the right side of the screen
+     * @param  {} =>{props.navigation.openDrawer(
+     */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
-
+    /**
+     * The method will let us navigate to the NearbyInterestDetails screen
+     * @param  {} =>{props.navigation.navigate("NearbyInterestDetails)"
+     */
     const goToNearbyInterestDetails = () => {
         props.navigation.navigate("NearbyInterestDetails");
+    };
+    /**
+     * The method will let us navigate to the Map screen 
+     * @param  {} =>{AsyncStorage.setItem("sideMenu)"
+     * @param  {} ""
+     * @param  {} ;props.navigation.navigate("Map)"
+     */
+    const goBack = () => {
+        AsyncStorage.setItem("sideMenu", "");
+        props.navigation.navigate("Map");
     };
 
     // Static data for now 
@@ -38,15 +74,18 @@ function NearbyInterest(props) {
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goToMenu}>
-                    <Feather name="menu" style={styles.icon} />
-                </Button>
+                {fromScreen !== "sideMenu" &&
+                    <TouchableOpacity style={styles.backButton} onPress={goBack}>
+                        <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown}  />
+                    </TouchableOpacity>
+                }
+                {fromScreen === "sideMenu" &&
+                    <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
+                        <Feather name="menu" style={styles.icon} />
+                    </TouchableOpacity>
+                }
             </View>
-
-
             <Text style={styles.mainLabel}>Points of Interest</Text>
-
-
             <View style={styles.flatListContainer}>
                 <FlatList
                     onEndReachedThreshold={0}
@@ -59,14 +98,14 @@ function NearbyInterest(props) {
                     renderItem={({ item, index }) => (
                         <TouchableOpacity onPress={goToNearbyInterestDetails}>
                             <View key={index}>
-                                    <View style={styles.itemContainer}>
-                                        <View style={styles.itemImageContainer}>
-                                        </View>
-                                        <View style={styles.itemTextContainer}>
-                                            <Text style={styles.itemText}>Name of place: {item.key}</Text>
-                                            <Text style={styles.itemText}>Rating of place: {item.rate}</Text>
-                                        </View>
+                                <View style={styles.itemContainer}>
+                                    <View style={styles.itemImageContainer}>
                                     </View>
+                                    <View style={styles.itemTextContainer}>
+                                        <Text style={styles.itemText}>Name of place: {item.key}</Text>
+                                        <Text style={styles.itemText}>Rating of place: {item.rate}</Text>
+                                    </View>
+                                </View>
                             </View>
                         </TouchableOpacity>
                     )}
@@ -98,36 +137,32 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         top: "15%"
     },
+    list: {
+        flexDirection: "column"
+    },
     arrowDown: {
         color: "#ffffff",
         top: "5%",
         fontSize: 54,
-        position: "absolute"
     },
-    list: {
-        flexDirection: "column"
+    backButton: {
+        alignSelf:"center"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        alignSelf:"center",
         color: "#FFFFFF",
-        fontSize: 35
+        fontSize: 35,
     },
     menuButton: {
         height: "100%",
-        width: "100%",
+        width: "20%",  
         flexDirection: "row",
+        justifyContent: "center"
     },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "7%",
     },
     flatListContainer: {
         height: "73%",
