@@ -1,6 +1,66 @@
+import { ClassRooms } from "../constants/ClassRooms";
+import { buildingData } from "../constants/buildingData";
+
+
+const retrieveMoreDetailsData = (value, list) => {
+    
+    for (var key in list) {
+        if (list[key].name.includes(value)) {
+            return appendInfoAndAccessibility(list[key]);
+        }
+    }
+    return null;
+}
+
+const appendInfoAndAccessibility = (building) => {
+    let list  = {accessibilityItems: []};
+    list.accessibilityItems.push(building.hasCredit ? "Credit Card: Yes" : "Credit Card: No");
+    list.accessibilityItems.push(building.hasBicycle ? "Bicycle Parking: Yes" : "Bicycle Parking: No");
+    list.accessibilityItems.push(building.hasHandicap ? "Handicap Accessibility: Yes" : "Handicap Accessibility: No");
+    list.accessibilityItems.push(building.hasInfocenter ? "Info-Center: Yes" : "Info-Center: No");
+    list.accessibilityItems.push(building.hasParking ? "Car Parking: Yes" : "Car Parking: No");
+    return ({...building, ...list});
+}
+
+const appendIdToList = (list) => {
+        
+    const appendedList = list.map((element, index) => {
+            return ({
+                id: index,
+                value: element
+            });
+        });
+    return appendedList;
+}
+
+const retrieveSearchItems = (buildings, classrooms) => {
+    let classroomsList = [];
+    let buildingNames = [];
+    let buildingFullNames = [];
+    let buildingAddress = [];
+    let buildingServices = [];
+    let buildingDepartments = [];
+    buildings.forEach((element) => {
+        buildingNames.push(element.name);
+        buildingFullNames.push(element.fullName);
+        buildingAddress.push(element.address);
+        buildingServices.push(element.services);
+        buildingDepartments.push(element.departments);
+    });
+    classrooms.forEach(building => {
+        building.room.forEach(element => {
+            classroomsList.push(element);
+        })
+    });
+    const mergedItems = [...buildingNames, ...buildingFullNames, ...buildingAddress, ...buildingDepartments, ...buildingServices, ...classroomsList];
+    const searchItems = appendIdToList(mergedItems);
+    return searchItems;
+}
+
+
+
+
 /**
- * The following HOC is used to extract data from buildingData.js
- * following a strategy pattern.
  * 
  * Props passed
  * @param accesibility | bool: child requires accesibility
@@ -17,8 +77,25 @@
  */
 
 export function MapData (props, rooms, buildingInfo) {
-    let idCount = 1;
+    var results= [];
+    let buildingList = buildingData();
+    let classrooms = ClassRooms();
+    switch(props.context) {
+        case "More Details":
+        results = retrieveMoreDetailsData(props.buildingToSearch, buildingList);
+        return results;
+        case "Search":
+        results = retrieveSearchItems(buildingList, classrooms);
+        return results
+        break;
+    }
 
+
+
+
+
+
+    let idCount = 1;
     var buildingName = [];
     var departmentsArray = [];
     var serviceArray = [];
