@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, SectionList, TouchableOpacity } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 
 /**
@@ -23,12 +22,21 @@ import PropTypes from "prop-types";
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
-function CourseSchedule (props) {
+function CourseSchedule(props) {
 
+     /**
+     * The method will slide the side menu from the right side of the screen
+     * @param  {} =>{props.navigation.openDrawer(
+     */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
 
+    
+    /**
+     * The method will let us navigate to the CourseSchedule screen
+     * @param  {} =>{props.navigation.navigate("CourseScheduleDetails"
+     */
     const goToCourseSchedule = () => {
         props.navigation.navigate("CourseScheduleDetails");
     };
@@ -43,9 +51,9 @@ function CourseSchedule (props) {
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goToMenu}>
+                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
-                </Button>
+                </TouchableOpacity>
             </View>
             <Text style={styles.mainLabel}>My Course Schedule</Text>
             <SafeAreaView style={styles.scrollTextContainer}>
@@ -54,7 +62,7 @@ function CourseSchedule (props) {
                     renderItem={({ item }) => <TouchableOpacity onPress={goToCourseSchedule}><Text style={styles.listItem}>{item}</Text></TouchableOpacity>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(index) => index}
-                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
+                    ItemSeparatorComponent={() => <View style={styles.line} />}
                 />
             </SafeAreaView>
 
@@ -85,28 +93,21 @@ export const styles = StyleSheet.create({
         top: "15%"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        alignSelf: "center",
         color: "#FFFFFF",
-        fontSize: 35
+        fontSize: 35,
     },
     menuButton: {
         height: "100%",
-        width: "100%",
+        width: "20%",
         flexDirection: "row",
+        justifyContent: "center"
     },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "7%",
     },
-
     scrollTextContainer: {
         width: "100%",
         height: "75%",

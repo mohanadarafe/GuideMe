@@ -20,7 +20,6 @@ function BottomMenu (props) {
     const [mobilityReduced, setMobilityReduced] = React.useState("");
     const previewDirections = props.previewMode;
 
-
     //const [mapPressed, setmapPressed] = React.useState("");
 
     AsyncStorage.setItem("toggle", switchVal.toString());
@@ -75,12 +74,14 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        props.navigation.navigate("Nearby", { bottomMenu: true });
+        AsyncStorage.setItem("sideMenu", "mapView");
+        props.navigation.navigate("NearbyInterest");
     };
 
     // const currentAltitude = async () => {
     //     let altitude = await AsyncStorage.getItem("altitude");
     // };
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {

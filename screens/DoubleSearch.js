@@ -62,8 +62,22 @@ function DoubleSearch(props) {
      * Description: Method to go back to the previous screen.
      * Using Stack navigator.
      */
+
+    // var fromScreen; 
+    CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
+    NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
     const goBack = () => {
-        props.navigation.goBack();
+        if(CourseScheduleDetailsScreen === true){
+            props.navigation.goBack();
+            props.navigation.navigate("CourseScheduleDetails")
+        }
+        else if (NearbyInterestDetailsScreen === true){
+            props.navigation.goBack();
+            props.navigation.navigate("NearbyInterestDetails")
+        }
+        else{
+            props.navigation.goBack();
+        }
     };
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.

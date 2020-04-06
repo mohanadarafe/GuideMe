@@ -1,7 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Paragraph } from "react-native-paper";
+import { View, Text, StyleSheet, SafeAreaView, SectionList, TouchableOpacity } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
@@ -13,11 +11,15 @@ import PropTypes from "prop-types";
  * participation of this application. Github usernames included.
  */
 
- /**Prop passed
- * @param  {} navigation props.navigation is the name of the object from Navigator library
- */
-function AboutUs (props) {
+/**Prop passed
+* @param  {} navigation props.navigation is the name of the object from Navigator library
+*/
+function AboutUs(props) {
 
+     /**
+     * The method will slide the side menu from the right side of the screen
+     * @param  {} =>{props.navigation.openDrawer(
+     */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -35,23 +37,28 @@ function AboutUs (props) {
             "Hussain Witwit - hussainwitwit"
         ]
     }];
+    const textParagraph = [{
+        data: ["GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling."]
+    }];
 
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goToMenu}>
+                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
-                </Button>
+                </TouchableOpacity>
             </View>
 
             <Text style={styles.mainLabel}>About Us</Text>
             <Text style={styles.aboutLabel}>Our App</Text>
 
             <View style={styles.scrollViewTextContainer}>
-                <ScrollView style={styles.scrollTextAbout}>
-                    <Paragraph style={styles.aboutText}>GuideMe is a software application made for commuters of Concordia University. The purpose of the application is to serve users a map for both the Loyola & Sir George Williams Campuses. The application gives a new refined way to navigate on campus offering route recommendations & various methods of travelling.
-                  </Paragraph>
-                </ScrollView>
+                <SectionList
+                    sections={textParagraph}
+                    renderItem={({ item }) => <Text style={styles.paragraphText}>{item}</Text>}
+                    keyExtractor={(index) => index}
+                    ItemSeparatorComponent={() => <View style={styles.line} />}
+                />
             </View>
 
             <Text style={styles.teamLabel}>Our Team</Text>
@@ -61,8 +68,8 @@ function AboutUs (props) {
                     sections={data}
                     renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(item, index) => index}
-                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
+                    keyExtractor={(index) => index}
+                    ItemSeparatorComponent={() => <View style={styles.line} />}
                 />
             </SafeAreaView>
         </View >
@@ -83,13 +90,10 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         flex: 1
     },
-    scollTextAbout: {
-        flex: 1
-    },
     scrollViewTextContainer: {
-        bottom: "57%",
-        height: 150,
-        width: 415,
+        bottom: "59%",
+        height: "15%",
+        width: "95%",
     },
     mainLabel: {
         color: "#FFFFFF",
@@ -125,28 +129,21 @@ export const styles = StyleSheet.create({
         top: "43%"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        alignSelf: "center",
         color: "#FFFFFF",
-        fontSize: 35
+        fontSize: 35,
     },
     menuButton: {
         height: "100%",
-        width: "100%",
+        width: "20%",
         flexDirection: "row",
+        justifyContent: "center"
     },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "7%",
     },
-
     scrollTextContainer: {
         width: "100%",
         height: "52%",
@@ -170,13 +167,21 @@ export const styles = StyleSheet.create({
         height: 44,
         paddingLeft: 22,
         fontFamily: "encodeSansExpanded",
-        color: "#D3D3D3",
+        color: "#FFF",
     },
     line: {
         height: 1,
         width: "100%",
         backgroundColor: "#353A50",
     },
+    paragraphText: {
+        padding: 10,
+        fontSize: 14,
+        fontFamily: "encodeSansExpanded",
+        color: "#FFF",
+        textAlign: "center",
+        lineHeight: 30
+    }
 
 });
 

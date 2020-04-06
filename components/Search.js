@@ -57,6 +57,7 @@ function Search (props) {
   }, []);
 
   const goToMenu = () => {
+    AsyncStorage.setItem("sideMenu", "sideMenu");
     props.navigation.openDrawer();
   };
 

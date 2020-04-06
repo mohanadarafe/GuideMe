@@ -23,7 +23,7 @@ function SideMenu (props) {
             <ImageBackground
                 source={require("../assets/Concordia_Darken.png")}
                 style={styles.backgroundImage}
-            >
+                >
                 <View style={styles.textContainer}>
                     <Text style={styles.nameLabel}>John Appleseed</Text>
                     <Text style={styles.emailLabel}>johnappleseed@gmail.com</Text>
