@@ -44,29 +44,21 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43"
     },
     mainLabel: {
-        color: "#FFFFFF",
-        position: "absolute",
-        fontSize: 25,
-        fontWeight: "bold",
+        color: "#FFF",
+        fontSize: 23,
         fontFamily: "encodeSansExpanded",
-        top: "15%"
+        paddingBottom: 10,
+        top: "14%",
+        bottom: "2%",
+        fontWeight: "bold",
+        justifyContent: "center",
+        position: "absolute"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        position: "absolute",
         color: "#FFFFFF",
+        alignSelf: "center",
         fontSize: 35
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
     },
     routeButton: {
         width: "90%",

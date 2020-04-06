@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Switch } from "react-native";
+import { View, Text, StyleSheet, Switch, TouchableOpacity } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,10 +11,10 @@ import PropTypes from "prop-types";
  * also have accessibility to a Google Account Login screen.
  */
 
- /**Prop passed
- * @param  {} navigation props.navigation is the name of the object from Navigator library
- */
-function Settings (props) {
+/**Prop passed
+* @param  {} navigation props.navigation is the name of the object from Navigator library
+*/
+function Settings(props) {
 
     const [switchVal1, setSwitchVal1] = React.useState(false);
     const [switchVal2, setSwitchVal2] = React.useState(false);
@@ -22,6 +22,10 @@ function Settings (props) {
     var switchLabel1 = switchVal1 ? "ON" : "OFF";
     var switchLabel2 = switchVal2 ? "ON" : "OFF";
 
+     /**
+     * The method will slide the side menu from the right side of the screen
+     * @param  {} =>{props.navigation.openDrawer(
+     */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -29,9 +33,9 @@ function Settings (props) {
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goToMenu}>
+                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
-                </Button>
+                </TouchableOpacity>
             </View>
             <Text style={styles.mainLabel}>Settings</Text>
             <View style={styles.scrollContainer}>
@@ -84,26 +88,20 @@ export const styles = StyleSheet.create({
         top: "15%"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        alignSelf: "center",
         color: "#FFFFFF",
-        fontSize: 35
+        fontSize: 35,
     },
     menuButton: {
         height: "100%",
-        width: "100%",
+        width: "20%",
         flexDirection: "row",
+        justifyContent: "center"
     },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "7%",
     },
     container1: {
         width: "100%",
@@ -156,7 +154,7 @@ export const styles = StyleSheet.create({
         left: "80%",
         top: "30%"
     },
-    scrollViewFlex:{
+    scrollViewFlex: {
         flexGrow: 1
     }
 });

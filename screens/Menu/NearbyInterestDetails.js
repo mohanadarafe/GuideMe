@@ -20,12 +20,11 @@ function NearbyInterestDetails(props) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goBack}>
-                <Icon name="md-arrow-round-back" style={styles.icon} />
+              <View style={styles.backArrowContainer}>
+                <Button transparent style={styles.backArrow} onPress={goBack}>
+                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>
-
             <Text style={styles.mainLabel}>Point of Interests Details</Text>
             
             <Button transparent style={styles.routeButton} onPress={goToDoubleSearch}><Text style={styles.viewRouteText}>View Route</Text></Button>
@@ -42,34 +41,21 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43"
     },
     mainLabel: {
-        color: "#FFFFFF",
-        position: "absolute",
-        fontSize: 25,
-        fontWeight: "bold",
+        color: "#FFF",
+        fontSize: 23,
         fontFamily: "encodeSansExpanded",
-        top: "15%"
+        paddingBottom: 10,
+        top: "14%",
+        bottom: "2%",
+        fontWeight: "bold",
+        justifyContent: "center",
+        position: "absolute"
     },
     icon: {
-            height: "100%",
-            width: "100%",
-            flexDirection: "row",
-            left: "6%",
-            color: "#FFFFFF",
-            fontSize: 35
-    },
-    menuButton: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        position: "absolute",
+        color: "#FFFFFF",
+        alignSelf: "center",
+        fontSize: 35
     },
     routeButton: {
         width: "90%",
@@ -83,7 +69,23 @@ export const styles = StyleSheet.create({
     viewRouteText: {
         color: "white",
         fontSize: 14,    
-    }
+    },
+    backArrow: {
+        height: "100%",
+        width: "100%",
+        flexDirection: "row",
+        left: "10%"
+    },
+    backArrowContainer: {
+        width: "100%",
+        height: "6%",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        alignContent: "center",
+        alignItems: "center",
+        top: "7%"
+    },
+
 });
 
 export default NearbyInterestDetails;

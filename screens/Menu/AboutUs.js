@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, SectionList } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, SectionList, TouchableOpacity } from "react-native";
 import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
@@ -11,11 +11,15 @@ import PropTypes from "prop-types";
  * participation of this application. Github usernames included.
  */
 
- /**Prop passed
- * @param  {} navigation props.navigation is the name of the object from Navigator library
- */
-function AboutUs (props) {
+/**Prop passed
+* @param  {} navigation props.navigation is the name of the object from Navigator library
+*/
+function AboutUs(props) {
 
+     /**
+     * The method will slide the side menu from the right side of the screen
+     * @param  {} =>{props.navigation.openDrawer(
+     */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -40,20 +44,20 @@ function AboutUs (props) {
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goToMenu}>
+                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
-                </Button>
+                </TouchableOpacity>
             </View>
 
             <Text style={styles.mainLabel}>About Us</Text>
             <Text style={styles.aboutLabel}>Our App</Text>
 
             <View style={styles.scrollViewTextContainer}>
-            <SectionList
+                <SectionList
                     sections={textParagraph}
                     renderItem={({ item }) => <Text style={styles.paragraphText}>{item}</Text>}
                     keyExtractor={(index) => index}
-                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
+                    ItemSeparatorComponent={() => <View style={styles.line} />}
                 />
             </View>
 
@@ -65,7 +69,7 @@ function AboutUs (props) {
                     renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
                     renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(index) => index}
-                    ItemSeparatorComponent={ () => <View style={styles.line}/>}
+                    ItemSeparatorComponent={() => <View style={styles.line} />}
                 />
             </SafeAreaView>
         </View >
@@ -87,8 +91,8 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     scrollViewTextContainer: {
-         bottom: "59%",
-        height:"15%",
+        bottom: "59%",
+        height: "15%",
         width: "95%",
     },
     mainLabel: {
@@ -125,28 +129,21 @@ export const styles = StyleSheet.create({
         top: "43%"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        alignSelf: "center",
         color: "#FFFFFF",
-        fontSize: 35
+        fontSize: 35,
     },
     menuButton: {
         height: "100%",
-        width: "100%",
+        width: "20%",
         flexDirection: "row",
+        justifyContent: "center"
     },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "7%",
     },
-
     scrollTextContainer: {
         width: "100%",
         height: "52%",
@@ -177,7 +174,7 @@ export const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#353A50",
     },
-    paragraphText:{
+    paragraphText: {
         padding: 10,
         fontSize: 14,
         fontFamily: "encodeSansExpanded",
