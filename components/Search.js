@@ -19,7 +19,8 @@ import PropTypes from "prop-types";
  */
 
 function fetchData () {
-  const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
+  const searchInfo = MapData({context: "Search"});
+  console.log(searchInfo);
   return searchInfo;
 }
 
@@ -28,7 +29,7 @@ function Search (props) {
   const [buildingName, setBuildingName] = React.useState("");
   const [from, setFrom] = React.useState("");
   const [to, setTo] = React.useState("");
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState(null);
 
   let toName = to.name;
 
