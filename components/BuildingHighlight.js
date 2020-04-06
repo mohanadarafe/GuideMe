@@ -52,7 +52,7 @@ function BuildingHighlight () {
                 id="tap_mb"
                 coordinates={coord.mb.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["JMSB"].name)}
+                onPress={() => setBuildingName(buildings["MB Building"].name)}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 

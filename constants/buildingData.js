@@ -253,7 +253,7 @@ export function buildingData () {
       longitude: -73.578800
     }
   };
-  buildings["JMSB"] = {
+  buildings["MB Building"] = {
     name: "MB Building",
     fullName: "John Molson Building",
     address: "1450 Rue Guy, Montreal, QC, H3H 0A1",
