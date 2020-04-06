@@ -72,8 +72,8 @@ export function DifferentBuildingDirections(props) {
         )
     } 
     if(props.floor == 1) {
-        const arrow = !props.from.includes(" ") ? getArrowCoordinates(rooms["exit"].nearestPoint.x, rooms["exit"].nearestPoint.y, rooms["exit"].x, rooms["exit"].y) : getArrowCoordinates(rooms["elevator"].nearestPoint.x, rooms["elevator"].nearestPoint.y, rooms["elevator"].x, rooms["elevator"].y);
         rooms = props.rooms;
+        const arrow = !props.from.includes(" ") ? getArrowCoordinates(rooms["exit"].nearestPoint.x, rooms["exit"].nearestPoint.y, rooms["exit"].x, rooms["exit"].y) : getArrowCoordinates(rooms["elevator"].nearestPoint.x, rooms["elevator"].nearestPoint.y, rooms["elevator"].x, rooms["elevator"].y);
         return(
             <G>
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>

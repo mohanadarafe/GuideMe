@@ -2,7 +2,7 @@ export function HallXCoordinates (floorNumber) {
     var rooms = [];
     rooms["elevator"] = {
         x: "361",
-        y: "353",
+        y: "365",
         nearestPoint: {
             x: "362",
             y: "415"

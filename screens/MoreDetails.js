@@ -4,7 +4,7 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
-import { sgwRooms } from "../constants/sgwRooms";
+import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
 import { AppLoading } from "expo";
@@ -14,7 +14,7 @@ import { AppLoading } from "expo";
  * @param {*} buildingName Name of building to get data of
  */
 export function fetchData (buildingName) {
-  const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
+  const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, ClassRooms(), buildingData());
   return modeDetailsInfo;
 }
 /**

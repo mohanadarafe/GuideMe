@@ -54,7 +54,6 @@ function PreferenceMenu (props) {
             mobilityType: onPressSecondCategory.selectedButton,
             transportType: onPressThirdCategory.selectedButton,
         });
-
     };
 
     return (

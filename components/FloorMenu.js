@@ -35,6 +35,10 @@ const jmsbFloors = [
   { label: "15", value: "15" }
 ];
 
+const vlFloors = [
+  { label: "1", value: "1" }
+];
+
 export function FloorMenu() {
   const [floorNumber, setFloorNumber] = React.useState("1");
   const [selectedBuilding, setSelectedBuilding] = React.useState("");
@@ -65,7 +69,7 @@ export function FloorMenu() {
           }}
         />
       )}
-      {selectedBuilding === "JMSB" && (
+      {selectedBuilding === "MB Building" && (
         <SwitchSelector
           style={styles.selector}
           options={jmsbFloors}
@@ -76,7 +80,18 @@ export function FloorMenu() {
           }}
         />
       )}
-      {selectedBuilding !== "JMSB" && selectedBuilding !== "Hall Building" && (
+      {selectedBuilding === "VL Building" && (
+        <SwitchSelector
+          style={styles.selector}
+          options={vlFloors}
+          initial={0}
+          buttonColor={"#3ACCE1"}
+          onPress={value => {
+            setFloorNumber(value);
+          }}
+        />
+      )}
+      {selectedBuilding !== "MB Building" && selectedBuilding !== "Hall Building" && (
         <SwitchSelector
           id="floor_select_none"
           style={styles.selector}

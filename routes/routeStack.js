@@ -1,11 +1,11 @@
 import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
+import MapDirections from "../screens/Directions";
+import DoubleSearch from "../screens/DoubleSearch";
+import IndoorMapView from "../screens/Indoor/IndoorMapView";
 import HomeMap from "../screens/Map";
 import MoreDetails from "../screens/MoreDetails";
-import DoubleSearch from "../screens/DoubleSearch";
-import MapDirections from "../screens/Directions";
-import PreviewDirections from "../screens/PreviewDirections";
 import PreferenceMenu from "../screens/PreferenceMenu";
-import IndoorMapView from "../screens/Indoor/IndoorMapView";
+import PreviewDirections from "../screens/PreviewDirections";
 
 // Add screens here
 const screens = {

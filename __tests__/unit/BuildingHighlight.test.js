@@ -20,7 +20,7 @@ describe("Building Highlight component", () => {
 
   test("number of polygons", () => {
     const tree = renderer.create(<BuildingHighlight />).toJSON();
-    expect(tree.children.length).toBe(10);
+    expect(tree.children.length).toBe(11);
   });
 
   test("pressing on a building", () => {
@@ -34,6 +34,7 @@ describe("Building Highlight component", () => {
     wrapper.find("#tap_cc").props().onPress();
     wrapper.find("#tap_ad").props().onPress();
     wrapper.find("#tap_gn").props().onPress();
+    wrapper.find("#tap_vl").props().onPress();
 
     expect(setState).toHaveBeenCalledWith("Hall Building");
     expect(setState).toHaveBeenCalledWith("LB Building");
@@ -45,5 +46,6 @@ describe("Building Highlight component", () => {
     expect(setState).toHaveBeenCalledWith("CC Building");
     expect(setState).toHaveBeenCalledWith("AD Building");
     expect(setState).toHaveBeenCalledWith("Grey Nuns");
+    expect(setState).toHaveBeenCalledWith("VL Building");
   });
 });

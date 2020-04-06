@@ -71,6 +71,10 @@ const lowestCostNode = (costs, processed) => {
  */
 export const getFloorNumber = (name) => {
     if (name) {
+        if (name == "exit" || name == "elevator") {
+            return name;
+        }
+
         if (name.match(/\b[^\d\W]+\b/g)) {
             return name;
         }
@@ -102,6 +106,10 @@ export const getFloorNumber = (name) => {
  * @param {*} name | classroom name
  */
 export const ConvertToHall8Floor = (name) => {
+    if (name == "exit" || name == "elevator") {
+        return name;
+    }
+    
     if (name) {
         const num = name.match(/\d+/g).map(Number);
         const numToString = num.toString();

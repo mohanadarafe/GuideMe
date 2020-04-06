@@ -1,35 +1,21 @@
 import React, { useEffect } from "react";
 import { AsyncStorage } from "react-native";
-import Svg, { G, Path, Text, Line} from "react-native-svg";
+import Svg, { G, Path, Text } from "react-native-svg";
 import { IndoorScenario } from "../../../components/IndoorDirections/IndoorScenario";
-import { Hall9Coordinates } from "../../../constants/Hall9Coordinates";
 
-export function HallFloor9() {
+export function HallFloor9(props) {
     const [floorNumber, setFloorNumber] = React.useState("");
-    const [to, setTo] = React.useState("");
-    const [from, setFrom] = React.useState("");
-    const rooms = Hall9Coordinates();
+    const to = props.to;
+    const from = props.from;
 
     const floorSelected = async () => {
       let name = await AsyncStorage.getItem("floorSelected");
       setFloorNumber(name);
     };
 
-    const getFromLocation = async () => {
-      let name = await AsyncStorage.getItem("fromLocation");
-      setFrom(name);
-    };
-
-    const getToLocation = async () => {
-      let name = await AsyncStorage.getItem("toLocation");
-      setTo(name);
-    };
-
     useEffect(() => {
       const intervalId = setInterval(() => {
         floorSelected();
-        getFromLocation();
-        getToLocation();
       }, 1);
       return () => clearInterval(intervalId);
     });
@@ -1010,7 +996,7 @@ export function HallFloor9() {
           fill="#fff"
         />
         {from !== null && to !==null &&
-          <IndoorScenario floor={floorNumber} from={from} to={to} />
+          <IndoorScenario floor={floorNumber} from={from} to={to} building={"Hall Building"} />
         }
       </G>
     </Svg>

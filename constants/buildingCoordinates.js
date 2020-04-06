@@ -48,7 +48,7 @@ export default {
             { latitude: 45.495200, longitude: -73.578530 },
             { latitude: 45.495523, longitude: -73.579198 }
         ],
-        name: "JMSB"
+        name: "MB Building"
     },
     "gn": {
         coordinates: [
@@ -96,6 +96,24 @@ export default {
             { latitude: 45.458243, longitude: -73.639460 },
             { latitude: 45.457807, longitude: -73.639814 },
             { latitude: 45.457901, longitude: -73.640113 }
+        ]
+    },
+    "vl": {
+        coordinates: [
+            { latitude: 45.45859546323396, longitude:  -73.6383855342865},
+            { latitude: 45.45911471817363, longitude:  -73.6378812789917},
+            { latitude: 45.4592351244332, longitude: -73.63816022872925 },
+            { latitude: 45.45916739594383, longitude: -73.6382246017456 },
+            { latitude: 45.45949851222957, longitude: -73.63913655281067 },
+            { latitude: 45.45925017519755, longitude: -73.63936185836792 },
+            { latitude: 45.4591372943669, longitude: -73.6393940448761 },
+            { latitude: 45.459031938721054, longitude: -73.63914728164673 },
+            { latitude: 45.45912224357239, longitude: -73.63909363746643 },
+            { latitude: 45.45908461656855, longitude: -73.63898634910583 },
+            { latitude: 45.45912976897015, longitude: -73.63893270492554 },
+            { latitude: 45.45908461656855, longitude: -73.63882541656494 },
+            { latitude: 45.458828752276666, longitude: -73.63903999328613 },
+            { latitude: 45.45859546323396, longitude:  -73.6383855342865}
         ]
     }
 };
