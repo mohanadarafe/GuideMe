@@ -61,7 +61,7 @@
     "@react-navigation/drawer": "^5.3.2",
     "@react-navigation/native": "^5.1.1",
     "@react-navigation/stack": "^5.2.3",
-    "acorn": "^7.1.1",
+    "acorn": "^7.1.0",
     "detox-expo-helpers": "^0.6.0",
     "expo": "~36.0.0",
     "expo-detox-hook": "^1.0.10",
