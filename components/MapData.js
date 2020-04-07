@@ -33,7 +33,7 @@ const appendIdToList = (list) => {
     return appendedList;
 }
 
-const retrieveSearchItems = (buildings, classrooms) => {
+export function RetrieveSearchItems (buildings, classrooms) {
     let classroomsList = [];
     let buildingNames = [];
     let buildingFullNames = [];
@@ -51,9 +51,10 @@ const retrieveSearchItems = (buildings, classrooms) => {
         classroomsList.push(...classrooms[key].room);
     }
     classroomsList.flat();
+    buildingServices = [].concat.apply([], buildingServices);
+    buildingDepartments = [].concat.apply([], buildingDepartments);
     const mergedItems = [...buildingNames, ...buildingFullNames, ...buildingAddress, ...buildingDepartments, ...buildingServices, ...classroomsList];
-    const searchItems = appendIdToList(mergedItems);
-    return searchItems;
+    return mergedItems;
 }
 
 
@@ -84,7 +85,7 @@ export function MapData (props, rooms, buildingInfo) {
         results = retrieveMoreDetailsData(props.buildingToSearch, buildingList);
         return results;
         case "Search":
-        results = retrieveSearchItems(buildingList, classrooms);
+        results = appendIdToList(RetrieveSearchItems(buildingList, classrooms));
         return results
         break;
     }
