@@ -47,7 +47,12 @@
       "!**/routes/routeStack.js",
       "!**/constants/buildingCoordinates.js",
       "!**/screens/Directions.js",
-      "!**/screens/PreviewDirections.js"
+      "!**/screens/PreviewDirections.js",
+      "!**/assets/floormaps/vl/VLFloor1.js",
+      "!**/constants/Hall9Coordinates.js",
+      "!**/constants/LoyolaGraph.js",
+      "!**/routes/**.js",
+      "!**/screens/Menu/ShuttleBus.js"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/web-build/register-service-worker.js"
