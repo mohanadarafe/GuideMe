@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { G } from 'react-native-svg';
 import { HallXCoordinates } from '../../constants/HallXCoordinates';
 import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDirections';

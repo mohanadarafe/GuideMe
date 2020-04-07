@@ -100,6 +100,9 @@ function DoubleSearch(props) {
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
         }
+        else if(coordinatesFrom.isClassRoom && to.name.includes("Washroom")){
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
+        }
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
