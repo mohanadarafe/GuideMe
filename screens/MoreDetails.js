@@ -4,27 +4,17 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
-import { sgwRooms } from "../constants/sgwRooms";
+import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
 import { AppLoading } from "expo";
-export const renderSeparator = () => {
-  return (
-    <View
-      style={{
-        height: 1,
-        width: "100%",
-        backgroundColor: "#353A50",
-      }}
-    />
-  );
-};
+
 /**
  * 
  * @param {*} buildingName Name of building to get data of
  */
-export function fetchData(buildingName) {
-  const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, sgwRooms(), buildingData());
+export function fetchData (buildingName) {
+  const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, ClassRooms(), buildingData());
   return modeDetailsInfo;
 }
 /**
@@ -35,7 +25,7 @@ export function fetchData(buildingName) {
  * @param {*} accesibility array of accesibility
  * @param {*} number phone number
  */
-export function createLists(data, departments, services, accesibility, number) {
+export function createLists (data, departments, services, accesibility, number) {
   if (data) {
     for (let i = 0; i < data.length; i++) {
       for (let j = 0; j < data[i].length; j++) {
@@ -74,11 +64,11 @@ export function createLists(data, departments, services, accesibility, number) {
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails(props) {
+function MoreDetails (props) {
   const [data, setData] = React.useState();
   const goBack = () => {
     props.navigation.goBack();
-  }
+  };
   const name = props.navigation.getParam("name", "null");
   const goToDoubleSearchBar = () => {
     props.navigation.navigate("DoubleSearch", { destinationName: name });
@@ -132,7 +122,7 @@ function MoreDetails(props) {
             renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
             renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
             keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={renderSeparator}
+            ItemSeparatorComponent={ () => <View style={styles.line}/>}
           />
         </SafeAreaView>
         <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
@@ -319,5 +309,10 @@ export const styles = StyleSheet.create({
     fontSize: 54,
     position: "absolute"
   },
+  line: {
+    height: 1,
+    width: "100%",
+    backgroundColor: "#353A50",
+},
 });
 export default MoreDetails;

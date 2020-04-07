@@ -2,7 +2,7 @@ import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
 import { Class9Graph } from '../../../constants/ClassGraph9';
-import { dijkstra, getFloorNumber, ConvertToHall8Floor } from '../Dijkstra/DijkstraAlgorithm';
+import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 
 export function DifferentBuildingDirections(props) {
@@ -56,7 +56,8 @@ export function DifferentBuildingDirections(props) {
     });
 
     // Go to elevator
-    if(props.floor == getFloorNumber(goTo)) {
+    if(props.floor == getFloorNumber(tempGoTo)) {
+        const arrow = props.from.includes(" ") ? getArrowCoordinates(rooms[goTo].nearestPoint.x, rooms[goTo].nearestPoint.y, rooms[goTo].x, rooms[goTo].y) : getArrowCoordinates(rooms["elevator"].nearestPoint.x, rooms["elevator"].nearestPoint.y, rooms["elevator"].x, rooms["elevator"].y);
         rooms = props.floor == 9 ? Hall9Coordinates() : rooms;
         return(
             <G>
@@ -65,17 +66,23 @@ export function DifferentBuildingDirections(props) {
                     linesToElevator.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x3} y1={arrow.y3} x2={props.from.includes(" ") ? rooms[goTo].x : rooms["elevator"].x} y2={props.from.includes(" ") ? rooms[goTo].y : rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x4} y1={arrow.y4} x2={props.from.includes(" ") ? rooms[goTo].x : rooms["elevator"].x} y2={props.from.includes(" ") ? rooms[goTo].y :rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
             </G>
         )
     } 
     if(props.floor == 1) {
         rooms = props.rooms;
+        const arrow = !props.from.includes(" ") ? getArrowCoordinates(rooms["exit"].nearestPoint.x, rooms["exit"].nearestPoint.y, rooms["exit"].x, rooms["exit"].y) : getArrowCoordinates(rooms["elevator"].nearestPoint.x, rooms["elevator"].nearestPoint.y, rooms["elevator"].x, rooms["elevator"].y);
         return(
             <G>
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToExit.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
+                <Line x1={rooms["exit"].x} y1={rooms["exit"].y} x2={rooms["exit"].nearestPoint.x} y2={rooms["exit"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x3} y1={arrow.y3} x2={!props.from.includes(" ") ? rooms["exit"].x : rooms["elevator"].x} y2={!props.from.includes(" ") ? rooms["exit"].y : rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x4} y1={arrow.y4} x2={!props.from.includes(" ") ? rooms["exit"].x : rooms["elevator"].x} y2={!props.from.includes(" ") ? rooms["exit"].y : rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
             </G>
         )
     }

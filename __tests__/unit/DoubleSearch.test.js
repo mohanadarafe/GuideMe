@@ -5,7 +5,7 @@ import renderer from "react-test-renderer";
 describe("DoubleSearch component", () => {
     test("renders correctly", () => {
         const navigation = { getParam: (param, defaultValue) => {
-            return "JMSB";
+            return "MB Building";
         }};
         const mockGeolocation = {
             getCurrentPosition: jest.fn(),

@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
-import { sgwRooms } from "../constants/sgwRooms";
+import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 import PropTypes from "prop-types";
 
@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
  */
 
 function fetchData () {
-  const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
+  const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
   return searchInfo;
 }
 
@@ -55,12 +55,17 @@ function Search (props) {
     setData(fetchData());
   }, []);
 
+  const goToMenu = () => {
+    AsyncStorage.setItem("sideMenu", "sideMenu");
+    props.navigation.openDrawer();
+  };
+
   return (
     <View style={styles.container} testID={props.testID}>
       <View style={styles.buttonStyle}>
         <TouchableOpacity>
           <View>
-            <Icon name='menu' size={30}></Icon>
+            <Icon name='menu' size={30} onPress={goToMenu}></Icon>
           </View>
         </TouchableOpacity>
       </View>
@@ -81,7 +86,8 @@ function Search (props) {
 }
 
 Search.propTypes = {
-  testID: PropTypes.string
+  testID: PropTypes.string,
+  navigation: PropTypes.object
 };
 
 export const styles = StyleSheet.create({

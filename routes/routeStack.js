@@ -1,13 +1,11 @@
 import { createStackNavigator, TransitionPresets } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import MapDirections from "../screens/Directions";
+import DoubleSearch from "../screens/DoubleSearch";
+import IndoorMapView from "../screens/Indoor/IndoorMapView";
 import HomeMap from "../screens/Map";
 import MoreDetails from "../screens/MoreDetails";
-import DoubleSearch from "../screens/DoubleSearch";
-import MapDirections from "../screens/Directions";
-import PreviewDirections from "../screens/PreviewDirections";
 import PreferenceMenu from "../screens/PreferenceMenu";
-import IndoorMapView from "../screens/Indoor/IndoorMapView";
-import Nearby from "../screens/Nearby";
+import PreviewDirections from "../screens/PreviewDirections";
 
 // Add screens here
 const screens = {
@@ -57,23 +55,14 @@ const screens = {
         }
     },
 
-    IndoorMapView:{
+    IndoorMapView: {
         screen: IndoorMapView,
         navigationOptions: {
             headerShown: false,
         }
     },
-    Nearby:{
-        screen: Nearby,
-        navigationOptions:{
-            headerShown: false,
-            ...TransitionPresets.ModalSlideFromBottomIOS
-        }
-    }
-
-
 };
 
-const HomeStack = createStackNavigator(screens);
+const routeStack = createStackNavigator(screens);
 
-export default createAppContainer(HomeStack);
+export default routeStack;

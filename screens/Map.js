@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -7,7 +8,6 @@ import { BottomMenu } from "../components/BottomMenu";
 import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import { Search } from "../components/Search";
-import IndoorMapView from "./Indoor/IndoorMapView";
 import PropTypes from "prop-types";
 
 const mapPosition = {
@@ -33,7 +33,7 @@ const mapPosition = {
  * FIXME: When the app refreshes, a random component appears on in the upper
  *        half of the screen for miliseconds...
  */
-function Map({ navigation }) {
+function Map ({ navigation }) {
     const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
     const [mapPressed, setmapPressed] = React.useState("");
@@ -71,12 +71,12 @@ function Map({ navigation }) {
                     <BuildingHighlight />
                     <BuildingIdentification />
                 </MapView>
-                <Search testID="searchBar" />
-                {/* FixMe: need to add permission for Location in this file <View style={styles.CurrentBuildingLocation}>
+                <Search testID="searchBar" navigation={navigation} />
+                <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
-                    </View> */}
-            </View>
+                </View>
             <BottomMenu navigation={navigation} />
+            </View>
         </View>
     );
 }

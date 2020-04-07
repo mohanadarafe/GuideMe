@@ -2,18 +2,18 @@ export function HallXCoordinates (floorNumber) {
     var rooms = [];
     rooms["elevator"] = {
         x: "361",
-        y: "353",
+        y: "365",
         nearestPoint: {
             x: "362",
             y: "415"
         }
     }
     rooms["exit"] = {
-        x: "",
-        y: "",
+        x: "555",
+        y: "70",
         nearestPoint: {
             x: "555",
-            y: "43"
+            y: "120"
         }
     }
     rooms["H801"] = {

@@ -1,9 +1,10 @@
 export function buildingData () {
   var buildings = [];
   buildings["B Annex"] = {
-    name: "B Annex",
+    name: "B Building",
+    fullName: "B Annex",
     address: "2160 Rue Bishop, Montreal, QC, H3G 2E9",
-    departments: null,
+    departments: [],
     services: ["Engineering and Computer Science Association"],
     phone: 5148482424,
     hasCredit: false,
@@ -11,74 +12,79 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497856,
-      longitude:-73.579588
+    coordinates: {
+      latitude: 45.497856,
+      longitude: -73.579588
 
     }
   };
   buildings["C Annex"] = {
-    name: "CI Annex",
+    name: "CI Building",
+    fullName: "CI Annex",
     address: "2149 Rue Mackay, Montreal, QC, H3G 2J2",
     departments: ["School of Community and Public Affairs"],
-    services: null,
+    services: [],
     hasCredit: true,
     hasBicycle: false,
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.497467,
-      longitude:-73.579925
+    coordinates: {
+      latitude: 45.497467,
+      longitude: -73.579925
     }
   };
   buildings["CL Annex"] = {
-    name: "CL Annex",
+    name: "CL Building",
+    fullName: "CL Annex",
     address: "1665 Rue Ste-Catherine O. Montreal, QC, H3H 1L9",
-    departments: null,
+    departments: [],
     services: ["Concordia Continuing Education"],
     hasCredit: true,
     hasBicycle: false,
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.494259,
-      longitude:-73.579007
+    coordinates: {
+      latitude: 45.494259,
+      longitude: -73.579007
     }
   };
   buildings["D Annex"] = {
-    name: "D Annex",
+    name: "D Building",
+    fullName: "D Annex",
     address: "2140 Rue Bishop, Montreal, QC, H3G 2E9",
     departments: ["Theological Studies"],
-    services: null,
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497827,
-      longitude:-73.579409
+    coordinates: {
+      latitude: 45.497827,
+      longitude: -73.579409
     }
   };
   buildings["EN Annex"] = {
-    name: "EN Annex",
+    name: "EN Building",
+    fullName: "EN Annex",
     address: "2155 Rue Guy, Montreal, QC, H3H 2L9",
-    departments: null,
-    services: null,
+    departments: [],
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496944,
-      longitude:-73.579555
+    coordinates: {
+      latitude: 45.496944,
+      longitude: -73.579555
     }
   };
   buildings["EV Building"] = {
-    name: "Engineering, Computer Science and Visual Arts Integrated Complex",
+    name: "EV Building",
+    fullName: "Engineering, Computer Science and Visual Arts Integrated Complex",
     address: "1515 Rue St Catherine O. Montreal, QC, H3G 2W1",
     departments: [
       "Gina Cody School of Engineering and Computer Science",
@@ -93,28 +99,30 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.495376,
-      longitude:-73.577997
+    coordinates: {
+      latitude: 45.496495,
+      longitude: -73.578258
     }
   };
   buildings["FA Annex"] = {
-    name: "FA Annex",
+    name: "FA Building",
+    fullName: "FA Annex",
     address: "2060 Rue Mackay, QC, H3G 2J1",
     departments: ["Department of Religions and Cultures"],
-    services: null,
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496874,
-      longitude:-73.579468
+    coordinates: {
+      latitude: 45.496874,
+      longitude: -73.579468
     }
   };
-  buildings["FG Building"] = {
-    name: "Faubourg Building",
+  buildings["FB Building"] = {
+    name: "FB Building",
+    fullName: "Faubourg Building",
     address: "1250 Rue Guy, QC, H3G 2T4",
     departments: [
       "Concordia Continuing Education",
@@ -134,13 +142,14 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.494666,
-      longitude:-73.577603
+    coordinates: {
+      latitude: 45.494666,
+      longitude: -73.577603
     }
   };
   buildings["GM Building"] = {
-    name: "Guy-De Maisonneuve Building",
+    name: "GM Building",
+    fullName: "Guy-De Maisonneuve Building",
     address: "1550 Rue de Maisonneuve O., Montreal, QC, H3G 1N1",
     departments: ["Contemporary Dance", "Music", "Theatre"],
     services: [
@@ -157,15 +166,16 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.495983,
-      longitude:-73.578824
+    coordinates: {
+      latitude: 45.495983,
+      longitude: -73.578824
     }
   };
   buildings["Grey Nuns"] = {
-    name: "Grey Nuns Building",
+    name: "Grey Nuns",
+    fullName: "Grey Nuns Building",
     address: "1190 Rue Guy, Montreal, QC, H3H 2L4",
-    departments: null,
+    departments: [],
     services: [
       "Residences",
       "Grey Nuns Library (Reading Room and Group Study Rooms)",
@@ -178,43 +188,46 @@ export function buildingData () {
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.493622,
-      longitude:-73.577003
+    coordinates: {
+      latitude: 45.493622,
+      longitude: -73.577003
     }
   };
   buildings["GN Annex"] = {
-    name: "Grey Nuns Annex",
+    name: "GA Building",
+    fullName: "Grey Nuns Annex",
     address: "1211-1215 Rue St. Mathieu, Montreal, QC, H3H 2S2",
     departments: ["Department of Education"],
-    services: null,
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.494123,
-      longitude:-73.577870
+    coordinates: {
+      latitude: 45.494123,
+      longitude: -73.577870
     }
   };
   buildings["GS Building"] = {
     name: "GS Building",
+    fullName: "Guy-Sherbrooke Building",
     address: "1538 Sherbrook St O., Montreal, QC, H3H 2L9",
-    departments: null,
-    services: null,
+    departments: [],
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: true,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496620,
-      longitude:-73.581402
+    coordinates: {
+      latitude: 45.496620,
+      longitude: -73.581402
     }
   };
   buildings["Hall Building"] = {
-    name: "Henry F. Hall Building",
+    name: "Hall Building",
+    fullName: "Henry F. Hall Building",
     address: "1455 De Maisonneuve Blvd O., Montreal, QC, H3G 1M8",
     departments: [
       "Classics, Moden Languages and Linguistics",
@@ -235,13 +248,14 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.497092,
-      longitude:-73.578800
+    coordinates: {
+      latitude: 45.497092,
+      longitude: -73.578800
     }
   };
-  buildings["JMSB"] = {
-    name: "John Molson Building",
+  buildings["MB Building"] = {
+    name: "MB Building",
+    fullName: "John Molson Building",
     address: "1450 Rue Guy, Montreal, QC, H3H 0A1",
     departments: [
       "Accountancy",
@@ -255,28 +269,30 @@ export function buildingData () {
       "John Molson Executive Centre",
       "Performing Arts Facilities"
     ],
-    coordinates:{
-      latitude:45.495304,
-      longitude:-73.579044
+    coordinates: {
+      latitude: 45.495304,
+      longitude: -73.579044
     }
   };
   buildings["K Annex"] = {
-    name: "K Annex",
+    name: "K Building",
+    fullName: "K Annex",
     address: "2150 Rue Bishop, Montreal, QC, H3G 2E9",
-    departments: null,
+    departments: [],
     services: ["Theological Studies"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497777,
-      longitude:-73.579531
+    coordinates: {
+      latitude: 45.497777,
+      longitude: -73.579531
     }
   };
   buildings["LB Building"] = {
-    name: "JW McConnell Building",
+    name: "LB Building",
+    fullName: "JW McConnell Building",
     address: "1400 De Maisonneuve Blvd. O. Montreal, QC, H3G 1M8",
     departments: [
       "English",
@@ -300,259 +316,276 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: true,
-    coordinates:{
-      latitude:45.498678,
-      longitude:-73.578093
+    coordinates: {
+      latitude: 45.497192,
+      longitude: -73.577883,
     }
   };
-  buildings["LD"] = {
-    //or k building?
+  buildings["LD Building"] = {
     name: "LD Building",
+    fullName: "LD Building",
     address: "1424 Rue Bishop, Montreal, QC, H3G 1M8",
-    departments: null,
+    departments: [],
     services: ["CSU Day Care & Nursery"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496697,
-      longitude:-73.577312
+    coordinates: {
+      latitude: 45.496697,
+      longitude: -73.577312
     }
   };
-  buildings["LS"] = {
-    name: "Learning Square",
+  buildings["LS Building"] = {
+    name: "LS Building",
+    fullName: "Learning Square",
     address: "1535 De Maisonneuve Blvd. W. Montreal, QC, H3G 1M9",
-    departments: null,
+    departments: [],
     services: ["IT Services -- 1st Floor", "IT Services -- 2nd Floor"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496380,
-      longitude:-73.579511
+    coordinates: {
+      latitude: 45.496380,
+      longitude: -73.579511
     }
   };
   buildings["M Annex"] = {
-    name: "M Annex",
+    name: "M Building",
+    fullName: "M Annex",
     address: "2135 Rue Mackay, Montreal, QC, H3G 2J2",
-    departments: null,
-    services: null,
+    departments: [],
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497368,
-      longitude:-73.579777
+    coordinates: {
+      latitude: 45.497368,
+      longitude: -73.579777
     }
   };
   buildings["MI Annex"] = {
-    name: "MI Annex",
+    name: "MI Building",
+    fullName: "MI Annex",
     address: "2130 Rue Bishop, Montreal, QC, H3H 2E9",
-    departments: null,
+    departments: [],
     services: ["ACUMAE", "SCOMM", "CUSSU", "CUUSS-TS", "CULEU", "CUPEU"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497807,
-      longitude:-73.579261
+    coordinates: {
+      latitude: 45.497807,
+      longitude: -73.579261
     }
   };
   buildings["MT Building"] = {
-    name: "Montefiore Building",
+    name: "MT Building",
+    fullName: "Montefiore Building",
     address: "1195 Rue Guy, Montreal, QC, H3H 2K7",
-    departments: null,
+    departments: [],
     services: ["Conference Services"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.494442,
-      longitude:-73.576108
+    coordinates: {
+      latitude: 45.494442,
+      longitude: -73.576108
     }
   };
   buildings["MU Annex"] = {
-    name: "MU Annex",
+    name: "MU Building",
+    fullName: "MU Annex",
     address: "2170 Rue Bishop, Montreal, QC, H3H 2E9",
-    departments: null,
+    departments: [],
     services: ["Simone de Beauvoir Institute"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497963,
-      longitude:-73.579506
+    coordinates: {
+      latitude: 45.497963,
+      longitude: -73.579506
     }
   };
   buildings["OS Building"] = {
     name: "OS Building",
+    fullName: "Collège O'Sullivan de Montréal",
     address: "1191 Rue de la Montagne, Montreal, QC, H3H 1Z2",
-    departments: null,
-    services: null,
+    departments: [],
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497444,
-      longitude:-73.573472
+    coordinates: {
+      latitude: 45.497444,
+      longitude: -73.573472
     }
   };
   buildings["P Annex"] = {
-    name: "P Annex",
+    name: "P Building",
+    fullName: "P Annex",
     address: "2020 Rue Mackay, Montreal, QC, H3G 2M2",
-    departments: null,
-    services: null,
+    departments: [],
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496745,
-      longitude:-73.579113
+    coordinates: {
+      latitude: 45.496745,
+      longitude: -73.579113
     }
   };
   buildings["PR Annex"] = {
-    name: "PR Annex",
+    name: "PR Building",
+    fullName: "PR Annex",
     address: "2100 Rue Mackay, Montreal, QC, H3G 2J1",
-    departments: null,
-    services: null,
-    coordinates:{
-      latitude:45.497066,
-      longitude:-73.579790
+    departments: [],
+    services: [],
+    coordinates: {
+      latitude: 45.497066,
+      longitude: -73.579790
     }
   };
   buildings["Q Annex"] = {
-    name: "Q Annex",
+    name: "Q Building",
+    fullName: "Q Annex",
     address: "2010 Rue Mackay, Montreal, QC, H3G 2J1",
-    departments: null,
+    departments: [],
     services: ["Ethnic Students' Association"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496648,
-      longitude:-73.579094
+    coordinates: {
+      latitude: 45.496648,
+      longitude: -73.579094
     }
   };
   buildings["R Annex"] = {
-    name: "R Annex",
+    name: "R Building",
+    fullName: "R Annex",
     address: "2050 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: ["Religions and Cultures"],
-    services: null,
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496826,
-      longitude:-73.579389
+    coordinates: {
+      latitude: 45.496826,
+      longitude: -73.579389
     }
   };
   buildings["RR Annex"] = {
-    name: "RR Annex",
+    name: "RR Building",
+    fullName: "RR Annex",
     address: "2040 Rue Mackay, Montreal, QC, H3G 2J1",
     departments: ["Liberal Arts College"],
-    services: null,
-    coordinates:{
-      latitude:45.496796,
-      longitude:-73.579259
+    services: [],
+    coordinates: {
+      latitude: 45.496796,
+      longitude: -73.579259
     }
   };
   buildings["S Annex"] = {
-    name: "S Annex",
+    name: "S Building",
+    fullName: "S Annex",
     address: "2145 Rue Mackay, Montreal, QC, H3G 2J2",
     departments: ["Department of Philosophy"],
-    services: null,
+    services: [],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497423,
-      longitude:-73.579851
+    coordinates: {
+      latitude: 45.497423,
+      longitude: -73.579851
     }
   };
   buildings["SB Building"] = {
-    name: "Samuel Bronfman Building",
+    name: "SB Building",
+    fullName: "Samuel Bronfman Building",
     address: "1590 Rue Docteur Penfield, Montreal, QC, H3G 1C5",
-    departments: null,
+    departments: [],
     services: ["Arts and Services Research Groups"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: true,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496600,
-      longitude:-73.586090
+    coordinates: {
+      latitude: 45.496600,
+      longitude: -73.586090
     }
   };
   buildings["T Annex"] = {
-    name: "T Annex",
+    name: "T Building",
+    fullName: "T Annex",
     address: "2030 Rue Mackay, Montreal, QC, H3G 1C5",
-    departments: null,
+    departments: [],
     services: ["Graduate Students Association"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496710,
-      longitude:-73.579270
+    coordinates: {
+      latitude: 45.496710,
+      longitude: -73.579270
     }
   };
   buildings["TD"] = {
-    name: "Toronto Dominion Building",
+    name: "TD",
+    fullName: "Toronto Dominion Building",
     address: "1410 Rue Guy, Montreal, QC, H3H 2L7",
-    departments: null,
+    departments: [],
     services: ["CUSP"],
     hasCredit: true,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.495245,
-      longitude:-73.578429
+    coordinates: {
+      latitude: 45.495245,
+      longitude: -73.578429
     }
   };
   buildings["V Annex"] = {
-    name: "V Annex",
+    name: "V Building",
+    fullName: "V Annex",
     address: "1410 Rue Guy, Montreal, QC, H3H 2L7",
-    departments: null,
+    departments: [],
     services: ["CUTV", "Centre 2110"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.497101,
-      longitude:-73.579907
+    coordinates: {
+      latitude: 45.497101,
+      longitude: -73.579907
     }
   };
   buildings["VA Building"] = {
-    name: "Visual Arts Building",
+    name: "VA Building",
+    fullName: "Visual Arts Building",
     address: "1395 Rene-Levesque Blvd. O. Montreal, QC, H3G 2M5",
     departments: [
       "Studio Arts",
@@ -566,43 +599,46 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: false,
-    coordinates:{
-      latitude:45.495543,
-      longitude:-73.573795
+    coordinates: {
+      latitude: 45.495543,
+      longitude: -73.573795
     }
   };
   buildings["X Annex"] = {
-    name: "X Annex",
+    name: "X Building",
+    fullName: "X Annex",
     address: "2080 Rue Mackay, Montreal, QC, H3G 2J1",
-    departments: null,
+    departments: [],
     services: ["Concordia Internation"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496940,
-      longitude:-73.579593
+    coordinates: {
+      latitude: 45.496940,
+      longitude: -73.579593
     }
   };
   buildings["Z Annex"] = {
-    name: "Z Annex",
+    name: "Z Building",
+    fullName: "Z Annex",
     address: "2090 Rue Mackay, Montreal, QC, H3G 2J1",
-    departments: null,
+    departments: [],
     services: ["Concordia Internation"],
     hasCredit: false,
     hasBicycle: false,
     hasHandicap: false,
     hasInfocenter: false,
     hasParking: false,
-    coordinates:{
-      latitude:45.496981,
-      longitude:-73.579705
+    coordinates: {
+      latitude: 45.496981,
+      longitude: -73.579705
     }
   };
   (buildings["AD Building"] = {
-    name: "Administration Building",
+    name: "AD Building",
+    fullName: "Administration Building",
     address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
     departments: ["Faculty of Arts and Science"],
     services: [
@@ -618,45 +654,48 @@ export function buildingData () {
     hasHandicap: true,
     hasInfocenter: true,
     hasParking: true,
-    coordinates:{
-      latitude:45.457984,
-      longitude:-73.639834
+    coordinates: {
+      latitude: 45.457984,
+      longitude: -73.639834
     }
   }),
     (buildings["BB Building"] = {
-      name: "BB Annex",
+      name: "BB Building",
+      fullName: "BB Annex",
       address: "3502 Avenue Belmore, Montréal, QC, H4B 2B9",
-      departments: null,
+      departments: [],
       services: ["CPE Les P’tits Profs Daycare"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459793,
-        longitude:-73.639174
+      coordinates: {
+        latitude: 45.459793,
+        longitude: -73.639174
       }
     }),
     (buildings["BH Building"] = {
-      name: "BH Annex",
+      name: "BH Building",
+      fullName: "BH Annex",
       address: "3500 Avenue Belmore, Montréal, QC, H4B 2B9",
-      departments: null,
+      departments: [],
       services: ["CPE Les P’tits Profs Daycare"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459819,
-        longitude:-73.639152
+      coordinates: {
+        latitude: 45.459819,
+        longitude: -73.639152
       }
     }),
-    (buildings["CC Bulding"] = {
-      name: "Central Building",
+    (buildings["CC Building"] = {
+      name: "CC Building",
+      fullName: "Central Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: [
         "Concordia Student Union",
         "Loyola College for Diversity and Sustainability and Loyola"
@@ -666,13 +705,14 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.458204,
-        longitude:-73.640300
+      coordinates: {
+        latitude: 45.458204,
+        longitude: -73.640300
       }
     }),
     (buildings["CJ Building"] = {
-      name: "Communication Studies and Journalism Building",
+      name: "CJ Building",
+      fullName: "Communication Studies and Journalism Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Communication Studies", "Journalism"],
       services: ["Campus Retail Stores"],
@@ -681,31 +721,33 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.457478,
-        longitude:-73.640354
+      coordinates: {
+        latitude: 45.457478,
+        longitude: -73.640354
       }
     }),
     (buildings["DO Building"] = {
-      name: "Stinger Dome (Seasonal)",
+      name: "DO Building",
+      fullName: "Stinger Dome (Seasonal)",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Stingers Team"],
-      services: null,
+      services: [],
       phone: 51484824248860, //has extension
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458710,
-        longitude:-73.640581
+      coordinates: {
+        latitude: 45.458710,
+        longitude: -73.640581
       }
     }),
     (buildings["FC Building"] = {
-      name: "F.C. Smith Building",
+      name: "FC Building",
+      fullName: "F.C. Smith Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: [
         "F.C. Smith Auditorium",
         "Cazalet Theatre",
@@ -716,133 +758,142 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458493,
-        longitude:-73.639287
+      coordinates: {
+        latitude: 45.458493,
+        longitude: -73.639287
       }
     }),
     (buildings["GE Building"] = {
-      name: "Centre for Structural and Functional Genomics",
+      name: "GE Building",
+      fullName: "Centre for Structural and Functional Genomics",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Centre for Structural and Functional Genomics"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.457017,
-        longitude:-73.640432
+      coordinates: {
+        latitude: 45.457017,
+        longitude: -73.640432
       }
     }),
     (buildings["HA Building"] = {
-      name: "Hingston Hall, Wing HA",
+      name: "HA Building",
+      fullName: "Hingston Hall, Wing HA",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Student Residence"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459356,
-        longitude:-73.641270
+      coordinates: {
+        latitude: 45.459356,
+        longitude: -73.641270
       }
     }),
     (buildings["HB Building"] = {
-      name: "Hingston Hall, Wing HB",
+      name: "HB Building",
+      fullName: "Hingston Hall, Wing HB",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Student Residence"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459308,
-        longitude:-73.641849
+      coordinates: {
+        latitude: 45.459308,
+        longitude: -73.641849
       }
     }),
     (buildings["HC Building"] = {
-      name: "Hingston Hall, Wing HC",
+      name: "HC Building",
+      fullName: "Hingston Hall, Wing HC",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Student Residence"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459663,
-        longitude:-73.642080
+      coordinates: {
+        latitude: 45.459663,
+        longitude: -73.642080
       }
     }),
     (buildings["HU Building"] = {
-      name: "Applied Science Hub",
+      name: "HU Building",
+      fullName: "Applied Science Hub",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
-      services: null,
+      departments: [],
+      services: [],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.458513,
-        longitude:-73.641921
+      coordinates: {
+        latitude: 45.458513,
+        longitude: -73.641921
       }
     }),
     (buildings["JR Building"] = {
-      name: "Jetsuit Residence",
+      name: "JR Building",
+      fullName: "Jetsuit Residence",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Student Residence"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.458740,
-        longitude:-73.640506
+      coordinates: {
+        latitude: 45.458740,
+        longitude: -73.640506
       }
     }),
     (buildings["PC Building"] = {
-      name: "Perform Centre",
+      name: "PC Building",
+      fullName: "Perform Centre",
       address: "7200 Sherbrooke St WMontreal, QC, H4B 1R2",
-      departments: null,
+      departments: [],
       services: ["Perform Centre"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: true,
-      coordinates:{
-        latitude:45.458740,
-        longitude:-73.640506
+      coordinates: {
+        latitude: 45.458740,
+        longitude: -73.640506
       }
     }),
     (buildings["PS Building"] = {
-      name: "Physical Services Building",
+      name: "PS Building",
+      fullName: "Physical Services Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Environmental Health and Safety", "Facilities Management"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459636,
-        longitude:-73.639758
+      coordinates: {
+        latitude: 45.459636,
+        longitude: -73.639758
       }
     }),
     (buildings["PT Building"] = {
-      name: "Oscar Peterson Concert Hall",
+      name: "PT Building",
+      fullName: "Oscar Peterson Concert Hall",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Oscar Peterson Concert Hall"],
       services: ["Concert Hall"],
@@ -851,63 +902,67 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459308,
-        longitude:-73.638941
+      coordinates: {
+        latitude: 45.459308,
+        longitude: -73.638941
       }
     }),
     (buildings["PY Building"] = {
-      name: "Psychology Building",
+      name: "PY Building",
+      fullName: "Psychology Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [
         "Psychology",
         "Centre for Clinical Research in Health (CCRH)"
       ],
-      services: null,
+      services: [],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.458938,
-        longitude:-73.640467
+      coordinates: {
+        latitude: 45.458938,
+        longitude: -73.640467
       }
     }),
     (buildings["QA Building"] = {
-      name: "Quadrangle",
+      name: "QA Building",
+      fullName: "Quadrangle",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
-      services: null,
+      departments: [],
+      services: [],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458778,
-        longitude:-73.640581
+      coordinates: {
+        latitude: 45.458778,
+        longitude: -73.640581
       }
     }),
     (buildings["RA Building"] = {
-      name: "Recreation and Athletics Complex",
+      name: "RA Building",
+      fullName: "Recreation and Athletics Complex",
       address: "7200 Sherbrooke St WMontreal, QC, H4B 1R2",
-      departments: null,
+      departments: [],
       services: ["Ed Meagher Arena", "Gymnasium"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.456774,
-        longitude:-73.637610
+      coordinates: {
+        latitude: 45.456774,
+        longitude: -73.637610
       }
     }),
     (buildings["RF Building"] = {
-      name: "Loyola Jesuit Hall and Conference Centre",
+      name: "RF Building",
+      fullName: "Loyola Jesuit Hall and Conference Centre",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: [
         "Loyola Jesuit Hall and Conference Centre",
         "Conference Services"
@@ -917,58 +972,62 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.458489,
-        longitude:-73.641028
+      coordinates: {
+        latitude: 45.458489,
+        longitude: -73.641028
       }
     }),
     (buildings["SC Building"] = {
-      name: "Student Centre",
+      name: "SC Building",
+      fullName: "Student Centre",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Campus Centre", "Food Services", "Cafeteria", "Cafe"],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459131,
-        longitude:-73.639251
+      coordinates: {
+        latitude: 45.459131,
+        longitude: -73.639251
       }
     }),
     (buildings["SH Building"] = {
-      name: "Solar House",
+      name: "SH Building",
+      fullName: "Solar House",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
-      services: null,
+      departments: [],
+      services: [],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: true,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459298,
-        longitude:-73.642478
+      coordinates: {
+        latitude: 45.459298,
+        longitude: -73.642478
       }
     }),
     (buildings["SI Building"] = {
-      name: "St. Ignatius of Loyola Church",
+      name: "SI Building",
+      fullName: "St. Ignatius of Loyola Church",
       address: "4455 Rue West Broadway, Montréal, QC H4B 2A7",
-      departments: null,
-      services: null,
+      departments: [],
+      services: [],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.457832,
-        longitude:73.642584
+      coordinates: {
+        latitude: 45.457832,
+        longitude: 73.642584
       }
     }),
     (buildings["SP Building"] = {
-      name: "Richard J. Renaud Science Complex",
+      name: "SP Building",
+      fullName: "Richard J. Renaud Science Complex",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [
         "Biology",
@@ -990,28 +1049,30 @@ export function buildingData () {
       hasHandicap: true,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.457881,
-        longitude:-73.641565
+      coordinates: {
+        latitude: 45.457881,
+        longitude: -73.641565
       }
     }),
     (buildings["TA Building"] = {
-      name: "Terrebonne Building",
+      name: "TA Building",
+      fullName: "Terrebonne Building",
       address: "7079 Terrebonne, Montreal, QC, H4B 1E1",
-      departments: null,
-      services: null,
+      departments: [],
+      services: [],
       hasCredit: false,
       hasBicycle: false,
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: true,
-      coordinates:{
-        latitude:45.459992,
-        longitude:-73.640897
+      coordinates: {
+        latitude: 45.459992,
+        longitude: -73.640897
       }
     }),
     (buildings["VE Building"] = {
-      name: "Vanier Extension",
+      name: "VE Building",
+      fullName: "Vanier Extension",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Applied Human Sciences"],
       services: ["Library"],
@@ -1020,15 +1081,16 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: false,
       hasParking: false,
-      coordinates:{
-        latitude:45.459026,
-        longitude:-73.638606
+      coordinates: {
+        latitude: 45.459026,
+        longitude: -73.638606
       }
     }),
     (buildings["VL Building"] = {
-      name: "Vanier Library Building",
+      name: "VL Building",
+      fullName: "Vanier Library Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
-      departments: null,
+      departments: [],
       services: ["Library"],
       phone: 51484824247770, //has extension
       hasCredit: false,
@@ -1036,9 +1098,9 @@ export function buildingData () {
       hasHandicap: false,
       hasInfocenter: true,
       hasParking: false,
-      coordinates:{
-        latitude:45.459026,
-        longitude:-73.638606
+      coordinates: {
+        latitude: 45.459026,
+        longitude: -73.638606
       }
     });
   return buildings;

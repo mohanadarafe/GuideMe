@@ -23,23 +23,29 @@ describe("IndoorScenario component", () => {
             {from: "H820", to: "H720"},
             {from: "H1025", to: "H155"},
             {from: "H562", to: "H513"},
-            {from: "H562", to: "MB3.124"},
             {from: "H1025", to: "H1157"},
             {from: "H961_7", to: "H906"},
             {from: "H961_7", to: "H801"},
+            {from: "VL102", to: "H801"},
+            {from: "H937", to: "VL102"},
             {from: "H961_7", to: "Grey Nuns Annex"},
             {from: "EN Annex", to: "Grey Nuns Annex"},
+            {from: "Hall Building", to: "H914"},
+            {from: "VL103", to: "H914"},
         ]
         const results = [
             "DIFFERENT_FLOOR",
             "DIFFERENT_FLOOR",
             "SAME_FLOOR",
-            "DIFFERENT_BUILDING",
             "DIFFERENT_FLOOR",
             "SAME_FLOOR",
             "DIFFERENT_FLOOR",
+            "DIFFERENT_CAMPUS",
+            "DIFFERENT_CAMPUS",
             "DIFFERENT_BUILDING",
-            "NOT_INDOOR"
+            "NOT_INDOOR",
+            "DIFFERENT_BUILDING",
+            "DIFFERENT_CAMPUS"
         ]
         testCases.forEach((element, index) => {
             expect(whichPathToTake(element.from, element.to)).toEqual(results[index])
