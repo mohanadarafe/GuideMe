@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "../components/MapData";
@@ -9,12 +9,6 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-/**
- * FIXME: 
- * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
- * 
- * A.U
- */
 function fetchData () {
     const searchInfo = MapData({context: "Search"});
     return searchInfo;
@@ -32,18 +26,12 @@ DoubleSearch.propTypes = {
     navigation: PropTypes.object
 };
 
-/**
- * FIXME: Refers to fetchData()
- *
- * A.U
- */
 var originItems = fetchData();
 var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
 originItems.unshift({ "id": 0, "name": "Current Location" });
 
 /**
  * Overall :
- * TODO: 1.  Algorithm for another Classrom, refers to B) and fetchData() - 3
  * 
  * A.U
  * @param {*} props 
@@ -127,7 +115,9 @@ function DoubleSearch(props) {
 
     /**
      * Algorithm to find the coordinates of a given building name or classroom name.
-     * returns longitude and latitude
+     * returns longitude and latitude.
+     * In the case of a service or department, it will return the coordinates of the
+     * building it belongs to.
      * 
      * A.U
      * @param {*} name 
@@ -197,9 +187,9 @@ function DoubleSearch(props) {
     return (
         <View style={styles.container} data-test="DoubleSearch">
             <View style={styles.backArrowContainer}>
-                <Button transparent style={styles.backArrow} onPress={goBack}>
+                <TouchableOpacity onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                </Button>
+                </TouchableOpacity>
             </View>
             <View style={styles.svgContainer}>
                 <DoubleSearchSVG />
@@ -210,9 +200,9 @@ function DoubleSearch(props) {
                 <View style={styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
-                        onTextChange={val => val} //Refer TODO: A)
+                        onTextChange={val => val} 
                         onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={"0"} //Refer TODO: A)
+                        defaultIndex={"0"}
                         textInputStyle={styles.textInputStyle}
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
@@ -337,21 +327,18 @@ export const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         flexDirection: "row",
-        left: "10%"
+        left: "10%",
+        backgroundColor: "brown"
     },
     backArrowContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "6%"
     },
     icon: {
         position: "absolute",
         color: "#FFFFFF",
-        alignSelf: "center",
+        left: "5%",
         fontSize: 35
     },
     routeButton: {
