@@ -137,7 +137,7 @@ function DoubleSearch(props) {
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) ||  buildingList[key].fullName.includes(name)) {
                 return buildingList[key].coordinates;
             }
         }
