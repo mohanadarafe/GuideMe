@@ -104,4 +104,5 @@ export function MapData (props) {
         results = appendIdToList(RetrieveSearchItems(buildingList, classrooms));
         return results
     }
+    return null;
 }
