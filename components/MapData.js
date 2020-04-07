@@ -12,8 +12,17 @@ import { buildingData } from "../constants/buildingData";
 const retrieveMoreDetailsData = (value, list) => {
     
     for (var key in list) {
-        if (list[key].name.includes(value) || list[key].services.includes(value) || list[key].departments.includes(value)) {
+        if (list[key].name.includes(value) || list[key].services.includes(value) || list[key].departments.includes(value) || list[key].fullName.includes(value)) {
             return appendInfoAndAccessibility(list[key]);
+        }
+    }
+    let classRoomsList = ClassRooms();
+    for (var key in classRoomsList) {
+        if(classRoomsList[key].room.includes(value)) {
+        const building = list[key];
+        const isClassroom = {isClassRoom: value + " [ClassRoom]"};
+        const result = {...building, ...isClassroom};
+        return appendInfoAndAccessibility(result);
         }
     }
     return null;
