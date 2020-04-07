@@ -12,15 +12,13 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 /**
  * FIXME: 
  * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
- * 2) TODO: - Services and departments should not be in the searchItems.
- *      Thus different parameters need to be sent to MapData()
  * 
  * A.U
  */
-function fetchData() {
-    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
+function fetchData () {
+    const searchInfo = MapData({context: "Search"});
     return searchInfo;
-}
+  }
 
 
 /**
@@ -40,10 +38,8 @@ DoubleSearch.propTypes = {
  * A.U
  */
 var originItems = fetchData();
-var destinationItems = [];
-destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
+var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
 originItems.unshift({ "id": 0, "name": "Current Location" });
-
 
 /**
  * Overall :
@@ -64,8 +60,8 @@ function DoubleSearch(props) {
      */
 
     // var fromScreen; 
-    CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
-    NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
+    const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
+    const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
     const goBack = () => {
         if(CourseScheduleDetailsScreen === true){
             props.navigation.goBack();

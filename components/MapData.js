@@ -26,8 +26,8 @@ const appendIdToList = (list) => {
         
     const appendedList = list.map((element, index) => {
             return ({
-                id: index,
-                value: element
+                id: index + 1,
+                name: element
             });
         });
     return appendedList;
@@ -40,18 +40,17 @@ const retrieveSearchItems = (buildings, classrooms) => {
     let buildingAddress = [];
     let buildingServices = [];
     let buildingDepartments = [];
-    buildings.forEach((element) => {
-        buildingNames.push(element.name);
-        buildingFullNames.push(element.fullName);
-        buildingAddress.push(element.address);
-        buildingServices.push(element.services);
-        buildingDepartments.push(element.departments);
-    });
-    classrooms.forEach(building => {
-        building.room.forEach(element => {
-            classroomsList.push(element);
-        })
-    });
+    for (var key in buildings) {
+        buildingNames.push(buildings[key].name);
+        buildingFullNames.push(buildings[key].fullName);
+        buildingAddress.push(buildings[key].address);
+        buildingServices.push(buildings[key].services);
+        buildingDepartments.push(buildings[key].departments);
+    }
+    for (var key in classrooms) {
+        classroomsList.push(...classrooms[key].room);
+    }
+    classroomsList.flat();
     const mergedItems = [...buildingNames, ...buildingFullNames, ...buildingAddress, ...buildingDepartments, ...buildingServices, ...classroomsList];
     const searchItems = appendIdToList(mergedItems);
     return searchItems;

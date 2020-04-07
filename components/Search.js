@@ -3,8 +3,6 @@ import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
-import { ClassRooms } from "../constants/ClassRooms";
-import { buildingData } from "../constants/buildingData";
 import PropTypes from "prop-types";
 
 
@@ -20,7 +18,6 @@ import PropTypes from "prop-types";
 
 function fetchData () {
   const searchInfo = MapData({context: "Search"});
-  console.log(searchInfo);
   return searchInfo;
 }
 
