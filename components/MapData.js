@@ -65,13 +65,11 @@ export function RetrieveSearchItems (buildings, classrooms) {
     let classroomsList = [];
     let buildingNames = [];
     let buildingFullNames = [];
-    let buildingAddress = [];
     let buildingServices = [];
     let buildingDepartments = [];
     for (var key in buildings) {
         buildingNames.push(buildings[key].name);
         buildingFullNames.push(buildings[key].fullName);
-        buildingAddress.push(buildings[key].address);
         buildingServices.push(buildings[key].services);
         buildingDepartments.push(buildings[key].departments);
     }
@@ -81,7 +79,7 @@ export function RetrieveSearchItems (buildings, classrooms) {
     classroomsList.flat();
     buildingServices = [].concat.apply([], buildingServices);
     buildingDepartments = [].concat.apply([], buildingDepartments);
-    const mergedItems = [...buildingNames, ...buildingFullNames, ...buildingAddress, ...buildingDepartments, ...buildingServices, ...classroomsList];
+    const mergedItems = [...buildingNames, ...buildingFullNames, ...buildingDepartments, ...buildingServices, ...classroomsList];
     return mergedItems;
 }
 

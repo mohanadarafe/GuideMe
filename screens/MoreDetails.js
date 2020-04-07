@@ -58,7 +58,7 @@ function MoreDetails (props) {
             </View>
             <SafeAreaView style={styles.separator}></SafeAreaView>
             <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>{data ? data.phone : "N/A"}</Text>
+              <Text style={styles.mapPinLabel}>{(data && data.phone) ? data.phone : "N/A"}</Text>
             </View>
           </Button>
           <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
