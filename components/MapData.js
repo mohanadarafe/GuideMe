@@ -1,17 +1,29 @@
 import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 
-
+//TODO: Add more unit tests.
+/**
+ * This method will return an object containing all the elements necessary to display in the MoreDetails
+ * screen. No need to create method inside MoreDetails, everything is taken care of here.
+ * 
+ * @param {*} value is value passed from the BottomMenu to be searched in the constant Building file.
+ * @param {*} list is the list of buildings that we need to iterate through.
+ */
 const retrieveMoreDetailsData = (value, list) => {
     
     for (var key in list) {
-        if (list[key].name.includes(value)) {
+        if (list[key].name.includes(value) || list[key].services.includes(value) || list[key].departments.includes(value)) {
             return appendInfoAndAccessibility(list[key]);
         }
     }
     return null;
 }
-
+/**
+ * Because accessibility values weren't written as arrays, I need to manually create an array and then merge the 
+ * result to the building object passed in parameter.
+ * 
+ * @param {*} building is the building object in question.
+ */
 const appendInfoAndAccessibility = (building) => {
     let list  = {accessibilityItems: []};
     list.accessibilityItems.push(building.hasCredit ? "Credit Card: Yes" : "Credit Card: No");
@@ -21,7 +33,11 @@ const appendInfoAndAccessibility = (building) => {
     list.accessibilityItems.push(building.hasParking ? "Car Parking: Yes" : "Car Parking: No");
     return ({...building, ...list});
 }
-
+/**
+ * This method appends every element of an array with an index since SearchableDropDown requires 
+ * an id in order to render the items.
+ * @param {*} list is the list we want to append ids to.
+ */
 const appendIdToList = (list) => {
         
     const appendedList = list.map((element, index) => {
@@ -33,6 +49,18 @@ const appendIdToList = (list) => {
     return appendedList;
 }
 
+/**
+ * This method will go through each element in the buildingData and classrooms constant files and 
+ * fetch the name, fullName, address, services and departements so that they can be searchable 
+ * in the dropdown search list. 
+ * 
+ * The reason why I'm not directly calling buildingData() and ClassRooms() is because those two are lists
+ * that we are going to use in two different scenario (Search and MoreDetails) and I wanted to avoid too 
+ * many calls. 
+ * 
+ * @param {*} buildings 
+ * @param {*} classrooms 
+ */
 export function RetrieveSearchItems (buildings, classrooms) {
     let classroomsList = [];
     let buildingNames = [];
@@ -58,25 +86,13 @@ export function RetrieveSearchItems (buildings, classrooms) {
 }
 
 
-
-
 /**
+ * Will map the constant file values to the proper context : Search / MoreDetails
+ * We pass the necessary values as props.
  * 
- * Props passed
- * @param accesibility | bool: child requires accesibility
- * @param buildingName | bool: child requires building name
- * @param classRooms | bool: child requires class rooms
- * @param departments | bool: child requires departments
- * @param services | bool: child requires services
- * @param flatten | bool: return a flat list
- * @param passBuildingName | bool: child requires specific building
- * 
- * Functions passed
- * @param rooms function that returns a list of rooms
- * @param buildingInfo function that returns a list of information on buildings
+ * @param {*} props 
  */
-
-export function MapData (props, rooms, buildingInfo) {
+export function MapData (props) {
     var results= [];
     let buildingList = buildingData();
     let classrooms = ClassRooms();
@@ -87,171 +103,5 @@ export function MapData (props, rooms, buildingInfo) {
         case "Search":
         results = appendIdToList(RetrieveSearchItems(buildingList, classrooms));
         return results
-        break;
     }
-
-
-
-
-
-
-    let idCount = 1;
-    var buildingName = [];
-    var departmentsArray = [];
-    var serviceArray = [];
-    var accessibilityArray = [];
-    var classRooms = [];
-    var items = [];
-
-    //Get building name
-    if (props.buildingName == true) {
-        for (var key in buildingInfo) {
-            var value = buildingInfo[key].name;
-            buildingName.push({ id: idCount, name: value });
-            idCount++;
-        }
-    }
-
-    //Get departments
-    if (props.passBuildingName != "" && props.departments == true) {
-        value = buildingInfo[props.passBuildingName].departments;
-        if (value != null) {
-            value.forEach(element => {
-                departmentsArray.push({ id: idCount, name: element });
-                idCount++;
-            });
-        }
-    }
-
-    if (props.passBuildingName == "" && props.departments == true) {
-        for (key in buildingInfo) {
-            value = buildingInfo[key].departments;
-            if (value != null) {
-                value.forEach(element => {
-                    departmentsArray.push({ id: idCount, name: element });
-                    idCount++;
-                });
-            }
-        }
-    }
-
-    //Get services
-    if (props.passBuildingName != "" && props.services == true) {
-        value = buildingInfo[props.passBuildingName].services;
-        if (value != null) {
-            value.forEach(element => {
-                serviceArray.push({ id: idCount, name: element });
-                idCount++;
-            });
-        }
-    }
-
-
-    if (props.passBuildingName == "" && props.services == true) {
-        for (key in buildingInfo) {
-            value = buildingInfo[key].services;
-            if (value != null) {
-                value.forEach(element => {
-                    serviceArray.push({ id: idCount, name: element });
-                    idCount++;
-                });
-            }
-        }
-    }
-
-    //Get accesibility
-    if (props.passBuildingName != "" && props.accesibility == true) {
-        var hasCredit = buildingInfo[props.passBuildingName].hasCredit;
-        if (hasCredit && hasCredit == true) {
-            accessibilityArray.push({ id: idCount, name: "Credit Card: Yes" });
-            idCount++;
-        } else {
-            accessibilityArray.push({ id: idCount, name: "Credit Card: No" });
-            idCount++;
-        }
-
-        //Bicycle
-        var hasBicycle = buildingInfo[props.passBuildingName].hasBicycle;
-        if (hasBicycle && hasBicycle == true) {
-            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: Yes" });
-            idCount++;
-        } else {
-            accessibilityArray.push({ id: idCount, name: "Bicycle Parking: No" });
-            idCount++;
-        }
-
-        //Handicap
-        var hasHandicap = buildingInfo[props.passBuildingName].hasHandicap;
-        if (hasHandicap && hasHandicap == true) {
-            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: Yes" });
-            idCount++;
-        } else {
-            accessibilityArray.push({ id: idCount, name: "Wheelchair Accessibility: No" });
-            idCount++;
-        }
-
-        //Information center
-        var hasInfocenter = buildingInfo[props.passBuildingName].hasInfocenter;
-        if (hasInfocenter && hasInfocenter == true) {
-            accessibilityArray.push({ id: idCount, name: "Info Center: Yes" });
-            idCount++;
-        } else {
-            accessibilityArray.push({ id: idCount, name: "Info Center: No" });
-            idCount++;
-        }
-
-        //Parking
-        var hasParking = buildingInfo[props.passBuildingName].hasParking;
-        if (hasParking && hasParking == true) {
-            accessibilityArray.push({ id: idCount, name: "Parking: Yes" });
-            idCount++;
-        } else {
-            accessibilityArray.push({ id: idCount, name: "Parking: No" });
-            idCount++;
-        }
-    }
-
-    //Get classrooms
-    if (props.classRooms) {
-        for (key in rooms) {
-            value = rooms[key].room;
-            value.forEach(element => {
-                classRooms.push({ id: idCount, name: element });
-                idCount++;
-            });
-        }
-    }
-
-    if (buildingName.length > 0) {
-        items.push(buildingName);
-    }
-
-    if (departmentsArray.length > 0) {
-        items.push(departmentsArray);
-    }
-
-    if (departmentsArray.length == 0 && props.passBuildingName !== "") {
-        items.push(["None"]);
-    }
-
-    if (serviceArray.length > 0) {
-        items.push(serviceArray);
-    }
-
-    if (serviceArray.length == 0 && props.passBuildingName !== "") {
-        items.push(["None"]);
-    }
-
-    if (accessibilityArray.length > 0) {
-        items.push(accessibilityArray);
-    }
-
-    if (classRooms.length > 0) {
-        items.push(classRooms);
-    }
-
-    if (props.flatten) {
-        return items.flat();
-    }
-    return items;
 }

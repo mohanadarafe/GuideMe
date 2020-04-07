@@ -10,6 +10,11 @@ import { Button } from "react-native-paper";
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
+/**TODO: When updating BottomMenu from Main SearchBar, I personally think
+ * it should be More Info as a button instead of GetDirections as it 
+ * can confuse the user since when clicking on a building, we have the 
+ * button GetInside.
+*/
 
 function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
@@ -19,8 +24,6 @@ function BottomMenu (props) {
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
     const previewDirections = props.previewMode;
-
-    //const [mapPressed, setmapPressed] = React.useState("");
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     const getBuildingSelected = async () => {
@@ -77,11 +80,6 @@ function BottomMenu (props) {
         AsyncStorage.setItem("sideMenu", "mapView");
         props.navigation.navigate("NearbyInterest");
     };
-
-    // const currentAltitude = async () => {
-    //     let altitude = await AsyncStorage.getItem("altitude");
-    // };
-
 
     useEffect(() => {
         const intervalId = setInterval(() => {

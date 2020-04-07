@@ -5,16 +5,13 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
 import { MapData } from "../components/MapData";
-import { AppLoading } from "expo";
 
 /**
  * 
  * @param {*} buildingName Name of building to get data of
  */
 export function fetchData (buildingName) {
-  // const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, ClassRooms(), buildingData());
   const buildingInfo = MapData({ buildingToSearch: buildingName, context:"More Details"});
-  console.log(buildingInfo);
   return buildingInfo;
 }
 
@@ -69,7 +66,8 @@ function MoreDetails (props) {
         <View style={styles.imageContainer}>
           <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
         </View>
-        <Text style={styles.mainLabel}>{name}</Text>
+        <Text style={styles.mainLabel}>{data ? data.name: "N/A"}</Text>
+        <Text style={styles.subLabel}>{data ? data.fullName: "N/A"}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
         <SafeAreaView testID="moreInfoScrollView" style={styles.scrollTextContainer}>
           <SectionList
@@ -104,7 +102,16 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     fontFamily: "encodeSansExpanded",
-    top: "21%"
+    top: "19%"
+  },
+  subLabel: {
+    position: "absolute",
+    top: "24%",
+    left: "5%",
+    color: "#FFFFFF",
+    fontSize: 11,
+    fontWeight: "bold",
+    fontFamily: "encodeSansExpanded"
   },
   reviewLabel: {
     position: "absolute",
