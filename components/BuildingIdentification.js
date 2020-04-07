@@ -60,6 +60,11 @@ function BuildingIdentification () {
                 coordinate={{ latitude: 45.493450, longitude: -73.576814 }}>
                 <Text style={styles.buildingIdentification}>GN</Text>
             </Marker>
+
+            <Marker
+                coordinate={{ latitude: 45.459031938721054, longitude: -73.63858938217163 }}>
+                <Text style={styles.buildingIdentification}>VL</Text>
+            </Marker>
         </View>
     );
 }

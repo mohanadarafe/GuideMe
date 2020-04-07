@@ -1,24 +1,18 @@
 import React from "react";
-import MoreDetails, { createLists, renderSeparator, fetchData } from "../../screens/MoreDetails";
 import renderer from "react-test-renderer";
+import MoreDetails, { createLists, fetchData } from "../../screens/MoreDetails";
 
 describe("MoreDetails component", () => {
     test("renders correctly", () => {
         const navigation = { getParam: (param, defaultValue) => {
-            return "JMSB";
+            return "MB Building";
           }};
         const tree = renderer.create(<MoreDetails navigation={navigation} />).toJSON();
         expect(tree).toMatchSnapshot();
     });
 
-    test("render seperator renders correctly", () => {
-        const render = renderSeparator();
-        const style = render.props.style;
-        expect(style.backgroundColor).toEqual('#353A50');
-    });
-
     test("fetch data returns list of data", () => {
-        const data = fetchData("JMSB");
+        const data = fetchData("MB Building");
         var response = [
             [{id: 1, name: "Accountancy"}, {id: 2, name: "Supply Chain and Business Technology Management"},
             {id: 3, name: "Finance"}, {id: 4, name: "Management"}, {id: 5, name: "Marketing"}],

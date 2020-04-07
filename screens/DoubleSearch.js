@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "../components/MapData";
-import { sgwRooms } from "../constants/sgwRooms";
+import { ClassRooms } from "../constants/ClassRooms";
 import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
@@ -14,12 +14,11 @@ import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
  * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
  * 2) TODO: - Services and departments should not be in the searchItems.
  *      Thus different parameters need to be sent to MapData()
- * 3) TODO: Algorithm for classrooms and refers to B)
  * 
  * A.U
  */
 function fetchData() {
-    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, sgwRooms(), buildingData());
+    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
     return searchInfo;
 }
 
@@ -36,6 +35,17 @@ DoubleSearch.propTypes = {
 };
 
 /**
+ * FIXME: Refers to fetchData()
+ *
+ * A.U
+ */
+var originItems = fetchData();
+var destinationItems = [];
+destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
+originItems.unshift({ "id": 0, "name": "Current Location" });
+
+
+/**
  * Overall :
  * TODO: 1.  Algorithm for another Classrom, refers to B) and fetchData() - 3
  * 
@@ -47,15 +57,27 @@ function DoubleSearch(props) {
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
-    const [currentLocationCoords, setCurrentLocationCoords] = React.useState({ latitude: null, longitude: null });
-    const [isCurrentLocationFetched, setIsCurrentLocationFetched] = React.useState(false);
-
+    const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
     /**
      * Description: Method to go back to the previous screen.
      * Using Stack navigator.
      */
+
+    // var fromScreen; 
+    CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
+    NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
     const goBack = () => {
-        props.navigation.goBack();
+        if(CourseScheduleDetailsScreen === true){
+            props.navigation.goBack();
+            props.navigation.navigate("CourseScheduleDetails")
+        }
+        else if (NearbyInterestDetailsScreen === true){
+            props.navigation.goBack();
+            props.navigation.navigate("NearbyInterestDetails")
+        }
+        else{
+            props.navigation.goBack();
+        }
     };
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
@@ -67,6 +89,7 @@ function DoubleSearch(props) {
      *      - If the Current Direction is wanted, fetch the proper coordinates
      *      - If there's no destination, refuse search
      *      - A value selected beyond the search Items displayed by the dropdown is not accepted.
+     * 3. Added the scenario in which we have two classrooms from the same building. We go in IndoorMapView
      * 
      * A.U
      */
@@ -74,56 +97,75 @@ function DoubleSearch(props) {
         if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.");
         }
+        else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
+        }
+        else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
+        }
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo });
-        }
-        else if (from.name == "Current Location" && currentLocationCoords.latitude && currentLocationCoords.longitude) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo });
-        }
-        else if (from.name == "Current Location" && !currentLocationCoords) {
-            return alert("Error: Are location services on?");
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName:from.name, toName:to.name });
         }
         else {
-            return alert("The destination field is missing or you typed an invalid location. Please try again.");
+            return alert("The destination or origin field is missing or invalid. Please try again.");
         }
     };
 
     const destinationName = props.navigation.getParam("destinationName", "Destination");
+    const value = props.navigation.getParam("destinationIndex", "");
+    /**
+     * 
+     */
+    const fetchCurrentPosition = () => {
+        
+        getPosition().then(({coords}) => {
+            setCurrentLocationCoords({
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
+                })
+            })
+            .catch((err) => {
+            alert (err.message);
+            });
+    }
 
     /**
-     * Algorithm to find the coordinates of a given building name.
+     * Algorithm to find the coordinates of a given building name or classroom name.
      * returns longitude and latitude
-     * TODO: B) Another algorithm or extend this one to take in consideration classrooms.
+     * 
      * A.U
      * @param {*} name 
      */
     const getCoordinates = (name) => {
 
-        var list = buildingData();
-        for (var key in list) {
-            if (list[key].name.includes(name)) {
-                return list[key].coordinates;
+        let buildingList = buildingData();
+        let classRoomsList = ClassRooms();
+        if (/\d/.test(name)) {
+            for (var key in classRoomsList) {
+                if(classRoomsList[key].room.includes(name)) {
+                const buildingCoords = buildingList[key].coordinates;
+                const isClassroom = {isClassRoom: name};
+                const result = {...buildingCoords, ...isClassroom};
+                return result;
+                }
             }
         }
-        if (name == "Current Location" && currentLocationCoords) {
-            getCurrentLocation();
-            setIsCurrentLocationFetched(true);
+        for (var key in buildingList) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
+                return buildingList[key].coordinates;
+            }
+        }
+        if (name == "Current Location") {
+            fetchCurrentPosition();           
         }
         return null;
     };
 
-    const getCurrentLocation = () => {
-        navigator.geolocation.getCurrentPosition(
-            ({ coords }) => {
-                setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                });
-            },
-            (error) => alert("Error: Are location services on?"),
-            { enableHighAccuracy: true }
-        );
-    };
+    var getPosition = function (options) {
+        return new Promise(function (resolve, reject) {
+          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+        });
+      }
 
     let fromName = from.name;
     let toName = to.name;
@@ -151,27 +193,10 @@ function DoubleSearch(props) {
             setCoordinatesTo(getCoordinates(initialTo));
             setTo({ name: initialTo });
         }
-    });
-
-    /**
-     * FIXME: Refers to fetchData()
-     * TODO: A) the unshift method is called to add at the start of the array the value of Current Location.
-     *          However, one could argue that we don't want to make them select Current Location as it's not 
-     *          intuitive. However, I do not know how to fetch the data if no item is selected in the 
-     *          dropdown. 
-     *          This is very important since the onTextChange props returns nothing when we are not writing or 
-     *          when nothing was passed or selected. This is annoying since if the user selected something and then changed his
-     *          mind and select nothing, the item passed is the previous value!
-     * 
-     * Clues: I left some clue about what could be investigated with the tag Refer TODO: A). So just Ctr+F that.
-     * Overall: As of now, The user has to select the Current Location for the double search to fetch the current Location coordinates. 
-     *
-     * A.U
-     */
-    var originItems = fetchData();
-    var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
-    originItems.unshift({ "id": 0, "name": "Current Location" });
-
+        if (from.name === undefined) {
+            fetchCurrentPosition();
+        }
+    }, []);
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
@@ -191,7 +216,7 @@ function DoubleSearch(props) {
                     <SearchableDropdown
                         onTextChange={val => val} //Refer TODO: A)
                         onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={0} //Refer TODO: A)
+                        defaultIndex={"0"} //Refer TODO: A)
                         textInputStyle={styles.textInputStyle}
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
@@ -213,11 +238,12 @@ function DoubleSearch(props) {
                         onTextChange={val => val}
                         onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
                         textInputStyle={styles.textInputStyle}
+                        defaultIndex={(String)(value)} //Refer TODO: A)
                         itemStyle={styles.itemStyle}
                         containerStyle={styles.containerStyle}
                         itemTextStyle={styles.itemTextStyle}
                         itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor={"grey"}
+                        placeholderTextColor={"black"}
                         items={destinationItems}
                         placeholder={destinationName}
                         textInputProps={{
@@ -228,10 +254,10 @@ function DoubleSearch(props) {
                     />
                 </View>
             </View>
-            {(isCurrentLocationFetched || coordinatesFrom != null) &&
+            {(currentLocationCoords || coordinatesFrom != null) && 
                 <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
-            {(coordinatesFrom == null && !isCurrentLocationFetched) &&
+            {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&
                 <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
         </View >

@@ -71,6 +71,10 @@ const lowestCostNode = (costs, processed) => {
  */
 export const getFloorNumber = (name) => {
     if (name) {
+        if (name == "exit" || name == "elevator") {
+            return name;
+        }
+
         if (name.match(/\b[^\d\W]+\b/g)) {
             return name;
         }
@@ -103,17 +107,23 @@ export const getFloorNumber = (name) => {
  */
 export const ConvertToHall8Floor = (name) => {
     if (!name.includes(" ")) {
-        const num = name.match(/\d+/g).map(Number);
-        const numToString = num.toString();
-        
-        if(numToString.charAt(0) == 9) {
+        if (name == "exit" || name == "elevator") {
             return name;
         }
-        else if (numToString.length == 3) {
-            return name.replace(numToString.charAt(0), "8");
-        }
-        else if (numToString.length == 4) {
-            return name.replace(numToString.substring(0,2), "8");
+        
+        if (name) {
+            const num = name.match(/\d+/g).map(Number);
+            const numToString = num.toString();
+            
+            if(numToString.charAt(0) == 9) {
+                return name;
+            }
+            else if (numToString.length == 3) {
+                return name.replace(numToString.charAt(0), "8");
+            }
+            else if (numToString.length == 4) {
+                return name.replace(numToString.substring(0,2), "8");
+            }
         }
     }  
 }
@@ -144,4 +154,35 @@ export const shortestPathToInterest = (graph, from, to) => {
     if (to == "water") {
         console.log("attends");
     }
+}
+/**
+ * The following function returns the coordinates for an arrow
+ * to be drawn on the SVG map for a user to follow a direction.
+ * @param {*} x1 | x1 coordinate
+ * @param {*} y1 | y1 coordinate 
+ * @param {*} x2 | x2 coordinate 
+ * @param {*} y2 | y2 coordinate 
+ */
+export const getArrowCoordinates = (x1, y1, x2, y2) => {
+    const LINE_DIF = 0.5;
+    const THETA = 30;
+
+    var arg1 = (x1 - x2)*Math.cos(THETA*Math.PI/180);
+    var arg2 = (y1 - y2)*Math.sin(THETA*Math.PI/180);
+    var x3 = (Number(x2) + Number((LINE_DIF*(arg1+arg2))));
+
+    var arg3 = (y1 - y2)*Math.cos(THETA*Math.PI/180);
+    var arg4 = (x1 - x2)*Math.sin(THETA*Math.PI/180);
+    var y3 = (Number(y2) + Number((LINE_DIF*(arg3-arg4))));
+
+    var x4 = (Number(x2) + Number((LINE_DIF*(arg1-arg2))));
+    var y4 = (Number(y2) + Number((LINE_DIF*(arg3+arg4))));
+
+    const results = {
+        x3: x3,
+        y3: y3,
+        x4: x4,
+        y4: y4
+    };
+    return results;
 }

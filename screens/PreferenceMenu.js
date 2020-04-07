@@ -14,17 +14,17 @@ import { Icon, Button } from "native-base";
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-function PreferenceMenu(props) {
+function PreferenceMenu (props) {
 
     const personaSavedState = props.navigation.getParam("personaType", "null");
 
-    const mobilitySavedState =  props.navigation.getParam("mobilityType","null");
-    
+    const mobilitySavedState = props.navigation.getParam("mobilityType", "null");
+
     const transportSavedState = props.navigation.getParam("transportType", "null");
 
-    const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState?personaSavedState:null })
-    const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState?mobilitySavedState:null})
-    const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState?transportSavedState:null})
+    const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState ? personaSavedState : null });
+    const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState ? mobilitySavedState : null });
+    const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState ? transportSavedState : null });
 
     let firstRow = onPressFirstCategory.selectedButton;
     let secondRow = onPressSecondCategory.selectedButton;
@@ -43,19 +43,18 @@ function PreferenceMenu(props) {
         firstRow = "";
         secondRow = "";
         thirdRow = "";
-        AsyncStorage.setItem("firstCategory",firstRow);
-        AsyncStorage.setItem("secondCategory",secondRow);
-        AsyncStorage.setItem("thirdCategory",thirdRow);
+        AsyncStorage.setItem("firstCategory", firstRow);
+        AsyncStorage.setItem("secondCategory", secondRow);
+        AsyncStorage.setItem("thirdCategory", thirdRow);
     }
 
     const goToPreviewDirections = () => {
         props.navigation.navigate("PreviewDirections", {
             personaType: onPressFirstCategory.selectedButton,
-            mobilityType: onPressSecondCategory.selectedButton, 
+            mobilityType: onPressSecondCategory.selectedButton,
             transportType: onPressThirdCategory.selectedButton,
-        },  );
-
-    }
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -160,7 +159,7 @@ function PreferenceMenu(props) {
                     Loyola campus. However, the services are reserved for students with valid ID cards
                         and buses are wheelchair accessible.</Text>
                     <Text style={styles.disclaimerText}>The shuttle bus is only useful to travel between campuses.</Text>
-                    <Text style = {styles.shuttleSideMenuText}>Head to the Side Menu if you wish to see the next departures.</Text>
+                    <Text style={styles.shuttleSideMenuText}>Head to the Side Menu if you wish to see the next departures.</Text>
                 </View>
             </View >
 
