@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
@@ -74,20 +74,24 @@ function NearbyInterest(props) {
             let LOY_COORDS = `45.458627, -73.638866`;
             let RADIUS = `100`;
             let TYPE = `restaurant`;
+            let MAX_WIDTH = `500`; 
+            let SENSOR = `false`;
             let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
-
+            
             var key;
             if (jsonResp && jsonResp.results.length > 0) {
                 for (key in jsonResp.results) {
                     let placeName = jsonResp.results[key].name;
                     let placeRating = jsonResp.results[key].rating;
+                    let photoRef = jsonResp.results[key].photos[0].photo_reference;
+                    let imageResp = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${photoRef}&sensor=${SENSOR}&key=${keyId}`;
                     if (placeName !== null & placeRating !== null) {
-                        data.push({ key: placeName, rating: placeRating })
+                        data.push({ key: placeName, rating: placeRating, img: imageResp})
                     }
                 }
             }
-            
+
              setJsonElement(data);
         }
         catch (error) {
@@ -133,6 +137,8 @@ function NearbyInterest(props) {
                             <View key={index}>
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
+                                        {/* // FIXME: add a default image when theres no internet connection  */}
+                                        <Image style={{height: "100%", width: "100%"}} source={{uri: item.img}}/>
                                     </View>
                                     <View style={styles.itemTextContainer}>
                                         <Text style={styles.itemText}>Name of place: {item.key}</Text>
@@ -204,19 +210,21 @@ export const styles = StyleSheet.create({
     itemContainer: {
         flex: 1,
         margin: 5,
-        minWidth: 170,
-        maxWidth: 223,
+        minWidth: 185,
+        maxWidth: 185,
         height: 200,
         maxHeight: 200,
         backgroundColor: "#353A50",
-        borderRadius: 10
+        borderRadius: 10,
+        
     },
     itemText: {
         color: "#FFFFFF",
         fontSize: 12,
         fontFamily: "encodeSansExpanded",
         marginHorizontal: "10%",
-        marginVertical: "3%"
+        marginVertical: "3%",
+        width: "70%"
     },
     itemTextContainer: {
         width: "100%",
@@ -225,8 +233,6 @@ export const styles = StyleSheet.create({
         justifyContent: "center"
     },
     itemImageContainer: {
-        backgroundColor: "#FFF",
-        opacity: 0.3,
         width: "100%",
         height: "65%",
     },
