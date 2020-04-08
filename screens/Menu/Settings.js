@@ -1,9 +1,62 @@
 import React from "react";
 import { View, Text, StyleSheet, Switch, TouchableOpacity } from "react-native";
-import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
+import * as Google from 'expo-google-app-auth';
+
+/**
+ * TODO: 
+ * TODO google calendar:
+ * 1. display the calendars in a flatlist
+ * 2. let him select one (change its color similar to preferences menu)
+ * 3. Pass the calendarID and accesstoken to courseSchedule page --> Use AsyncStorage  to also save the states when returning here
+ * 4. Display the list of events in that page + Rename Go to my Next Class Button 
+ * 5. Sign out when toggle is false.
+ */
+
+/**
+ * 
+ */
+getUsersCalendarList = async (accessToken) => {
+    let calendarsList = await fetch('https://www.googleapis.com/calendar/v3/users/me/calendarList', {
+    headers: { Authorization: `Bearer ${accessToken}`},
+    });
+    let resp = await calendarsList.json();
+    return resp;
+}
+
+/**
+ * 
+ */
+async function signInWithGoogleAsync() {
+    try {
+      const result = await Google.logInAsync({
+        // androidClientId: YOUR_CLIENT_ID_HERE,
+        iosClientId: "128383090622-lgrk639fn4k6t99lhrldkh02441fcjgb.apps.googleusercontent.com",
+        scopes: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.readonly'],
+      });
+      if (result.type === 'success') {
+        return getUsersCalendarList(result.accessToken); //Here We are getting all the calendars in a json...
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return { error: true };
+    }
+  }
+  /**
+   * 
+   * @param {*} val 
+   */
+  const signInOrOut = async (val) => {
+      if(val) {
+      return await signInWithGoogleAsync()
+      }
+      else{
+          //TODO: 5. Sign out
+      }
+  }
 
 /**
  * Description: This method holds the toggle switches 
@@ -56,7 +109,11 @@ function Settings(props) {
                         <View style={styles.toggle}>
                             <Switch
                                 value={switchVal2}
-                                onValueChange={(val) => setSwitchVal2(val)}>
+                                onValueChange={(val) => {
+                                    setSwitchVal2(val);
+                                    signInOrOut(val);
+                                }
+                                    }>
                             </Switch>
                         </View>
                     </View>
