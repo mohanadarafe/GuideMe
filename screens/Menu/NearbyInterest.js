@@ -20,8 +20,9 @@ import { BottomMenu } from "../../components/BottomMenu";
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 function NearbyInterest(props) {
-   
+
     const [fromScreen, setFromScreen] = React.useState();
+    const [jsonElement, setJsonElement] = React.useState([]);
     /**
      * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
      * @param  {} =>{letname=awaitAsyncStorage.getItem("sideMenu)"
@@ -32,12 +33,6 @@ function NearbyInterest(props) {
         setFromScreen(name);
     };
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            getFromScreen();
-        }, 1);
-        return () => clearInterval(intervalId);
-    });
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -65,18 +60,56 @@ function NearbyInterest(props) {
     };
 
     // Static data for now 
-    const data = [
-        { key: "a", rate: "1" }, { key: "b", rate: "2" }, { key: "c", rate: "3" }, { key: "d", rate: "4" }, { key: "e", rate: "5" }, { key: "f", rate: "6" }, { key: "g", rate: "7" }, { key: "h", rate: "8" }, { key: "i", rate: "9" }, { key: "j", rate: "10" }, { key: "j", rate: "11" }
-    ];
+    const data = [];
 
+    // number of coloumns for the flatList 
     const numColumns = 2;
+
+    const fetchData = async () => {
+
+        try {
+            // getItem method is necessary for the retrieval of the API Key 
+            let keyId = await AsyncStorage.getItem("apiKeyId");
+            let SGW_COORDS = `45.497063, -73.578431`;
+            let LOY_COORDS = `45.458627, -73.638866`;
+            let RADIUS = `100`;
+            let TYPE = `restaurant`;
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
+            let jsonResp = await resp.json();
+
+            var key;
+            if (jsonResp && jsonResp.results.length > 0) {
+                for (key in jsonResp.results) {
+                    let placeName = jsonResp.results[key].name;
+                    let placeRating = jsonResp.results[key].rating;
+                    if (placeName !== null & placeRating !== null) {
+                        data.push({ key: placeName, rating: placeRating })
+                    }
+                }
+            }
+            
+             setJsonElement(data);
+        }
+        catch (error) {
+            alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+        }
+    }
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getFromScreen();
+        }, 1);
+        fetchData();
+        return () => clearInterval(intervalId);
+    });
+
 
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
                 {fromScreen !== "sideMenu" &&
                     <TouchableOpacity style={styles.backButton} onPress={goBack}>
-                        <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown}  />
+                        <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} />
                     </TouchableOpacity>
                 }
                 {fromScreen === "sideMenu" &&
@@ -90,7 +123,7 @@ function NearbyInterest(props) {
                 <FlatList
                     onEndReachedThreshold={0}
                     contentContainerStyle={styles.list}
-                    data={data}
+                    data={jsonElement}
                     numColumns={numColumns}
                     keyExtractor={(item) => {
                         return item.key;
@@ -103,7 +136,7 @@ function NearbyInterest(props) {
                                     </View>
                                     <View style={styles.itemTextContainer}>
                                         <Text style={styles.itemText}>Name of place: {item.key}</Text>
-                                        <Text style={styles.itemText}>Rating of place: {item.rate}</Text>
+                                        <Text style={styles.itemText}>Rating of place: {item.rating}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -146,16 +179,16 @@ export const styles = StyleSheet.create({
         fontSize: 54,
     },
     backButton: {
-        alignSelf:"center"
+        alignSelf: "center"
     },
     icon: {
-        alignSelf:"center",
+        alignSelf: "center",
         color: "#FFFFFF",
         fontSize: 35,
     },
     menuButton: {
         height: "100%",
-        width: "20%",  
+        width: "20%",
         flexDirection: "row",
         justifyContent: "center"
     },
