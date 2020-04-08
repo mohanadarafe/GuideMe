@@ -28,6 +28,10 @@ function ShuttleBus (props) {
     const sgw = "SGW";
     const loyola = "Loyola";
 
+    /**
+    * The method will slide the side menu from the right side of the screen
+    * @param  {} =>{props.navigation.openDrawer(
+    */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -114,9 +118,9 @@ function ShuttleBus (props) {
             </View>
 
             <View style={styles.menuButtonContainer}>
-                <Button transparent style={styles.menuButton} onPress={goToMenu}>
+                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
-                </Button>
+                </TouchableOpacity>
             </View>
 
             <Text style={styles.mainLabel}>Shuttle Bus</Text>
@@ -201,26 +205,20 @@ export const styles = StyleSheet.create({
         right: "52%"
     },
     icon: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "6%",
+        alignSelf: "center",
         color: "#FFFFFF",
         fontSize: 35
     },
     menuButton: {
         height: "100%",
-        width: "100%",
+        width: "20%",
         flexDirection: "row",
+        justifyContent: "center"
     },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "7%",
     },
     imageContainer: {
         width: "100%",
