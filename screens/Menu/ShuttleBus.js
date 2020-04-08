@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
-import { Button } from "native-base";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
@@ -36,6 +34,9 @@ function ShuttleBus (props) {
         props.navigation.openDrawer();
     };
 
+    /**
+     * Function that gets the current time in hours and minutes as well as the current day
+     */
     const getCurrentTime = () => {
         let currentHour = new Date().getHours();
         let currentMinutes = new Date().getMinutes();
