@@ -5,6 +5,12 @@ import { Class9Graph } from '../../../constants/ClassGraph9';
 import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 
+/**
+ * FIXME: There is a warning fired when this component is used. Must be fixed.
+ * Warning: Each child in a list should have a unique "key" prop.%s%s See https://fb.me/react-warning-keys for more information.%s, 
+ * Check the render method of `DifferentBuildingDirections`., , 
+ * @param {*} props 
+ */
 export function DifferentBuildingDirections(props) {
     var floorFrom;
     var floorTo;

@@ -1075,7 +1075,7 @@ export function buildingData () {
       fullName: "Vanier Extension",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: ["Applied Human Sciences"],
-      services: ["Library"],
+      services: ["VE Library"],
       hasCredit: false,
       hasBicycle: true,
       hasHandicap: false,
@@ -1091,7 +1091,7 @@ export function buildingData () {
       fullName: "Vanier Library Building",
       address: "7141 Sherbrooke St W, Montreal, QC, H4B 1R6",
       departments: [],
-      services: ["Library"],
+      services: ["VL Library"],
       phone: 51484824247770, //has extension
       hasCredit: false,
       hasBicycle: false,
