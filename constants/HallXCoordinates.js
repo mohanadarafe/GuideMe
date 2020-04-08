@@ -333,7 +333,7 @@ export function HallXCoordinates (floorNumber) {
         y: "",
         nearestPoint: {
             x: "183",
-            y: "423"
+            y: "410"
         }
     },
     rooms["H860"] = {
@@ -421,7 +421,7 @@ export function HallXCoordinates (floorNumber) {
         y: "362",
         nearestPoint: {
             x: "269",
-            y: "399"
+            y: "410"
         }
     }
     rooms["stairs_SW"] = {

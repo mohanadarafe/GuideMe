@@ -568,7 +568,7 @@ export function Hall9Coordinates () {
             y: "167"
         }
     }
-    rooms["water_fountain_N"] = {
+    rooms["water_foutain_N"] = {
         x: "778",
         y: "638",
         nearestPoint: {

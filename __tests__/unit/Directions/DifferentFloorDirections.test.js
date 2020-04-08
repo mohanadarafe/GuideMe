@@ -20,7 +20,8 @@ describe("DifferentFloorDirections component", () => {
             "H1055",
             "H1347",
             "H920",
-            "H937-1"
+            "H937-1",
+            "exit"
         ]
         const results = [
             "H829",
@@ -29,7 +30,8 @@ describe("DifferentFloorDirections component", () => {
             "H855",
             "H847",
             "H920",
-            "H937-1"
+            "H937-1",
+            "exit"
         ]
         testCases.forEach((element, index) => {
             expect(ConvertToHall8Floor(element)).toEqual(results[index])
@@ -44,8 +46,8 @@ describe("DifferentFloorDirections component", () => {
             {from: "elevator", to: "H907"}
         ]
         const results = [
-            ["H863", "H861", "H859", "elevator"],
-            ["elevator", "H962", "checkpoint7", "H914", "checkpoint1", "H906", "H907"],
+            ["H863", "H861", "H859", "checkpoint3", "stairs_SE", "elevator"],
+            ["elevator", "checkpoint7", "H980", "H914", "checkpoint1", "H907"],
         ]
 
         testCases.forEach((element, index) => {

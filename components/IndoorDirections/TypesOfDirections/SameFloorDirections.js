@@ -15,8 +15,9 @@ export function SameFloorDirections(props) {
     var route = null;
 
     if (props.interest == true) {
-        to = ConvertPointOfInterest(props.to)
-        route = shortestPathToInterest(graph, from, to);
+        var interest = shortestPathToInterest(graph, from, props.to);
+        to = interest.to;
+        route = interest.route;
     } else {
         to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
         route = dijkstra(graph, from, to).path;

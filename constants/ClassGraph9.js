@@ -1,9 +1,9 @@
 export function Class9Graph () {
     const graph = {
         H903: {H967: 1, H907: 1},
-        H907: {H903: 1, women_washroom: 0.5, checkpoint1: 1},
-        H906: {checkpoint1: 1, women_washroom: 1},
-        checkpoint1: {H909: 1, H906: 1, H914: 1, H907: 1, men_washroom: 1, water_fountain_S: 1},
+        H907: {H903: 1, checkpoint1: 1},
+        H906: {H906: 1, checkpoint1: 1, women_washroom: 1},
+        checkpoint1: {H909: 1, H906: 1, H914: 1, H907: 1, men_washroom: 1, water_foutain_S: 1},
         H914: {checkpoint1: 1, h980: 0.5},
         H909: {checkpoint1: 1, H911: 1},
         H911: {H909: 1, H913: 1, men_washroom: 0.5},
@@ -15,7 +15,7 @@ export function Class9Graph () {
         H923: {H921: 1, H920: 0.5, H925: 1},
         H920: {H923: 0.5},
         H925: {checkpoint2: 1, H923: 1},
-        checkpoint2: {H925: 1, H927: 1, water_fountain_N: 0.5},
+        checkpoint2: {H925: 1, H927: 1, water_foutain_N: 0.5},
         H927: {checkpoint2: 1, H929: 1},
         H929: {H933: 1, H927: 1},
         H933: {H928: 0.5, H932: 0.5, H929: 1, turn1: 1},
@@ -67,14 +67,14 @@ export function Class9Graph () {
         H963: {H965: 1, H964: 1, stairs_SE: 1},
         H967: {H965: 1, H903: 1},
         H965: {H963: 1, H967: 1},
-        men_washroom: {H911: 0.5, water_fountain_S: 0.1, checkpoint1: 1, stairs_SW: 1},
+        men_washroom: {H911: 0.5, water_foutain_S: 0.1, checkpoint1: 1, stairs_SW: 1},
         women_washroom: {H906: 1, H907: 0.5},
-        water_fountain_S: {men_washroom: 0.1, stairs_SW: 1, checkpoint1: 1},
-        water_fountain_N: {stairs_NW: 0.5, checkpoint2: 0.5},
+        water_foutain_S: {men_washroom: 0.1, stairs_SW: 1, checkpoint1: 1},
+        water_foutain_N: {stairs_NW: 0.5, checkpoint2: 0.5},
         stairs_NE: {H966: 1, H968: 1},
-        stairs_NW: {checkpoint3: 1, water_fountain_N: 0.5},
+        stairs_NW: {checkpoint3: 1, water_foutain_N: 0.5},
         stairs_SE: {H964: 0.5, elevator: 0.5, H963: 1},
-        stairs_SW: {water_fountain_S: 1, H913: 0.5, men_washroom: 1},
+        stairs_SW: {water_foutain_S: 1, H913: 0.5, men_washroom: 1},
         escalator: {checkpoint7: 1, checkpoint4: 1}
     };
     return graph;

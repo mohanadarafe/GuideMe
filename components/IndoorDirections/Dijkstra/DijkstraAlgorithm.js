@@ -128,31 +128,44 @@ export const ConvertToHall8Floor = (name) => {
     }  
 }
 
+/**
+ * The following function converts the point of interest
+ * to the key value in the data file.
+ * @param {*} name 
+ */
 export const ConvertPointOfInterest = (name) => {
     if (name) {
         switch (name) {
             case "Men's Washroom":
                 return "men_washroom"
-                break;
             case "Women's Washroom":
                 return "women_washroom"
-                break;
-            case "Water Fountain":
-                return "water"
-                break;
-            default:
-                break;
         }
     }
 }
 
+/**
+ * The following function returns the shortest path to
+ * the interest point requested by the user.
+ * @param {*} graph | node graph
+ * @param {*} from | from node
+ * @param {*} to | to node
+ */
 export const shortestPathToInterest = (graph, from, to) => {
-    if (to == "women_washroom" || to == "men_washroom") {
-        return dijkstra(graph, from, to).path;
+    if (to.includes("Washroom")) {
+        var to = ConvertPointOfInterest(to);
+        return {route: dijkstra(graph, from, to).path, to: to};
     }
 
-    if (to == "water") {
-        console.log("attends");
+    if (to.includes("Water")) {
+        var costToNorth = dijkstra(graph, from, "water_foutain_N");
+        var costToSouth = dijkstra(graph, from, "water_foutain_S");
+        
+        if (costToNorth.distance >= costToSouth.distance) {
+            return {route: costToSouth.path, to: "water_foutain_S"}
+        } else {
+            return {route: costToNorth.path, to: "water_foutain_N"}
+        }
     }
 }
 /**
