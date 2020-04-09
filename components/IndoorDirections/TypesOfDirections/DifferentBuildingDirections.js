@@ -67,7 +67,7 @@ export function DifferentBuildingDirections(props) {
         rooms = props.floor == 9 ? Hall9Coordinates() : rooms;
         return(
             <G>
-                <Line key={el.id} x1={rooms[goTo].x} y1={rooms[goTo].y} x2={rooms[goTo].nearestPoint.x} y2={rooms[goTo].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={rooms[goTo].x} y1={rooms[goTo].y} x2={rooms[goTo].nearestPoint.x} y2={rooms[goTo].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToElevator.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }

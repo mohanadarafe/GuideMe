@@ -2,12 +2,7 @@
 
 exports[`SameFloorDirections component renders correctly 1`] = `
 <RNSVGGroup
-  fill={
-    Array [
-      0,
-      4278190080,
-    ]
-  }
+  fill={4278190080}
   fillOpacity={1}
   fillRule={1}
   font={Object {}}
@@ -43,12 +38,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
   y={0}
 >
   <RNSVGLine
-    fill={
-      Array [
-        0,
-        4278190080,
-      ]
-    }
+    fill={4278190080}
     fillOpacity={1}
     fillRule={1}
     matrix={
@@ -75,12 +65,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     scaleY={1}
     skewX={0}
     skewY={0}
-    stroke={
-      Array [
-        0,
-        4278190335,
-      ]
-    }
+    stroke={4278190335}
     strokeDasharray={null}
     strokeDashoffset={null}
     strokeLinecap={0}
@@ -97,12 +82,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     y2="802"
   />
   <RNSVGLine
-    fill={
-      Array [
-        0,
-        4278190080,
-      ]
-    }
+    fill={4278190080}
     fillOpacity={1}
     fillRule={1}
     matrix={
@@ -129,12 +109,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     scaleY={1}
     skewX={0}
     skewY={0}
-    stroke={
-      Array [
-        0,
-        4278190335,
-      ]
-    }
+    stroke={4278190335}
     strokeDasharray={null}
     strokeDashoffset={null}
     strokeLinecap={0}
@@ -151,12 +126,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     y2="802"
   />
   <RNSVGLine
-    fill={
-      Array [
-        0,
-        4278190080,
-      ]
-    }
+    fill={4278190080}
     fillOpacity={1}
     fillRule={1}
     matrix={
@@ -183,12 +153,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     scaleY={1}
     skewX={0}
     skewY={0}
-    stroke={
-      Array [
-        0,
-        4278190335,
-      ]
-    }
+    stroke={4278190335}
     strokeDasharray={null}
     strokeDashoffset={null}
     strokeLinecap={0}
@@ -205,12 +170,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     y2="844"
   />
   <RNSVGLine
-    fill={
-      Array [
-        0,
-        4278190080,
-      ]
-    }
+    fill={4278190080}
     fillOpacity={1}
     fillRule={1}
     matrix={
@@ -237,12 +197,7 @@ exports[`SameFloorDirections component renders correctly 1`] = `
     scaleY={1}
     skewX={0}
     skewY={0}
-    stroke={
-      Array [
-        0,
-        4278190335,
-      ]
-    }
+    stroke={4278190335}
     strokeDasharray={null}
     strokeDashoffset={null}
     strokeLinecap={0}
