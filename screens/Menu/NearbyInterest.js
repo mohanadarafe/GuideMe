@@ -94,9 +94,8 @@ function NearbyInterest(props) {
                     let placeName = jsonResp.results[key].name;
                     let placeRating = jsonResp.results[key].rating;
                     let photoRef = jsonResp.results[key].photos[0].photo_reference;
-                    let imageResp = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${photoRef}&sensor=${SENSOR}&key=${keyId}`;
-                    if (placeName !== null & placeRating !== null) {
-                        data.push({ key: placeName, rating: placeRating, img: imageResp })
+                    if (placeName !== null & placeRating !== null && photoRef !== null ) {
+                        data.push({ key: placeName, rating: placeRating, img: photoRef});
                     }
                 }
             }
@@ -176,7 +175,7 @@ function NearbyInterest(props) {
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
                                         {/* // FIXME: add a default image when theres no internet connection  */}
-                                        <Image style={{ height: "100%", width: "100%" }} source={{ uri: item.img }} />
+                                        {/* <Image style={{ height: "100%", width: "100%" }} source={{ uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=CmRaAAAAAGS3__D7O6MNN29XzvOsx9WY5_PaSQHIkNBaOpvsPfnq2np1XnZ3C_vYyG96uq1ymazXICcE0NH0sfyg1BHBXYEbKP7nhAZL3amkXumjzNiV2-a9gAao95PQyWK-vIT8EhB7AT2alZEvyyFHT7mcxr-AGhR_mPQjgJgMFyy-JG_aRK-_wVv8JQ&sensor=false&key=AIzaSyDApykkW1hGVhUCZXf5pv9CIvAvyPBAy7k`}} /> */}
                                     </View>
                                     <View style={styles.itemTextContainer}>
                                         <Text style={styles.itemText}>Name of place: {item.key}</Text>
