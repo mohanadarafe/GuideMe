@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather, Entypo } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../../components/BottomMenu";
 import SegmentedControlTab from "react-native-segmented-control-tab";
+import Menu, { MenuItem, MenuDivider, Position } from "react-native-enhanced-popup-menu";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -25,6 +26,7 @@ function NearbyInterest(props) {
     const [fromScreen, setFromScreen] = React.useState();
     const [jsonElement, setJsonElement] = React.useState([]);
     const [selectedTab, setSelectedTab] = React.useState(0);
+    const [radius, setRadius] = React.useState(100);
     const [campus, setCampus] = React.useState("SGW");
     /**
      * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
@@ -80,22 +82,23 @@ function NearbyInterest(props) {
             let SGW_COORDS = `45.497063, -73.578431`;
             let LOY_COORDS = `45.458371, -73.638239`;
             let coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
-            let RADIUS = `500`;
+            let RADIUS = radius;
             let TYPE = `restaurant`;
             let MAX_WIDTH = `500`;
             let SENSOR = `false`;
-            // let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
+            // let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
-           
+            let response = jsonResp;
+
 
             var key;
-            if (jsonResp && jsonResp.results.length > 0) {
-                for (key in jsonResp.results) {
-                    let placeName = jsonResp.results[key].name;
-                    let placeRating = jsonResp.results[key].rating;
-                    let photoRef = jsonResp.results[key].photos[0].photo_reference;
-                    if (placeName !== null & placeRating !== null && photoRef !== null ) {
-                        data.push({ key: placeName, rating: placeRating, img: photoRef});
+            if (response && response.results.length > 0) {
+                for (key in response.results) {
+                    let placeName = response.results[key].name;
+                    let placeRating = response.results[key].rating;
+                    let photoRef = response.results[key].photos[0].photo_reference;
+                    if (placeName !== null & placeRating !== null && photoRef !== null) {
+                        data.push({ key: placeName, rating: placeRating, img: photoRef });
                     }
                 }
             }
@@ -115,6 +118,24 @@ function NearbyInterest(props) {
         return () => clearInterval(intervalId);
     });
 
+    let textRef = React.createRef();
+    let menuRef = null;
+
+    const setMenuRef = ref => {
+        menuRef = ref;
+    }
+    const hideMenu = () => {
+        menuRef.hide();
+    }
+    const showMenu = () => {
+        menuRef.show(textRef.current, stickTo = Position.BOTTOM_CENTER);
+    }
+    const itemSelected = (value) => {
+        setRadius(value);
+        hideMenu();
+    }
+
+    // console.log("json: "+jsonElement[0]);
 
     return (
         <View style={styles.container}>
@@ -130,16 +151,25 @@ function NearbyInterest(props) {
                     </TouchableOpacity>
                 }
 
-                <TouchableOpacity style={styles.optionButton}>
-                    <Ionicons name="ios-options" style={styles.option} />
-                </TouchableOpacity>
             </View>
+            <TouchableOpacity style={styles.optionButton} onPress={showMenu} ref={textRef}>
+                <Entypo name="popup" style={styles.option} />
+            </TouchableOpacity>
 
+            <Menu ref={setMenuRef}>
+                <MenuItem onPress={() => {itemSelected(100)}}> 100 miles</MenuItem>
+               
+                <MenuItem onPress={() => {itemSelected(250)}}>250 miles</MenuItem>
+            
+                <MenuItem onPress={() => {itemSelected(500)}}>500 miles</MenuItem>
+              
+                <MenuItem onPress={() => {itemSelected(1500)}}>>1000 miles</MenuItem>
+            </Menu>
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
 
-        
-          <SegmentedControlTab
+
+            <SegmentedControlTab
                 tabsContainerStyle={styles.tabsContainerStyle}
                 values={["SGW", "LOY"]}
                 selectedIndex={selectedTab}
@@ -157,7 +187,7 @@ function NearbyInterest(props) {
                         setCampus("LOY");
                     }
                 }}
-               ></SegmentedControlTab>
+            ></SegmentedControlTab>
 
 
             <View style={styles.flatListContainer}>
@@ -175,7 +205,7 @@ function NearbyInterest(props) {
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
                                         {/* // FIXME: add a default image when theres no internet connection  */}
-                                        {/* <Image style={{ height: "100%", width: "100%" }} source={{ uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=CmRaAAAAAGS3__D7O6MNN29XzvOsx9WY5_PaSQHIkNBaOpvsPfnq2np1XnZ3C_vYyG96uq1ymazXICcE0NH0sfyg1BHBXYEbKP7nhAZL3amkXumjzNiV2-a9gAao95PQyWK-vIT8EhB7AT2alZEvyyFHT7mcxr-AGhR_mPQjgJgMFyy-JG_aRK-_wVv8JQ&sensor=false&key=AIzaSyDApykkW1hGVhUCZXf5pv9CIvAvyPBAy7k`}} /> */}
+                                        {/* <Image style={{ height: "100%", width: "100%" }} source={{ uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=${item.img}&sensor=false&key=AIzaSyDApykkW1hGVhUCZXf5pv9CIvAvyPBAy7k`}} /> */}
                                     </View>
                                     <View style={styles.itemTextContainer}>
                                         <Text style={styles.itemText}>Name of place: {item.key}</Text>
@@ -190,145 +220,133 @@ function NearbyInterest(props) {
 
 
         </View>
-
-
-        // </View>
     );
-}
+    }
 
-NearbyInterest.propTypes = {
-    navigation: PropTypes.object,
-    openDrawer: PropTypes.func,
-    navigate: PropTypes.func
-};
+    NearbyInterest.propTypes = {
+        navigation: PropTypes.object,
+        openDrawer: PropTypes.func,
+        navigate: PropTypes.func
+    };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43"
-    },
-    mainLabel: {
-        color: "#FFFFFF",
-        position: "absolute",
-        fontSize: 25,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded",
-        top: "15%"
-    },
-    list: {
-        flexDirection: "column"
-    },
-    arrowDown: {
-        color: "#ffffff",
-        top: "5%",
-        fontSize: 54,
-    },
-    backButton: {
-        alignSelf: "center"
-    },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35,
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    option: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35,
-    },
-    optionButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "7%",
-    },
-    flatListContainer: {
-        height: "65%",
-        bottom: "5%"
-    },
-    itemContainer: {
-        flex: 1,
-        margin: 5,
-        minWidth: 185,
-        maxWidth: 185,
-        height: 200,
-        maxHeight: 200,
-        backgroundColor: "#353A50",
-        borderRadius: 10,
-    },
-    itemText: {
-        color: "#FFFFFF",
-        fontSize: 12,
-        fontFamily: "encodeSansExpanded",
-        marginHorizontal: "10%",
-        marginVertical: "3%",
-        width: "70%"
-    },
-    itemTextContainer: {
-        width: "100%",
-        height: "35%",
-        flexDirection: "column",
-        justifyContent: "center"
-    },
-    itemImageContainer: {
-        width: "100%",
-        height: "65%",
-    },
-    controlTabContainer: {
-        top: "%",
-        alignContent: "space-between",
-        backgroundColor: "red",
-        height: "20%",
-        width: "100%",
-        bottom: "%"
-    },
-    tabsContainerStyle: {
-        // bottom: "100%",
-        // top: "10%",
+    export const styles = StyleSheet.create({
+        container: {
+            alignItems: "center",
+            justifyContent: "space-between",
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#2A2E43"
+        },
+        mainLabel: {
+            color: "#FFFFFF",
+            position: "absolute",
+            fontSize: 25,
+            fontWeight: "bold",
+            fontFamily: "encodeSansExpanded",
+            top: "15%"
+        },
+        list: {
+            flexDirection: "column"
+        },
+        arrowDown: {
+            color: "#ffffff",
+            top: "5%",
+            fontSize: 54,
+        },
+        backButton: {
+            alignSelf: "center"
+        },
+        icon: {
+            alignSelf: "center",
+            color: "#FFFFFF",
+            fontSize: 35,
+        },
+        menuButton: {
+            height: "100%",
+            width: "20%",
+            flexDirection: "row",
+            justifyContent: "center"
+        },
+        option: {
+            alignSelf: "center",
+            color: "#FFFFFF",
+            fontSize: 35,
+        },
+        optionButton: {
+            bottom: "5%",
+            left: "40%",
+        },
+        menuButtonContainer: {
+            width: "100%",
+            height: "6%",
+            top: "7%",
+        },
+        flatListContainer: {
+            height: "65%",
+            bottom: "5%"
+        },
+        itemContainer: {
+            flex: 1,
+            margin: 5,
+            minWidth: 185,
+            maxWidth: 185,
+            height: 200,
+            maxHeight: 200,
+            backgroundColor: "#353A50",
+            borderRadius: 10,
+        },
+        itemText: {
+            color: "#FFFFFF",
+            fontSize: 12,
+            fontFamily: "encodeSansExpanded",
+            marginHorizontal: "10%",
+            marginVertical: "3%",
+            width: "70%"
+        },
+        itemTextContainer: {
+            width: "100%",
+            height: "35%",
+            flexDirection: "column",
+            justifyContent: "center"
+        },
+        itemImageContainer: {
+            width: "100%",
+            height: "65%",
+        },
+        controlTabContainer: {
+            alignContent: "space-between",
+            backgroundColor: "red",
+            height: "20%",
+            width: "100%",
+        },
+        tabsContainerStyle: {
+            bottom: "5%",
+        },
+        tabStyle: {
+            backgroundColor: "#2A2E43",
+            borderWidth: 0,
+            borderColor: "white",
+            borderBottomColor: "#FFFFFF",
+            paddingHorizontal: "15%"
+        },
+        tabTextStyle: {
+            fontWeight: "bold",
+            color: "#FFFFFF"
+        },
+        activeTabStyle: {
+            backgroundColor: "#2A2E43",
+            borderBottomColor: "#3ACCE1"
+        },
+        activeTabTextStyle: {
+            color: "#3ACCE1",
+            backgroundColor: "#2A2E43",
+            fontWeight: "bold"
+        },
+        tabContent: {
+            color: "#fff",
+            fontSize: 18,
+            margin: 24,
+        },
+    });
 
-        top: "7%",
-        backgroundColor: "red",
-    },
-    tabStyle: {
-        backgroundColor: "#2A2E43",
-        borderWidth: 0,
-        borderColor: "white",
-        borderBottomColor: "#FFFFFF",
-        paddingHorizontal: "15%"
-    },
-    tabTextStyle: {
-        fontWeight: "bold",
-        color: "#FFFFFF"
-    },
-    activeTabStyle: {
-        backgroundColor: "#2A2E43",
-        borderBottomColor: "#3ACCE1"
-    },
-    activeTabTextStyle: {
-        color: "#3ACCE1",
-        backgroundColor: "#2A2E43",
-        fontWeight: "bold"
-    },
-    tabContent: {
-        color: "#fff",
-        fontSize: 18,
-        margin: 24,
-        // bottom: "100%",
-    },
-});
-
-export default NearbyInterest;
+    export default NearbyInterest;
