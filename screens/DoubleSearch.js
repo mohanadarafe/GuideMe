@@ -214,6 +214,7 @@ function DoubleSearch(props) {
                 <View style={styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
+                        testID="DoubleSearch_FromSearchBar"
                         onTextChange={val => val} //Refer TODO: A)
                         onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
                         defaultIndex={"0"} //Refer TODO: A)
@@ -235,6 +236,7 @@ function DoubleSearch(props) {
                 <View style={styles.destinationSearchContainer}>
                     <Text style={styles.searchBarLabels}>To: </Text>
                     <SearchableDropdown
+                        testID="DoubleSearch_ToSearchBar"
                         onTextChange={val => val}
                         onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
                         textInputStyle={styles.textInputStyle}

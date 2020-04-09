@@ -48,7 +48,7 @@ export function DifferentFloorDirections(props) {
         var className = ConvertToHall8Floor(props.from.toString());
         const arrow = getArrowCoordinates(rooms["elevator"].nearestPoint.x, rooms["elevator"].nearestPoint.y, rooms["elevator"].x, rooms["elevator"].y);
         return(
-            <G>
+            <G testID="DifferentFloorDirections_GraphDirectionsFloorFrom">
                 <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToElevator.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
@@ -65,7 +65,7 @@ export function DifferentFloorDirections(props) {
         var className = ConvertToHall8Floor(props.to.toString());
         const arrow = getArrowCoordinates(rooms[className].nearestPoint.x, rooms[className].nearestPoint.y, rooms[className].x, rooms[className].y);
         return(
-            <G>
+            <G testID="DifferentFloorDirections_GraphDirectionsFloorTo">
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToClass.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
