@@ -5,10 +5,28 @@ import { SameFloorDirections } from "../../../components/IndoorDirections/TypesO
 import { getFloorNumber, dijkstra, shortestPathToInterest } from "../../../components/IndoorDirections/Dijkstra/DijkstraAlgorithm";
 import { ClassGraph } from "../../../constants/ClassGraph";
 import { Class9Graph } from "../../../constants/ClassGraph9";
+import { Hall9Coordinates } from "../../../constants/Hall9Coordinates";
+import { LoyolaCoordinates } from "../../../constants/LoyolaCoordinates";
+import { LoyolaGraph } from "../../../constants/LoyolaGraph";
 
 describe("SameFloorDirections component", () => {
-    test("renders correctly", () => {
+    test("renders correctly for floor 8", () => {
         const tree = renderer.create(<SameFloorDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"H835"}/>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    test("renders correctly for floor 9", () => {
+        const tree = renderer.create(<SameFloorDirections floor={9} rooms={Hall9Coordinates()} from={"H920"} to={"H911"}/>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    test("renders correctly for loyola", () => {
+        const tree = renderer.create(<SameFloorDirections loy={true} floor={1} rooms={LoyolaCoordinates()} from={"VL103"} to={"exit"}/>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    test("renders correctly for interest", () => {
+        const tree = renderer.create(<SameFloorDirections interest={true} floor={1} rooms={HallXCoordinates()} from={"H820"} to={"Men's Washroom"}/>).toJSON();
         expect(tree).toMatchSnapshot();
     });
 
@@ -64,7 +82,7 @@ describe("SameFloorDirections component", () => {
         const testCases = [
             {from: "H863", to: "H801"},
             {from: "H803", to: "H827"},
-            {from: "H937", to: "H911"},
+            {from: "H937", to: "H911"}
         ]
         const results = [
             ["H863", "H801"],
@@ -73,7 +91,8 @@ describe("SameFloorDirections component", () => {
         ]
 
         testCases.forEach((element, index) => {
-            const path = dijkstra(getFloorNumber(element.from) == 9 ? Class9Graph() : ClassGraph(), element.from, element.to).path;
+            var graph = getFloorNumber(element.from) == 9 ? Class9Graph() : ClassGraph();
+            const path = dijkstra(element.from.includes("VL") ? LoyolaGraph() : graph, element.from, element.to).path;
             expect(path).toEqual(results[index]);
         });
     })
