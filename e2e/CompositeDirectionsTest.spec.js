@@ -2,6 +2,13 @@
 const { reloadApp } = require("detox-expo-helpers");
 
 describe("Composite Directions Feature", () => {
+  /**USER STORIES COVERED
+   * US-15 : As a user, I want to be able to view directions on the map
+   * US-25 : AS a user, I would like to be able to search for a room
+   * US-26 : As a user, I would like to be able to set a room as my start or destination
+   * US-33 : AS a user, I would like to be able to be given directions between classes from two different campuses
+   */
+
   /** BEFORE Each Test
    * 1. Load the app
    * 2. Display main screen
@@ -12,6 +19,8 @@ describe("Composite Directions Feature", () => {
 
   /**Scenario: Getting Directions from 1 room to another room on different campuses (SGW to LoyoLa)
    * US-15 : As a user, I want to be able to view directions on the map
+   * US-25 : AS a user, I would like to be able to search for a room
+   * US-26 : As a user, I would like to be able to set a room as my start or destination
    * US-33 : AS a user, I would like to be able to be given directions between classes from two different campuses
    * 1. Click on the search bar
    * 2. Enter the number of a room from Loyola Campus: "VL103"

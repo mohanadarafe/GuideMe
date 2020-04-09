@@ -4,6 +4,8 @@ const { reloadApp } = require("detox-expo-helpers");
 describe("Indoor Directions Feature", () => {
     /**USER STORIES COVERED
    * US-15 : As a user, I want to be able to view directions on the map
+   * US-25 : AS a user, I would like to be able to search for a room
+   * US-26 : As a user, I would like to be able to set a room as my start or destination
    * US-31 : As a user, I would like to be able to generate directions to rooms between floors
    */
 
@@ -16,8 +18,10 @@ describe("Indoor Directions Feature", () => {
   });
 
   /**Scenario: Getting Directions from 1 room to another room on different floors
-   * US-31 : As a user, I would like to be able to generate directions to rooms between floors
    * US-15 : As a user, I want to be able to view directions on the map
+   * US-25 : AS a user, I would like to be able to search for a room
+   * US-26 : As a user, I would like to be able to set a room as my start or destination
+   * US-31 : As a user, I would like to be able to generate directions to rooms between floors
    * 1. Click on the search bar
    * 2. Enter the number of a room: "H813"
    * 3. Select the corresponding item from the dropdown list
@@ -52,6 +56,8 @@ describe("Indoor Directions Feature", () => {
 
  /**Scenario: Getting Directions from 1 room to another room on the same floor
    * US-15 : As a user, I want to be able to view directions on the map
+   * US-25 : AS a user, I would like to be able to search for a room
+   * US-26 : As a user, I would like to be able to set a room as my start or destination
    * 1. Click on the search bar
    * 2. Enter the number of a room: "H813"
    * 3. Select the corresponding item from the dropdown list

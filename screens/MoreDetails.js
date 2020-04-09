@@ -105,7 +105,7 @@ function MoreDetails (props) {
               <Text style={styles.mapPinLabel}>{getBuildingInfo[name].phone != undefined ? getBuildingInfo[name].phone : "N/A"}</Text>
             </View>
           </Button>
-          <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+          <Button testID="MoreDetails_getDirectionsButton" style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
         </SafeAreaView>
         <View style={styles.imageContainer}>
           <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
