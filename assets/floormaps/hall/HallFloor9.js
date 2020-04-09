@@ -7,6 +7,7 @@ export function HallFloor9(props) {
     const [floorNumber, setFloorNumber] = React.useState("");
     const to = props.to;
     const from = props.from;
+    const mobility = props.mobility;
 
     const floorSelected = async () => {
       let name = await AsyncStorage.getItem("floorSelected");
@@ -1234,7 +1235,7 @@ export function HallFloor9(props) {
           />
         </G>
         {from !== null && to !==null &&
-          <IndoorScenario floor={floorNumber} from={from} to={to} building={"Hall Building"} />
+          <IndoorScenario floor={floorNumber} from={from} to={to} building={"Hall Building"} mobility={mobility} />
         }
       </G>
     </Svg>

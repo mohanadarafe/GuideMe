@@ -23,7 +23,7 @@ export function ClassGraph () {
         H831: {H833: 1, H829: 1},
         H833: {H835: 1, H831: 1, water_foutain_N: 0.5},
         H835: {H837: 1, H833: 1, stairs_NW: 0.5},
-        H837: {checkpoint2: 1, H835: 1, H832: 0.5},
+        H837: {checkpoint2: 1, H835: 1},
         checkpoint2: {H841: 1, H838: 1, H837: 1, H832: 1, escalator: 3},
         H841: {H843: 1, checkpoint2: 1, H838: 0.5},
         H843: {H845: 1, H841: 1},
