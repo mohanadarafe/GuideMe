@@ -19,7 +19,7 @@ describe("DifferentBuildingDirections component", () => {
             {from: "elevator", to: "exit"}
         ]
         const results = [
-            ["H863", "H861", "H859", "elevator"],
+            ["H863", "H861", "H859", "checkpoint3", "stairs_SE", "elevator"],
             ["elevator", "checkpoint4", "H806", "checkpoint1", "exit"]
         ]
 

@@ -106,26 +106,68 @@ export const getFloorNumber = (name) => {
  * @param {*} name | classroom name
  */
 export const ConvertToHall8Floor = (name) => {
-    if (name == "exit" || name == "elevator") {
-        return name;
-    }
-    
-    if (name) {
-        const num = name.match(/\d+/g).map(Number);
-        const numToString = num.toString();
-        
-        if(numToString.charAt(0) == 9) {
+    if (!name.includes(" ")) {
+        if (name == "exit" || name == "elevator") {
             return name;
         }
-        else if (numToString.length == 3) {
-            return name.replace(numToString.charAt(0), "8");
-        }
-        else if (numToString.length == 4) {
-            return name.replace(numToString.substring(0,2), "8");
+        
+        if (name) {
+            const num = name.match(/\d+/g).map(Number);
+            const numToString = num.toString();
+            
+            if(numToString.charAt(0) == 9) {
+                return name;
+            }
+            else if (numToString.length == 3) {
+                return name.replace(numToString.charAt(0), "8");
+            }
+            else if (numToString.length == 4) {
+                return name.replace(numToString.substring(0,2), "8");
+            }
         }
     }  
 }
 
+/**
+ * The following function converts the point of interest
+ * to the key value in the data file.
+ * @param {*} name 
+ */
+export const ConvertPointOfInterest = (name) => {
+    if (name) {
+        switch (name) {
+            case "Men's Washroom":
+                return "men_washroom"
+            case "Women's Washroom":
+                return "women_washroom"
+        }
+    }
+}
+
+/**
+ * The following function returns the shortest path to
+ * the interest point requested by the user.
+ * @param {*} graph | node graph
+ * @param {*} from | from node
+ * @param {*} to | to node
+ */
+export const shortestPathToInterest = (graph, from, to) => {
+    if (to.includes("Washroom")) {
+        var to = ConvertPointOfInterest(to);
+        return {route: dijkstra(graph, from, to).path, to: to};
+    }
+
+    if (to.includes("Water")) {
+        var costToNorth = dijkstra(graph, from, "water_foutain_N");
+        var costToSouth = dijkstra(graph, from, "water_foutain_S");
+        
+        if (costToNorth.distance >= costToSouth.distance) {
+            return {route: costToSouth.path, to: "water_foutain_S"}
+        } else {
+            return {route: costToNorth.path, to: "water_foutain_N"}
+        }
+    }
+}
 /**
  * The following function returns the coordinates for an arrow
  * to be drawn on the SVG map for a user to follow a direction.

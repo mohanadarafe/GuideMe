@@ -2,7 +2,7 @@ import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
 import { Class9Graph } from '../../../constants/ClassGraph9';
-import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates } from '../Dijkstra/DijkstraAlgorithm';
+import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates, ConvertPointOfInterest, shortestPathToInterest } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 import { LoyolaGraph } from '../../../constants/LoyolaGraph';
 
@@ -11,8 +11,17 @@ export function SameFloorDirections(props) {
     const rooms = floor == 9 ? Hall9Coordinates() : props.rooms;
     var graph = floor == 9 ? Class9Graph() : ClassGraph();
     var from = floor == 9 ? props.from : ConvertToHall8Floor(props.from);
-    var to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
-    var route = dijkstra(graph, from, to).path;
+    var to = "";
+    var route = null;
+
+    if (props.interest == true) {
+        var interest = shortestPathToInterest(graph, from, props.to);
+        to = interest.to;
+        route = interest.route;
+    } else {
+        to = floor == 9 ? props.to : ConvertToHall8Floor(props.to);
+        route = dijkstra(graph, from, to).path;
+    }
 
     if (props.loy) {
         graph = LoyolaGraph();
