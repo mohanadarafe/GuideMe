@@ -48,9 +48,7 @@
       "!**/constants/buildingCoordinates.js",
       "!**/screens/Directions.js",
       "!**/screens/PreviewDirections.js",
-      "!**/assets/floormaps/vl/VLFloor1.js",
-      "!**/constants/Hall9Coordinates.js",
-      "!**/constants/LoyolaGraph.js",
+      "!**/screens/SideMenu.js",
       "!**/routes/**.js",
       "!**/screens/Menu/ShuttleBus.js"
     ],
