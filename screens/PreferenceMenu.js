@@ -1,6 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
+import { connect } from "react-redux";
+
+function mapStateToProps(transportType) {
+    return {
+        transportType: transportType
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setMethodOfTravel: (value) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: value }),
+        // decreaseCounter: () => dispatch({ type: 'DECREASE_COUNTER' }),
+    }
+}
 
 /**
  * US12 - As a user, I want to be able to select a destination building by clicking on it.
@@ -15,6 +29,7 @@ import { Icon, Button } from "native-base";
  */
 
 function PreferenceMenu (props) {
+    // console.log(props);
 
     const personaSavedState = props.navigation.getParam("personaType", "null");
 
@@ -108,7 +123,10 @@ function PreferenceMenu (props) {
                 </View>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "driving" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "driving" })}>
+                    onPress={() => {
+                        setOnPressThirdCategory({ selectedButton: "driving" })
+                        props.setMethodOfTravel("driving");
+                        }}>
 
                     <View style={styles.iconContainer}>
                         <Icon name="md-car" style={styles.icon}></Icon>
@@ -119,7 +137,10 @@ function PreferenceMenu (props) {
                 </Button>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "walking" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "walking" })}>
+                    onPress={() => {
+                    setOnPressThirdCategory({ selectedButton: "walking" })
+                    props.setMethodOfTravel("walking");
+                    }}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-walk" style={styles.icon}></Icon>
                     </View>
@@ -129,7 +150,10 @@ function PreferenceMenu (props) {
                 </Button>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "bicycling" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "bicycling" })}>
+                    onPress={() => {
+                        setOnPressThirdCategory({ selectedButton: "bicycling" });
+                        props.setMethodOfTravel("bicycling");
+                    }}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bicycle" style={styles.icon}></Icon>
                     </View>
@@ -139,7 +163,10 @@ function PreferenceMenu (props) {
                 </Button>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "transit" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressThirdCategory({ selectedButton: "transit" })}>
+                    onPress={() => { 
+                        setOnPressThirdCategory({ selectedButton: "transit" });
+                        props.setMethodOfTravel("transit");
+                        }}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>
@@ -166,6 +193,8 @@ function PreferenceMenu (props) {
         </View >
     );
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(PreferenceMenu);
 
 export const styles = StyleSheet.create({
     container: {
@@ -320,4 +349,4 @@ export const styles = StyleSheet.create({
     },
 });
 
-export default PreferenceMenu;
+// export default PreferenceMenu;

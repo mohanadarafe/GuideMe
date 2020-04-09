@@ -6,7 +6,7 @@ import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-
+import { store } from "../App"
 /**
  * Description: This method act as an interface. After taking the leg of the response
  * called jsonLeg as argument, the method will create an object that will 
@@ -144,12 +144,16 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * 
  */
 function PreviewDirections (props) {
-
+    // console.log(props);
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
-    const [outdoorTransportType, setOutdoorTransportType] = React.useState("driving");
+    const [transportType, setTransportType] = React.useState("driving");
     const mapRef = useRef(null);
 
+    store.subscribe(() => {
+        setTransportType(store.getState().transportType)
+    });
+    
     /**
       * Description: Go back to previous screen method.
       * Using Stack Navigator
@@ -163,6 +167,7 @@ function PreviewDirections (props) {
     const toCoordinates = props.navigation.getParam("To", null);
     const fromName = props.navigation.getParam("fromName", null);
     const toName = props.navigation.getParam("toName", null);
+
     if (!fromCoordinates || !toCoordinates) {
         alert("Sorry, could not load directions. The Starting Point or Destination might be wrong. Please Try again.");
         goBackPressHandler();
@@ -171,26 +176,28 @@ function PreviewDirections (props) {
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
     // The variables retrived from the preference page 
 
+ 
     /**
-         * Description: fetchData() is an async method that makes the API request to Google Maps.
-         * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
-         * @param {*} transportType 
-        */
+     * Description: fetchData() is an async method that makes the API request to Google Maps.
+     * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
+     * @param {*} transportType 
+    */
     const fetchData = async () => {
         try {
             // Retrieving the apiKey from the AsyncStorage.
             let keyId = await AsyncStorage.getItem("apiKeyId");
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${outdoorTransportType}`);
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
             const jsonResponse = await resp.json();
             if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
                 //Command Pattern
-                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0], outdoorTransportType);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0], transportType);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? fromCoordinates.isClassRoom : null;
                 filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? toCoordinates.isClassRoom : null;
+                // console.log(filteredInstruction.steps);
                 setdetailedInstructionsObject(filteredInstruction);
             }
             else { //Error handling
@@ -201,7 +208,7 @@ function PreviewDirections (props) {
             alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
             goBackPressHandler();
         }
-    };
+    };  
 
 
     /**
@@ -230,29 +237,13 @@ function PreviewDirections (props) {
 
         }, 100);
     };
+
     /**
-     * This method will fetch the value of the transport Type that is set in the asyncStorange.
-     * By default, the value is driving. 
-     */
-    const fetchTransportType = async () => {
-        let name = await AsyncStorage.getItem("thirdCategory");
-        if (name != null) {
-        setOutdoorTransportType(name);
-        }
-    };
-    /**
-     * The useEffect is a hook that will constantly (every second) calls fetchTransportType in case teh value of the transport changes
-     * in the PreferenceMenu context. When that happens, the state outdoorTransportType will change which will trigger the fetchData() 
-     * method to be call again. This logic must be implemented in the IndoorMap context since we want to know the other two fields: 
-     * persona and mobility type.
      */
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            fetchTransportType();
-        }, 1);
         fetchData();
-        return () => clearInterval(intervalId);
-    }, [outdoorTransportType]);
+    }, [transportType]);
+
 
     return (
         <View>
