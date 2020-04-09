@@ -57,7 +57,7 @@ export function FloorMenu() {
   });
 
   return (
-    <View testID="floorBarMenu">
+    <View testID="FloorMenu_floorBarMenuView">
       {selectedBuilding === "Hall Building" && (
         <SwitchSelector
           style={styles.selector}

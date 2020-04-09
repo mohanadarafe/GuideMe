@@ -112,7 +112,7 @@ function MoreDetails (props) {
         </View>
         <Text style={styles.mainLabel}>{name}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
-        <SafeAreaView testID="moreInfoScrollView" style={styles.scrollTextContainer}>
+        <SafeAreaView testID="MoreDetails_moreInfoScrollView" style={styles.scrollTextContainer}>
           <SectionList
             sections={[
               { title: "Departments ", data: departments },
@@ -125,7 +125,7 @@ function MoreDetails (props) {
             ItemSeparatorComponent={ () => <View style={styles.line}/>}
           />
         </SafeAreaView>
-        <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+        <Icon testID="MoreDetails_bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
       </View>
     );
   }

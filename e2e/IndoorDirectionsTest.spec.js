@@ -33,17 +33,17 @@ describe("Indoor Directions Feature", () => {
    * 13. Check that the path on the FROM floor exists
    */
   it.skip("Getting directions from 1 room to another room on different floors", async () => {
-    await element(by.id("searchBar")).tap();
-    await element(by.id("searchBar")).typeText("H813");
-    await element(by.id("searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await element(by.id("getDirectionsButton")).tap();
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("H813");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_ToSearchBar"))).toHaveText("H813");
     await element(by.id("DoubleSearch_FromSearchBar")).tap();
     await element(by.id("DoubleSearch_FromSearchBar")).typeText("H937");
     //TODO: Check the x and y coordinates of the corresponding item in the dropdown list given relative position to the FROM Search Bar
     //Fix possible: using items at index
     await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tapAtPoint();
-    await element(by.id("enabledViewRouteButton")).tap();
+    await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await element(by.label("8")).tap();
     await expect(element(by.id("DifferentFloorDirections_GraphDirectionsFloorTo"))).toBeVisible();
     await element(by.label("9")).tap();
@@ -65,17 +65,17 @@ describe("Indoor Directions Feature", () => {
    * 11. Check that the directions path exists
    */    
   it.skip("Getting Directions from 1 room to another room on the same floor", async () => {
-    await element(by.id("searchBar")).tap();
-    await element(by.id("searchBar")).typeText("H813");
-    await element(by.id("searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await element(by.id("getDirectionsButton")).tap();
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("H813");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_ToSearchBar"))).toHaveText("H813");
     await element(by.id("DoubleSearch_FromSearchBar")).tap();
     await element(by.id("DoubleSearch_FromSearchBar")).typeText("H820");
     //TODO: Check the x and y coordinates of the corresponding item in the dropdown list given relative position to the FROM Search Bar
     //Fix possible: using items at index
     await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tapAtPoint();
-    await element(by.id("enabledViewRouteButton")).tap();
+    await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await element(by.label("8")).tap();
     await expect(element(by.id("SameFloorDirections_GraphDirections"))).toBeVisible();
   });

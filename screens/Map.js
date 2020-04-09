@@ -56,7 +56,7 @@ function Map ({ navigation }) {
     });
 
     return (
-        <View testID="mapView" data-test="MapComponent">
+        <View testID="Map_mapView" data-test="MapComponent">
             <View>
                 <MapView
                     data-test="MapViewComponent"
@@ -71,7 +71,7 @@ function Map ({ navigation }) {
                     <BuildingHighlight />
                     <BuildingIdentification />
                 </MapView>
-                <Search testID="searchBar" navigation={navigation} />
+                <Search testID="Map_searchBar" navigation={navigation} />
                 <View style={styles.CurrentBuildingLocation}>
                         <CurrentBuildingLocation />
                 </View>

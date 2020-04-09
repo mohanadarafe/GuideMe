@@ -26,13 +26,13 @@ describe("Exploring the map Feature", () => {
    * 7. Check the map is present
    */
   it.skip("Explore different campuses", async () => {
-    await expect(element(by.id("mapView"))).toExist();
-    await expect(element(by.id("bottomMenuInitalView"))).toExist();
+    await expect(element(by.id("Map_mapView"))).toExist();
+    await expect(element(by.id("BottomMenu_initalView"))).toExist();
     await expect(element(by.id("intialBottomMenuToggleButton"))).toExist();
-    await element(by.id("intialBottomMenuToggleButton")).longPress();
-    await expect(element(by.id("mapView"))).toExist();
-    await element(by.id("intialBottomMenuToggleButton")).longPress();
-    await expect(element(by.id("mapView"))).toExist();
+    await element(by.id("BottomMenu_ToggleButton")).longPress();
+    await expect(element(by.id("Map_mapView"))).toExist();
+    await element(by.id("BottomMenu_ToggleButton")).longPress();
+    await expect(element(by.id("Map_mapView"))).toExist();
   });
 
   /** Scenario: Navigate through different indoor floors (Hall)
@@ -49,16 +49,16 @@ describe("Exploring the map Feature", () => {
    * 10. Check the map is present
    */
   it.skip("Navigate through different indoor floors (Hall)", async () => {
-    await element(by.id("searchBar")).tapAtPoint({ x: 165, y: 370 });
-    await expect(element(by.id("getInsideButton"))).toExist();
-    await element(by.id("getInsideButton")).tap();
-    await expect(element(by.id("floorBarMenu"))).toExist();
-    await element(by.id("floorBarMenu")).tapAtPoint({ x: 192, y: 23 });
-    await expect(element(by.id("indoorMapFloorScrollView"))).toExist();
-    await element(by.id("indoorMapFloorScrollView")).swipe("left", "fast");
-    await expect(element(by.id("indoorMapExitBuildingButton"))).toExist();
-    await element(by.id("indoorMapExitBuildingButton")).tap();
-    await expect(element(by.id("mapView"))).toExist();
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
+    await expect(element(by.id("BottomMenu_getInsideButton"))).toExist();
+    await element(by.id("BottomMenu_getInsideButton")).tap();
+    await expect(element(by.id("FloorMenu_floorBarMenuView"))).toExist();
+    await element(by.id("FloorMenu_floorBarMenuView")).tapAtPoint({ x: 192, y: 23 });
+    await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
+    await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "fast");
+    await expect(element(by.id("IndoorMapView_ExitBuildingButton"))).toExist();
+    await element(by.id("IndoorMapView_ExitBuildingButton")).tap();
+    await expect(element(by.id("Map_mapView"))).toExist();
   });
 
   /** Scenario: Get more details about a building (Hall)
@@ -72,19 +72,19 @@ describe("Exploring the map Feature", () => {
     * 8. Check the map is present
     */
   it.skip("Get more details about a building (Hall)", async () => {
-    await element(by.id("searchBar")).tapAtPoint({ x: 165, y: 370 });
-    await expect(element(by.id("getInsideIcon"))).toExist();
-    await element(by.id("getInsideIcon")).tapAtPoint({ x: 10, y: 20 });
-    await expect(element(by.id("moreInfoScrollView"))).toExist();
-    await element(by.id("moreInfoScrollView")).swipe("up");
-    await expect(element(by.id("bottomArrowIcon"))).toExist();
-    await element(by.id("bottomArrowIcon")).tap();
-    await expect(element(by.id("mapView"))).toExist();
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
+    await expect(element(by.id("BottomMenu_arrowUpIcon"))).toExist();
+    await element(by.id("BottomMenu_arrowUpIcon")).tapAtPoint({ x: 10, y: 20 });
+    await expect(element(by.id("MoreDetails_moreInfoScrollView"))).toExist();
+    await element(by.id("MoreDetails_moreInfoScrollView")).swipe("up");
+    await expect(element(by.id("MoreDetails_bottomArrowIcon"))).toExist();
+    await element(by.id("MoreDetails_bottomArrowIcon")).tap();
+    await expect(element(by.id("Map_mapView"))).toExist();
   });
 
   /** Scenario: Select a building as a destination point by typing its name
    * US-13 : As a user, I want to be able to select a destination building by typing its name
-   * 1. Click on the searchbar
+   * 1. Click on the searchBar
    * 2. Enter the name of a building: "hall building"
    * 3. Select the corresponding item from the dropdown list
    * 4. Check that the GET DIRECTIONS button exist
@@ -93,12 +93,12 @@ describe("Exploring the map Feature", () => {
    * 7. Check that TO search bar is filled with "Hall building"
    */
   it.skip("Select a building as a destination point by typing its name", async () => {
-    await element(by.id("searchBar")).tap();
-    await element(by.id("searchBar")).typeText("hall building");
-    await element(by.id("searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await expect(element(by.id("getDirectionsButton"))).toExist();
-    await element(by.id("getDirectionsButton")).tap();
-    await expect(element(by.id("disabledViewRouteButton"))).toExist();
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("hall building");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
+    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
     //Added step (step 7) for checking US-13 at the same time. Might have problems with the displaying if the name vs full name
     await expect(element(by.id("DoubleSearch_ToSearchBar"))).toHaveText("Hall building");
   });

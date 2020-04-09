@@ -44,7 +44,7 @@ function IndoorMapView(props) {
     });
 
     return (
-        <View testID="indoorMapFloorScrollView">
+        <View testID="IndoorMapView_FloorScrollView">
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
                     {((selectedBuilding === "VL Building") || (from != null && from.includes("VL") && isFirst != null) || (to != null && to.includes("VL") && isLast != null)) && 
@@ -80,7 +80,7 @@ function IndoorMapView(props) {
                     <Text style={styles.mainLabel}>{((from.includes("VL") && isFirst != null) || (to.includes("VL") && isLast != null)) ? "VL Building" : "Hall Building" }</Text>
                 }
                 <Text style={styles.shortLabel}>More info</Text>
-                <Button testID="indoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                <Button testID="IndoorMapView_ExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>

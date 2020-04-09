@@ -25,17 +25,17 @@ describe("Composite Directions Feature", () => {
    * TODO: Checking the path for directions is shown (need to play)
    */    
   it.skip("Getting Directions from 1 room to another room on different campuses (Hall to LoyoLa)", async () => {
-    await element(by.id("searchBar")).tap();
-    await element(by.id("searchBar")).typeText("VL103");
-    await element(by.id("searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await element(by.id("getDirectionsButton")).tap();
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("VL103");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_ToSearchBar"))).toHaveText("VL103");
     await element(by.id("DoubleSearch_FromSearchBar")).tap();
     await element(by.id("DoubleSearch_FromSearchBar")).typeText("H820");
     //TODO: Check the x and y coordinates of the corresponding item in the dropdown list given relative position to the FROM Search Bar
     //Fix possible: using items at index
     await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tapAtPoint();
-    await element(by.id("enabledViewRouteButton")).tap();
+    await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     //TODO: Checking the path for directions is shown (need to play)
   });
 });
