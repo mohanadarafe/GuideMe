@@ -29,7 +29,7 @@ export function DifferentFloorDirections(props) {
     const linesToElevator = [];
     pathToElevator.forEach((element, index) => {
         if (index < pathToElevator.length - 1) {
-            linesToElevator.push({x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoomElevator(index)].nearestPoint.x, y2: rooms[getNextRoomElevator(index)].nearestPoint.y})
+            linesToElevator.push({id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoomElevator(index)].nearestPoint.x, y2: rooms[getNextRoomElevator(index)].nearestPoint.y})
         }
     });
 
@@ -37,7 +37,7 @@ export function DifferentFloorDirections(props) {
     const linesToClass = [];
     pathToClass.forEach((element, index) => {
         if (index < pathToClass.length - 1) {
-            linesToClass.push({x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoomClass(index)].nearestPoint.x, y2: rooms[getNextRoomClass(index)].nearestPoint.y})
+            linesToClass.push({id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoomClass(index)].nearestPoint.x, y2: rooms[getNextRoomClass(index)].nearestPoint.y})
         }
     });
     
@@ -51,7 +51,7 @@ export function DifferentFloorDirections(props) {
             <G>
                 <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
-                    linesToElevator.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
+                    linesToElevator.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 <Line x1={arrow.x3} y1={arrow.y3} x2={rooms["elevator"].x} y2={rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
@@ -68,7 +68,7 @@ export function DifferentFloorDirections(props) {
             <G>
                 <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
-                    linesToClass.map(el => <Line x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
+                    linesToClass.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
                 <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 <Line x1={arrow.x3} y1={arrow.y3} x2={rooms[className].x} y2={rooms[className].y} stroke="blue" strokeWidth="5"/>
