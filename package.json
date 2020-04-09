@@ -102,7 +102,9 @@
     "react-navigation": "^4.0.10",
     "react-navigation-drawer": "^2.4.6",
     "react-navigation-stack": "^2.0.15",
-    "react-navigation-transitions": "^1.0.12"
+    "react-navigation-transitions": "^1.0.12",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

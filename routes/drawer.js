@@ -12,6 +12,7 @@ import settingsStack from "./settingsStack";
 import aboutUsStack from "./aboutUsStack";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Dimensions } from "react-native";
+import { connect } from 'react-redux';
 
 
 /**
@@ -97,4 +98,10 @@ const Drawer = createDrawerNavigator({
     }
 });
 
-export default createAppContainer(Drawer);
+const allStacks = createAppContainer(Drawer);
+
+const mapStateToProps = state => ({
+    navigation: state.navigation,
+  })
+  
+  export default connect(mapStateToProps)(allStacks)
