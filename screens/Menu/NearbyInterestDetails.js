@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { Icon, Button } from "native-base";
 
 
@@ -13,23 +13,31 @@ function NearbyInterestDetails(props) {
         props.navigation.goBack();
     }
 
-    const NearbyInterestDetailsScreen = true; 
+    const NearbyInterestDetailsScreen = true;
     const goToDoubleSearch = () => {
-        props.navigation.navigate("DoubleSearch", {NearbyInterestDetailsScreen: NearbyInterestDetailsScreen});
+        props.navigation.navigate("DoubleSearch", { NearbyInterestDetailsScreen: NearbyInterestDetailsScreen });
     }
 
-    // const name = props.navigation.getParam("array", null);
+    const name = props.navigation.getParam("name", null);
+    const rating = props.navigation.getParam("rating", null);
+    const photoref = props.navigation.getParam("photoref", null);
 
     return (
         <View style={styles.container}>
-              <View style={styles.backArrowContainer}>
+           
+
+            <View style={styles.imageContainer}>
+                <Image style={styles.placeImage} source={{ uri: photoref }} />
+            </View>
+            <Text style={styles.mainLabel}>{name ? name : "N/A"}</Text>
+            <Text style={styles.reviewLabel}>{rating ? rating : "N/A"}</Text>
+
+            <View style={styles.backArrowContainer}>
                 <Button transparent style={styles.backArrow} onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
                 </Button>
             </View>
-            <Text style={styles.mainLabel}>Point of Interests Details</Text>
-            
-            
+
             <Button transparent style={styles.routeButton} onPress={goToDoubleSearch}><Text style={styles.viewRouteText}>View Route</Text></Button>
         </View >
     );
@@ -71,7 +79,7 @@ export const styles = StyleSheet.create({
     },
     viewRouteText: {
         color: "white",
-        fontSize: 14,    
+        fontSize: 14,
     },
     backArrow: {
         height: "100%",
@@ -87,6 +95,47 @@ export const styles = StyleSheet.create({
         alignContent: "center",
         alignItems: "center",
         top: "7%"
+    },
+
+    imageContainer: {
+        width: "100%",
+        height: "32%",
+        top: "0%",
+        position: "absolute",
+        opacity: 0.3
+    },
+
+    placeImage: {
+        width: "100%",
+        height: "100%",
+        top: "0%",
+        position: "relative"
+    },
+    mainLabel: {
+        color: "#FFFFFF",
+        left: "5%",
+        position: "absolute",
+        fontSize: 30,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+        top: "19%"
+    },
+    subLabel: {
+        position: "absolute",
+        top: "24%",
+        left: "5%",
+        color: "#FFFFFF",
+        fontSize: 11,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded"
+    },
+    reviewLabel: {
+        position: "absolute",
+        top: "27%",
+        left: "5%",
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontFamily: "encodeSansExpanded"
     },
 
 });

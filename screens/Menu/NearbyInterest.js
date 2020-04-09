@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../../components/BottomMenu";
+import SegmentedControlTab from "react-native-segmented-control-tab";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -23,6 +24,8 @@ function NearbyInterest(props) {
 
     const [fromScreen, setFromScreen] = React.useState();
     const [jsonElement, setJsonElement] = React.useState([]);
+    const [selectedTab, setSelectedTab] = React.useState(0);
+    const [campus, setCampus] = React.useState("SGW");
     /**
      * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
      * @param  {} =>{letname=awaitAsyncStorage.getItem("sideMenu)"
@@ -45,8 +48,12 @@ function NearbyInterest(props) {
      * The method will let us navigate to the NearbyInterestDetails screen
      * @param  {} =>{props.navigation.navigate("NearbyInterestDetails)"
      */
-    const goToNearbyInterestDetails = () => {
-        props.navigation.navigate("NearbyInterestDetails");
+    const goToNearbyInterestDetails = (item) => {
+        props.navigation.navigate("NearbyInterestDetails", {
+            name: item.key,
+            rating: item.rating,
+            photoref: item.img
+        });
     };
     /**
      * The method will let us navigate to the Map screen 
@@ -71,14 +78,16 @@ function NearbyInterest(props) {
             // getItem method is necessary for the retrieval of the API Key 
             let keyId = await AsyncStorage.getItem("apiKeyId");
             let SGW_COORDS = `45.497063, -73.578431`;
-            let LOY_COORDS = `45.458627, -73.638866`;
-            let RADIUS = `100`;
+            let LOY_COORDS = `45.458371, -73.638239`;
+            let coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
+            let RADIUS = `500`;
             let TYPE = `restaurant`;
-            let MAX_WIDTH = `500`; 
+            let MAX_WIDTH = `500`;
             let SENSOR = `false`;
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
+            // let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
-            
+           
+
             var key;
             if (jsonResp && jsonResp.results.length > 0) {
                 for (key in jsonResp.results) {
@@ -87,15 +96,15 @@ function NearbyInterest(props) {
                     let photoRef = jsonResp.results[key].photos[0].photo_reference;
                     let imageResp = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${photoRef}&sensor=${SENSOR}&key=${keyId}`;
                     if (placeName !== null & placeRating !== null) {
-                        data.push({ key: placeName, rating: placeRating, img: imageResp})
+                        data.push({ key: placeName, rating: placeRating, img: imageResp })
                     }
                 }
             }
 
-             setJsonElement(data);
+            setJsonElement(data);
         }
         catch (error) {
-            alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+            // alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
     }
 
@@ -121,8 +130,37 @@ function NearbyInterest(props) {
                         <Feather name="menu" style={styles.icon} />
                     </TouchableOpacity>
                 }
+
+                <TouchableOpacity style={styles.optionButton}>
+                    <Ionicons name="ios-options" style={styles.option} />
+                </TouchableOpacity>
             </View>
+
+
             <Text style={styles.mainLabel}>Points of Interest</Text>
+
+        
+          <SegmentedControlTab
+                tabsContainerStyle={styles.tabsContainerStyle}
+                values={["SGW", "LOY"]}
+                selectedIndex={selectedTab}
+                tabStyle={styles.tabStyle}
+                borderRadius={0}
+                tabTextStyle={styles.tabTextStyle}
+                activeTabStyle={styles.activeTabStyle}
+                activeTabTextStyle={styles.activeTabTextStyle}
+                onTabPress={tab => {
+                    setSelectedTab(tab);
+                    if (tab === 0) {
+                        setCampus("SGW");
+                    }
+                    else if (tab === 1) {
+                        setCampus("LOY");
+                    }
+                }}
+               ></SegmentedControlTab>
+
+
             <View style={styles.flatListContainer}>
                 <FlatList
                     onEndReachedThreshold={0}
@@ -133,12 +171,12 @@ function NearbyInterest(props) {
                         return item.key;
                     }}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity onPress={goToNearbyInterestDetails}>
+                        <TouchableOpacity onPress={() => { goToNearbyInterestDetails(item) }}>
                             <View key={index}>
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
                                         {/* // FIXME: add a default image when theres no internet connection  */}
-                                        <Image style={{height: "100%", width: "100%"}} source={{uri: item.img}}/>
+                                        <Image style={{ height: "100%", width: "100%" }} source={{ uri: item.img }} />
                                     </View>
                                     <View style={styles.itemTextContainer}>
                                         <Text style={styles.itemText}>Name of place: {item.key}</Text>
@@ -150,7 +188,12 @@ function NearbyInterest(props) {
                     )}
                 />
             </View>
-        </View >
+
+
+        </View>
+
+
+        // </View>
     );
 }
 
@@ -198,13 +241,24 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center"
     },
+    option: {
+        alignSelf: "center",
+        color: "#FFFFFF",
+        fontSize: 35,
+    },
+    optionButton: {
+        height: "100%",
+        width: "20%",
+        flexDirection: "row",
+        justifyContent: "center"
+    },
     menuButtonContainer: {
         width: "100%",
         height: "6%",
         top: "7%",
     },
     flatListContainer: {
-        height: "73%",
+        height: "65%",
         bottom: "5%"
     },
     itemContainer: {
@@ -216,7 +270,6 @@ export const styles = StyleSheet.create({
         maxHeight: 200,
         backgroundColor: "#353A50",
         borderRadius: 10,
-        
     },
     itemText: {
         color: "#FFFFFF",
@@ -235,6 +288,47 @@ export const styles = StyleSheet.create({
     itemImageContainer: {
         width: "100%",
         height: "65%",
+    },
+    controlTabContainer: {
+        top: "%",
+        alignContent: "space-between",
+        backgroundColor: "red",
+        height: "20%",
+        width: "100%",
+        bottom: "%"
+    },
+    tabsContainerStyle: {
+        // bottom: "100%",
+        // top: "10%",
+
+        top: "7%",
+        backgroundColor: "red",
+    },
+    tabStyle: {
+        backgroundColor: "#2A2E43",
+        borderWidth: 0,
+        borderColor: "white",
+        borderBottomColor: "#FFFFFF",
+        paddingHorizontal: "15%"
+    },
+    tabTextStyle: {
+        fontWeight: "bold",
+        color: "#FFFFFF"
+    },
+    activeTabStyle: {
+        backgroundColor: "#2A2E43",
+        borderBottomColor: "#3ACCE1"
+    },
+    activeTabTextStyle: {
+        color: "#3ACCE1",
+        backgroundColor: "#2A2E43",
+        fontWeight: "bold"
+    },
+    tabContent: {
+        color: "#fff",
+        fontSize: 18,
+        margin: 24,
+        // bottom: "100%",
     },
 });
 
