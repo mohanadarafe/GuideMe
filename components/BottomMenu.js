@@ -4,7 +4,6 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { store } from "../redux/reducers/index";
-// import  store  from "../App"
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -21,40 +20,44 @@ function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
-    const [methodTravel, setMethodTravel] = React.useState("");
+    const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
     const previewDirections = props.previewMode;
 
     store.subscribe(() => {
         setSelectedBuilding(store.getState().selectedBuildingName);
+        setDestination(store.getState().mainSearchBarDestination);
+        setPersonaType(store.getState().personaType);
+        setMobilityReduced(store.getState().mobilityReducedType);
+        setMethodTravel(store.getState().transportType);
     });
 
-    AsyncStorage.setItem("toggle", switchVal.toString());
-    const getBuildingSelected = async () => {
-        let name = await AsyncStorage.getItem("buildingSelected");
-        setSelectedBuilding(name);
-    };
+    // AsyncStorage.setItem("toggle", switchVal.toString());
+    // const getBuildingSelected = async () => {
+    //     let name = await AsyncStorage.getItem("buildingSelected");
+    //     setSelectedBuilding(name);
+    // };
 
-    const getDestination = async () => {
-        let searchItem = await AsyncStorage.getItem("toLocation");
-        setDestination(searchItem);
-    };
+    // const getDestination = async () => {
+    //     let searchItem = await AsyncStorage.getItem("toLocation");
+    //     setDestination(searchItem);
+    // };
 
-    const getPersonaType = async () => {
-        let name = await AsyncStorage.getItem("firstCategory");
-        setPersonaType(name);
-    };
+    // const getPersonaType = async () => {
+    //     let name = await AsyncStorage.getItem("firstCategory");
+    //     setPersonaType(name);
+    // };
 
-    const getMobility = async () => {
-        let name = await AsyncStorage.getItem("secondCategory");
-        setMobilityReduced(name);
-    };
+    // const getMobility = async () => {
+    //     let name = await AsyncStorage.getItem("secondCategory");
+    //     setMobilityReduced(name);
+    // };
 
-    const getMethodTravel = async () => {
-        let name = await AsyncStorage.getItem("thirdCategory");
-        setMethodTravel(name);
-    };
+    // const getMethodTravel = async () => {
+    //     let name = await AsyncStorage.getItem("thirdCategory");
+    //     setMethodTravel(name);
+    // };
 
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: destination });
@@ -82,46 +85,46 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        AsyncStorage.setItem("sideMenu", "mapView");
+        AsyncStorage.setItem("sideMenu", "mapView"); //FIXME: WHY?
         props.navigation.navigate("NearbyInterest");
     };
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            // getBuildingSelected();
-            getDestination();
-            getPersonaType();
-            getMobility();
-            getMethodTravel();
-        }, 1);
-        return () => clearInterval(intervalId);
+        // const intervalId = setInterval(() => {
+        //     // getBuildingSelected();
+        //     // getDestination();
+        //     // getPersonaType();
+        //     // getMobility();
+        //     // getMethodTravel();
+        // }, 1);
+        // return () => clearInterval(intervalId);
     });
 
-    const nameMethodTravel = () => {
-        switch (methodTravel) {
-            case "driving":
-                return "Driving";
+    // const nameMethodTravel = () => {
+    //     switch (methodTravel) {
+    //         case "driving":
+    //             return "Driving";
 
-            case "walking":
-                return "Walking";
+    //         case "walking":
+    //             return "Walking";
 
-            case "transit":
-                return "Transit";
+    //         case "transit":
+    //             return "Transit";
 
-            case "bicycling":
-                return "Bicycling";
+    //         case "bicycling":
+    //             return "Bicycling";
 
-            default:
-                return "Driving";
-        }
-    };
+    //         default:
+    //             return "Driving";
+    //     }
+    // };
 
     if (previewDirections) {
         return (
             <View style={styles.container}>
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToPreferenceMenu} />
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
-                <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
+                <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
@@ -182,7 +185,7 @@ function BottomMenu (props) {
                 <View testID="intialBottomMenuToggleButton" style={styles.toggle}>
                     <Switch
                         value={switchVal}
-                        onValueChange={(val) => setSwitchVal(val)}>
+                        onValueChange={(val) => { setSwitchVal(val); props.campus(val)}}>
                     </Switch>
                 </View>
             </View>
