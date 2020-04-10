@@ -4,8 +4,6 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
-import { getFloorNumber } from "./IndoorDirections/Dijkstra/DijkstraAlgorithm";
-
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -143,7 +141,7 @@ function BottomMenu (props) {
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>
-                    <FloorMenu from={props.from} to={props.to}/>
+                    <FloorMenu from={from} to={to}/>
                 </View>
             </View>
         )

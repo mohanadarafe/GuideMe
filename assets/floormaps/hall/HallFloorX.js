@@ -11,8 +11,8 @@ export function HallFloorX(props) {
   const mobility = props.mobility;
 
   const floorSelected = async () => {
-    let name = await AsyncStorage.getItem("floorSelected");
-    name == 1 ? setFloorNumber(1) : setFloorNumber(name);
+    let floor = await AsyncStorage.getItem("floorSelected");
+    floor == 1 ? setFloorNumber(1) : setFloorNumber(floor);
   };
 
   useEffect(() => {

@@ -180,8 +180,8 @@ export const closestTransportation = (graph, from) => {
  */
 export const shortestPathToInterest = (graph, from, to) => {
     if (to.includes("Washroom")) {
-        var to = ConvertPointOfInterest(to);
-        return {route: dijkstra(graph, from, to).path, to: to};
+        var toPOI = ConvertPointOfInterest(to);
+        return {route: dijkstra(graph, from, to).path, to: toPOI};
     }
 
     if (to.includes("Water")) {
