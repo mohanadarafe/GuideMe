@@ -46,7 +46,7 @@ describe("Indoor Directions Feature", () => {
     await element(by.id("DoubleSearch_FromSearchBar")).typeText("H937");
     //TODO: Check the x and y coordinates of the corresponding item in the dropdown list given relative position to the FROM Search Bar
     //Fix possible: using items at index
-    await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tapAtPoint();
+    await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tap();
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await element(by.label("8")).tap();
     await expect(element(by.id("DifferentFloorDirections_GraphDirectionsFloorTo"))).toBeVisible();
