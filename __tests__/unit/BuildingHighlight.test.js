@@ -2,25 +2,44 @@ import React from "react";
 import { BuildingHighlight } from "../../components/BuildingHighlight";
 import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
+import configureMockStore from "redux-mock-store";
+
+const mockStore = configureMockStore();
+
 
 describe("Building Highlight component", () => {
   let wrapper;
   const setState = jest.fn();
   const useStateSpy = jest.spyOn(React, "useState");
   useStateSpy.mockImplementation((init) => [init, setState]);
-
+  let component;
+  const props = {
+    isFetching: false,
+    dispatch: jest.fn(),
+    setSelectedBuildingName: (value) => {return value},
+  }
   beforeEach(() => {
-    wrapper = shallow(<BuildingHighlight />);
+    wrapper = shallow(<BuildingHighlight {...props}/>);
   });
 
+  // component = renderer.create(
+  //   <Provider store={store}>
+  //     <BuildingHighlight />
+  //   </Provider>
+  // );
+
   test("renders correctly", () => {
-    const tree = renderer.create(<BuildingHighlight />).toJSON();
+    const tree = renderer.create(<BuildingHighlight {...props}/>).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   test("number of polygons", () => {
-    const tree = renderer.create(<BuildingHighlight />).toJSON();
+    const tree = renderer.create(<BuildingHighlight {...props}/>).toJSON();
     expect(tree.children.length).toBe(11);
+  });
+
+  it('should dispatch an action on button click', () => {
+
   });
 
   test("pressing on a building", () => {
