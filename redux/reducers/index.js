@@ -14,8 +14,11 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
  */
 
 const initialState = {
-    transportType: "driving",
-    selectedBuildingName: null
+  selectedBuildingName: null,
+  mainSearchBarDestination: null,
+  personaType: "UNDERGRADUATE",
+  mobilityReducedType: "MOBILITY_NOT_REDUCED",
+  transportType: "driving"
   }
   const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -23,6 +26,8 @@ const initialState = {
             return { transportType: action.payload}
         case 'UPDATE_SELECTED_BUILDING':
             return { selectedBuildingName: action.payload}
+        case 'SEARCH_BAR_VALUE':
+            return { mainSearchBarDestination: action.payload}
     }
     return state;
   }
