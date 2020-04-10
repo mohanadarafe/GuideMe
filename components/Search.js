@@ -4,7 +4,20 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
+
+function mapStateToProps(value) {
+  return {
+      mainSearchBarDestination: value
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setMainSearchBarDestination: (value) => dispatch({ type: "SEARCH_BAR_VALUE", payload: value })
+  }
+}
 
 /**
  * US11 - As a user, I would like to see auto-fill options when I type a query
@@ -21,40 +34,40 @@ function fetchData () {
   return searchInfo;
 }
 
-function Search (props) {
+export function Search (props) {
   // eslint-disable-next-line no-unused-vars
-  const [buildingName, setBuildingName] = React.useState("");
-  const [from, setFrom] = React.useState("");
-  const [to, setTo] = React.useState("");
+  // const [buildingName, setBuildingName] = React.useState("");
+  // const [from, setFrom] = React.useState("");
+  // const [to, setTo] = React.useState("");
   const [data, setData] = React.useState(null);
 
-  let toName = to.name;
+  // let toName = to.name;
 
-  if (toName === undefined) {
-    toName = "";
-    AsyncStorage.setItem("toLocation", toName.toString());
-    AsyncStorage.setItem("toLocation", toName.toString());
-    AsyncStorage.setItem("buildingSelected", buildingName.toString());
-  }
-  else {
-    AsyncStorage.setItem("fromLocation", from.toString());
-    AsyncStorage.setItem("toLocation", toName.toString());
-    AsyncStorage.setItem("buildingSelected", buildingName.toString());
-  }
-
-  function destinationSetter (to) {
-    // resets the value of the buildingName label when on pressing on a searched item
-    setTo(to);
-    setFrom("Current Location");
-    setBuildingName("");
-  }
+  // if (toName === undefined) {
+  //   toName = "";
+  //   AsyncStorage.setItem("toLocation", toName.toString());
+  //   AsyncStorage.setItem("toLocation", toName.toString());
+  //   AsyncStorage.setItem("buildingSelected", buildingName.toString());
+  // }
+  // else {
+  //   AsyncStorage.setItem("fromLocation", from.toString());
+  //   AsyncStorage.setItem("toLocation", toName.toString());
+  //   AsyncStorage.setItem("buildingSelected", buildingName.toString());
+  // }
+  // function destinationSetter (to) {
+  //   resets the value of the buildingName label when on pressing on a searched item
+  //   setTo(to);
+    
+  //   setFrom("Current Location");
+  //   setBuildingName("");
+  // }
 
   useEffect(() => {
     setData(fetchData());
   }, []);
 
   const goToMenu = () => {
-    AsyncStorage.setItem("sideMenu", "sideMenu");
+    AsyncStorage.setItem("sideMenu", "sideMenu"); //FIXME: Why?
     props.navigation.openDrawer();
   };
 
@@ -69,7 +82,7 @@ function Search (props) {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => destinationSetter(item)}
+        onItemSelect={item => {props.setMainSearchBarDestination(item.name)}}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}
@@ -87,6 +100,9 @@ Search.propTypes = {
   testID: PropTypes.string,
   navigation: PropTypes.object
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
+
 
 export const styles = StyleSheet.create({
   buttonStyle: {
@@ -140,4 +156,4 @@ export const styles = StyleSheet.create({
   }
 });
 
-export { Search };
+// export { Search };
