@@ -11,8 +11,9 @@ function mapStateToProps(transportType) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        setPersonaType: (value) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: value }),
+        setMobilityReduced: (value) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: value }),
         setMethodOfTravel: (value) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: value }),
-        // decreaseCounter: () => dispatch({ type: 'DECREASE_COUNTER' }),
     }
 }
 
@@ -29,7 +30,6 @@ function mapDispatchToProps(dispatch) {
  */
 
 function PreferenceMenu (props) {
-    // console.log(props);
 
     const personaSavedState = props.navigation.getParam("personaType", "null");
 
@@ -83,22 +83,34 @@ function PreferenceMenu (props) {
                 </View>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressFirstCategory({ selectedButton: "GRADUATE" })}>
+                    onPress={() => {
+                        setOnPressFirstCategory({ selectedButton: "GRADUATE" })
+                        props.setPersonaType("GRADUATE");
+                    }}>
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressFirstCategory({ selectedButton: "UNDERGRADUATE" })}>
+                    onPress={() => {
+                        setOnPressFirstCategory({ selectedButton: "UNDERGRADUATE" })
+                        props.setPersonaType("UNDERGRADUATE");
+                    }}>
                     <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressFirstCategory({ selectedButton: "VISITOR" })}>
+                    onPress={() => {
+                        setOnPressFirstCategory({ selectedButton: "VISITOR" })
+                        props.setPersonaType("VISITOR");
+                    }}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY_STAFF" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressFirstCategory({ selectedButton: "UNIVERSITY_STAFF" })}>
+                    onPress={() => {
+                        setOnPressFirstCategory({ selectedButton: "UNIVERSITY_STAFF" })
+                        props.setPersonaType("UNIVERSITY_STAFF");
+                    }}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
             </View>
@@ -108,11 +120,17 @@ function PreferenceMenu (props) {
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
                 </View>
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_REDUCED" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressSecondCategory({ selectedButton: "MOBILITY_REDUCED" })}>
+                    onPress={() => { 
+                        setOnPressSecondCategory({ selectedButton: "MOBILITY_REDUCED" })
+                        props.setMobilityReduced("MOBILITY_REDUCED");
+                    }}>
                     <Text style={styles.buttonLabelMobility} > Yes </Text>
                 </Button>
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_NOT_REDUCED" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => setOnPressSecondCategory({ selectedButton: "MOBILITY_NOT_REDUCED" })}>
+                    onPress={() => { 
+                        setOnPressSecondCategory({ selectedButton: "MOBILITY_NOT_REDUCED" })
+                        props.setMobilityReduced("MOBILITY_NOT_REDUCED");
+                    }}>
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
