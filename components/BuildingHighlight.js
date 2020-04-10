@@ -26,6 +26,7 @@ function mapDispatchToProps(dispatch) {
 
 export function BuildingHighlight (props) {
     const [buildingName, setBuildingName] = React.useState("");
+    const [polygonPressed, setPolygonPressed] = React.useState({item: null});
     // AsyncStorage.setItem("buildingSelected", buildingName);
     var buildings = buildingData();
     return (
@@ -35,10 +36,11 @@ export function BuildingHighlight (props) {
                 coordinates={coord.h.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    // setPolygonPressed()
                     setBuildingName(buildings["Hall Building"].name); 
                     props.setSelectedBuildingName(buildings["Hall Building"].name);
             }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["Hall Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -49,7 +51,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["LB Building"].name);
                     props.setSelectedBuildingName(buildings["LB Building"].name);
                 } }
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["LB Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -60,7 +62,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["GM Building"].name)
                     props.setSelectedBuildingName(buildings["GM Building"].name);
                 }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["GM Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -71,7 +73,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["EV Building"].name)
                     props.setSelectedBuildingName(buildings["EV Building"].name);
                 }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["EV Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -82,7 +84,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["MB Building"].name);
                     props.setSelectedBuildingName(buildings["MB Building"].name);
                 }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["MB Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -93,7 +95,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["SP Building"].name);
                     props.setSelectedBuildingName(buildings["SP Building"].name);
                 }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["SP Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -104,7 +106,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["CJ Building"].name)
                     props.setSelectedBuildingName(buildings["CJ Building"].name);
             }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+            fillColor={buildingName == buildings["CJ Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -115,7 +117,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["CC Building"].name);
                     props.setSelectedBuildingName(buildings["CC Building"].name);
             }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+            fillColor={buildingName == buildings["CC Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
             <Polygon
@@ -126,8 +128,8 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["AD Building"].name);
                     props.setSelectedBuildingName(buildings["AD Building"].name);
                 }}
-                fillColor="rgba(76, 79, 98, 0.7)"
-            />
+                fillColor={buildingName == buildings["AD Building"].name ? "#3ACCE1": "#a282e0"}
+                />
 
             <Polygon
                 id="tap_gn"
@@ -137,7 +139,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["Grey Nuns"].name)
                     props.setSelectedBuildingName(buildings["Grey Nuns"].name);
                 }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+                fillColor={buildingName == buildings["Grey Nuns"].name ? "#3ACCE1": "#a282e0"}
             />
             <Polygon
                 id="tap_vl"
@@ -147,7 +149,7 @@ export function BuildingHighlight (props) {
                     setBuildingName(buildings["VL Building"].name)
                     props.setSelectedBuildingName(buildings["VL Building"].name);
             }}
-                fillColor="rgba(76, 79, 98, 0.7)"
+            fillColor={buildingName == buildings["VL Building"].name ? "#3ACCE1": "#a282e0"}
             />
         </View>
     );
