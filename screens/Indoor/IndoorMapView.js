@@ -24,17 +24,6 @@ function IndoorMapView(props) {
         setSelectedFloor(name);
     };
 
-    const goBack = () => {
-        props.navigation.goBack();
-    };
-
-    const goToMoreDetails = () => {
-        props.navigation.navigate("MoreDetails", {
-            name: selectedBuilding,
-            navigation: props.navigation,
-        });
-    };
-
     const selectedBuilding = props.navigation.getParam("selectedBuilding", "Hall Building");
     const from = props.navigation.getParam("From", null);
     const to = props.navigation.getParam("To", null);

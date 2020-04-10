@@ -41,6 +41,17 @@ const vlFloors = [
   { label: "1", value: "1" }
 ];
 
+/**
+ * The following function will determine where the initial
+ * floor should be when navigating indoors & sets it intially.
+ * 
+ * Examples
+ * H811 to H525 => initial floor 8
+ * Grey Nuns to H525 => initial floor 1 (enter the building)
+ * H920 to EV Building => initial floor 9 (leave the class)
+ * @param {*} from | starting place
+ * @param {*} to | ending place
+ */
 export const initialFloor = (from, to) => {
   const path = whichPathToTake(from, to); 
 
@@ -66,7 +77,7 @@ export const initialFloor = (from, to) => {
 }
 
 export function FloorMenu(props) {
-  const [floorNumber, setFloorNumber] = React.useState(props.from != null && props.to != null ? initialFloor(props.from, props.to) : 0);
+  const [floorNumber, setFloorNumber] = React.useState(props.from != null && props.to != null ? initialFloor(props.from, props.to) : 1);
   const [selectedBuilding, setSelectedBuilding] = React.useState("");
   AsyncStorage.setItem("floorSelected", floorNumber.toString());
   
@@ -76,10 +87,7 @@ export function FloorMenu(props) {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      getSelectedBuilding();
-    }, 1);
-    return () => clearInterval(intervalId);
+    getSelectedBuilding();
   });
 
   return (

@@ -15,10 +15,7 @@ export function HallFloor9(props) {
     };
 
     useEffect(() => {
-      const intervalId = setInterval(() => {
-        floorSelected();
-      }, 1);
-      return () => clearInterval(intervalId);
+      floorSelected();
     });
 
     return(
