@@ -6,8 +6,13 @@ import { dijkstra } from "../../../components/IndoorDirections/Dijkstra/Dijkstra
 import { ClassGraph } from "../../../constants/ClassGraph";
 
 describe("DifferentBuildingDirections component", () => {
-    test("renders correctly", () => {
-        const tree = renderer.create(<DifferentBuildingDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"MB3.125"}/>).toJSON();
+    test("renders correctly for direction to exit", () => {
+        const tree = renderer.create(<DifferentBuildingDirections floor={1} rooms={HallXCoordinates()} from={"EV Building"} to={"H835"}/>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    test("renders correctly for direction to class", () => {
+        const tree = renderer.create(<DifferentBuildingDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"EV Building"}/>).toJSON();
         expect(tree).toMatchSnapshot();
     });
 

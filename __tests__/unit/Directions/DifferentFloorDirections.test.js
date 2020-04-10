@@ -7,8 +7,13 @@ import { Class9Graph } from "../../../constants/ClassGraph9";
 import { ClassGraph } from "../../../constants/ClassGraph";
 
 describe("DifferentFloorDirections component", () => {
-    test("renders correctly", () => {
+    test("renders correctly for from floor", () => {
         const tree = renderer.create(<DifferentFloorDirections floor={8} rooms={HallXCoordinates()} from={"H835"} to={"H535"}/>).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    test("renders correctly for to floor", () => {
+        const tree = renderer.create(<DifferentFloorDirections floor={5} rooms={HallXCoordinates()} from={"H835"} to={"H535"}/>).toJSON();
         expect(tree).toMatchSnapshot();
     });
 
