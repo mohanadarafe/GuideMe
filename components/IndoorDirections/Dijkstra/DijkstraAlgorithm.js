@@ -146,6 +146,33 @@ export const ConvertPointOfInterest = (name) => {
 
 /**
  * The following function returns the shortest path to
+ * the travel method required.
+ * @param {*} graph | node graph
+ * @param {*} from | from node
+ */
+export const closestTransportation = (graph, from) => {
+    var paths = [];
+    var smallestCost = Number.MAX_VALUE;
+    var closestMethod = "";
+
+    var costToElevator = dijkstra(graph, from, "elevator").distance;
+    var costToNE = dijkstra(graph, from, "stairs_NE").distance;
+    var costToNW = dijkstra(graph, from, "stairs_NW").distance;
+    var costToSE = dijkstra(graph, from, "stairs_SE").distance;
+    var costToSW = dijkstra(graph, from, "stairs_SW").distance;
+    paths.push({id: "elevator", cost: costToElevator}, {id: "stairs_NE", cost: costToNE}, {id: "stairs_NW", cost: costToNW}, {id: "stairs_SE", cost: costToSE}, {id: "stairs_SW", cost: costToSW});
+
+    paths.forEach((element) => {
+        if (element.cost < smallestCost) {
+            smallestCost = element.cost;
+            closestMethod = element.id
+        }
+    });
+    return closestMethod;
+}
+
+/**
+ * The following function returns the shortest path to
  * the interest point requested by the user.
  * @param {*} graph | node graph
  * @param {*} from | from node
@@ -153,8 +180,8 @@ export const ConvertPointOfInterest = (name) => {
  */
 export const shortestPathToInterest = (graph, from, to) => {
     if (to.includes("Washroom")) {
-        var to = ConvertPointOfInterest(to);
-        return {route: dijkstra(graph, from, to).path, to: to};
+        var toPOI = ConvertPointOfInterest(to);
+        return {route: dijkstra(graph, from, toPOI).path, to: toPOI};
     }
 
     if (to.includes("Water")) {
