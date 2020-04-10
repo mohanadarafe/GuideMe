@@ -31,10 +31,10 @@ describe("Indoor Directions Feature", () => {
    * 7. Enter the number of a room on a different floor: "H937"
    * 8. Select the corresponding item from the dropdown list
    * 9. Click on VIEW ROUTE
-   * 10. Select the TO room floor (8th floor)
-   * 11. Check that the path on the TO floor exists
-   * 12. Select the FROM room floor (9th floor)
-   * 13. Check that the path on the FROM floor exists
+   * 10. Check that the selected floor corresponds to the FROM floor (9th floor)
+   * 11. Check that the path on the FROM floor exists
+   * 12. Select the TO room floor (8th floor)
+   * 13. Check that the path on the TO floor exists
    */
   it.skip("Getting directions from 1 room to another room on different floors", async () => {
     await element(by.id("Map_searchBar")).tap();
@@ -48,10 +48,10 @@ describe("Indoor Directions Feature", () => {
     //Fix possible: using items at index
     await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tap();
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
+    await expect(element(by.id("FloorMenu_floorBarMenuView"))).toHaveValue(9);
+    await expect(element(by.id("DifferentFloorDirections_GraphDirectionsFloorFrom"))).toBeVisible();
     await element(by.label("8")).tap();
     await expect(element(by.id("DifferentFloorDirections_GraphDirectionsFloorTo"))).toBeVisible();
-    await element(by.label("9")).tap();
-    await expect(element(by.id("DifferentFloorDirections_GraphDirectionsFloorFrom"))).toBeVisible();
   });
 
  /**Scenario: Getting Directions from 1 room to another room on the same floor
@@ -67,7 +67,7 @@ describe("Indoor Directions Feature", () => {
    * 7. Enter the number of a room on the same floor: "H820"
    * 8. Select the corresponding item from the dropdown list
    * 9. Click on VIEW ROUTE
-   * 10. Select the floor on which directions are being shown (8th floor)
+   * 10. Check that you are on the floor corresponding to the directions (8th floor)
    * 11. Check that the directions path exists
    */    
   it.skip("Getting Directions from 1 room to another room on the same floor", async () => {
@@ -82,7 +82,7 @@ describe("Indoor Directions Feature", () => {
     //Fix possible: using items at index
     await element(by.id("DoubleSearch_FromSearchBar")).atIndex(0).tapAtPoint();
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
-    await element(by.label("8")).tap();
+    await expect(element(by.id("FloorMenu_floorBarMenuView"))).toHaveValue(8);
     await expect(element(by.id("SameFloorDirections_GraphDirections"))).toBeVisible();
   });
 });

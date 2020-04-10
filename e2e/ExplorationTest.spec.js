@@ -32,7 +32,7 @@ describe("Exploring the map Feature", () => {
   it.skip("Explore different campuses", async () => {
     await expect(element(by.id("Map_mapView"))).toExist();
     await expect(element(by.id("BottomMenu_initalView"))).toExist();
-    await expect(element(by.id("intialBottomMenuToggleButton"))).toExist();
+    await expect(element(by.id("BottomMenu_ToggleButton"))).toExist();
     await element(by.id("BottomMenu_ToggleButton")).longPress();
     await expect(element(by.id("Map_mapView"))).toExist();
     await element(by.id("BottomMenu_ToggleButton")).longPress();
@@ -45,12 +45,13 @@ describe("Exploring the map Feature", () => {
    * 2. Check if the GET INSIDE Button appears on the bottom menu
    * 3. Click the GET INSIDE button
    * 4. Check that the floor bar menu exists
-   * 5. Change floors
-   * 6. Check that indoor map scroll view exists
-   * 7. Scroll across the floor map
-   * 8. Check that the EXIT BUILDING button exists
-   * 9. Click EXIT BUILDING button
-   * 10. Check the map is present
+   * 5. Change floors (8th floor)
+   * 6. Check that the floor selected value corresponds to the one tapped (8th floor)
+   * 7. Check that indoor map scroll view exists
+   * 8. Scroll across the floor map
+   * 9. Check that the EXIT BUILDING button exists
+   * 10. Click EXIT BUILDING button
+   * 11. Check the map is present
    */
   it.skip("Navigate through different indoor floors (Hall)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
@@ -58,6 +59,7 @@ describe("Exploring the map Feature", () => {
     await element(by.id("BottomMenu_getInsideButton")).tap();
     await expect(element(by.id("FloorMenu_floorBarMenuView"))).toExist();
     await element(by.id("FloorMenu_floorBarMenuView")).tapAtPoint({ x: 192, y: 23 });
+    await expect(element(by.id("FloorMenu_floorBarMenuView"))).toHaveValue(8);
     await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
     await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "fast");
     await expect(element(by.id("IndoorMapView_ExitBuildingButton"))).toExist();
