@@ -4,56 +4,17 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView, SectionList } from "react-native";
 import { Icon, Button } from "native-base";
-import { ClassRooms } from "../constants/ClassRooms";
-import { buildingData } from "../constants/buildingData";
 import { MapData } from "../components/MapData";
-import { AppLoading } from "expo";
 
 /**
  * 
  * @param {*} buildingName Name of building to get data of
  */
 export function fetchData (buildingName) {
-  const modeDetailsInfo = MapData({ passBuildingName: buildingName, buildingName: false, classRooms: false, departments: true, services: true, accesibility: true, flatten: false }, ClassRooms(), buildingData());
-  return modeDetailsInfo;
+  const buildingInfo = MapData({ buildingToSearch: buildingName, context:"More Details"});
+  return buildingInfo;
 }
-/**
- * The following function flattens a list of data incoming from fetchData
- * @param {*} data double array of data incoming
- * @param {*} departments array of deparments
- * @param {*} services array of services
- * @param {*} accesibility array of accesibility
- * @param {*} number phone number
- */
-export function createLists (data, departments, services, accesibility, number) {
-  if (data) {
-    for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].length; j++) {
-        if (i === 0) {
-          if (data[i][j] === "None") {
-            departments.push("None");
-          } else {
-            departments.push(data[i][j].name);
-          }
-        }
-        if (i === 1) {
-          if (data[i][j] === "None") {
-            services.push("None");
-          } else {
-            services.push(data[i][j].name);
-          }
-        }
-        if (i === 2) {
-          if (data[i][j] === "None") {
-            accesibility.push("None");
-          } else {
-            accesibility.push(data[i][j].name);
-          }
-        }
-      }
-    }
-  }
-}
+
 /**
  * The following screen renders information on a selected building.
  * 
@@ -65,7 +26,8 @@ export function createLists (data, departments, services, accesibility, number) 
  * @param {*} name props.name is the name of the building selected
  */
 function MoreDetails (props) {
-  const [data, setData] = React.useState();
+  const [data, setData] = React.useState(null);
+
   const goBack = () => {
     props.navigation.goBack();
   };
@@ -73,17 +35,11 @@ function MoreDetails (props) {
   const goToDoubleSearchBar = () => {
     props.navigation.navigate("DoubleSearch", { destinationName: name });
   };
-  const getBuildingInfo = buildingData();
-  var departments = [];
-  var services = [];
-  var accesibility = [];
-  var number;
+
   useEffect(() => {
     setData(fetchData(name));
   }, []);
 
-  createLists(data, departments, services, accesibility, number);
-  if (data) {
     return (
       <View style={styles.container} data-test="MoreDetailsComponent">
         <SafeAreaView style={styles.buttonContainer}>
@@ -93,7 +49,7 @@ function MoreDetails (props) {
             </View>
             <View style={styles.separator}></View>
             <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>{getBuildingInfo[name].address}</Text>
+              <Text style={styles.mapPinLabel}>{data ? data.address : "N/A"}</Text>
             </View>
           </Button>
           <Button transparent style={styles.phoneButton}>
@@ -102,7 +58,7 @@ function MoreDetails (props) {
             </View>
             <SafeAreaView style={styles.separator}></SafeAreaView>
             <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>{getBuildingInfo[name].phone != undefined ? getBuildingInfo[name].phone : "N/A"}</Text>
+              <Text style={styles.mapPinLabel}>{(data && data.phone) ? data.phone : "N/A"}</Text>
             </View>
           </Button>
           <Button testID="MoreDetails_getDirectionsButton" style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
@@ -110,14 +66,15 @@ function MoreDetails (props) {
         <View style={styles.imageContainer}>
           <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
         </View>
-        <Text style={styles.mainLabel}>{name}</Text>
+        <Text style={styles.mainLabel}>{name ? name: "N/A"}</Text>
+        <Text style={styles.subLabel}>{data ? data.fullName: "N/A"}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
         <SafeAreaView testID="MoreDetails_moreInfoScrollView" style={styles.scrollTextContainer}>
           <SectionList
             sections={[
-              { title: "Departments ", data: departments },
-              { title: "Services", data: services },
-              { title: "Accessibility", data: accesibility },
+              { title: "Departments ", data:  (data && data.departments.length > 0) ? data.departments : ["None"]},
+              { title: "Services", data: (data && data.services.length > 0) ? data.services : ["None"]},
+              { title: "Accessibility", data: (data && data.accessibilityItems.length > 0) ? data.accessibilityItems : ["None"] },
             ]}
             renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
             renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
@@ -128,8 +85,6 @@ function MoreDetails (props) {
         <Icon testID="MoreDetails_bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
       </View>
     );
-  }
-  return (<AppLoading />);
 }
 export const styles = StyleSheet.create({
   container: {
@@ -147,7 +102,16 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     fontFamily: "encodeSansExpanded",
-    top: "21%"
+    top: "19%"
+  },
+  subLabel: {
+    position: "absolute",
+    top: "24%",
+    left: "5%",
+    color: "#FFFFFF",
+    fontSize: 11,
+    fontWeight: "bold",
+    fontFamily: "encodeSansExpanded"
   },
   reviewLabel: {
     position: "absolute",

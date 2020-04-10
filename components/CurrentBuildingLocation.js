@@ -6,7 +6,10 @@ import * as Location from "expo-location";
 import Modal from "react-native-modal";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-
+/**FIXME: This component create an unwanted warning and shuold be fixed by modifiying 
+ * how the useEffect (or any other hook) is used.
+ * 'Warning: Can't perform a React state update on an unmounted component.'
+*/
 /**
  * US5 - As a user, I would like to know which building I am currently in
  * US32 - As a user, I would like to be able to know where I am indoors.
