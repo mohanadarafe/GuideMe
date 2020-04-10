@@ -6,7 +6,7 @@ import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-import store from "../redux/reducers/index";
+import { store } from "../redux/reducers/index";
 /**
  * Description: This method act as an interface. After taking the leg of the response
  * called jsonLeg as argument, the method will create an object that will 

@@ -15,7 +15,6 @@ function mapStateToProps(buildingName) {
 function mapDispatchToProps(dispatch) {
     return {
         setSelectedBuildingName: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
-        // decreaseCounter: () => dispatch({ type: 'DECREASE_COUNTER' }),
     }
 }
 

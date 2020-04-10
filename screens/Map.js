@@ -7,7 +7,7 @@ import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
 import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
-import { Search } from "../components/Search";
+import Search  from "../components/Search";
 import PropTypes from "prop-types";
 
 const mapPosition = {
@@ -34,26 +34,29 @@ const mapPosition = {
  *        half of the screen for miliseconds...
  */
 function Map ({ navigation }) {
-    const [switchVal, setswitchVal] = React.useState("");
+    // const [switchVal, setswitchVal] = React.useState("");
     const [getInsideBuild, setGetInsideBuild] = React.useState("");
-    const [mapPressed, setmapPressed] = React.useState("");
-
+    // const [mapPressed, setmapPressed] = React.useState("");
+    const [campusSwitch, setCampusSwitch] = React.useState(true);
     //TODO: To have a functionality for when the user presses on the map
-    AsyncStorage.setItem("mapPressed", mapPressed);
+    // AsyncStorage.setItem("mapPressed", mapPressed);
 
-    const campusSelected = async () => {
-        let tog = await AsyncStorage.getItem("toggle");
-        let inside = await AsyncStorage.getItem("getInsideBuilding");
-        setswitchVal(tog);
-        setGetInsideBuild(inside);
-    };
+    // const campusSelected = async () => {
+    //     let tog = await AsyncStorage.getItem("toggle");
+    //     let inside = await AsyncStorage.getItem("getInsideBuilding");
+    //     setswitchVal(tog);
+    //     setGetInsideBuild(inside);
+    // };
 
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            campusSelected();
-        }, 1);
-        return () => clearInterval(intervalId);
-    });
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         campusSelected();
+    //     }, 1);
+    //     return () => clearInterval(intervalId);
+    // });
+    const setSelectedCampus = (value) => {
+        setCampusSwitch(value);
+    }
 
     return (
         <View testID="mapView" data-test="MapComponent">
@@ -62,7 +65,7 @@ function Map ({ navigation }) {
                     data-test="MapViewComponent"
                     style={styles.map}
                     provider={PROVIDER_GOOGLE}
-                    region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
+                    region={campusSwitch ? mapPosition.sgwCoord : mapPosition.loyCoord}
                     showsUserLocation={true}
                     showsCompass={true}
                     showsBuildings={true}
@@ -71,11 +74,11 @@ function Map ({ navigation }) {
                     <BuildingHighlight />
                     <BuildingIdentification />
                 </MapView>
-                <Search testID="searchBar" navigation={navigation} />
+                <Search testID="searchBar" navigation = {navigation}/>
                 <View style={styles.CurrentBuildingLocation}>
                         {/* <CurrentBuildingLocation /> */}
                 </View>
-            <BottomMenu navigation={navigation} />
+            <BottomMenu navigation={navigation} campus = {setSelectedCampus.bind(this)}/>
             </View>
         </View>
     );
