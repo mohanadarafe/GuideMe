@@ -4,7 +4,7 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { retrieveApiKey } from "./services/getApiKey";
 import { Provider } from "react-redux";
-import store from "./redux/reducers/index"
+import { store } from "./redux/reducers/index"
 
 
 //Navigator is an alias, we can give it any name we want, since it is a default export.

@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
-import store from "../redux/reducers/index";
+import { store } from "../redux/reducers/index";
+// import  store  from "../App"
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps

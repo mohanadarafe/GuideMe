@@ -25,9 +25,9 @@ function mapDispatchToProps(dispatch) {
  * The following function colors the campus buildings.
  */
 
-function BuildingHighlight (props) {
+export function BuildingHighlight (props) {
     const [buildingName, setBuildingName] = React.useState("");
-    AsyncStorage.setItem("buildingSelected", buildingName);
+    // AsyncStorage.setItem("buildingSelected", buildingName);
     var buildings = buildingData();
     return (
         <View>
@@ -46,7 +46,10 @@ function BuildingHighlight (props) {
                 id="tap_lb"
                 coordinates={coord.lb.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["LB Building"].name)}
+                onPress={() => {
+                    setBuildingName(buildings["LB Building"].name);
+                    props.setSelectedBuildingName(buildings["LB Building"].name);
+                } }
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -54,7 +57,10 @@ function BuildingHighlight (props) {
                 id="tap_gm"
                 coordinates={coord.gm.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["GM Building"].name)}
+                onPress={() => {
+                    setBuildingName(buildings["GM Building"].name)
+                    props.setSelectedBuildingName(buildings["GM Building"].name);
+                }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -62,7 +68,10 @@ function BuildingHighlight (props) {
                 id="tap_ev"
                 coordinates={coord.ev.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["EV Building"].name)}
+                onPress={() => {
+                    setBuildingName(buildings["EV Building"].name)
+                    props.setSelectedBuildingName(buildings["EV Building"].name);
+                }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -70,7 +79,10 @@ function BuildingHighlight (props) {
                 id="tap_mb"
                 coordinates={coord.mb.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["MB Building"].name)}
+                onPress={() => { 
+                    setBuildingName(buildings["MB Building"].name);
+                    props.setSelectedBuildingName(buildings["MB Building"].name);
+                }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -78,7 +90,10 @@ function BuildingHighlight (props) {
                 id="tap_sp"
                 coordinates={coord.sp.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["SP Building"].name)}
+                onPress={() => { 
+                    setBuildingName(buildings["SP Building"].name);
+                    props.setSelectedBuildingName(buildings["SP Building"].name);
+                }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -86,7 +101,10 @@ function BuildingHighlight (props) {
                 id="tap_cj"
                 coordinates={coord.cj.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["CJ Building"].name)}
+                onPress={() => { 
+                    setBuildingName(buildings["CJ Building"].name)
+                    props.setSelectedBuildingName(buildings["CJ Building"].name);
+            }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -94,7 +112,10 @@ function BuildingHighlight (props) {
                 id="tap_cc"
                 coordinates={coord.cc.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["CC Building"].name)}
+                onPress={() => { 
+                    setBuildingName(buildings["CC Building"].name);
+                    props.setSelectedBuildingName(buildings["CC Building"].name);
+            }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -102,7 +123,10 @@ function BuildingHighlight (props) {
                 id="tap_ad"
                 coordinates={coord.ad.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["AD Building"].name)}
+                onPress={() => {
+                    setBuildingName(buildings["AD Building"].name);
+                    props.setSelectedBuildingName(buildings["AD Building"].name);
+                }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -110,15 +134,20 @@ function BuildingHighlight (props) {
                 id="tap_gn"
                 coordinates={coord.gn.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["Grey Nuns"].name)}
+                onPress={() => { 
+                    setBuildingName(buildings["Grey Nuns"].name)
+                    props.setSelectedBuildingName(buildings["Grey Nuns"].name);
+                }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
-
             <Polygon
                 id="tap_vl"
                 coordinates={coord.vl.coordinates}
                 tappable={true}
-                onPress={() => setBuildingName(buildings["VL Building"].name)}
+                onPress={() => { 
+                    setBuildingName(buildings["VL Building"].name)
+                    props.setSelectedBuildingName(buildings["VL Building"].name);
+            }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
         </View>
