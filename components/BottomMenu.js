@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
-
+import store from "../redux/reducers/index";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -17,13 +17,17 @@ import { Button } from "react-native-paper";
 */
 
 function BottomMenu (props) {
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
+    const [selectedBuilding, setSelectedBuilding] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
     const previewDirections = props.previewMode;
+
+    store.subscribe(() => {
+        setSelectedBuilding(store.getState().selectedBuildingName);
+    });
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     const getBuildingSelected = async () => {
@@ -83,7 +87,7 @@ function BottomMenu (props) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            getBuildingSelected();
+            // getBuildingSelected();
             getDestination();
             getPersonaType();
             getMobility();

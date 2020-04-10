@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import { BuildingHighlight } from "../components/BuildingHighlight";
+import BuildingHighlight  from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
 import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
@@ -73,7 +73,7 @@ function Map ({ navigation }) {
                 </MapView>
                 <Search testID="searchBar" navigation={navigation} />
                 <View style={styles.CurrentBuildingLocation}>
-                        <CurrentBuildingLocation />
+                        {/* <CurrentBuildingLocation /> */}
                 </View>
             <BottomMenu navigation={navigation} />
             </View>

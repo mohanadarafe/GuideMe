@@ -3,6 +3,21 @@ import { View, AsyncStorage } from "react-native";
 import { Polygon } from "react-native-maps";
 import coord from "../constants/buildingCoordinates";
 import { buildingData } from "../constants/buildingData";
+import { connect } from "react-redux";
+
+
+function mapStateToProps(buildingName) {
+    return {
+        selectedBuildingName: buildingName
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setSelectedBuildingName: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
+        // decreaseCounter: () => dispatch({ type: 'DECREASE_COUNTER' }),
+    }
+}
 
 /**
  * US3 - As a user, I would like to be able to identify campus buildings and
@@ -10,7 +25,7 @@ import { buildingData } from "../constants/buildingData";
  * The following function colors the campus buildings.
  */
 
-function BuildingHighlight () {
+function BuildingHighlight (props) {
     const [buildingName, setBuildingName] = React.useState("");
     AsyncStorage.setItem("buildingSelected", buildingName);
     var buildings = buildingData();
@@ -20,7 +35,10 @@ function BuildingHighlight () {
                 id="tap_h"
                 coordinates={coord.h.coordinates}
                 tappable={true}
-                onPress={() => { setBuildingName(buildings["Hall Building"].name); }}
+                onPress={() => { 
+                    setBuildingName(buildings["Hall Building"].name); 
+                    props.setSelectedBuildingName(buildings["Hall Building"].name);
+            }}
                 fillColor="rgba(76, 79, 98, 0.7)"
             />
 
@@ -107,4 +125,5 @@ function BuildingHighlight () {
     );
 }
 
-export { BuildingHighlight };
+// export { BuildingHighlight };
+export default connect(mapStateToProps, mapDispatchToProps)(BuildingHighlight);

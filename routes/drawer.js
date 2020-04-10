@@ -98,10 +98,10 @@ const Drawer = createDrawerNavigator({
     }
 });
 
-const allStacks = createAppContainer(Drawer);
+export default createAppContainer(Drawer);
 
-const mapStateToProps = state => ({
-    navigation: state.navigation,
-  })
+// const mapStateToProps = state => ({
+//     navigation: state.navigation,
+//   })
   
-  export default connect(mapStateToProps)(allStacks)
+//   export default connect(mapStateToProps)(allStacks)
