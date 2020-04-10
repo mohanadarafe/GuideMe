@@ -138,9 +138,6 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
- * Description: This is our main screen which includes all the components inside a map.
- * FIXME: 1. Direction, the headers in the Direction is not properly changing his UI
- *           more specifically the height.
  * 
  */
 function PreviewDirections (props) {

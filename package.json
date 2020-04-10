@@ -69,6 +69,7 @@
     "expo": "^37.0.0",
     "expo-detox-hook": "^1.0.10",
     "expo-font": "~8.1.0",
+    "expo-google-app-auth": "^8.1.0",
     "expo-location": "~8.1.0",
     "firebase": "7.9.0",
     "galio-framework": "^0.6.3",
