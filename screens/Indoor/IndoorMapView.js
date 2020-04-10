@@ -76,7 +76,7 @@ function IndoorMapView(props) {
                     }
                 </ScrollView>
             </ScrollView>
-            <BottomMenu navigation={props.navigation} indoor={true} inDirections={from != null && to != null} building={selectedBuilding}/>
+            <BottomMenu navigation={props.navigation} indoor={true} inDirections={from != null && to != null} from={from} to={to} building={selectedBuilding}/>
         </View>
     );
 }

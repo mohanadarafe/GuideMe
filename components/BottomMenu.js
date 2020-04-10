@@ -4,6 +4,7 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { FloorMenu } from "./FloorMenu";
+import { getFloorNumber } from "./IndoorDirections/Dijkstra/DijkstraAlgorithm";
 
 
 /**
@@ -28,6 +29,8 @@ function BottomMenu (props) {
     const inDirections = props.inDirections;
     const building = props.building;
     const previewDirections = props.previewMode;
+    const from = props.from;
+    const to = props.to;
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     const getBuildingSelected = async () => {
@@ -140,7 +143,7 @@ function BottomMenu (props) {
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>
-                    <FloorMenu />
+                    <FloorMenu from={props.from} to={props.to}/>
                 </View>
             </View>
         )

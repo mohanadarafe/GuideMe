@@ -12,16 +12,16 @@ export function HallFloorX(props) {
 
   const floorSelected = async () => {
     let name = await AsyncStorage.getItem("floorSelected");
-    setFloorNumber(name);
+    name == 0 ? setFloorNumber(1) : setFloorNumber(name);
   };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       floorSelected();
-    }, 1);
+    }, 100);
     return () => clearInterval(intervalId);
   });
-
+  
   return (
     <Svg width={1024} height={1024}>
       <Defs>
