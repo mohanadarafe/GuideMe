@@ -30,6 +30,8 @@ var originItems = fetchData();
 var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
 originItems.unshift({ "id": 0, "name": "Current Location" });
 
+
+
 /**
  * Overall :
  * 
@@ -42,27 +44,60 @@ function DoubleSearch(props) {
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
+    const [pointOfInterest, setPointOfInterest] = React.useState(null); 
+
+
     /**
      * Description: Method to go back to the previous screen.
      * Using Stack navigator.
      */
-
     // var fromScreen; 
-    const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
-    const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
+    const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", null);
+    const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", null);
     const goBack = () => {
         if(CourseScheduleDetailsScreen === true){
             props.navigation.goBack();
             props.navigation.navigate("CourseScheduleDetails")
         }
         else if (NearbyInterestDetailsScreen === true){
+            // destinationItems.shift()
             props.navigation.goBack();
             props.navigation.navigate("NearbyInterestDetails")
+
         }
         else{
             props.navigation.goBack();
         }
     };
+
+
+    const namePointOfInterest = props.navigation.getParam("name_POI", null);
+    const latitudePointOfInterest = props.navigation.getParam("latitude_POI", null);
+    const longitudePointOfInterest = props.navigation.getParam("longitude_POI", null);
+
+    // const getNamePointOfInterest = async () => {
+    //     let name = await AsyncStorage.getItem("namePOI");
+    //     setPointOfInterest(name);
+    // };
+
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //        getNamePointOfInterest()
+    //     }, 1);
+    //     return () => clearInterval(intervalId);
+    // });
+
+    // console.log("yo: "+pointOfInterest);
+
+    // if(pointOfInterest) {
+    //     destinationItems.unshift({ "id": 0, "name": pointOfInterest });
+    // }
+
+
+    if (namePointOfInterest) {
+        destinationItems.unshift({"id":0, "name": namePointOfInterest});
+    }
+
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
      * Particularity: 
@@ -181,8 +216,11 @@ function DoubleSearch(props) {
         }
         if (from.name === undefined) {
             fetchCurrentPosition();
+            
         }
     }, []);
+
+    console.log(coordinatesTo);
 
     return (
         <View style={styles.container} data-test="DoubleSearch">

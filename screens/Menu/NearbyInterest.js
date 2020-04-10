@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage
 import { Icon, Button } from "native-base";
 import { Feather, Entypo } from "@expo/vector-icons";
 import PropTypes from "prop-types";
-import { BottomMenu } from "../../components/BottomMenu";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import Menu, { MenuItem, MenuDivider, Position } from "react-native-enhanced-popup-menu";
 
@@ -52,9 +51,15 @@ function NearbyInterest(props) {
      */
     const goToNearbyInterestDetails = (item) => {
         props.navigation.navigate("NearbyInterestDetails", {
+            photoref: item.img,
             name: item.key,
             rating: item.rating,
-            photoref: item.img
+            hours: item.open_hours,
+            address: item.address,
+            phone: item.phone,
+            web: item.web,
+            latitude: item.latitude,
+            longitude: item.longitude,  
         });
     };
     /**
@@ -69,52 +74,55 @@ function NearbyInterest(props) {
     };
 
     // Static data for now 
-    const data = [];
+    const data = [
+        { key: "McKibbins", rating: 3.3, open_hours: true, address: "1446 Crescent", phone: "+1(514) 666-9999", web: "mckibbins.com", latitude: 45.4975951, longitude: -73.57762079999999},
+        { key: "Tim Hortons", rating: 3.0, open_hours: false, address: "1500 Crescent", phone: "+1(514) 666-8888", web: "timhortons.com", latitude: 45.4975951, longitude: -73.57762079999999, },
+        { key: "Arabica", rating: 3.2, open_hours: false, address: "1900 Crescent", phone: "+1(514) 666-7777", web: "arabica.com", latitude: 45.4975951, longitude: -73.57762079999999,  },
+        { key: "Kaeks", rating: 2.9, open_hours: true, address: "1594 Crescent", phone: "+1(514) 666-4444", web: "kaeks.com", latitude: 45.4975951, longitude: -73.57762079999999, }];
 
     // number of coloumns for the flatList 
     const numColumns = 2;
 
-    const fetchData = async () => {
+    // const fetchData = async () => {
 
-        try {
-            // getItem method is necessary for the retrieval of the API Key 
-            let keyId = await AsyncStorage.getItem("apiKeyId");
-            let SGW_COORDS = `45.497063, -73.578431`;
-            let LOY_COORDS = `45.458371, -73.638239`;
-            let coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
-            let RADIUS = radius;
-            let TYPE = `restaurant`;
-            let MAX_WIDTH = `500`;
-            let SENSOR = `false`;
-            // let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
-            let jsonResp = await resp.json();
-            let response = jsonResp;
+    //     try {
+    //         // getItem method is necessary for the retrieval of the API Key 
+    //         let keyId = await AsyncStorage.getItem("apiKeyId");
+    //         let SGW_COORDS = `45.497063, -73.578431`;
+    //         let LOY_COORDS = `45.458371, -73.638239`;
+    //         let coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
+    //         let RADIUS = radius;
+    //         let TYPE = `restaurant`;
+    //         let MAX_WIDTH = `500`;
+    //         let SENSOR = `false`;
+    //         // let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
+    //         let jsonResp = await resp.json();
 
 
-            var key;
-            if (response && response.results.length > 0) {
-                for (key in response.results) {
-                    let placeName = response.results[key].name;
-                    let placeRating = response.results[key].rating;
-                    let photoRef = response.results[key].photos[0].photo_reference;
-                    if (placeName !== null & placeRating !== null && photoRef !== null) {
-                        data.push({ key: placeName, rating: placeRating, img: photoRef });
-                    }
-                }
-            }
+    //         // var key;
+    //         // if (response && response.results.length > 0) {
+    //         //     for (key in response.results) {
+    //         //         let placeName = response.results[key].name;
+    //         //         let placeRating = response.results[key].rating;
+    //         //         let photoRef = response.results[key].photos[0].photo_reference;
+    //         //         if (placeName !== null & placeRating !== null && photoRef !== null) {
+    //         //             data.push({ key: placeName, rating: placeRating, img: photoRef });
+    //         //         }
+    //         //     }
+    //         // }
 
-            setJsonElement(data);
-        }
-        catch (error) {
-            // alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
-        }
-    }
+    //         setJsonElement(jsonResp);
+    //     }
+    //     catch (error) {
+    //         alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+    //     }
+    // }
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             getFromScreen();
         }, 1);
-        fetchData();
+        // fetchData();
         return () => clearInterval(intervalId);
     });
 
@@ -135,7 +143,7 @@ function NearbyInterest(props) {
         hideMenu();
     }
 
-    // console.log("json: "+jsonElement[0]);
+    // console.log("json name: "+jsonElement);
 
     return (
         <View style={styles.container}>
@@ -157,13 +165,13 @@ function NearbyInterest(props) {
             </TouchableOpacity>
 
             <Menu ref={setMenuRef}>
-                <MenuItem onPress={() => {itemSelected(100)}}> 100 miles</MenuItem>
-               
-                <MenuItem onPress={() => {itemSelected(250)}}>250 miles</MenuItem>
-            
-                <MenuItem onPress={() => {itemSelected(500)}}>500 miles</MenuItem>
-              
-                <MenuItem onPress={() => {itemSelected(1500)}}>>1000 miles</MenuItem>
+                <MenuItem onPress={() => { itemSelected(100) }}> 100 miles</MenuItem>
+
+                <MenuItem onPress={() => { itemSelected(250) }}>250 miles</MenuItem>
+
+                <MenuItem onPress={() => { itemSelected(500) }}>500 miles</MenuItem>
+
+                <MenuItem onPress={() => { itemSelected(1500) }}>> 1000 miles</MenuItem>
             </Menu>
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
@@ -194,7 +202,7 @@ function NearbyInterest(props) {
                 <FlatList
                     onEndReachedThreshold={0}
                     contentContainerStyle={styles.list}
-                    data={jsonElement}
+                    data={data}
                     numColumns={numColumns}
                     keyExtractor={(item) => {
                         return item.key;
@@ -208,8 +216,8 @@ function NearbyInterest(props) {
                                         {/* <Image style={{ height: "100%", width: "100%" }} source={{ uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=${item.img}&sensor=false&key=AIzaSyDApykkW1hGVhUCZXf5pv9CIvAvyPBAy7k`}} /> */}
                                     </View>
                                     <View style={styles.itemTextContainer}>
-                                        <Text style={styles.itemText}>Name of place: {item.key}</Text>
-                                        <Text style={styles.itemText}>Rating of place: {item.rating}</Text>
+                                        <Text style={styles.itemText}>{item.key}</Text>
+                                        <Text style={styles.itemText}>{item.rating}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -221,132 +229,132 @@ function NearbyInterest(props) {
 
         </View>
     );
-    }
+}
 
-    NearbyInterest.propTypes = {
-        navigation: PropTypes.object,
-        openDrawer: PropTypes.func,
-        navigate: PropTypes.func
-    };
+NearbyInterest.propTypes = {
+    navigation: PropTypes.object,
+    openDrawer: PropTypes.func,
+    navigate: PropTypes.func
+};
 
-    export const styles = StyleSheet.create({
-        container: {
-            alignItems: "center",
-            justifyContent: "space-between",
-            height: "100%",
-            width: "100%",
-            backgroundColor: "#2A2E43"
-        },
-        mainLabel: {
-            color: "#FFFFFF",
-            position: "absolute",
-            fontSize: 25,
-            fontWeight: "bold",
-            fontFamily: "encodeSansExpanded",
-            top: "15%"
-        },
-        list: {
-            flexDirection: "column"
-        },
-        arrowDown: {
-            color: "#ffffff",
-            top: "5%",
-            fontSize: 54,
-        },
-        backButton: {
-            alignSelf: "center"
-        },
-        icon: {
-            alignSelf: "center",
-            color: "#FFFFFF",
-            fontSize: 35,
-        },
-        menuButton: {
-            height: "100%",
-            width: "20%",
-            flexDirection: "row",
-            justifyContent: "center"
-        },
-        option: {
-            alignSelf: "center",
-            color: "#FFFFFF",
-            fontSize: 35,
-        },
-        optionButton: {
-            bottom: "5%",
-            left: "40%",
-        },
-        menuButtonContainer: {
-            width: "100%",
-            height: "6%",
-            top: "7%",
-        },
-        flatListContainer: {
-            height: "65%",
-            bottom: "5%"
-        },
-        itemContainer: {
-            flex: 1,
-            margin: 5,
-            minWidth: 185,
-            maxWidth: 185,
-            height: 200,
-            maxHeight: 200,
-            backgroundColor: "#353A50",
-            borderRadius: 10,
-        },
-        itemText: {
-            color: "#FFFFFF",
-            fontSize: 12,
-            fontFamily: "encodeSansExpanded",
-            marginHorizontal: "10%",
-            marginVertical: "3%",
-            width: "70%"
-        },
-        itemTextContainer: {
-            width: "100%",
-            height: "35%",
-            flexDirection: "column",
-            justifyContent: "center"
-        },
-        itemImageContainer: {
-            width: "100%",
-            height: "65%",
-        },
-        controlTabContainer: {
-            alignContent: "space-between",
-            backgroundColor: "red",
-            height: "20%",
-            width: "100%",
-        },
-        tabsContainerStyle: {
-            bottom: "5%",
-        },
-        tabStyle: {
-            backgroundColor: "#2A2E43",
-            borderWidth: 0,
-            borderColor: "white",
-            borderBottomColor: "#FFFFFF",
-            paddingHorizontal: "15%"
-        },
-        tabTextStyle: {
-            fontWeight: "bold",
-            color: "#FFFFFF"
-        },
-        activeTabStyle: {
-            backgroundColor: "#2A2E43",
-            borderBottomColor: "#3ACCE1"
-        },
-        activeTabTextStyle: {
-            color: "#3ACCE1",
-            backgroundColor: "#2A2E43",
-            fontWeight: "bold"
-        },
-        tabContent: {
-            color: "#fff",
-            fontSize: 18,
-            margin: 24,
-        },
-    });
+export const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+        justifyContent: "space-between",
+        height: "100%",
+        width: "100%",
+        backgroundColor: "#2A2E43"
+    },
+    mainLabel: {
+        color: "#FFFFFF",
+        position: "absolute",
+        fontSize: 25,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+        top: "15%"
+    },
+    list: {
+        flexDirection: "column"
+    },
+    arrowDown: {
+        color: "#ffffff",
+        top: "5%",
+        fontSize: 54,
+    },
+    backButton: {
+        alignSelf: "center"
+    },
+    icon: {
+        alignSelf: "center",
+        color: "#FFFFFF",
+        fontSize: 35,
+    },
+    menuButton: {
+        height: "100%",
+        width: "20%",
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    option: {
+        alignSelf: "center",
+        color: "#FFFFFF",
+        fontSize: 35,
+    },
+    optionButton: {
+        bottom: "5%",
+        left: "40%",
+    },
+    menuButtonContainer: {
+        width: "100%",
+        height: "6%",
+        top: "7%",
+    },
+    flatListContainer: {
+        height: "65%",
+        bottom: "5%"
+    },
+    itemContainer: {
+        flex: 1,
+        margin: 5,
+        minWidth: 185,
+        maxWidth: 185,
+        height: 200,
+        maxHeight: 200,
+        backgroundColor: "#353A50",
+        borderRadius: 10,
+    },
+    itemText: {
+        color: "#FFFFFF",
+        fontSize: 12,
+        fontFamily: "encodeSansExpanded",
+        marginHorizontal: "10%",
+        marginVertical: "3%",
+        width: "70%"
+    },
+    itemTextContainer: {
+        width: "100%",
+        height: "35%",
+        flexDirection: "column",
+        justifyContent: "center"
+    },
+    itemImageContainer: {
+        width: "100%",
+        height: "65%",
+    },
+    controlTabContainer: {
+        alignContent: "space-between",
+        backgroundColor: "red",
+        height: "20%",
+        width: "100%",
+    },
+    tabsContainerStyle: {
+        bottom: "5%",
+    },
+    tabStyle: {
+        backgroundColor: "#2A2E43",
+        borderWidth: 0,
+        borderColor: "white",
+        borderBottomColor: "#FFFFFF",
+        paddingHorizontal: "15%"
+    },
+    tabTextStyle: {
+        fontWeight: "bold",
+        color: "#FFFFFF"
+    },
+    activeTabStyle: {
+        backgroundColor: "#2A2E43",
+        borderBottomColor: "#3ACCE1"
+    },
+    activeTabTextStyle: {
+        color: "#3ACCE1",
+        backgroundColor: "#2A2E43",
+        fontWeight: "bold"
+    },
+    tabContent: {
+        color: "#fff",
+        fontSize: 18,
+        margin: 24,
+    },
+});
 
-    export default NearbyInterest;
+export default NearbyInterest;
