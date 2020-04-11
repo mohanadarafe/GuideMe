@@ -1,5 +1,5 @@
 import React from "react";
-import { View, AsyncStorage } from "react-native";
+import { View } from "react-native";
 import { Polygon } from "react-native-maps";
 import coord from "../constants/buildingCoordinates";
 import { buildingData } from "../constants/buildingData";
@@ -26,9 +26,8 @@ function mapDispatchToProps(dispatch) {
 
 export function BuildingHighlight (props) {
     const [buildingName, setBuildingName] = React.useState("");
-    const [polygonPressed, setPolygonPressed] = React.useState({item: null});
-    // AsyncStorage.setItem("buildingSelected", buildingName);
     var buildings = buildingData();
+
     return (
         <View>
             <Polygon
@@ -36,7 +35,6 @@ export function BuildingHighlight (props) {
                 coordinates={coord.h.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    // setPolygonPressed()
                     setBuildingName(buildings["Hall Building"].name); 
                     props.setSelectedBuildingName(buildings["Hall Building"].name);
             }}
@@ -155,5 +153,4 @@ export function BuildingHighlight (props) {
     );
 }
 
-// export { BuildingHighlight };
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingHighlight);

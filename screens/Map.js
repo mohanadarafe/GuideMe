@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
-import { StyleSheet, AsyncStorage } from "react-native";
+import React from "react";
+import { StyleSheet } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import BuildingHighlight  from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
@@ -30,30 +30,10 @@ const mapPosition = {
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * This is our main screen which includes all the components inside a map.
- * FIXME: When the app refreshes, a random component appears on in the upper
- *        half of the screen for miliseconds...
  */
 function Map ({ navigation }) {
-    // const [switchVal, setswitchVal] = React.useState("");
-    const [getInsideBuild, setGetInsideBuild] = React.useState("");
-    // const [mapPressed, setmapPressed] = React.useState("");
+
     const [campusSwitch, setCampusSwitch] = React.useState(true);
-    //TODO: To have a functionality for when the user presses on the map
-    // AsyncStorage.setItem("mapPressed", mapPressed);
-
-    // const campusSelected = async () => {
-    //     let tog = await AsyncStorage.getItem("toggle");
-    //     let inside = await AsyncStorage.getItem("getInsideBuilding");
-    //     setswitchVal(tog);
-    //     setGetInsideBuild(inside);
-    // };
-
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         campusSelected();
-    //     }, 1);
-    //     return () => clearInterval(intervalId);
-    // });
     const setSelectedCampus = (value) => {
         setCampusSwitch(value);
     }

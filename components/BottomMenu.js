@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React, { useLayoutEffect, useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
-import { store } from "../redux/reducers/index";
+// import { store } from "../redux/reducers/index";
 import { FloorMenu } from "./FloorMenu";
+import { useStore } from 'react-redux'
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -24,6 +25,7 @@ function BottomMenu (props) {
     const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
+    const store = useStore();
     const viewIndoor = props.indoor;
     const inDirections = props.inDirections;
     const building = props.building;
@@ -31,39 +33,17 @@ function BottomMenu (props) {
     const from = props.from;
     const to = props.to;
 
-    store.subscribe(() => {
-        setSelectedBuilding(store.getState().selectedBuildingName);
-        setDestination(store.getState().mainSearchBarDestination);
-        setPersonaType(store.getState().personaType);
-        setMobilityReduced(store.getState().mobilityReducedType);
-        setMethodTravel(store.getState().transportType);
+    useLayoutEffect(() => {
+        store.subscribe(() => {
+            setSelectedBuilding(store.getState().selectedBuildingName);
+            setDestination(store.getState().mainSearchBarDestination);
+            setPersonaType(store.getState().personaType);
+            setMobilityReduced(store.getState().mobilityReducedType);
+            setMethodTravel(store.getState().transportType);
+        });
+        return function cleanUp() {}
     });
-
-    // AsyncStorage.setItem("toggle", switchVal.toString());
-    // const getBuildingSelected = async () => {
-    //     let name = await AsyncStorage.getItem("buildingSelected");
-    //     setSelectedBuilding(name);
-    // };
-
-    // const getDestination = async () => {
-    //     let searchItem = await AsyncStorage.getItem("toLocation");
-    //     setDestination(searchItem);
-    // };
-
-    // const getPersonaType = async () => {
-    //     let name = await AsyncStorage.getItem("firstCategory");
-    //     setPersonaType(name);
-    // };
-
-    // const getMobility = async () => {
-    //     let name = await AsyncStorage.getItem("secondCategory");
-    //     setMobilityReduced(name);
-    // };
-
-    // const getMethodTravel = async () => {
-    //     let name = await AsyncStorage.getItem("thirdCategory");
-    //     setMethodTravel(name);
-    // };
+    
 
     const goBack = () => {
         props.navigation.goBack();
@@ -97,7 +77,7 @@ function BottomMenu (props) {
 
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
-            name: selectedBuilding
+            name: store.getState().selectedBuildingName
         });
     };
 
@@ -109,36 +89,6 @@ function BottomMenu (props) {
         AsyncStorage.setItem("sideMenu", "mapView"); //FIXME: WHY?
         props.navigation.navigate("NearbyInterest");
     };
-
-    useEffect(() => {
-        // const intervalId = setInterval(() => {
-        //     // getBuildingSelected();
-        //     // getDestination();
-        //     // getPersonaType();
-        //     // getMobility();
-        //     // getMethodTravel();
-        // }, 1);
-        // return () => clearInterval(intervalId);
-    });
-
-    // const nameMethodTravel = () => {
-    //     switch (methodTravel) {
-    //         case "driving":
-    //             return "Driving";
-
-    //         case "walking":
-    //             return "Walking";
-
-    //         case "transit":
-    //             return "Transit";
-
-    //         case "bicycling":
-    //             return "Bicycling";
-
-    //         default:
-    //             return "Driving";
-    //     }
-    // };
 
     if (viewIndoor) {
         return(

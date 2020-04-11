@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useLayoutEffect } from "react";
 import { StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-import { store } from "../redux/reducers/index";
+import { useStore } from 'react-redux'
+
 /**
  * Description: This method act as an interface. After taking the leg of the response
  * called jsonLeg as argument, the method will create an object that will 
@@ -144,12 +145,11 @@ function PreviewDirections (props) {
     // console.log(props);
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
-    const [transportType, setTransportType] = React.useState("driving");
+    const [transportType, setTransportType] = React.useState(null);
     const mapRef = useRef(null);
+    const store = useStore();
 
-    store.subscribe(() => {
-        setTransportType(store.getState().transportType)
-    });
+
     
     /**
       * Description: Go back to previous screen method.
@@ -235,10 +235,19 @@ function PreviewDirections (props) {
         }, 100);
     };
 
+    useLayoutEffect (() => {
+        store.subscribe(() => {
+            setTransportType(store.getState().transportType);
+        });
+    });
+
     /**
      */
     useEffect(() => {
         fetchData();
+        return function cleanUp() {
+
+        }
     }, [transportType]);
 
 
