@@ -121,7 +121,7 @@ function DoubleSearch(props) {
         }
 
         // building to buildling 
-        else if (coordinatesFrom && coordinatesTo) {
+        else if (coordinatesFrom && coordinatesTo && pointOfInterest === undefined) {
             props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName: from.name, toName: to.name });
         }
 
@@ -224,8 +224,10 @@ function DoubleSearch(props) {
             latitude: latitudePointOfInterest,
             longitude: longitudePointOfInterest
         })
-        
+
+        if(namePointOfInterest){
         addItem(pointOfInterest)
+        }
         
     }, []);
 
@@ -269,7 +271,7 @@ function DoubleSearch(props) {
                     <Text style={styles.searchBarLabels}>To: </Text>
                     <SearchableDropdown
                         onTextChange={val => val}
-                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
+                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); (namePointOfInterest == item.name ? setPointOfInterest(namePointOfInterest) : setPointOfInterest(null));}}
                         textInputStyle={styles.textInputStyle}
                         defaultIndex={(String)(value)} //Refer TODO: A)
                         itemStyle={styles.itemStyle}
