@@ -81,14 +81,16 @@ function BottomMenu (props) {
 
     
     useLayoutEffect(() => {
-        store.subscribe(() => {
+        const unsubscribe = store.subscribe(() => {
             setSelectedBuilding(store.getState().selectedBuildingName);
             setDestination(store.getState().mainSearchBarDestination);
             setPersonaType(store.getState().personaType);
             setMobilityReduced(store.getState().mobilityReducedType);
             setMethodTravel(store.getState().transportType);
         });
-        return function cleanUp() {}
+        return function cleanUp() {
+            unsubscribe();
+        }
     });
 
     if (viewIndoor) {

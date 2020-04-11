@@ -236,9 +236,12 @@ function PreviewDirections (props) {
     };
 
     useLayoutEffect (() => {
-        store.subscribe(() => {
+        const unsubscribe = store.subscribe(() => {
             setTransportType(store.getState().transportType);
         });
+        return function cleanUp() {
+            unsubscribe();
+        }
     });
 
     /**
