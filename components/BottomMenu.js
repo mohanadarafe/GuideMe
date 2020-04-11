@@ -3,9 +3,9 @@ import React, { useLayoutEffect, useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
-// import { store } from "../redux/reducers/index";
+import { store } from "../redux/reducers/index";
 import { FloorMenu } from "./FloorMenu";
-import { useStore } from 'react-redux'
+// import { useStore } from 'react-redux'
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -25,7 +25,7 @@ function BottomMenu (props) {
     const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
-    const store = useStore();
+    // const store = useStore();
     const viewIndoor = props.indoor;
     const inDirections = props.inDirections;
     const building = props.building;
