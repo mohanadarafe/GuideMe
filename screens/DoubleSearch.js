@@ -9,10 +9,10 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-function fetchData () {
-    const searchInfo = MapData({context: "Search"});
+function fetchData() {
+    const searchInfo = MapData({ context: "Search" });
     return searchInfo;
-  }
+}
 
 
 /**
@@ -44,7 +44,8 @@ function DoubleSearch(props) {
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
-    const [pointOfInterest, setPointOfInterest] = React.useState(null); 
+    const [pointOfInterest, setPointOfInterest] = React.useState(null);
+    const [coordinatesPOI, setCoordinatesPOI] = React.useState({ latitude: null, longitude: null });
 
 
     /**
@@ -55,17 +56,17 @@ function DoubleSearch(props) {
     const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", null);
     const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", null);
     const goBack = () => {
-        if(CourseScheduleDetailsScreen === true){
+        if (CourseScheduleDetailsScreen === true) {
             props.navigation.goBack();
             props.navigation.navigate("CourseScheduleDetails")
         }
-        else if (NearbyInterestDetailsScreen === true){
-            // destinationItems.shift()
+        else if (NearbyInterestDetailsScreen === true) {
+            destinationItems.shift()
             props.navigation.goBack();
             props.navigation.navigate("NearbyInterestDetails")
 
         }
-        else{
+        else {
             props.navigation.goBack();
         }
     };
@@ -74,28 +75,10 @@ function DoubleSearch(props) {
     const namePointOfInterest = props.navigation.getParam("name_POI", null);
     const latitudePointOfInterest = props.navigation.getParam("latitude_POI", null);
     const longitudePointOfInterest = props.navigation.getParam("longitude_POI", null);
-
-    // const getNamePointOfInterest = async () => {
-    //     let name = await AsyncStorage.getItem("namePOI");
-    //     setPointOfInterest(name);
-    // };
-
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //        getNamePointOfInterest()
-    //     }, 1);
-    //     return () => clearInterval(intervalId);
-    // });
-
-    // console.log("yo: "+pointOfInterest);
-
-    // if(pointOfInterest) {
-    //     destinationItems.unshift({ "id": 0, "name": pointOfInterest });
-    // }
-
-
-    if (namePointOfInterest) {
-        destinationItems.unshift({"id":0, "name": namePointOfInterest});
+  
+    const addItem = () => {
+            destinationItems.unshift({ id: 0, name: namePointOfInterest});
+        
     }
 
     /**
@@ -112,19 +95,36 @@ function DoubleSearch(props) {
      * 
      * A.U
      */
+
     const goToPreviewDirectionScreen = () => {
         if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.");
         }
-        else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
+        // current location to POI
+        else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords && pointOfInterest !==null) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesPOI, fromName: "Current Location", toName: pointOfInterest });
+
         }
+        // building name to POI
+        else if (coordinatesFrom && pointOfInterest !==null) {
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesPOI, fromName: from.name, toName: pointOfInterest });
+        }
+
+        // current location to building name
+        else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName: to.name });
+        }
+
+        // classroom to classroom 
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
+
+        // building to buildling 
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName:from.name, toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName: from.name, toName: to.name });
         }
+
         else {
             return alert("The destination or origin field is missing or invalid. Please try again.");
         }
@@ -136,15 +136,15 @@ function DoubleSearch(props) {
      * 
      */
     const fetchCurrentPosition = () => {
-        
-        getPosition().then(({coords}) => {
+
+        getPosition().then(({ coords }) => {
             setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                })
+                latitude: coords.latitude,
+                longitude: coords.longitude
             })
+        })
             .catch((err) => {
-            alert (err.message);
+                alert(err.message);
             });
     }
 
@@ -163,11 +163,11 @@ function DoubleSearch(props) {
         let classRoomsList = ClassRooms();
         if (/\d/.test(name)) {
             for (var key in classRoomsList) {
-                if(classRoomsList[key].room.includes(name)) {
-                const buildingCoords = buildingList[key].coordinates;
-                const isClassroom = {isClassRoom: name};
-                const result = {...buildingCoords, ...isClassroom};
-                return result;
+                if (classRoomsList[key].room.includes(name)) {
+                    const buildingCoords = buildingList[key].coordinates;
+                    const isClassroom = { isClassRoom: name };
+                    const result = { ...buildingCoords, ...isClassroom };
+                    return result;
                 }
             }
         }
@@ -177,16 +177,16 @@ function DoubleSearch(props) {
             }
         }
         if (name == "Current Location") {
-            fetchCurrentPosition();           
+            fetchCurrentPosition();
         }
         return null;
     };
 
     var getPosition = function (options) {
         return new Promise(function (resolve, reject) {
-          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+            navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
-      }
+    }
 
     let fromName = from.name;
     let toName = to.name;
@@ -213,14 +213,23 @@ function DoubleSearch(props) {
             const initialTo = props.navigation.getParam("destinationName", "Destination");
             setCoordinatesTo(getCoordinates(initialTo));
             setTo({ name: initialTo });
+            // setPointOfInterest("");
         }
         if (from.name === undefined) {
             fetchCurrentPosition();
-            
         }
+
+        setPointOfInterest(namePointOfInterest)
+        setCoordinatesPOI({
+            latitude: latitudePointOfInterest,
+            longitude: longitudePointOfInterest
+        })
+        
+        addItem(pointOfInterest)
+        
     }, []);
 
-    console.log(coordinatesTo);
+    
 
     return (
         <View style={styles.container} data-test="DoubleSearch">
@@ -238,7 +247,7 @@ function DoubleSearch(props) {
                 <View style={styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
-                        onTextChange={val => val} 
+                        onTextChange={val => val}
                         onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
                         defaultIndex={"0"}
                         textInputStyle={styles.textInputStyle}
@@ -269,7 +278,7 @@ function DoubleSearch(props) {
                         itemsContainerStyle={styles.itemsContainerStyle}
                         placeholderTextColor={"black"}
                         items={destinationItems}
-                        placeholder={destinationName}
+                        placeholder={pointOfInterest ? pointOfInterest : destinationName}
                         textInputProps={{
                             keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
@@ -278,7 +287,7 @@ function DoubleSearch(props) {
                     />
                 </View>
             </View>
-            {(currentLocationCoords || coordinatesFrom != null) && 
+            {(currentLocationCoords || coordinatesFrom != null) &&
                 <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
             {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&

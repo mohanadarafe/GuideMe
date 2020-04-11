@@ -42,6 +42,7 @@ function NearbyInterestDetails(props) {
 
     const opening =  (hours === true ? "Open Now" : "Close Now");
 
+
     return (
         <View style={styles.container}>
 
