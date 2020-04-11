@@ -4,6 +4,7 @@ import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { store } from "../redux/reducers/index";
+import { FloorMenu } from "./FloorMenu";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -23,7 +24,12 @@ function BottomMenu (props) {
     const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
+    const viewIndoor = props.indoor;
+    const inDirections = props.inDirections;
+    const building = props.building;
     const previewDirections = props.previewMode;
+    const from = props.from;
+    const to = props.to;
 
     store.subscribe(() => {
         setSelectedBuilding(store.getState().selectedBuildingName);
@@ -59,6 +65,10 @@ function BottomMenu (props) {
     //     setMethodTravel(name);
     // };
 
+    const goBack = () => {
+        props.navigation.goBack();
+    };
+
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: destination });
     };
@@ -66,12 +76,23 @@ function BottomMenu (props) {
         props.navigation.navigate("Directions", { destinationResponse: props.directionResponse });
     };
 
-    const goToPreferenceMenu = () => {
-        props.navigation.navigate("PreferenceMenu", {
-            personaType: personaType,
-            mobilityType: mobilityReduced,
-            transportType: methodTravel
-        });
+    const goToPreferenceMenu = (isIndoor) => {
+        if (isIndoor) {
+            props.navigation.navigate("PreferenceMenu", {
+                indoor: true,
+                personaType: personaType,
+                mobilityType: mobilityReduced,
+                transportType: methodTravel
+            });
+        } else {
+            props.navigation.navigate("PreferenceMenu", {
+                indoor: false,
+                personaType: personaType,
+                mobilityType: mobilityReduced,
+                transportType: methodTravel
+            });
+        }
+        
     };
 
     const goToMoreDetails = () => {
@@ -119,10 +140,26 @@ function BottomMenu (props) {
     //     }
     // };
 
+    if (viewIndoor) {
+        return(
+            <View style={styles.insideBuildingContainer} data-test="BottomMenu" testID="bottomMenuInitalView">
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {(inDirections ? goToPreferenceMenu(true) : goToMoreDetails)}} />
+                <Text style={styles.mainLabel}>{building ? building : selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <Button testID="indoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                    <Text style={styles.btnText}>Exit Building</Text>
+                </Button>
+                <View style={styles.changeFloor}>
+                    <FloorMenu from={from} to={to}/>
+                </View>
+            </View>
+        )
+    }
+
     if (previewDirections) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToPreferenceMenu} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {goToPreferenceMenu(false)}} />
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
                 <View style={styles.btnGetDirection}>

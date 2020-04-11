@@ -7,6 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest --forceExit",
+    "clear_jest": "jest --clearCache",
     "lint": "eslint **/*.js --ignore-pattern node_modules/",
     "lint:fix": "eslint **/*.js --fix",
     "e2e": "detox test --configuration ios.sim"

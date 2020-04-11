@@ -1,7 +1,7 @@
 import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
-import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates } from '../Dijkstra/DijkstraAlgorithm';
+import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates, closestTransportation } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 import { Class9Graph } from '../../../constants/ClassGraph9';
 
@@ -9,9 +9,10 @@ export function DifferentFloorDirections(props) {
     const floorFrom = getFloorNumber(props.from);
     const floorTo = getFloorNumber(props.to);
     const graph = ClassGraph();
+    var closestTransportationMethod = props.mobility == "MOBILITY_REDUCED" ? "elevator" : closestTransportation(floorFrom == 9 ? Class9Graph() : graph, floorFrom == 9 ? props.from : ConvertToHall8Floor(props.from));
 
-    const pathToElevator = dijkstra(floorFrom == 9 ? Class9Graph() : graph, floorFrom == 9 ? props.from : ConvertToHall8Floor(props.from), "elevator").path;
-    const pathToClass = dijkstra(floorTo == 9 ? Class9Graph() : graph, "elevator", floorTo == 9 ? props.to : ConvertToHall8Floor(props.to)).path;
+    const pathToElevator = dijkstra(floorFrom == 9 ? Class9Graph() : graph, floorFrom == 9 ? props.from : ConvertToHall8Floor(props.from), closestTransportationMethod).path;
+    const pathToClass = dijkstra(floorTo == 9 ? Class9Graph() : graph, closestTransportationMethod, floorTo == 9 ? props.to : ConvertToHall8Floor(props.to)).path;
 
     var getNextRoomElevator = (index) => {
         if (index < pathToElevator.length){
@@ -41,21 +42,20 @@ export function DifferentFloorDirections(props) {
         }
     });
     
-
     // Go to elevator
     if(props.floor == getFloorNumber(props.from)) {
         rooms = floorFrom == 9 ? Hall9Coordinates() : props.rooms;
         var className = ConvertToHall8Floor(props.from.toString());
-        const arrow = getArrowCoordinates(rooms["elevator"].nearestPoint.x, rooms["elevator"].nearestPoint.y, rooms["elevator"].x, rooms["elevator"].y);
+        const arrow = getArrowCoordinates(rooms[closestTransportationMethod].nearestPoint.x, rooms[closestTransportationMethod].nearestPoint.y, rooms[closestTransportationMethod].x, rooms[closestTransportationMethod].y);
         return(
             <G>
                 <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToElevator.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
-                <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
-                <Line x1={arrow.x3} y1={arrow.y3} x2={rooms["elevator"].x} y2={rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
-                <Line x1={arrow.x4} y1={arrow.y4} x2={rooms["elevator"].x} y2={rooms["elevator"].y} stroke="blue" strokeWidth="5"/>
+                <Line x1={rooms[closestTransportationMethod].x} y1={rooms[closestTransportationMethod].y} x2={rooms[closestTransportationMethod].nearestPoint.x} y2={rooms[closestTransportationMethod].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x3} y1={arrow.y3} x2={rooms[closestTransportationMethod].x} y2={rooms[closestTransportationMethod].y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x4} y1={arrow.y4} x2={rooms[closestTransportationMethod].x} y2={rooms[closestTransportationMethod].y} stroke="blue" strokeWidth="5"/>
             </G>
         )
     }
@@ -66,7 +66,7 @@ export function DifferentFloorDirections(props) {
         const arrow = getArrowCoordinates(rooms[className].nearestPoint.x, rooms[className].nearestPoint.y, rooms[className].x, rooms[className].y);
         return(
             <G>
-                <Line x1={rooms["elevator"].x} y1={rooms["elevator"].y} x2={rooms["elevator"].nearestPoint.x} y2={rooms["elevator"].nearestPoint.y} stroke="blue" strokeWidth="5"/>
+                <Line x1={rooms[closestTransportationMethod].x} y1={rooms[closestTransportationMethod].y} x2={rooms[closestTransportationMethod].nearestPoint.x} y2={rooms[closestTransportationMethod].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToClass.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)
                 }
