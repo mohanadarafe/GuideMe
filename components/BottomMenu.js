@@ -32,17 +32,6 @@ function BottomMenu (props) {
     const previewDirections = props.previewMode;
     const from = props.from;
     const to = props.to;
-
-    useLayoutEffect(() => {
-        store.subscribe(() => {
-            setSelectedBuilding(store.getState().selectedBuildingName);
-            setDestination(store.getState().mainSearchBarDestination);
-            setPersonaType(store.getState().personaType);
-            setMobilityReduced(store.getState().mobilityReducedType);
-            setMethodTravel(store.getState().transportType);
-        });
-        return function cleanUp() {}
-    });
     
 
     const goBack = () => {
@@ -89,6 +78,18 @@ function BottomMenu (props) {
         AsyncStorage.setItem("sideMenu", "mapView"); //FIXME: WHY?
         props.navigation.navigate("NearbyInterest");
     };
+
+    
+    useLayoutEffect(() => {
+        store.subscribe(() => {
+            setSelectedBuilding(store.getState().selectedBuildingName);
+            setDestination(store.getState().mainSearchBarDestination);
+            setPersonaType(store.getState().personaType);
+            setMobilityReduced(store.getState().mobilityReducedType);
+            setMethodTravel(store.getState().transportType);
+        });
+        return function cleanUp() {}
+    });
 
     if (viewIndoor) {
         return(
