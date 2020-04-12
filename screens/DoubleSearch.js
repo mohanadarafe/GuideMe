@@ -48,12 +48,13 @@ function DoubleSearch(props) {
      */
 
     // var fromScreen; 
-    const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
+    const CourseSchedule = props.navigation.getParam("CourseScheduleScreen", "null");
+    const CourseScheduleLocation = props.navigation.getParam("CourseScheduleLocation", "null");
     const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
     const goBack = () => {
-        if(CourseScheduleDetailsScreen === true){
+        if(CourseSchedule === true){
             props.navigation.goBack();
-            props.navigation.navigate("CourseScheduleDetails")
+            props.navigation.navigate("CourseSchedule")
         }
         else if (NearbyInterestDetailsScreen === true){
             props.navigation.goBack();
