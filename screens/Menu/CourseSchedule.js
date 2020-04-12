@@ -57,7 +57,7 @@ function CourseSchedule(props) {
         return filteredList;
     };
 
-    const CourseScheduleScreen = true;
+    const CourseScheduleScreen = true; //FIXME: WHY?
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -71,6 +71,7 @@ function CourseSchedule(props) {
         props.navigation.navigate("DoubleSearch", { CourseScheduleScreen: CourseScheduleScreen, CourseScheduleLocation: item.location });
     }
 
+    //FIXME: Creates memory leak when trying to sign in again to google-calendar (second attempt)
     useEffect(() => {
         const intervalId = setInterval(() => {
             getCalendarId();
