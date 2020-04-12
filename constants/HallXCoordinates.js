@@ -40,6 +40,14 @@ export function HallXCoordinates (floorNumber) {
             y: "217"
         }
     },
+    rooms["women_washroom"] = {
+        x: "385",
+        y: "267",
+        nearestPoint: {
+            x: "385",
+            y: "217"
+        }
+    },
     rooms["H807"] = {
         x: "471",
         y: "155",
@@ -67,6 +75,14 @@ export function HallXCoordinates (floorNumber) {
     rooms["H811"] = {
         x: "654",
         y: "155",
+        nearestPoint: {
+            x: "654",
+            y: "216"
+        }
+    },
+    rooms["men_washroom"] = {
+        x: "654",
+        y: "256",
         nearestPoint: {
             x: "654",
             y: "216"
@@ -108,8 +124,16 @@ export function HallXCoordinates (floorNumber) {
         x: "627",
         y: "468",
         nearestPoint: {
-            x: "553",
-            y: "399"
+            x: "840",
+            y: "468"
+        }
+    },
+    rooms["H822"] = {
+        x: "804",
+        y: "617",
+        nearestPoint: {
+            x: "840",
+            y: "617"
         }
     },
     rooms["H821"] = {
@@ -186,7 +210,7 @@ export function HallXCoordinates (floorNumber) {
     },
     rooms["H837"] = {
         x: "648",
-        y: "806",
+        y: "866",
         nearestPoint: {
             x: "646",
             y: "802"
@@ -204,7 +228,7 @@ export function HallXCoordinates (floorNumber) {
         x: "627",
         y: "717",
         nearestPoint: {
-            x: "559",
+            x: "646",
             y: "799"
         }
     },
@@ -272,6 +296,14 @@ export function HallXCoordinates (floorNumber) {
             y: "691"
         }
     },
+    rooms["H854"] = {
+        x: "227",
+        y: "598",
+        nearestPoint: {
+            x: "183",
+            y: "598"
+        }
+    },
     rooms["H855"] = {
         x: "127",
         y: "601",
@@ -301,14 +333,14 @@ export function HallXCoordinates (floorNumber) {
         y: "",
         nearestPoint: {
             x: "183",
-            y: "423"
+            y: "410"
         }
     },
     rooms["H860"] = {
         x: "241",
         y: "447",
         nearestPoint: {
-            x: "237",
+            x: "274",
             y: "399"
         }
     },
@@ -336,12 +368,76 @@ export function HallXCoordinates (floorNumber) {
             y: "217"
         }
     }
+    rooms["H867"] = {
+        x: "122",
+        y: "128",
+        nearestPoint: {
+            x: "180",
+            y: "215"
+        }
+    }
     rooms["checkpoint4"] = {
         x: "",
         y: "",
         nearestPoint: {
             x: "553",
             y: "401"
+        }
+    }
+    rooms["water_foutain_S"] = {
+        x: "622",
+        y: "252",
+        nearestPoint: {
+            x: "622",
+            y: "216"
+        }
+    }
+    rooms["water_foutain_N"] = {
+        x: "784",
+        y: "760",
+        nearestPoint: {
+            x: "784",
+            y: "802"
+        }
+    }
+    rooms["stairs_NE"] = {
+        x: "306",
+        y: "757",
+        nearestPoint: {
+            x: "306",
+            y: "802"
+        }
+    }
+    rooms["stairs_NW"] = {
+        x: "722",
+        y: "757",
+        nearestPoint: {
+            x: "722",
+            y: "802"
+        }
+    }
+    rooms["stairs_SE"] = {
+        x: "269",
+        y: "362",
+        nearestPoint: {
+            x: "269",
+            y: "410"
+        }
+    }
+    rooms["stairs_SW"] = {
+        x: "722",
+        y: "258",
+        nearestPoint: {
+            x: "722",
+            y: "216"
+        }
+    }
+    rooms["escalator"] = {
+        x: "486",
+        y: "528",
+        nearestPoint: {
+            x: "555",
+            y: "528"
         }
     }
     return rooms;

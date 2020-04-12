@@ -2,12 +2,7 @@
 
 exports[`IndoorScenario component renders different building correctly 1`] = `
 <RNSVGGroup
-  fill={
-    Array [
-      0,
-      4278190080,
-    ]
-  }
+  fill={4278190080}
   fillOpacity={1}
   fillRule={1}
   font={Object {}}
@@ -46,12 +41,7 @@ exports[`IndoorScenario component renders different building correctly 1`] = `
 
 exports[`IndoorScenario component renders different floor correctly 1`] = `
 <RNSVGGroup
-  fill={
-    Array [
-      0,
-      4278190080,
-    ]
-  }
+  fill={4278190080}
   fillOpacity={1}
   fillRule={1}
   font={Object {}}
@@ -90,12 +80,7 @@ exports[`IndoorScenario component renders different floor correctly 1`] = `
 
 exports[`IndoorScenario component renders same floor correctly 1`] = `
 <RNSVGGroup
-  fill={
-    Array [
-      0,
-      4278190080,
-    ]
-  }
+  fill={4278190080}
   fillOpacity={1}
   fillRule={1}
   font={Object {}}

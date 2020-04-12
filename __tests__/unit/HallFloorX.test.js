@@ -7,7 +7,7 @@ describe('Hall Floor X Asset coverage', () => {
     const HallFloorXAssetWrapper = shallow(<HallFloorX />)
 
     it('Should return the appropriate number of <Path> children', () => {
-        expect(HallFloorXAssetWrapper.find(Path).length).toBe(38);
+        expect(HallFloorXAssetWrapper.find(Path).length).toBe(57);
     });
 
     it('Should return the appropriate number of <Text> children', () => {
