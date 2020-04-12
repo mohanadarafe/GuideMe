@@ -45,7 +45,7 @@ function Settings(props) {
     const getSwitchValue = async () => {
         let getAccessToken = await AsyncStorage.getItem("accessToken");
         let switchValue = await AsyncStorage.getItem("switchVal");
-        if (switchValue == "true"){
+        if (switchValue == "true") {
             const resp = await getUsersCalendarList(getAccessToken);
             getFilteredGoogleCalendarList(resp);
         }
@@ -62,9 +62,11 @@ function Settings(props) {
             if (accessToken) {
                 /* Log-Out */
                 setCalendarList(null);
-                await Google.logOutAsync({ accessToken, iosClientId: "128383090622-lgrk639fn4k6t99lhrldkh02441fcjgb.apps.googleusercontent.com",
-            });
-        }        }
+                await Google.logOutAsync({
+                    accessToken, iosClientId: "128383090622-lgrk639fn4k6t99lhrldkh02441fcjgb.apps.googleusercontent.com",
+                });
+            }
+        }
     }
 
     async function signInWithGoogleAsync() {
@@ -149,7 +151,7 @@ function Settings(props) {
 
     //Same problem that with course schedule before with the accessToken (Not sure how to fix...)
     useEffect(() => {
-            getSwitchValue();
+        getSwitchValue();
     }, []);
 
     return (
@@ -199,8 +201,7 @@ function Settings(props) {
                                 <ListItem
                                     title={item.summary}
                                     titleStyle={{ color: "white" }}
-                                    subtitle={item.description !== undefined ? item.description : "N/A"}
-                                    checked={isConnected.checked.includes(item.id)}
+                                    subtitle={item.description !== undefined ? item.description : "Please provide a description inside google calendar"}
                                     rightTitleStyle={{ color: "green" }}
                                     subtitleStyle={{ color: "grey" }}
                                     containerStyle={{ backgroundColor: "#2A2E43" }}
@@ -215,7 +216,9 @@ function Settings(props) {
                                             checkedColor='#3ACCE1'
                                             onPress={() => {
                                                 press(item.id);
-                                                AsyncStorage.setItem("calendarId", item.id)}}
+                                                AsyncStorage.setItem("calendarId", item.id)
+                                            }}
+                                            checked={isConnected.checked.includes(item.id)}
                                         />}
                                 />
                             </TouchableOpacity>
