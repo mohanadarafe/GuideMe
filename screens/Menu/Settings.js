@@ -274,7 +274,6 @@ export const styles = StyleSheet.create({
     container1Text: {
         color: "#FFF",
         marginHorizontal: "10%",
-        marginVertical: "2%",
         fontSize: 18,
         fontFamily: "encodeSansExpanded"
     },
@@ -295,7 +294,6 @@ export const styles = StyleSheet.create({
     container2Text: {
         color: "#FFF",
         marginHorizontal: "10%",
-        marginVertical: "2%",
         fontSize: 18,
         fontFamily: "encodeSansExpanded"
     },
@@ -306,10 +304,10 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded"
     },
     scrollContainer: {
-        height: "30%",
+        height: "25%",
         width: "100%",
         backgroundColor: "#353A50",
-        flexDirection: "column"
+        flexDirection: "column",
     },
     toggle: {
         position: "absolute",
@@ -317,7 +315,7 @@ export const styles = StyleSheet.create({
         top: "30%"
     },
     flatlist: {
-        height: "55%",
+        height: "60%", //Increase size of the flatlist if it doesnt fit the screen
         width: "100%",
         marginLeft: 20,
         flexDirection: "column",

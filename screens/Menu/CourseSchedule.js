@@ -165,7 +165,6 @@ export const styles = StyleSheet.create({
         height: "75%",
         bottom: "0%",
         position: "absolute",
-        backgroundColor: "yellow"
     },
     sectionHeader: {
         paddingTop: 2,
