@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { AsyncStorage, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CheckBox, ListItem } from "react-native-elements";
-import { ScrollView } from "react-native-gesture-handler";
 
 /**
  * US22 - As a user, I would like to connect my direction to next class to my google calendar. #31
@@ -44,7 +43,7 @@ function CourseSchedule(props) {
 
     const getCalendarEvents = async () => {
         let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
         setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
