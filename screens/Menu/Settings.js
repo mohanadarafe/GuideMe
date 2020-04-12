@@ -189,7 +189,7 @@ function Settings(props) {
                     </View>
                 </ScrollView>
             </View>
-            <ScrollView style={styles.flatlist}>
+            <View style={styles.flatlist}>
                 {(calendarList) &&
                     <FlatList
                         data={calendarList}
@@ -200,6 +200,10 @@ function Settings(props) {
                                     title={item.summary}
                                     titleStyle={{ color: "white" }}
                                     subtitle={item.description !== undefined ? item.description : "N/A"}
+                                    checked={isConnected.checked.includes(item.id)}
+                                    rightTitleStyle={{ color: "green" }}
+                                    subtitleStyle={{ color: "grey" }}
+                                    containerStyle={{ backgroundColor: "#2A2E43" }}
                                     rightIcon={
                                         <CheckBox
                                             size={30}
@@ -211,21 +215,15 @@ function Settings(props) {
                                             checkedColor='#3ACCE1'
                                             onPress={() => {
                                                 press(item.id);
-                                                AsyncStorage.setItem("calendarId", item.id)
-                                            }}
-                                            checked={isConnected.checked.includes(item.id)}
+                                                AsyncStorage.setItem("calendarId", item.id)}}
                                         />}
-
-                                    rightTitleStyle={{ color: "green" }}
-                                    subtitleStyle={{ color: "grey" }}
-                                    containerStyle={{ backgroundColor: "#2A2E43" }}
                                 />
                             </TouchableOpacity>
                         )}
                     />
                 }
-            </ScrollView>
-        </View >
+            </View>
+        </View>
     );
 }
 
@@ -319,11 +317,10 @@ export const styles = StyleSheet.create({
         top: "30%"
     },
     flatlist: {
-        height: "100%",
+        height: "55%",
         width: "100%",
         marginLeft: 20,
-        backgroundColor: "#2A2E43",
-        flexDirection: "column"
+        flexDirection: "column",
     }
 });
 

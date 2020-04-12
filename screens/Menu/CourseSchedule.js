@@ -89,11 +89,12 @@ function CourseSchedule(props) {
                 </TouchableOpacity>
             </View>
             <Text style={styles.mainLabel}>My Course Schedule</Text>
-            <ScrollView style={styles.scrollTextContainer}>
+            <View style={styles.scrollTextContainer}>
                 {(switchVal == "true" && calendarEventsList) &&
                     <FlatList
                         data={calendarEventsList}
                         keyExtractor={(item) => item.id}
+                        initialNumToRender={10}
                         renderItem={({ item }) => (
                             <ListItem
                                 title={item.summary}
@@ -115,7 +116,7 @@ function CourseSchedule(props) {
                         )}
                     />
                 }
-            </ScrollView>
+            </View>
         </View >
     );
 }
@@ -164,6 +165,7 @@ export const styles = StyleSheet.create({
         height: "75%",
         bottom: "0%",
         position: "absolute",
+        backgroundColor: "yellow"
     },
     sectionHeader: {
         paddingTop: 2,
