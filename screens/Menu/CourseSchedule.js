@@ -1,11 +1,11 @@
-import React from "react";
-import { View, Text, StyleSheet, SafeAreaView, SectionList, TouchableOpacity } from "react-native";
-import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { AsyncStorage, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { CheckBox, ListItem } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
 
 /**
-
  * US22 - As a user, I would like to connect my direction to next class to my google calendar. #31
  * US23 - As a user, when connecting the direction to the next class in my google calendar, I would like to map those directions to multiple calendars. #32
  * US24 - As a user, I would like to find the location of a classroom from the next calendar event.
@@ -18,35 +18,68 @@ import PropTypes from "prop-types";
  * to navigate to the detail screen and get the directions to the class.
  */
 
-
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 function CourseSchedule(props) {
+    const [accessToken, setAccessToken] = React.useState(null);
+    const [selectedCalendarId, setSelectedCalendarId] = React.useState(null);
+    const [calendarEventsList, setCalendarEventsList] = React.useState(null);
+    const [switchVal, setSwitchVal] = React.useState(false);
 
-     /**
+    const getCalendarId = async () => {
+        let calendarId = await AsyncStorage.getItem("calendarId");
+        setSelectedCalendarId(calendarId);
+    };
+
+    const getAccessToken = async () => {
+        let accessToken = await AsyncStorage.getItem("accessToken");
+        setAccessToken(accessToken);
+    };
+
+    const getSwitchValue = async () => {
+        let switchValue = await AsyncStorage.getItem('switchVal');
+        setSwitchVal(switchValue);
+    };
+
+    const getCalendarEvents = async () => {
+        let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        let resp = await calendarEvents.json();
+        setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
+    }
+
+    const getFilteredGoogleCalendarEvents = (resp) => {
+        var filteredList = resp.items.map(element => {
+            return { id: element.id, summary: element.summary, description: element.description, location: element.location };
+        });
+        return filteredList;
+    };
+
+    const CourseScheduleScreen = true;
+
+    /**
      * The method will slide the side menu from the right side of the screen
      * @param  {} =>{props.navigation.openDrawer(
-     */
+    */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
 
-    
-    /**
-     * The method will let us navigate to the CourseSchedule screen
-     * @param  {} =>{props.navigation.navigate("CourseScheduleDetails"
-     */
-    const goToCourseSchedule = () => {
-        props.navigation.navigate("CourseScheduleDetails");
-    };
+    const goToDoubleSearch = (item) => {
+        props.navigation.navigate("DoubleSearch", { CourseScheduleScreen: CourseScheduleScreen, CourseScheduleLocation: item.location });
+    }
 
-    // TODO: Static data for now just to layout the SectionList 
-    const data = [{
-        title: "Wed, Feb 5",
-        data: ["SOEN 357 Lecture", "SOEN 357 Tutorial", "SOEN 345 Lecture"
-        ]
-    }];
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getCalendarId();
+            getAccessToken();
+            getSwitchValue();
+        }, 1);
+        getCalendarEvents();
+        return () => clearInterval(intervalId);
+    }, [selectedCalendarId, accessToken]);
 
     return (
         <View style={styles.container}>
@@ -56,19 +89,38 @@ function CourseSchedule(props) {
                 </TouchableOpacity>
             </View>
             <Text style={styles.mainLabel}>My Course Schedule</Text>
-            <SafeAreaView style={styles.scrollTextContainer}>
-                <SectionList
-                    sections={data}
-                    renderItem={({ item }) => <TouchableOpacity onPress={goToCourseSchedule}><Text style={styles.listItem}>{item}</Text></TouchableOpacity>}
-                    renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-                    keyExtractor={(index) => index}
-                    ItemSeparatorComponent={() => <View style={styles.line} />}
-                />
-            </SafeAreaView>
-
+            <View style={styles.scrollTextContainer}>
+                {(switchVal == "true" && calendarEventsList) &&
+                    <FlatList
+                        data={calendarEventsList}
+                        keyExtractor={(item) => item.id}
+                        initialNumToRender={10}
+                        renderItem={({ item }) => (
+                            <ListItem
+                                title={item.summary}
+                                titleStyle={{ color: "white", paddingLeft: 20 }}
+                                subtitle={item.location !== undefined ? item.description : "Please enter a location in your Google Calendar"}
+                                rightTitleStyle={{ color: "white", paddingRight: 20 }}
+                                containerStyle={{ backgroundColor: "#2A2E43" }}
+                                subtitleStyle={{ color: "grey", paddingLeft: 20 }}
+                                rightIcon={
+                                    <CheckBox
+                                        size={30}
+                                        iconRight
+                                        iconType='material'
+                                        uncheckedIcon='arrow-forward'
+                                        uncheckedColor="#3ACCE1"
+                                        onPress={() => { goToDoubleSearch(item) }}
+                                    />}
+                            />
+                        )}
+                    />
+                }
+            </View>
         </View >
     );
 }
+
 
 CourseSchedule.propTypes = {
     navigation: PropTypes.object,
