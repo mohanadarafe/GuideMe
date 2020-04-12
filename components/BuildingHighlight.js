@@ -18,6 +18,7 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+
 /**
  * US3 - As a user, I would like to be able to identify campus buildings and
  * distinguish them from other buildings.
@@ -35,9 +36,16 @@ export function BuildingHighlight (props) {
                 coordinates={coord.h.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    setBuildingName(buildings["Hall Building"].name); 
-                    props.setSelectedBuildingName(buildings["Hall Building"].name);
-            }}
+                    if (buildingName != buildings["Hall Building"].name) {
+                        setBuildingName(buildings["Hall Building"].name);
+                        props.setSelectedBuildingName(buildings["Hall Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
+                }
+
+            }
                 fillColor={buildingName == buildings["Hall Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
@@ -46,8 +54,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.lb.coordinates}
                 tappable={true}
                 onPress={() => {
+                    if (buildingName != buildings["LB Building"].name) {
                     setBuildingName(buildings["LB Building"].name);
                     props.setSelectedBuildingName(buildings["LB Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
                 } }
                 fillColor={buildingName == buildings["LB Building"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -57,8 +70,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.gm.coordinates}
                 tappable={true}
                 onPress={() => {
+                    if (buildingName != buildings["GM Building"].name) {
                     setBuildingName(buildings["GM Building"].name)
                     props.setSelectedBuildingName(buildings["GM Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
                 }}
                 fillColor={buildingName == buildings["GM Building"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -68,9 +86,15 @@ export function BuildingHighlight (props) {
                 coordinates={coord.ev.coordinates}
                 tappable={true}
                 onPress={() => {
+                    if (buildingName != buildings["EV Building"].name) {
                     setBuildingName(buildings["EV Building"].name)
                     props.setSelectedBuildingName(buildings["EV Building"].name);
-                }}
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
+                    }
+                }
                 fillColor={buildingName == buildings["EV Building"].name ? "#3ACCE1": "#a282e0"}
             />
 
@@ -79,8 +103,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.mb.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    if (buildingName != buildings["MB Building"].name) {
                     setBuildingName(buildings["MB Building"].name);
                     props.setSelectedBuildingName(buildings["MB Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
                 }}
                 fillColor={buildingName == buildings["MB Building"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -90,8 +119,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.sp.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    if (buildingName != buildings["SP Building"].name) {
                     setBuildingName(buildings["SP Building"].name);
                     props.setSelectedBuildingName(buildings["SP Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
                 }}
                 fillColor={buildingName == buildings["SP Building"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -101,8 +135,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.cj.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    if (buildingName != buildings["CJ Building"].name) {
                     setBuildingName(buildings["CJ Building"].name)
                     props.setSelectedBuildingName(buildings["CJ Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
             }}
             fillColor={buildingName == buildings["CJ Building"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -112,8 +151,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.cc.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    if (buildingName != buildings["CC Building"].name) {
                     setBuildingName(buildings["CC Building"].name);
                     props.setSelectedBuildingName(buildings["CC Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
             }}
             fillColor={buildingName == buildings["CC Building"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -123,8 +167,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.ad.coordinates}
                 tappable={true}
                 onPress={() => {
+                    if (buildingName != buildings["AD Building"].name) {
                     setBuildingName(buildings["AD Building"].name);
                     props.setSelectedBuildingName(buildings["AD Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
                 }}
                 fillColor={buildingName == buildings["AD Building"].name ? "#3ACCE1": "#a282e0"}
                 />
@@ -134,8 +183,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.gn.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    if (buildingName != buildings["Grey Nuns"].name) {
                     setBuildingName(buildings["Grey Nuns"].name)
                     props.setSelectedBuildingName(buildings["Grey Nuns"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
                 }}
                 fillColor={buildingName == buildings["Grey Nuns"].name ? "#3ACCE1": "#a282e0"}
             />
@@ -144,8 +198,13 @@ export function BuildingHighlight (props) {
                 coordinates={coord.vl.coordinates}
                 tappable={true}
                 onPress={() => { 
+                    if (buildingName != buildings["VL Building"].name) {
                     setBuildingName(buildings["VL Building"].name)
                     props.setSelectedBuildingName(buildings["VL Building"].name);
+                    } else {
+                        setBuildingName(null);
+                        props.setSelectedBuildingName(null);
+                    }
             }}
             fillColor={buildingName == buildings["VL Building"].name ? "#3ACCE1": "#a282e0"}
             />
