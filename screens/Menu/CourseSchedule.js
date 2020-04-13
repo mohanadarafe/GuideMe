@@ -17,6 +17,8 @@ import { CheckBox, ListItem } from "react-native-elements";
  * to navigate to the detail screen and get the directions to the class.
  */
 
+//TODO Ask chris how did he do the SVG for 
+
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
@@ -25,6 +27,9 @@ function CourseSchedule(props) {
     const [selectedCalendarId, setSelectedCalendarId] = React.useState(null);
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState(false);
+
+    //TODO Show only events after current date
+    let currentDate = new Date();
 
     const getCalendarId = async () => {
         let calendarId = await AsyncStorage.getItem("calendarId");
@@ -42,6 +47,7 @@ function CourseSchedule(props) {
     };
 
     const getCalendarEvents = async () => {
+        console.log(currentDate);
         let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
@@ -89,8 +95,8 @@ function CourseSchedule(props) {
             </View>
             <Text style={styles.mainLabel}>My Course Schedule</Text>
             <View style={styles.scrollTextContainer}>
-                {(switchVal == "true" && calendarEventsList) &&
-                    <FlatList
+                {(switchVal == "true" && calendarEventsList)
+                    ? <FlatList
                         data={calendarEventsList}
                         keyExtractor={(item) => item.id}
                         initialNumToRender={10}
@@ -98,22 +104,26 @@ function CourseSchedule(props) {
                             <ListItem
                                 title={item.summary}
                                 titleStyle={{ color: "white", paddingLeft: 20 }}
-                                subtitle={item.location !== undefined ? item.description : "Please enter a location in your Google Calendar"}
+                                subtitle={item.description !== undefined ? item.description : "Please enter a location in your Google Calendar"}
                                 rightTitleStyle={{ color: "white", paddingRight: 20 }}
                                 containerStyle={{ backgroundColor: "#2A2E43" }}
                                 subtitleStyle={{ color: "grey", paddingLeft: 20 }}
-                                rightIcon={
+                                rightIcon={ () => item.location &&
                                     <CheckBox
                                         size={30}
                                         iconRight
                                         iconType='material'
-                                        uncheckedIcon='arrow-forward'
+                                        uncheckedIcon={'arrow-forward'}
                                         uncheckedColor="#3ACCE1"
-                                        onPress={() => { goToDoubleSearch(item) }}
+                                        onPress={() => { goToDoubleSearch(item) }
+                                        }
                                     />}
                             />
                         )}
                     />
+                    : <View styles={styles.InstructionsContainer}>
+                        <Text style={styles.courseScheduleInstructions}>Sync your google calendar account in settings</Text>
+                    </View>
                 }
             </View>
         </View >
@@ -163,7 +173,7 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "75%",
         bottom: "0%",
-        position: "absolute",
+        // position: "absolute",
     },
     sectionHeader: {
         paddingTop: 2,
@@ -189,7 +199,12 @@ export const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#353A50",
     },
-
+    courseScheduleInstructions: {
+        color: "white",
+        paddingTop: "70%",
+        alignSelf: "center",
+        fontFamily: "Verdana"
+    }
 });
 
 export default CourseSchedule;
