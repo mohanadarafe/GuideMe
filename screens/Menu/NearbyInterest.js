@@ -23,10 +23,14 @@ import Menu, { MenuItem, MenuDivider, Position } from "react-native-enhanced-pop
 function NearbyInterest(props) {
 
     const [fromScreen, setFromScreen] = React.useState();
-    const [jsonElement, setJsonElement] = React.useState([]);
+    const [jsonElement, setJsonElement] = React.useState(null);
     const [selectedTab, setSelectedTab] = React.useState(0);
+    // const [key, setKey] = React.useState(null);
+    const [detailObject, setDetailObject] = React.useState([]);
     const [radius, setRadius] = React.useState(100);
     const [campus, setCampus] = React.useState("SGW");
+    const [phone, setPhone] = React.useState([]);
+    const [web, setWeb] = React.useState([]);
     /**
      * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
      * @param  {} =>{letname=awaitAsyncStorage.getItem("sideMenu)"
@@ -36,7 +40,6 @@ function NearbyInterest(props) {
         let name = await AsyncStorage.getItem("sideMenu");
         setFromScreen(name);
     };
-
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -59,7 +62,7 @@ function NearbyInterest(props) {
             phone: item.phone,
             web: item.web,
             latitude: item.latitude,
-            longitude: item.longitude,  
+            longitude: item.longitude,
         });
     };
     /**
@@ -75,56 +78,144 @@ function NearbyInterest(props) {
 
     // Static data for now 
     const data = [
-        { key: "McKibbins", rating: 3.3, open_hours: true, address: "1446 Crescent", phone: "+1(514) 666-9999", web: "mckibbins.com", latitude: 45.4975951, longitude: -73.57762079999999},
+        { key: "McKibbins", rating: 3.3, open_hours: true, address: "1446 Crescent", phone: "+1(514) 666-9999", web: "mckibbins.com", latitude: 45.4975951, longitude: -73.57762079999999 },
         { key: "Tim Hortons", rating: 3.0, open_hours: false, address: "1500 Crescent", phone: "+1(514) 666-8888", web: "timhortons.com", latitude: 45.4975951, longitude: -73.57762079999999, },
-        { key: "Arabica", rating: 3.2, open_hours: false, address: "1900 Crescent", phone: "+1(514) 666-7777", web: "arabica.com", latitude: 45.4975951, longitude: -73.57762079999999,  },
+        { key: "Arabica", rating: 3.2, open_hours: false, address: "1900 Crescent", phone: "+1(514) 666-7777", web: "arabica.com", latitude: 45.4975951, longitude: -73.57762079999999, },
         { key: "Kaeks", rating: 2.9, open_hours: true, address: "1594 Crescent", phone: "+1(514) 666-4444", web: "kaeks.com", latitude: 45.4975951, longitude: -73.57762079999999, }];
 
     // number of coloumns for the flatList 
     const numColumns = 2;
 
-    // const fetchData = async () => {
+    // const getKey = async () => {
+    //     let key = await AsyncStorage.getItem("apiKeyId");
+    //     setKey(key);
+    // };
 
-    //     try {
-    //         // getItem method is necessary for the retrieval of the API Key 
-    //         let keyId = await AsyncStorage.getItem("apiKeyId");
-    //         let SGW_COORDS = `45.497063, -73.578431`;
-    //         let LOY_COORDS = `45.458371, -73.638239`;
-    //         let coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
-    //         let RADIUS = radius;
-    //         let TYPE = `restaurant`;
-    //         let MAX_WIDTH = `500`;
-    //         let SENSOR = `false`;
-    //         // let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
-    //         let jsonResp = await resp.json();
+    var arr = [];
+    var jsonArr = [];
+
+    var phoneArr = [];
+    var webArr = [];
 
 
-    //         // var key;
-    //         // if (response && response.results.length > 0) {
-    //         //     for (key in response.results) {
-    //         //         let placeName = response.results[key].name;
-    //         //         let placeRating = response.results[key].rating;
-    //         //         let photoRef = response.results[key].photos[0].photo_reference;
-    //         //         if (placeName !== null & placeRating !== null && photoRef !== null) {
-    //         //             data.push({ key: placeName, rating: placeRating, img: photoRef });
-    //         //         }
-    //         //     }
-    //         // }
+    const fetchData = async () => {
 
-    //         setJsonElement(jsonResp);
-    //     }
-    //     catch (error) {
-    //         alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
-    //     }
-    // }
+        try {
+            let keyId = await AsyncStorage.getItem("apiKeyId");
+            let SGW_COORDS = "45.496996, -73.578481";
+            let LOY_COORDS = "45.458371,-73.638239";
+            var coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
+            var RADIUS = radius;
+            console.log(radius);
+            let TYPE = `restaurant`;
+            let MAX_WIDTH = `500`;
+            let SENSOR = `false`;
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates}&radius=${radius}&type=restaurant&key=${keyId}`);
+            let jsonResp = await resp.json();
+          
+
+
+            setJsonElement(getFilteredJsonElement(jsonResp, keyId, MAX_WIDTH, SENSOR));
+
+
+
+        } catch (error) {
+            alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+        }
+    }
+
+   
+
+
+    const getFilteredJsonElement = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
+
+
+        var filtering = jsonResp.results.map(element => {
+
+
+            fetchDetailData(element.place_id);
+
+
+            return {
+                key: element.name,
+                rating: element.rating,
+                open_hours: element.opening_hours.open_now,
+                address: element.vicinity,
+                latitude: element.geometry.location.lat,
+                longitude: element.geometry.location.lng,
+                img: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${element.photos[0].photo_reference}&sensor=${SENSOR}&key=${keyId}`
+            }
+        })
+
+
+
+        return filtering;
+    }
+
+
+    const fetchDetailData = async (placeId, element_count) => {
+        try {
+            let keyId = await AsyncStorage.getItem("apiKeyId");
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=formatted_phone_number,website&key=${keyId}`);
+            let jsonResp = await resp.json();
+            // phoneArr.push(jsonResp);
+            // webArr.push( jsonResp);
+            // // console.log(count);
+            // console.log(phoneArr[element_count].result.formatted_phone_number);
+            // console.log(webArr);
+
+            setPhone(prevState => [...prevState, jsonResp.result.formatted_phone_number]);
+            setWeb(prevState => [...prevState, jsonResp.result.website]);
+
+
+        } catch (error) {
+            alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+        }
+
+
+    }
+
+
+        useEffect(() => {
+
+            fetchData();
+
+        }, [campus, radius]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             getFromScreen();
         }, 1);
-        // fetchData();
+
         return () => clearInterval(intervalId);
     });
+
+    if (jsonElement && phone !== undefined && web !== undefined) {
+
+        var count = 0;
+        var newarr = jsonElement.map(element => {
+            //    console.log(count++);
+            count++;
+            return {
+                key: element.key,
+                rating: element.rating,
+                open_hours: element.open_hours,
+                address: element.address,
+                phone: phone[count - 1],
+                web: web[count - 1],
+                latitude: element.latitude,
+                longitude: element.longitude,
+                img: element.img
+
+            }
+
+        })
+
+
+        // console.log(;
+
+    }
+
 
     let textRef = React.createRef();
     let menuRef = null;
@@ -142,8 +233,6 @@ function NearbyInterest(props) {
         setRadius(value);
         hideMenu();
     }
-
-    // console.log("json name: "+jsonElement);
 
     return (
         <View style={styles.container}>
@@ -190,9 +279,11 @@ function NearbyInterest(props) {
                     setSelectedTab(tab);
                     if (tab === 0) {
                         setCampus("SGW");
+                        
                     }
                     else if (tab === 1) {
                         setCampus("LOY");
+                
                     }
                 }}
             ></SegmentedControlTab>
@@ -202,7 +293,7 @@ function NearbyInterest(props) {
                 <FlatList
                     onEndReachedThreshold={0}
                     contentContainerStyle={styles.list}
-                    data={data}
+                    data={newarr}
                     numColumns={numColumns}
                     keyExtractor={(item) => {
                         return item.key;
@@ -213,7 +304,7 @@ function NearbyInterest(props) {
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
                                         {/* // FIXME: add a default image when theres no internet connection  */}
-                                        {/* <Image style={{ height: "100%", width: "100%" }} source={{ uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=500&photoreference=${item.img}&sensor=false&key=AIzaSyDApykkW1hGVhUCZXf5pv9CIvAvyPBAy7k`}} /> */}
+                                        <Image style={{ height: "100%", width: "100%" }} source={{ uri: item.img }} />
                                     </View>
                                     <View style={styles.itemTextContainer}>
                                         <Text style={styles.itemText}>{item.key}</Text>

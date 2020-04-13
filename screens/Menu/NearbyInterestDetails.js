@@ -41,7 +41,7 @@ function NearbyInterestDetails(props) {
     }
 
     const opening =  (hours === true ? "Open Now" : "Close Now");
-
+  
 
     return (
         <View style={styles.container}>
@@ -130,17 +130,6 @@ export const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#2A2E43"
     },
-    mainLabel: {
-        color: "#FFF",
-        fontSize: 23,
-        fontFamily: "encodeSansExpanded",
-        paddingBottom: 10,
-        top: "14%",
-        bottom: "2%",
-        fontWeight: "bold",
-        justifyContent: "center",
-        position: "absolute"
-    },
     icon: {
         position: "absolute",
         color: "#FFFFFF",
@@ -198,7 +187,7 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "21%"
+        top: "23%"
     },
     subLabel: {
         position: "absolute",
