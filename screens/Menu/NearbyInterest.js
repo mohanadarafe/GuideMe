@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
 import { Icon } from "native-base";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+// import { Entypo } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import Menu, { MenuItem, Position } from "react-native-enhanced-popup-menu";
@@ -254,7 +255,7 @@ function NearbyInterest(props) {
 
     //     })
     // }
-      // if (jsonElementArray_LOY && phone !== undefined && web !== undefined) {
+    // if (jsonElementArray_LOY && phone !== undefined && web !== undefined) {
 
     //     var count = 0;
     //     var Detail_Array_LOY = jsonElementArray_LOY.map(element => {
@@ -276,26 +277,37 @@ function NearbyInterest(props) {
     //     })
     // }
 
-    let textRef = React.createRef();
-    let menuRef = null;
 
-    const setMenuRef = ref => {
-        menuRef = ref;
-    }
-    const hideMenu = () => {
-        menuRef.hide();
-    }
-    const showMenu = () => {
-        menuRef.show(textRef.current, stickTo = Position.BOTTOM_CENTER);
-    }
+    /**
+     *code for the pop menu that will the user change the search radius 
+     * in order to display this feature button you need to uncomment these lines 
+     * lines 286 to 298, lines 299 to 306, lines 330 to 337
+     * C.S.B
+     */
+
+    // let textRef = React.createRef();
+    // let menuRef = null;
+
+    // const setMenuRef = ref => {
+    //     menuRef = ref;
+    // }
+    // const hideMenu = () => {
+    //     menuRef.hide();
+    // }
+    // const showMenu = () => {
+    //     menuRef.show(textRef.current, stickTo = Position.BOTTOM_CENTER);
+    // }
     /**
      * This method retrived the radius value when the button in the menu is pressed
      * @param  {} value
      */
-    const itemSelected = (value) => {
-        setRadius(value);
-        hideMenu();
-    }
+
+    // const itemSelected = (value) => {
+    //     setRadius(value);
+    //     hideMenu();
+    // }
+
+
 
     return (
         <View style={styles.container}>
@@ -312,25 +324,28 @@ function NearbyInterest(props) {
                 }
 
             </View>
+
+            {/*             
             <TouchableOpacity style={styles.optionButton} onPress={showMenu} ref={textRef}>
                 <Entypo name="popup" style={styles.option} />
             </TouchableOpacity>
 
             <Menu ref={setMenuRef}>
-                <MenuItem onPress={() => { itemSelected(100) }}> 100 meters</MenuItem>
+                <MenuItem id="100btn" onPress={() => { itemSelected(100) }}> 100 meters</MenuItem>
 
-                <MenuItem onPress={() => { itemSelected(250) }}>250 meters</MenuItem>
+                <MenuItem id="250btn" onPress={() => { itemSelected(250) }}>250 meters</MenuItem>
 
-                <MenuItem onPress={() => { itemSelected(500) }}>500 meters</MenuItem>
+                <MenuItem id="500btn" onPress={() => { itemSelected(500) }}>500 meters</MenuItem>
 
-                <MenuItem onPress={() => { itemSelected(1500) }}>> 1000 meters</MenuItem>
-            </Menu>
+                <MenuItem id="1500btn"onPress={() => { itemSelected(1500) }}>> 1000 meters</MenuItem>
+            </Menu> */}
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
             <Text style={styles.radiusLabel}>Search radius: {radius} meters</Text>
 
 
             <SegmentedControlTab
+                id="tab_button"
                 tabsContainerStyle={styles.tabsContainerStyle}
                 values={["SGW", "LOY"]}
                 selectedIndex={selectedTab}
@@ -349,7 +364,6 @@ function NearbyInterest(props) {
                     else if (tab === 1) {
                         setCampus("LOY");
                         setRadius("1000");
-
                     }
                 }}
             ></SegmentedControlTab>
@@ -365,7 +379,7 @@ function NearbyInterest(props) {
                         return item.key;
                     }}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity onPress={() => { goToNearbyInterestDetails(item) }}>
+                        < TouchableOpacity onPress={() => { goToNearbyInterestDetails(item) }}>
                             <View key={index}>
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
@@ -385,7 +399,7 @@ function NearbyInterest(props) {
                                     </View>
                                 </View>
                             </View>
-                        </TouchableOpacity>
+                        </ TouchableOpacity>
                     )}
                 />
             </View>
@@ -507,7 +521,7 @@ export const styles = StyleSheet.create({
         width: "100%",
     },
     tabsContainerStyle: {
-        bottom: "3%",
+        top: "13%",
     },
     tabStyle: {
         backgroundColor: "#2A2E43",
@@ -515,6 +529,7 @@ export const styles = StyleSheet.create({
         borderColor: "white",
         borderBottomColor: "#FFFFFF",
         paddingHorizontal: "15%"
+
     },
     tabTextStyle: {
         fontWeight: "bold",
