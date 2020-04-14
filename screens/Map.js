@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, {useRef, useLayoutEffect} from "react";
 import { StyleSheet } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import BuildingHighlight  from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
@@ -9,6 +9,8 @@ import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import Search  from "../components/Search";
 import PropTypes from "prop-types";
+import { store } from "../redux/reducers/index";
+
 
 const mapPosition = {
     sgwCoord: {
@@ -34,15 +36,24 @@ const mapPosition = {
 function Map ({ navigation }) {
 
     const [campusSwitch, setCampusSwitch] = React.useState(true);
+    const [searchItemMaker, setSearchItemMaker] = React.useState(null);
+    const mapRef = React.useRef(null);
+
     const setSelectedCampus = (value) => {
         setCampusSwitch(value);
     }
+
+    const addMarkerToSearchItem = (value) => { 
+        setSearchItemMaker({latitude: value.latitude, longitude: value.longitude});
+    }
+    
 
     return (
         <View testID="mapView" data-test="MapComponent">
             <View>
                 <MapView
                     data-test="MapViewComponent"
+                    ref={mapRef}
                     style={styles.map}
                     provider={PROVIDER_GOOGLE}
                     region={campusSwitch ? mapPosition.sgwCoord : mapPosition.loyCoord}
@@ -50,11 +61,21 @@ function Map ({ navigation }) {
                     showsCompass={true}
                     showsBuildings={true}
                     showsIndoors={false}
+                    onPress = {() => {setSearchItemMaker(null); setSearchItemMaker(null)}}
                 >
                     <BuildingHighlight />
                     <BuildingIdentification />
+                    {searchItemMaker && 
+                        <Marker 
+                            coordinate = {searchItemMaker}
+                        />
+                    }
                 </MapView>
-                <Search testID="searchBar" navigation = {navigation}/>
+                <Search testID="searchBar" 
+                navigation = {navigation} 
+                mapReference = {mapRef} 
+                // selectedItemMarker = {addMarkerToSearchItem.bind(this)}
+                />
                 <View style={styles.CurrentBuildingLocation}>
                         {/* <CurrentBuildingLocation /> */}
                 </View>

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import {getCoordinates} from "../screens/DoubleSearch";
 
 function mapStateToProps(value) {
   return {
@@ -15,7 +15,8 @@ function mapStateToProps(value) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setMainSearchBarDestination: (value) => dispatch({ type: "SEARCH_BAR_VALUE", payload: value })
+    setMainSearchBarDestination: (value) => dispatch({ type: "SEARCH_BAR_VALUE", payload: value }),
+    setMainSearchMarker: (value) => dispatch({ type: "SEARCH_BAR_MARLER", payload: value })
   }
 }
 
@@ -36,40 +37,43 @@ function fetchData () {
 
 export function Search (props) {
   // eslint-disable-next-line no-unused-vars
-  // const [buildingName, setBuildingName] = React.useState("");
-  // const [from, setFrom] = React.useState("");
-  // const [to, setTo] = React.useState("");
+
   const [data, setData] = React.useState(null);
-
-  // let toName = to.name;
-
-  // if (toName === undefined) {
-  //   toName = "";
-  //   AsyncStorage.setItem("toLocation", toName.toString());
-  //   AsyncStorage.setItem("toLocation", toName.toString());
-  //   AsyncStorage.setItem("buildingSelected", buildingName.toString());
-  // }
-  // else {
-  //   AsyncStorage.setItem("fromLocation", from.toString());
-  //   AsyncStorage.setItem("toLocation", toName.toString());
-  //   AsyncStorage.setItem("buildingSelected", buildingName.toString());
-  // }
-  // function destinationSetter (to) {
-  //   resets the value of the buildingName label when on pressing on a searched item
-  //   setTo(to);
-    
-  //   setFrom("Current Location");
-  //   setBuildingName("");
-  // }
+  const [searchItemCoordinates, setSearchItemCoordinates] = React.useState(null);
 
   useEffect(() => {
     setData(fetchData());
   }, []);
 
+  useEffect(() => {
+    // addMarker();
+    goToSearchItemCoordinate();
+  }, [searchItemCoordinates]);
+
+  
   const goToMenu = () => {
     AsyncStorage.setItem("sideMenu", "sideMenu"); //FIXME: Why?
     props.navigation.openDrawer();
   };
+
+  const addMarker = () => {
+    if (searchItemCoordinates) {
+      props.selectedItemMarker(searchItemCoordinates);
+    }
+  }
+  
+  const goToSearchItemCoordinate = (coordinates) => { 
+    if(coordinates) {
+      // console.log("jerrrre")
+      props.mapReference.current.animateToRegion({
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+        latitudeDelta: 0.003,
+        longitudeDelta: 0.003
+      });
+    }
+}
+
 
   return (
     <View style={styles.container} testID={props.testID}>
@@ -82,7 +86,7 @@ export function Search (props) {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => {props.setMainSearchBarDestination(item.name)}}
+        onItemSelect={item => { props.setMainSearchBarDestination(item.name); goToSearchItemCoordinate(getCoordinates(item.name))}}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}
