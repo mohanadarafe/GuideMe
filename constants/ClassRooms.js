@@ -77,7 +77,6 @@ export function ClassRooms () {
       "H862",
       "H820",
       "H832",
-      "H902",
       "H903",
       "H906",
       "H907",
@@ -141,6 +140,9 @@ export function ClassRooms () {
       "H963",
       "H986",
       "H990",
+      "Men's Washroom",
+      "Women's Washroom",
+      "Water Fountain"
     ]
   };
   return rooms;

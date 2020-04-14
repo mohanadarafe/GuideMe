@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DifferentFloorDirections component renders correctly 1`] = `
+exports[`DifferentFloorDirections component renders correctly for from floor 1`] = `
 <RNSVGGroup
   fill={4278190080}
   fillOpacity={1}
@@ -120,7 +120,7 @@ exports[`DifferentFloorDirections component renders correctly 1`] = `
     vectorEffect={0}
     x={0}
     x1="737"
-    x2="646"
+    x2="722"
     y={0}
     y1="802"
     y2="802"
@@ -163,11 +163,227 @@ exports[`DifferentFloorDirections component renders correctly 1`] = `
     strokeWidth="5"
     vectorEffect={0}
     x={0}
-    x1="646"
-    x2="557"
+    x1="722"
+    x2="722"
+    y={0}
+    y1="757"
+    y2="802"
+  />
+  <RNSVGLine
+    fill={4278190080}
+    fillOpacity={1}
+    fillRule={1}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "stroke",
+        "strokeWidth",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={4278190335}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={0}
+    strokeLinejoin={0}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth="5"
+    vectorEffect={0}
+    x={0}
+    x1={733.25}
+    x2="722"
+    y={0}
+    y1={776.4855715851498}
+    y2="757"
+  />
+  <RNSVGLine
+    fill={4278190080}
+    fillOpacity={1}
+    fillRule={1}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "stroke",
+        "strokeWidth",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={4278190335}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={0}
+    strokeLinejoin={0}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth="5"
+    vectorEffect={0}
+    x={0}
+    x1={710.75}
+    x2="722"
+    y={0}
+    y1={776.4855715851498}
+    y2="757"
+  />
+</RNSVGGroup>
+`;
+
+exports[`DifferentFloorDirections component renders correctly for to floor 1`] = `
+<RNSVGGroup
+  fill={4278190080}
+  fillOpacity={1}
+  fillRule={1}
+  font={Object {}}
+  matrix={
+    Array [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ]
+  }
+  opacity={1}
+  originX={0}
+  originY={0}
+  propList={Array []}
+  rotation={0}
+  scaleX={1}
+  scaleY={1}
+  skewX={0}
+  skewY={0}
+  stroke={null}
+  strokeDasharray={null}
+  strokeDashoffset={null}
+  strokeLinecap={0}
+  strokeLinejoin={0}
+  strokeMiterlimit={4}
+  strokeOpacity={1}
+  strokeWidth={1}
+  vectorEffect={0}
+  x={0}
+  y={0}
+>
+  <RNSVGLine
+    fill={4278190080}
+    fillOpacity={1}
+    fillRule={1}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "stroke",
+        "strokeWidth",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={4278190335}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={0}
+    strokeLinejoin={0}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth="5"
+    vectorEffect={0}
+    x={0}
+    x1="722"
+    x2="722"
+    y={0}
+    y1="757"
+    y2="802"
+  />
+  <RNSVGLine
+    fill={4278190080}
+    fillOpacity={1}
+    fillRule={1}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "stroke",
+        "strokeWidth",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={4278190335}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={0}
+    strokeLinejoin={0}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth="5"
+    vectorEffect={0}
+    x={0}
+    x1="722"
+    x2="737"
     y={0}
     y1="802"
-    y2="804"
+    y2="802"
   />
   <RNSVGLine
     fill={4278190080}
@@ -207,11 +423,11 @@ exports[`DifferentFloorDirections component renders correctly 1`] = `
     strokeWidth="5"
     vectorEffect={0}
     x={0}
-    x1="557"
-    x2="559"
+    x1="737"
+    x2="737"
     y={0}
-    y1="804"
-    y2="799"
+    y1="844"
+    y2="802"
   />
   <RNSVGLine
     fill={4278190080}
@@ -251,11 +467,11 @@ exports[`DifferentFloorDirections component renders correctly 1`] = `
     strokeWidth="5"
     vectorEffect={0}
     x={0}
-    x1="559"
-    x2="553"
+    x1={726.5}
+    x2="737"
     y={0}
-    y1="799"
-    y2="399"
+    y1={825.8134665205268}
+    y2="844"
   />
   <RNSVGLine
     fill={4278190080}
@@ -295,187 +511,11 @@ exports[`DifferentFloorDirections component renders correctly 1`] = `
     strokeWidth="5"
     vectorEffect={0}
     x={0}
-    x1="553"
-    x2="553"
+    x1={747.5}
+    x2="737"
     y={0}
-    y1="399"
-    y2="401"
-  />
-  <RNSVGLine
-    fill={4278190080}
-    fillOpacity={1}
-    fillRule={1}
-    matrix={
-      Array [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0,
-      ]
-    }
-    opacity={1}
-    originX={0}
-    originY={0}
-    propList={
-      Array [
-        "stroke",
-        "strokeWidth",
-      ]
-    }
-    rotation={0}
-    scaleX={1}
-    scaleY={1}
-    skewX={0}
-    skewY={0}
-    stroke={4278190335}
-    strokeDasharray={null}
-    strokeDashoffset={null}
-    strokeLinecap={0}
-    strokeLinejoin={0}
-    strokeMiterlimit={4}
-    strokeOpacity={1}
-    strokeWidth="5"
-    vectorEffect={0}
-    x={0}
-    x1="553"
-    x2="362"
-    y={0}
-    y1="401"
-    y2="415"
-  />
-  <RNSVGLine
-    fill={4278190080}
-    fillOpacity={1}
-    fillRule={1}
-    matrix={
-      Array [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0,
-      ]
-    }
-    opacity={1}
-    originX={0}
-    originY={0}
-    propList={
-      Array [
-        "stroke",
-        "strokeWidth",
-      ]
-    }
-    rotation={0}
-    scaleX={1}
-    scaleY={1}
-    skewX={0}
-    skewY={0}
-    stroke={4278190335}
-    strokeDasharray={null}
-    strokeDashoffset={null}
-    strokeLinecap={0}
-    strokeLinejoin={0}
-    strokeMiterlimit={4}
-    strokeOpacity={1}
-    strokeWidth="5"
-    vectorEffect={0}
-    x={0}
-    x1="361"
-    x2="362"
-    y={0}
-    y1="365"
-    y2="415"
-  />
-  <RNSVGLine
-    fill={4278190080}
-    fillOpacity={1}
-    fillRule={1}
-    matrix={
-      Array [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0,
-      ]
-    }
-    opacity={1}
-    originX={0}
-    originY={0}
-    propList={
-      Array [
-        "stroke",
-        "strokeWidth",
-      ]
-    }
-    rotation={0}
-    scaleX={1}
-    scaleY={1}
-    skewX={0}
-    skewY={0}
-    stroke={4278190335}
-    strokeDasharray={null}
-    strokeDashoffset={null}
-    strokeLinecap={0}
-    strokeLinejoin={0}
-    strokeMiterlimit={4}
-    strokeOpacity={1}
-    strokeWidth="5"
-    vectorEffect={0}
-    x={0}
-    x1={373.9330127018922}
-    x2="361"
-    y={0}
-    y1={386.40063509461095}
-    y2="365"
-  />
-  <RNSVGLine
-    fill={4278190080}
-    fillOpacity={1}
-    fillRule={1}
-    matrix={
-      Array [
-        1,
-        0,
-        0,
-        1,
-        0,
-        0,
-      ]
-    }
-    opacity={1}
-    originX={0}
-    originY={0}
-    propList={
-      Array [
-        "stroke",
-        "strokeWidth",
-      ]
-    }
-    rotation={0}
-    scaleX={1}
-    scaleY={1}
-    skewX={0}
-    skewY={0}
-    stroke={4278190335}
-    strokeDasharray={null}
-    strokeDashoffset={null}
-    strokeLinecap={0}
-    strokeLinejoin={0}
-    strokeMiterlimit={4}
-    strokeOpacity={1}
-    strokeWidth="5"
-    vectorEffect={0}
-    x={0}
-    x1={348.9330127018922}
-    x2="361"
-    y={0}
-    y1={386.90063509461095}
-    y2="365"
+    y1={825.8134665205268}
+    y2="844"
   />
 </RNSVGGroup>
 `;
