@@ -73,7 +73,7 @@ function Map ({ navigation }) {
                 </MapView>
                 <Search testID="searchBar" navigation={navigation} />
                 <View style={styles.CurrentBuildingLocation}>
-                        <CurrentBuildingLocation />
+                        {/* <CurrentBuildingLocation /> */}
                 </View>
             <BottomMenu navigation={navigation} />
             </View>

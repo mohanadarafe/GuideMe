@@ -56,17 +56,27 @@ function DoubleSearch(props) {
     const addItem = () => {
             destinationItems.unshift({ id: 0, name: namePointOfInterest});   
     }
+    const [courseScheduleLocation, setCourseScheduleLocation] = React.useState("");
+    const [initialTo, setInitialTo] = React.useState("");
+    const [placeholder, setPlaceholder] = React.useState("");
+
+
     /**
-     * Description: Method to go back to the previous screen.
+     * Description: Method to back to the previous screen.
      * Using Stack navigator.
      */
-  
-    const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", null);
-    const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", null);
+
+    // var fromScreen; 
+    const CourseSchedule = props.navigation.getParam("CourseScheduleScreen", "null");
+    const CourseScheduleLocation = props.navigation.getParam("CourseScheduleLocation", "");
+    const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
+    const InitialTo = props.navigation.getParam("destinationName", "");
+
+
     const goBack = () => {
-        if (CourseScheduleDetailsScreen === true) {
+        if (CourseSchedule === true) {
             props.navigation.goBack();
-            props.navigation.navigate("CourseScheduleDetails")
+            props.navigation.navigate("CourseSchedule")
         }
         else if (NearbyInterestDetailsScreen === true) {
             destinationItems.shift()
@@ -183,7 +193,7 @@ function DoubleSearch(props) {
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) ||  buildingList[key].fullName.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) || buildingList[key].fullName.includes(name)) {
                 return buildingList[key].coordinates;
             }
         }
@@ -219,12 +229,20 @@ function DoubleSearch(props) {
      * A.U
      */
     useEffect(() => {
-
-        if (to.name === undefined) {
-            const initialTo = props.navigation.getParam("destinationName", "Destination");
-            setCoordinatesTo(getCoordinates(initialTo));
-            setTo({ name: initialTo });
-        }
+        setCourseScheduleLocation(CourseScheduleLocation);
+        setInitialTo(InitialTo);
+            if (to.name === undefined) {
+                if (initialTo !== "") {
+                    setCoordinatesTo(getCoordinates(initialTo));
+                    setTo({ name: initialTo });
+                    setPlaceholder(initialTo);
+                }
+                if (courseScheduleLocation !== "") {
+                    setCoordinatesTo(getCoordinates(courseScheduleLocation));
+                    setTo({ name: courseScheduleLocation });
+                    setPlaceholder(courseScheduleLocation);
+                }
+            }
         if (from.name === undefined) {
             fetchCurrentPosition();
         }
@@ -237,6 +255,7 @@ function DoubleSearch(props) {
 
         if(namePointOfInterest){
         addItem(pointOfInterest)
+        setPlaceholder(pointOfInterest)
         }
         
     }, []);
@@ -290,7 +309,7 @@ function DoubleSearch(props) {
                         itemsContainerStyle={styles.itemsContainerStyle}
                         placeholderTextColor={"black"}
                         items={destinationItems}
-                        placeholder={pointOfInterest ? pointOfInterest : destinationName}
+                        placeholder={placeholder}
                         textInputProps={{
                             keyboardAppearance: "dark",
                             clearButtonMode: "while-editing",
