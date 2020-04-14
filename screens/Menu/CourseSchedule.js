@@ -88,7 +88,7 @@ function CourseSchedule(props) {
     }, [selectedCalendarId, accessToken]);
 
     
-    if (switchVal == "true") {
+    if (switchVal == "true" && calendarEventsList) {
     return (
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
@@ -129,7 +129,7 @@ function CourseSchedule(props) {
             </View>
         );
     }
-    if (switchVal == "false") {
+    else {
         return (
             <View style={styles.container2}>
                 <View style={styles.menuButtonContainer}>
