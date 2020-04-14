@@ -28,6 +28,7 @@ function CourseSchedule(props) {
     const [selectedCalendarId, setSelectedCalendarId] = React.useState(null);
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState("false");
+    const [refresh, setRefresh] = React.useState(false);
 
     //TODO Show only events after current date
     // let currentDate = new Date();
@@ -53,6 +54,7 @@ function CourseSchedule(props) {
         });
         let resp = await calendarEvents.json();
         setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
+        setRefresh(false);
     }
 
     const getFilteredGoogleCalendarEvents = (resp) => {
@@ -61,6 +63,11 @@ function CourseSchedule(props) {
         });
         return filteredList;
     };
+
+    const handleRefresh = () => {
+        setRefresh(true);
+        getCalendarEvents();
+    }
 
     const CourseScheduleScreen = true;
 
@@ -86,7 +93,6 @@ function CourseSchedule(props) {
         return () => clearInterval(intervalId);
     }, [selectedCalendarId, accessToken]);
 
-    
     if (switchVal == "true") {
     return (
             <View style={styles.container}>
@@ -122,6 +128,8 @@ function CourseSchedule(props) {
                                         />}
                                 />
                             )}
+                            refreshing={refresh}
+                            onRefresh={handleRefresh}
                         />
                     }
                 </View>
@@ -138,7 +146,7 @@ function CourseSchedule(props) {
                 </View>
                 <Text style={styles.mainLabel}>My Course Schedule</Text>
                 <CourseScheduleSVG />
-                <Text style={styles.courseScheduleInstructions}>Sync your google calendar account to use this feature</Text>
+                <Text style={styles.courseScheduleInstructions}>Sync your Google Calendar account in the settings page to use this feature</Text>
             </View>
         );
     }
@@ -166,12 +174,12 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43"
     },
     mainLabel: {
+        top: "15%",
         color: "#FFFFFF",
         position: "absolute",
         fontSize: 25,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "15%"
     },
     icon: {
         alignSelf: "center",
@@ -219,11 +227,11 @@ export const styles = StyleSheet.create({
         backgroundColor: "#353A50",
     },
     courseScheduleInstructions: {
+        bottom: "30%",
+        paddingLeft: "5%",
+        paddingRight: "5%",
         color: "white",
-        paddingLeft: "10%",
-        paddingRight: "10%",
         textAlign: 'center',
-        paddingTop: "130%",
         alignSelf: "center",
         position: "absolute",
         fontSize: 18,
