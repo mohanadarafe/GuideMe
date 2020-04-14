@@ -63,7 +63,7 @@ function Settings(props) {
             if (result.type === 'success') {
                 AsyncStorage.setItem("accessToken", result.accessToken);
                 setAccessToken(result.accessToken);
-                return getUsersCalendarList(result.accessToken); //Here We are getting all the calendars in a json...
+                return getUsersCalendarList(result.accessToken); //Here We are getting all the calendars in a json
             } else {
                 return { cancelled: true };
             }
@@ -87,7 +87,7 @@ function Settings(props) {
         return resp;
     }
 
-    const press = (item) => {   // The onPress method 
+    const press = (item) => { 
         var { checked } = isConnected;
         // These ensures that multiple checkboxes don't all get affected when one is clicked
         if (!checked.includes(item) || checked.length == 1) {
@@ -135,9 +135,9 @@ function Settings(props) {
                         <Text style={styles.container2SubText}>Current Status is {switchLabel2}</Text>
                         <View style={styles.toggle}>
                             <Switch
-                                value={switchVal2 == "true" ? true : false} //Maybe not working because it is not a boolean
+                                value={switchVal2 == "true" ? true : false}
                                 onValueChange={(val) => {
-                                    AsyncStorage.setItem("switchVal", JSON.stringify(val)); //Passing a boolean to a Async storage
+                                    AsyncStorage.setItem("switchVal", JSON.stringify(val));
                                     setSwitchVal2(val.toString());
                                     signInOrOut(val);
                                 }
@@ -274,7 +274,7 @@ export const styles = StyleSheet.create({
         top: "30%"
     },
     flatlist: {
-        height: "60%", //Increase size of the flatlist if it doesnt fit the screen
+        height: "60%",
         width: "100%",
         marginLeft: 20,
         flexDirection: "column",

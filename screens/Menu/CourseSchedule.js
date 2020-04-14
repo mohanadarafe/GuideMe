@@ -193,7 +193,6 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "75%",
         bottom: "0%",
-        // position: "absolute",
     },
     sectionHeader: {
         paddingTop: 2,
