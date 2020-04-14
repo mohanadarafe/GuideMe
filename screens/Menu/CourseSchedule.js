@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { AsyncStorage, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CheckBox, ListItem } from "react-native-elements";
+import { CourseScheduleSVG } from "../../assets/CourseScheduleSVG.js";
+
 
 /**
  * US22 - As a user, I would like to connect my direction to next class to my google calendar. #31
@@ -17,7 +19,6 @@ import { CheckBox, ListItem } from "react-native-elements";
  * to navigate to the detail screen and get the directions to the class.
  */
 
-//TODO Ask chris how did he do the SVG for 
 
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
@@ -26,7 +27,7 @@ function CourseSchedule(props) {
     const [accessToken, setAccessToken] = React.useState(null);
     const [selectedCalendarId, setSelectedCalendarId] = React.useState(null);
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
-    const [switchVal, setSwitchVal] = React.useState(false);
+    const [switchVal, setSwitchVal] = React.useState("false");
 
     //TODO Show only events after current date
     let currentDate = new Date();
@@ -47,9 +48,8 @@ function CourseSchedule(props) {
     };
 
     const getCalendarEvents = async () => {
-        console.log(currentDate);
         let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
-            headers: { Authorization: `Bearer ${accessToken}` }
+            headers: { Authorization: `Bearer ${accessToken}` }, singleEvents: true, orderBy: 'startTime'
         });
         let resp = await calendarEvents.json();
         setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
@@ -86,48 +86,62 @@ function CourseSchedule(props) {
         return () => clearInterval(intervalId);
     }, [selectedCalendarId, accessToken]);
 
+    
+    if (switchVal == "true") {
     return (
-        <View style={styles.container}>
-            <View style={styles.menuButtonContainer}>
-                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
-                    <Feather name="menu" style={styles.icon} />
-                </TouchableOpacity>
+            <View style={styles.container}>
+                <View style={styles.menuButtonContainer}>
+                    <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
+                        <Feather name="menu" style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.mainLabel}>My Course Schedule</Text>
+                <View style={styles.scrollTextContainer}>
+                    {(switchVal == "true" && calendarEventsList) &&
+                        <FlatList
+                            data={calendarEventsList}
+                            keyExtractor={(item) => item.id}
+                            initialNumToRender={10}
+                            renderItem={({ item }) => (
+                                <ListItem
+                                    title={item.summary}
+                                    titleStyle={{ color: "white", paddingLeft: 20 }}
+                                    subtitle={item.description !== undefined ? item.description : "Please enter a description in your Google Calendar"}
+                                    rightTitleStyle={{ color: "white", paddingRight: 20 }}
+                                    containerStyle={{ backgroundColor: "#2A2E43" }}
+                                    subtitleStyle={{ color: "grey", paddingLeft: 20 }}
+                                    rightIcon={() => item.location &&
+                                        <CheckBox
+                                            size={30}
+                                            iconRight
+                                            iconType='material'
+                                            uncheckedIcon={'arrow-forward'}
+                                            uncheckedColor="#3ACCE1"
+                                            onPress={() => { goToDoubleSearch(item) }
+                                            }
+                                        />}
+                                />
+                            )}
+                        />
+                    }
+                </View>
             </View>
-            <Text style={styles.mainLabel}>My Course Schedule</Text>
-            <View style={styles.scrollTextContainer}>
-                {(switchVal == "true" && calendarEventsList)
-                    ? <FlatList
-                        data={calendarEventsList}
-                        keyExtractor={(item) => item.id}
-                        initialNumToRender={10}
-                        renderItem={({ item }) => (
-                            <ListItem
-                                title={item.summary}
-                                titleStyle={{ color: "white", paddingLeft: 20 }}
-                                subtitle={item.description !== undefined ? item.description : "Please enter a location in your Google Calendar"}
-                                rightTitleStyle={{ color: "white", paddingRight: 20 }}
-                                containerStyle={{ backgroundColor: "#2A2E43" }}
-                                subtitleStyle={{ color: "grey", paddingLeft: 20 }}
-                                rightIcon={ () => item.location &&
-                                    <CheckBox
-                                        size={30}
-                                        iconRight
-                                        iconType='material'
-                                        uncheckedIcon={'arrow-forward'}
-                                        uncheckedColor="#3ACCE1"
-                                        onPress={() => { goToDoubleSearch(item) }
-                                        }
-                                    />}
-                            />
-                        )}
-                    />
-                    : <View styles={styles.InstructionsContainer}>
-                        <Text style={styles.courseScheduleInstructions}>Sync your google calendar account in settings</Text>
-                    </View>
-                }
+        );
+    }
+    if (switchVal == "false") {
+        return (
+            <View style={styles.container2}>
+                <View style={styles.menuButtonContainer}>
+                    <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
+                        <Feather name="menu" style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.mainLabel}>My Course Schedule</Text>
+                <CourseScheduleSVG />
+                <Text style={styles.courseScheduleInstructions}>Sync your google calendar account to use this feature</Text>
             </View>
-        </View >
-    );
+        );
+    }
 }
 
 
@@ -141,6 +155,12 @@ export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
         justifyContent: "space-between",
+        height: "100%",
+        width: "100%",
+        backgroundColor: "#2A2E43"
+    },
+    container2: {
+        alignItems: "center",
         height: "100%",
         width: "100%",
         backgroundColor: "#2A2E43"
@@ -201,9 +221,13 @@ export const styles = StyleSheet.create({
     },
     courseScheduleInstructions: {
         color: "white",
-        paddingTop: "70%",
+        paddingLeft: "10%",
+        paddingRight: "10%",
+        textAlign: 'center',
+        paddingTop: "130%",
         alignSelf: "center",
-        fontFamily: "Verdana"
+        position: "absolute",
+        fontSize: 18,
     }
 });
 
