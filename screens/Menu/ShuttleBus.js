@@ -117,6 +117,7 @@ function ShuttleBus (props) {
                 <Image style={styles.shuttleImage} source={require("./../../assets/shuttle.jpg")} />
             </View>
 
+
             <View style={styles.menuButtonContainer}>
                 <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
                     <Feather name="menu" style={styles.icon} />
@@ -223,14 +224,13 @@ export const styles = StyleSheet.create({
     imageContainer: {
         width: "100%",
         height: "32%",
-        top: "0%",
         position: "absolute",
-        opacity: 0.7
+        opacity: 0.3,
+        backgroundColor: "#000"
     },
     shuttleImage: {
         width: "100%",
         height: "100%",
-        top: "0%",
         position: "relative"
     },
     controlTabContainer: {

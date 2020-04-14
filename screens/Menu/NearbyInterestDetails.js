@@ -1,14 +1,30 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView, AsyncStorage} from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import StarRating from "react-native-star-rating";
 
+
+/**
+ * US34 - As a user, I would like to see the nearest outdoor points of interest #14
+ * US35 - As a user, I would like to get the direction to the chosen nearest point of interest #15
+ * US36 - As a user, I would like to see a detailed description of the selected places #29
+ * 
+ * Description: This screen will presents the layout 
+ * for the display of the point of interests. The points 
+ * of interest information will be retrieved from the Google Places API.
+ * The screen is composed on a flatList to create a grid, and have 
+ * an pressable item for each points of interest
+ */
 
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 
 function NearbyInterestDetails(props) {
+/**
+ * navigation that serves to go back to previous screen
+ * @param  {} =>{props.navigation.goBack(
+ */
 
     const goBack = () => {
         props.navigation.goBack();
@@ -23,25 +39,30 @@ function NearbyInterestDetails(props) {
     const web = props.navigation.getParam("web", null);
     const latitude = props.navigation.getParam("latitude", null);
     const longitude = props.navigation.getParam("longitude", null);
+    const reviews = props.navigation.getParam("reviews", null);
 
+    // this boolean serves for the back button of the DoubleSearch component 
     const NearbyInterestDetailsScreen = true;
-    
+    /**
+     * This navigation function allows the navigation and the sending of props to DoubleSearch component
+     * @param  {} =>{props.navigation.navigate("DoubleSearch"
+     * @param  {NearbyInterestDetailsScreen} {NearbyInterestDetailsScreen
+     * @param  {name} name_POI
+     * @param  {latitude} latitude_POI
+     * @param  {longitude} longitude_POI
+     * @param  {} }
+     */
     const goToDoubleSearch = () => {
 
-        AsyncStorage.setItem("namePOI", name)
-
-        props.navigation.navigate("DoubleSearch", { 
+        props.navigation.navigate("DoubleSearch", {
             NearbyInterestDetailsScreen: NearbyInterestDetailsScreen,
             name_POI: name,
-            latitude_POI : latitude,
-            longitude_POI : longitude,
-         });
-
-        
+            latitude_POI: latitude,
+            longitude_POI: longitude,
+        });
     }
 
-    const opening =  (hours === true ? "Open Now" : "Close Now");
-  
+    const opening = (hours === true ? "Open Now" : "Close Now");
 
     return (
         <View style={styles.container}>
@@ -58,7 +79,14 @@ function NearbyInterestDetails(props) {
                     </Button>
                 </View>
 
-                <Text style={styles.mainLabel}>{name ? name : "N/A"}</Text>
+                {name.length > 19 &&
+                    <Text style={styles.mainLabel}>{name.substring(0, 19) + "..."}</Text>
+                }
+                {name.length <= 19 &&
+                    <Text style={styles.mainLabel}>{name}</Text>
+                }
+
+                <Text style={styles.totalReviewLabel}>{reviews ? reviews + " Reviews" : "N/A"}</Text>
 
                 <Button transparent style={styles.ratingContainer}>
                     <View style={styles.ratingNumberContainer}>
@@ -164,20 +192,16 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         bottom: "44%"
     },
-
     imageContainer: {
         width: "100%",
         height: "32%",
-        top: "0%",
         position: "absolute",
         opacity: 0.3,
         backgroundColor: "#000"
     },
-
     placeImage: {
         width: "100%",
         height: "100%",
-        top: "0%",
         position: "relative"
     },
     mainLabel: {
@@ -187,7 +211,16 @@ export const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "23%"
+        top: "17%"
+    },
+    totalReviewLabel: {
+        color: "#FFFFFF",
+        left: "5%",
+        position: "absolute",
+        fontSize: 20,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+        top: "24%"
     },
     subLabel: {
         position: "absolute",

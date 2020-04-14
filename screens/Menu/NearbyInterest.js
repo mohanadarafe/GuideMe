@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
-import { Icon, Button } from "native-base";
+import { Icon } from "native-base";
 import { Feather, Entypo } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
-import Menu, { MenuItem, MenuDivider, Position } from "react-native-enhanced-popup-menu";
+import Menu, { MenuItem, Position } from "react-native-enhanced-popup-menu";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -23,14 +23,14 @@ import Menu, { MenuItem, MenuDivider, Position } from "react-native-enhanced-pop
 function NearbyInterest(props) {
 
     const [fromScreen, setFromScreen] = React.useState();
-    const [jsonElement, setJsonElement] = React.useState(null);
+    const [jsonElementArray_SGW, setjsonElementArray_SGW] = React.useState(null);
+    const [jsonElementArray_LOY, setjsonElementArray_LOY] = React.useState(null);
+
     const [selectedTab, setSelectedTab] = React.useState(0);
-    // const [key, setKey] = React.useState(null);
-    const [detailObject, setDetailObject] = React.useState([]);
     const [radius, setRadius] = React.useState(100);
     const [campus, setCampus] = React.useState("SGW");
-    const [phone, setPhone] = React.useState([]);
-    const [web, setWeb] = React.useState([]);
+    // const [phone, setPhone] = React.useState([]);
+    // const [web, setWeb] = React.useState([]);
     /**
      * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
      * @param  {} =>{letname=awaitAsyncStorage.getItem("sideMenu)"
@@ -63,6 +63,7 @@ function NearbyInterest(props) {
             web: item.web,
             latitude: item.latitude,
             longitude: item.longitude,
+            reviews: item.reviews
         });
     };
     /**
@@ -76,64 +77,53 @@ function NearbyInterest(props) {
         props.navigation.navigate("Map");
     };
 
-    // Static data for now 
-    const data = [
-        { key: "McKibbins", rating: 3.3, open_hours: true, address: "1446 Crescent", phone: "+1(514) 666-9999", web: "mckibbins.com", latitude: 45.4975951, longitude: -73.57762079999999 },
-        { key: "Tim Hortons", rating: 3.0, open_hours: false, address: "1500 Crescent", phone: "+1(514) 666-8888", web: "timhortons.com", latitude: 45.4975951, longitude: -73.57762079999999, },
-        { key: "Arabica", rating: 3.2, open_hours: false, address: "1900 Crescent", phone: "+1(514) 666-7777", web: "arabica.com", latitude: 45.4975951, longitude: -73.57762079999999, },
-        { key: "Kaeks", rating: 2.9, open_hours: true, address: "1594 Crescent", phone: "+1(514) 666-4444", web: "kaeks.com", latitude: 45.4975951, longitude: -73.57762079999999, }];
-
     // number of coloumns for the flatList 
     const numColumns = 2;
 
-    // const getKey = async () => {
-    //     let key = await AsyncStorage.getItem("apiKeyId");
-    //     setKey(key);
-    // };
 
-    var arr = [];
-    var jsonArr = [];
-
-    var phoneArr = [];
-    var webArr = [];
-
-
-    const fetchData = async () => {
+    /**
+     * This method is the function used for the fetching of the objects in json format from the Google Places API
+     * The method fetches json objects from the api, filters the fields to create its own objects 
+     * and returns an array in the jsonElementArray_SGW hook
+     */
+    const fetchData_SGW = async () => {
 
         try {
             let keyId = await AsyncStorage.getItem("apiKeyId");
             let SGW_COORDS = "45.496996, -73.578481";
-            let LOY_COORDS = "45.458371,-73.638239";
-            var coordinates = (campus === "SGW" ? SGW_COORDS : LOY_COORDS)
-            var RADIUS = radius;
-            console.log(radius);
+
+            /**
+             * This line is serves to change the radius of search of the places nearby
+             * To prevent excessive API calls, this line will be commented,
+             * To use this feature simply uncomment this and the places the "searchRadius" variable in the HTTP URL
+             * 
+             * C.S.B
+             */
+
+            // var searchRadius = radius;
+
+            let RADIUS = 100;
             let TYPE = `restaurant`;
             let MAX_WIDTH = `500`;
             let SENSOR = `false`;
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${coordinates}&radius=${radius}&type=restaurant&key=${keyId}`);
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
-          
 
-
-            setJsonElement(getFilteredJsonElement(jsonResp, keyId, MAX_WIDTH, SENSOR));
-
-
+            setjsonElementArray_SGW(getFilteredjsonElementArray_SGW(jsonResp, keyId, MAX_WIDTH, SENSOR));
 
         } catch (error) {
+
             alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
     }
 
-   
-
-
-    const getFilteredJsonElement = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
-
+    const getFilteredjsonElementArray_SGW = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
 
         var filtering = jsonResp.results.map(element => {
 
 
-            fetchDetailData(element.place_id);
+            // to display the web and phone number on the detail page, uncomment this line, lines 140 to 153,  lines 165 to 185 - C.S.B
+            // fetchDetailData(element.place_id);
 
 
             return {
@@ -143,79 +133,148 @@ function NearbyInterest(props) {
                 address: element.vicinity,
                 latitude: element.geometry.location.lat,
                 longitude: element.geometry.location.lng,
+                reviews: element.user_ratings_total,
                 img: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${element.photos[0].photo_reference}&sensor=${SENSOR}&key=${keyId}`
             }
         })
-
-
-
         return filtering;
     }
 
+    const fetchData_LOY = async () => {
 
-    const fetchDetailData = async (placeId, element_count) => {
         try {
             let keyId = await AsyncStorage.getItem("apiKeyId");
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=formatted_phone_number,website&key=${keyId}`);
+            let LOY_COORDS = "45.458371,-73.638239";
+
+
+            /**
+             * This line is serves to change the radius of search of the places nearby
+             * To prevent excessive API calls, this line will be commented,
+             * To use this feature simply uncomment this and the places the "searchRadius" variable in the HTTP URL
+             * 
+             * C.S.B
+             */
+
+            // var searchRadius = radius;
+
+            let RADIUS = 500;
+            let TYPE = `restaurant`;
+            let MAX_WIDTH = `500`;
+            let SENSOR = `false`;
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${LOY_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
-            // phoneArr.push(jsonResp);
-            // webArr.push( jsonResp);
-            // // console.log(count);
-            // console.log(phoneArr[element_count].result.formatted_phone_number);
-            // console.log(webArr);
 
-            setPhone(prevState => [...prevState, jsonResp.result.formatted_phone_number]);
-            setWeb(prevState => [...prevState, jsonResp.result.website]);
-
+            setjsonElementArray_LOY(getFilteredjsonElementArray_LOY(jsonResp, keyId, MAX_WIDTH, SENSOR));
 
         } catch (error) {
+
             alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
-
-
     }
 
+    const getFilteredjsonElementArray_LOY = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
 
-        useEffect(() => {
+        var filtering = jsonResp.results.map(element => {
 
-            fetchData();
 
-        }, [campus, radius]);
+            // to display the web and phone number on the detail page, uncomment this line, lines 140 to 153,  lines 165 to 185, and replace the detail   - C.S.B
+            // fetchDetailData(element.place_id);
+
+
+            return {
+                key: element.name,
+                rating: element.rating,
+                open_hours: element.opening_hours.open_now,
+                address: element.vicinity,
+                latitude: element.geometry.location.lat,
+                longitude: element.geometry.location.lng,
+                reviews: element.user_ratings_total,
+                img: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${element.photos[0].photo_reference}&sensor=${SENSOR}&key=${keyId}`
+            }
+        })
+        return filtering;
+    }
+
+    // const fetchDetailData = async (placeId) => {
+    //     try {
+    //         let keyId = await AsyncStorage.getItem("apiKeyId");
+    //         let resp = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=formatted_phone_number,website&key=${keyId}`);
+    //         let jsonResp = await resp.json();
+
+    //         setPhone(prevState => [...prevState, jsonResp.result.formatted_phone_number]);
+    //         setWeb(prevState => [...prevState, jsonResp.result.website]);
+
+    //     } catch (error) {
+    //         alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+    //     }
+    // }
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             getFromScreen();
         }, 1);
-
+        fetchData_SGW();
+        fetchData_LOY();
         return () => clearInterval(intervalId);
-    });
+    }, []);
 
-    if (jsonElement && phone !== undefined && web !== undefined) {
-
-        var count = 0;
-        var newarr = jsonElement.map(element => {
-            //    console.log(count++);
-            count++;
-            return {
-                key: element.key,
-                rating: element.rating,
-                open_hours: element.open_hours,
-                address: element.address,
-                phone: phone[count - 1],
-                web: web[count - 1],
-                latitude: element.latitude,
-                longitude: element.longitude,
-                img: element.img
-
-            }
-
-        })
+    /**
+     * This map method lets us create an array that will contain the JSON Objects
+     * The reason of this array is because we're taking in two new fields to create the JSON Object
+     * The two new fields are taking the data fetched from the Map Place Detail API
+     * The two fields are the Phone Number and Website 
+     * 
+     * 
+     * However for execissive calls prevention reason we will comment this out, will be used if ever having to demo
+     * You will have to replace the actually arrays in the data={} variable in the flat list, by this array
+     * 
+     * C.S.B
+     */
 
 
-        // console.log(;
+    // if (jsonElementArray_SGW && phone !== undefined && web !== undefined) {
 
-    }
+    //     var count = 0;
+    //     var Detail_Array_SGW = jsonElementArray_SGW.map(element => {
+    //         //    console.log(count++);
+    //         count++;
+    //         return {
+    //             key: element.key,
+    //             rating: element.rating,
+    //             open_hours: element.open_hours,
+    //             address: element.address,
+    //             phone: phone[count - 1],
+    //             web: web[count - 1],
+    //             latitude: element.latitude,
+    //             longitude: element.longitude,
+    //             img: element.img,
+    //             reviews: element.reviews
+    //         }
 
+    //     })
+    // }
+      // if (jsonElementArray_LOY && phone !== undefined && web !== undefined) {
+
+    //     var count = 0;
+    //     var Detail_Array_LOY = jsonElementArray_LOY.map(element => {
+    //         //    console.log(count++);
+    //         count++;
+    //         return {
+    //             key: element.key,
+    //             rating: element.rating,
+    //             open_hours: element.open_hours,
+    //             address: element.address,
+    //             phone: phone[count - 1],
+    //             web: web[count - 1],
+    //             latitude: element.latitude,
+    //             longitude: element.longitude,
+    //             img: element.img,
+    //             reviews: element.reviews
+    //         }
+
+    //     })
+    // }
 
     let textRef = React.createRef();
     let menuRef = null;
@@ -229,6 +288,10 @@ function NearbyInterest(props) {
     const showMenu = () => {
         menuRef.show(textRef.current, stickTo = Position.BOTTOM_CENTER);
     }
+    /**
+     * This method retrived the radius value when the button in the menu is pressed
+     * @param  {} value
+     */
     const itemSelected = (value) => {
         setRadius(value);
         hideMenu();
@@ -254,16 +317,17 @@ function NearbyInterest(props) {
             </TouchableOpacity>
 
             <Menu ref={setMenuRef}>
-                <MenuItem onPress={() => { itemSelected(100) }}> 100 miles</MenuItem>
+                <MenuItem onPress={() => { itemSelected(100) }}> 100 meters</MenuItem>
 
-                <MenuItem onPress={() => { itemSelected(250) }}>250 miles</MenuItem>
+                <MenuItem onPress={() => { itemSelected(250) }}>250 meters</MenuItem>
 
-                <MenuItem onPress={() => { itemSelected(500) }}>500 miles</MenuItem>
+                <MenuItem onPress={() => { itemSelected(500) }}>500 meters</MenuItem>
 
-                <MenuItem onPress={() => { itemSelected(1500) }}>> 1000 miles</MenuItem>
+                <MenuItem onPress={() => { itemSelected(1500) }}>> 1000 meters</MenuItem>
             </Menu>
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
+            <Text style={styles.radiusLabel}>Search radius: {radius} meters</Text>
 
 
             <SegmentedControlTab
@@ -279,11 +343,13 @@ function NearbyInterest(props) {
                     setSelectedTab(tab);
                     if (tab === 0) {
                         setCampus("SGW");
-                        
+                        setRadius("100");
+
                     }
                     else if (tab === 1) {
                         setCampus("LOY");
-                
+                        setRadius("1000");
+
                     }
                 }}
             ></SegmentedControlTab>
@@ -293,7 +359,7 @@ function NearbyInterest(props) {
                 <FlatList
                     onEndReachedThreshold={0}
                     contentContainerStyle={styles.list}
-                    data={newarr}
+                    data={campus == "SGW" ? jsonElementArray_SGW : jsonElementArray_LOY}
                     numColumns={numColumns}
                     keyExtractor={(item) => {
                         return item.key;
@@ -303,12 +369,19 @@ function NearbyInterest(props) {
                             <View key={index}>
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
-                                        {/* // FIXME: add a default image when theres no internet connection  */}
-                                        <Image style={{ height: "100%", width: "100%" }} source={{ uri: item.img }} />
+                                        {item.img &&
+                                            <Image style={styles.itemImage} source={{ uri: item.img }} />
+                                        }
                                     </View>
                                     <View style={styles.itemTextContainer}>
-                                        <Text style={styles.itemText}>{item.key}</Text>
-                                        <Text style={styles.itemText}>{item.rating}</Text>
+                                        {item.key.length > 22 &&
+                                            <Text style={styles.itemText}>{item.key.substring(0, 22) + "..."}</Text>
+                                        }
+                                        {item.key.length <= 22 &&
+                                            <Text style={styles.itemText}>{item.key}</Text>
+                                        }
+
+                                        <Text style={styles.itemText2}>{item.reviews + " Reviews"}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -316,8 +389,6 @@ function NearbyInterest(props) {
                     )}
                 />
             </View>
-
-
         </View>
     );
 }
@@ -343,6 +414,14 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
         top: "15%"
+    },
+    radiusLabel: {
+        color: "#FFFFFF",
+        position: "absolute",
+        fontSize: 12,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded",
+        top: "20%"
     },
     list: {
         flexDirection: "column"
@@ -382,7 +461,7 @@ export const styles = StyleSheet.create({
     },
     flatListContainer: {
         height: "65%",
-        bottom: "5%"
+        bottom: "4%"
     },
     itemContainer: {
         flex: 1,
@@ -391,15 +470,24 @@ export const styles = StyleSheet.create({
         maxWidth: 185,
         height: 200,
         maxHeight: 200,
-        backgroundColor: "#353A50",
+        backgroundColor: "#1b1e2b",
         borderRadius: 10,
     },
     itemText: {
         color: "#FFFFFF",
-        fontSize: 12,
+        fontSize: 14,
+        fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
         marginHorizontal: "10%",
         marginVertical: "3%",
+        width: "70%"
+    },
+    itemText2: {
+        color: "#FFFFFF",
+        fontSize: 10,
+        fontFamily: "encodeSansExpanded",
+        marginHorizontal: "10%",
+        marginVertical: "0%",
         width: "70%"
     },
     itemTextContainer: {
@@ -419,7 +507,7 @@ export const styles = StyleSheet.create({
         width: "100%",
     },
     tabsContainerStyle: {
-        bottom: "5%",
+        bottom: "3%",
     },
     tabStyle: {
         backgroundColor: "#2A2E43",
@@ -446,6 +534,9 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         margin: 24,
     },
+    itemImage: {
+        height: "100%", width: "100%"
+    }
 });
 
 export default NearbyInterest;

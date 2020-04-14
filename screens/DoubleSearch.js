@@ -30,8 +30,6 @@ var originItems = fetchData();
 var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
 originItems.unshift({ "id": 0, "name": "Current Location" });
 
-
-
 /**
  * Overall :
  * 
@@ -48,11 +46,21 @@ function DoubleSearch(props) {
     const [coordinatesPOI, setCoordinatesPOI] = React.useState({ latitude: null, longitude: null });
 
 
+    const namePointOfInterest = props.navigation.getParam("name_POI", null);
+    const latitudePointOfInterest = props.navigation.getParam("latitude_POI", null);
+    const longitudePointOfInterest = props.navigation.getParam("longitude_POI", null);
+    
+    /**
+     * Adding the point of interest as an item in the dropdownlist of the Destination search bar
+     */
+    const addItem = () => {
+            destinationItems.unshift({ id: 0, name: namePointOfInterest});   
+    }
     /**
      * Description: Method to go back to the previous screen.
      * Using Stack navigator.
      */
-    // var fromScreen; 
+  
     const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", null);
     const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", null);
     const goBack = () => {
@@ -71,16 +79,7 @@ function DoubleSearch(props) {
         }
     };
 
-
-    const namePointOfInterest = props.navigation.getParam("name_POI", null);
-    const latitudePointOfInterest = props.navigation.getParam("latitude_POI", null);
-    const longitudePointOfInterest = props.navigation.getParam("longitude_POI", null);
-  
-    const addItem = () => {
-            destinationItems.unshift({ id: 0, name: namePointOfInterest});
-        
-    }
-
+   
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
      * Particularity: 
@@ -213,7 +212,6 @@ function DoubleSearch(props) {
             const initialTo = props.navigation.getParam("destinationName", "Destination");
             setCoordinatesTo(getCoordinates(initialTo));
             setTo({ name: initialTo });
-            // setPointOfInterest("");
         }
         if (from.name === undefined) {
             fetchCurrentPosition();

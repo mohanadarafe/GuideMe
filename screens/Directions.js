@@ -404,8 +404,6 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     detailedInstructions: {
-        // width: "100%",
-        // flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         height: "100%"
