@@ -115,31 +115,31 @@ function Settings(props) {
     };
 
 
-    //CHECK IF IT WORKS
-    const restrictSizeOfLabels = (filteredList) => {
-        var restrictedSizeList = respCalendars.items.map(element => {
-            //If both the title and the description of the calendar is greater than 20 char, add ...
-            if (element.summary.length > 20 && element.description.length > 20) {
-                updatedSummary = element.summary.substring(0, 20) + "...";
-                updatedDescription = element.description.substring(0, 20) + "...";
-                return { id: element.id, summary: element.updatedSummary, description: element.updatedDescription };
-            }
-            //If the description of the calendar is greater than 20 char, add ...
-            if (element.description.length > 20) {
-                updatedDescription = element.description.substring(0, 20) + "...";
-                return { id: element.id, summary: element.summary, description: element.updatedDescription };
-            }
-            //If the title of the calendar is greater than 20 char, add ...
-            if (element.summary.length > 20) {
-                updatedDescription = element.summary.substring(0, 20) + "...";
-                return { id: element.id, summary: element.summary, description: element.updatedDescription };
-            }
-            else {
-                return { id: element.id, summary: element.summary, description: element.description };
-            }
-        });
-        setCalendarList(restrictedSizeList);
-    }
+    // //CHECK IF IT WORKS
+    // const restrictSizeOfLabels = (filteredList) => {
+    //     var restrictedSizeList = filteredList.items.map(element => {
+    //         //If both the title and the description of the calendar is greater than 20 char, add ...
+    //         if (element.summary.length > 20 && element.description.length > 20) {
+    //             updatedSummary = element.summary.substring(0, 20) + "...";
+    //             updatedDescription = element.description.substring(0, 20) + "...";
+    //             return { id: element.id, summary: element.updatedSummary, description: element.updatedDescription };
+    //         }
+    //         //If the description of the calendar is greater than 20 char, add ...
+    //         if (element.description.length > 20) {
+    //             updatedDescription = element.description.substring(0, 20) + "...";
+    //             return { id: element.id, summary: element.summary, description: element.updatedDescription };
+    //         }
+    //         //If the title of the calendar is greater than 20 char, add ...
+    //         if (element.summary.length > 20) {
+    //             updatedDescription = element.summary.substring(0, 20) + "...";
+    //             return { id: element.id, summary: element.summary, description: element.updatedDescription };
+    //         }
+    //         else {
+    //             return { id: element.id, summary: element.summary, description: element.description };
+    //         }
+    //     });
+    //     setCalendarList(restrictedSizeList);
+    // }
 
     /**
     * The method will slide the side menu from the right side of the screen
