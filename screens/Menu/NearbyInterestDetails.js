@@ -141,7 +141,7 @@ function NearbyInterestDetails(props) {
                 </Button>
 
                 <Button transparent style={styles.routeButton} onPress={goToDoubleSearch}>
-                    <Text style={styles.viewRouteText}>View Route</Text>
+                    <Text style={styles.viewRouteText}>Get Directions</Text>
                 </Button>
 
             </SafeAreaView>
