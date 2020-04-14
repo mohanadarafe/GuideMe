@@ -30,7 +30,7 @@ function CourseSchedule(props) {
     const [switchVal, setSwitchVal] = React.useState("false");
 
     //TODO Show only events after current date
-    let currentDate = new Date();
+    // let currentDate = new Date();
 
     const getCalendarId = async () => {
         let calendarId = await AsyncStorage.getItem("calendarId");
@@ -49,7 +49,7 @@ function CourseSchedule(props) {
 
     const getCalendarEvents = async () => {
         let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
-            headers: { Authorization: `Bearer ${accessToken}` }, singleEvents: true, orderBy: 'startTime'
+            headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
         setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
