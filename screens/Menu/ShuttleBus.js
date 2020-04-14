@@ -139,7 +139,7 @@ function ShuttleBus (props) {
         let index = 0;
         for (var key in list) {
             if (list[key].hour >= currentTime.Hour && list[key].minutes >= currentTime.Minutes) {
-                console.log("Never here");
+                // console.log("Never here");
                 nextStops = list.slice(index, list.length - 1);
                 break;
             }
@@ -255,7 +255,7 @@ export const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         flexDirection: "column",
-        backgroundColor: "#2A2E43" // go back to this when done
+        backgroundColor: "#2A2E43"
     },
     mainLabel: {
         color: "#FFFFFF",
@@ -350,10 +350,8 @@ export const styles = StyleSheet.create({
         width: "100%"
     },
     topViewContainer: {
-        // position: "absolute",
         width: "100%",
         height: "32%",
-        // backgroundColor: "green"
     },
     titleViewContainer: {
         position: "absolute",
