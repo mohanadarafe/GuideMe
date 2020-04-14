@@ -2,7 +2,7 @@ import React from 'react';
 import { Line, G } from 'react-native-svg';
 import { ClassGraph } from '../../../constants/ClassGraph';
 import { Class9Graph } from '../../../constants/ClassGraph9';
-import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates, ConvertPointOfInterest, shortestPathToInterest } from '../Dijkstra/DijkstraAlgorithm';
+import { dijkstra, getFloorNumber, ConvertToHall8Floor, getArrowCoordinates, shortestPathToInterest } from '../Dijkstra/DijkstraAlgorithm';
 import { Hall9Coordinates } from '../../../constants/Hall9Coordinates';
 import { LoyolaGraph } from '../../../constants/LoyolaGraph';
 

@@ -6,7 +6,6 @@ import { HallFloor9 } from "../../assets/floormaps/hall/HallFloor9";
 import { JMSBFloor2 } from "../../assets/floormaps/mb/JMSBFloor2";
 import { HallFloorX } from "../../assets/floormaps/hall/HallFloorX";
 import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
-import { FloorMenu } from "../../components/FloorMenu";
 import VLFloor1 from "../../assets/floormaps/vl/VLFloor1";
 
 function IndoorMapView(props) {

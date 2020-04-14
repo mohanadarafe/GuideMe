@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
-import { Icon, Button } from "native-base";
+import { Icon } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
-import { BottomMenu } from "../../components/BottomMenu";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
