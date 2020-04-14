@@ -113,8 +113,20 @@ function DoubleSearch(props) {
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName: to.name });
         }
+    
+        else if(from.name.includes("Washroom") || from.name.includes("Water")){
+            alert("Directions from indoor points of interests are not supported! Try going to the point of interest.")
+        }
 
-        // classroom to classroom 
+        else if(!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+            alert("Directions to indoor points of interests are only accepted from classrooms!")
+        }
+
+        // class room to washroom or water fountain 
+        else if(coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
+        }
+        // classroom to classroom
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
@@ -171,7 +183,7 @@ function DoubleSearch(props) {
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) ||  buildingList[key].fullName.includes(name)) {
                 return buildingList[key].coordinates;
             }
         }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { G } from 'react-native-svg';
 import { HallXCoordinates } from '../../constants/HallXCoordinates';
 import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDirections';
@@ -15,6 +15,8 @@ export function IndoorScenario(props) {
         const routeToTake = whichPathToTake(props.from.toString(), props.to.toString());
        
         switch (routeToTake) {
+            case "INTEREST":
+                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} interest={true}/>
             //There are two cases here:
             //CASE I: From VL to H 
             //Start at VL, go to exit, then go to H & go upstairs
@@ -39,7 +41,7 @@ export function IndoorScenario(props) {
                 return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>
                 break;
             case "DIFFERENT_FLOOR":
-                return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
+                return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} mobility={props.mobility}/>;
                 break;
             case "DIFFERENT_BUILDING":
                 return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
@@ -66,6 +68,11 @@ export const whichPathToTake = (from, to) => {
         const different_floor = "DIFFERENT_FLOOR";
         const different_campus = "DIFFERENT_CAMPUS";
         const not_indoor = "NOT_INDOOR";
+        const interest = "INTEREST";
+
+        if (to.includes("Washroom") || to.includes("Water")) {
+            return interest;
+        }
 
         //todo: find a better way to identify different campus buildings
         if (from.includes("VL") || to.includes("VL")) {

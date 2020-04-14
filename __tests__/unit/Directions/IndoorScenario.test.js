@@ -1,6 +1,7 @@
 import React from "react";
 import { IndoorScenario, whichPathToTake } from "../../../components/IndoorDirections/IndoorScenario";
 import renderer from "react-test-renderer";
+import { initialFloor } from "../../../components/FloorMenu";
 
 describe("IndoorScenario component", () => {
     test("renders same floor correctly", () => {
@@ -16,6 +17,28 @@ describe("IndoorScenario component", () => {
     test("renders different building correctly", () => {
         const tree = renderer.create(<IndoorScenario from={"H825"} to={"Grey Nuns Annex"} />).toJSON();
         expect(tree).toMatchSnapshot();
+    })
+
+    test("directions starts at correct initial floor", () => {
+        const testCases = [
+            {from: "H820", to: "H720"},
+            {from: "H1025", to: "H155"},
+            {from: "H562", to: "H513"},
+            {from: "H937", to: "VL102"},
+            {from: "H961_7", to: "Grey Nuns Annex"},
+            {from: "Hall Building", to: "H914"}
+        ]
+        const results = [
+            "8",
+            "10",
+            "5",
+            1,
+            "9",
+            1
+        ]
+        testCases.forEach((element, index) => {
+            expect(initialFloor(element.from, element.to)).toEqual(results[index])
+        });
     })
 
     test("returns correct algorithm path", () => {

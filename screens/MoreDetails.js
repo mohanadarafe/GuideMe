@@ -66,7 +66,7 @@ function MoreDetails (props) {
         <View style={styles.imageContainer}>
           <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
         </View>
-        <Text style={styles.mainLabel}>{data ? data.name: "N/A"}</Text>
+        <Text style={styles.mainLabel}>{name ? name: "N/A"}</Text>
         <Text style={styles.subLabel}>{data ? data.fullName: "N/A"}</Text>
         <Text style={styles.reviewLabel}>19 Reviews</Text>
         <SafeAreaView testID="moreInfoScrollView" style={styles.scrollTextContainer}>
