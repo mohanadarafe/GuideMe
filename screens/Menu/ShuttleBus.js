@@ -1,13 +1,53 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView, TouchableOpacity } from "react-native";
-import { Button } from "native-base";
-import { Feather } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, SafeAreaView } from "react-native";
+import { ListItem } from "react-native-elements";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
 
-//TODO: create a hook called results that takes as a parameter getNextStops in the useEffect()
+/**
+ * This a function is a mini component that returns the layout and the data of each active tab
+ * @param {*} props 
+ */
+function TimesToDisplay (props) {
+    let DATA = [];
+    let campus = props.campus;
+    if (props.campus == "SGW") {
+        DATA = props.data.sgwStops;
+    }
+    else if (props.campus == "Loyola") {
+        DATA = props.data.LoyolaStops;
+    }
+    return (
+        <SafeAreaView style={styles.SafeAreaViewStyle}>
+            <FlatList
+                data={DATA}
+                showsVerticalScrollIndicator={true}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                    <ListItem
+                        title={`Shuttle Bus to ${campus}`}
+                        titleStyle={styles.titleStyle}
+                        subtitle={`${item.hour}:${item.minutes}`}
+                        subtitleStyle={styles.subtitleStyle}
+                        bottomDivider
+                        containerStyle={styles.containerStyle}
+                        leftIcon={<MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.leftIcon} />}
+                        rightTitle={`${item.timeDifference.Hours}${item.timeDifference.Minutes}`}
+                        rightTitleStyle={styles.rightTitleStyle}
+                    />
+                )}
+            />
+        </SafeAreaView>
+    );
+}
+
+TimesToDisplay.propTypes = {
+    props: PropTypes.object,
+    campus: PropTypes.any,
+    data: PropTypes.any
+};
 
 const ICON_SIZE = 35;
 
@@ -19,31 +59,36 @@ function ShuttleBus (props) {
     const [currentTime, setCurrentTime] = React.useState(null);
     const [currentDay, setCurrentDay] = React.useState(null);
     const [campus, setCampus] = React.useState("SGW");
+    const [results, setResults] = React.useState([]);
 
-
-    const weekDays = ["monday", "tuesday", "wednesday", "thursday"];
+    const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "saturday", "sunday"];
     const friday = ["friday"];
+    const weekends = ["saturday", "sunday"];
 
     const getShuttleBusTimes = ShuttleBusTimes();
-    const sgw = "SGW";
-    const loyola = "Loyola";
 
-     /**
-     * The method will slide the side menu from the right side of the screen
-     * @param  {} =>{props.navigation.openDrawer(
-     */
+    /**
+    * The method will slide the side menu from the right side of the screen
+    * @param  {} =>{props.navigation.openDrawer(
+    */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
 
+    /**
+     * Function that gets the current time in hours and minutes as well as the current day
+     */
     const getCurrentTime = () => {
         let currentHour = new Date().getHours();
         let currentMinutes = new Date().getMinutes();
         //set current time 
         setCurrentTime({ Hour: currentHour, Minutes: currentMinutes });
 
-        weekDays.map((item, key) => {
-            if (key == new Date().getDay()) {
+        let CurrentDayIndex = new Date().getDay();
+        let days = [];
+        days = weekDays;
+        days.forEach((item, index) => {
+            if (index == CurrentDayIndex) {
                 //set current day
                 setCurrentDay(item);
             }
@@ -58,75 +103,117 @@ function ShuttleBus (props) {
     const calculateTimeDifference = (nextStop) => {
         var diffHours = nextStop.hour - currentTime.Hour;
         var diffMinutes = nextStop.minutes - currentTime.Minutes;
-        return ({
-            Hours: diffHours,
-            Minutes: Math.abs(diffMinutes)
-        });
+        if (diffHours >= 1 && Math.abs(diffMinutes) < 10) {
+            return ({
+                Hours: diffHours + "h",
+                Minutes: "0" + Math.abs(diffMinutes) + "min"
+            });
+        }
+        else if (diffHours < 1) {
+            return ({
+                Hours: "",
+                Minutes: Math.abs(diffMinutes) + " min"
+            });
+        }
+        else if (Math.abs(diffMinutes) < 1) {
+            return ({
+                Hours: diffHours + " h",
+                Minutes: ""
+            });
+        }
+        else {
+            return ({
+                Hours: diffHours + "h",
+                Minutes: Math.abs(diffMinutes) + "min"
+            });
+        }
+
     };
 
     /**
-     * Function that sorts through the shuttle bus schedule and compares the time/day to the current time/day
+     * Function that returns an object containing the id, timeDifference as well as the time of the next buses on schedule
+     * @param {*} list 
      */
-    const getNextStops = () => {
-        var scheduleTimes = [];
+    const fetchNextStops = (list) => {
         var nextStops = [];
-        let index = 0;
         var results = [];
-        if (currentDay && weekDays.includes(currentDay.toString())) {
-            scheduleTimes = getShuttleBusTimes[campus].MondayToThursday; //TODO: CHANGE THIS BACK TO CAMPUS
-        }
-        else if (currentDay && friday.includes(currentDay.toString())) {
-            scheduleTimes = getShuttleBusTimes[campus].Friday; //TODO: CHANGE THIS BACK TO CAMPUS
-        }
-        else {
-            return alert("There is no shuttle bus on weekends. Please check back during the week!");
-        }
-        for (var key in scheduleTimes) {
-            if (scheduleTimes[key].hour >= currentTime.Hour && scheduleTimes[key].minutes >= currentTime.Minutes) {
-                nextStops = scheduleTimes.slice(index, scheduleTimes.length - 1);
+        let index = 0;
+        for (var key in list) {
+            if (list[key].hour >= currentTime.Hour && list[key].minutes >= currentTime.Minutes) {
+                nextStops = list.slice(index, list.length - 1);
                 break;
             }
             index++;
         }
         if (nextStops.length > 0) {
-            results = nextStops.map((element) => {
+            results = nextStops.map((element, index) => {
                 return ({
+                    id: index.toString(),
                     timeDifference: calculateTimeDifference(element),
                     hour: element.hour,
                     minutes: element.minutes
                 });
             });
         }
-        console.log(results, campus);
+        return results;
+    };
+
+    /**
+     * Function that sorts through the shuttle bus schedule and compares the time/day to the current time/day
+     */
+    const getNextStops = () => {
+        var scheduleTimesSGW = [];
+        var scheduleTimesLoyola = [];
+        const sgwCampus = "SGW";
+        const loyolaCampus = "Loyola";
+        if (currentDay && weekDays.includes(currentDay.toString()) && !friday.includes(currentDay.toString()) && !weekends.includes(currentDay.toString())) {
+            scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
+            scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
+        }
+        else if (currentDay && friday.includes(currentDay.toString())) {
+            scheduleTimesSGW = getShuttleBusTimes[sgwCampus].Friday;
+            scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].Friday;
+        }
+        else {
+            return alert("There is no shuttle bus on weekends. Please check back during the week!");
+        }
+        var nextStopsSGW = fetchNextStops(scheduleTimesSGW);
+        var nextStopsLoyola = fetchNextStops(scheduleTimesLoyola);
+        return ({
+            sgwStops: nextStopsSGW,
+            LoyolaStops: nextStopsLoyola
+        });
     };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             getCurrentTime();
-        }, 1000);
+        }, 100);
         if (currentTime && currentDay && campus) {
-            getNextStops(); //setResult(getNextStops())
+            setResults(getNextStops());
         }
         return () => clearInterval(intervalId);
     }, [currentTime, currentDay, campus]);
 
     return (
         <View style={styles.container}>
+            <View style={styles.topViewContainer}>
+                <View style={styles.imageContainer}>
+                    <Image style={styles.shuttleImage} source={require("./../../assets/shuttle.jpg")} />
+                </View>
 
-            <View style={styles.imageContainer}>
-                <Image style={styles.shuttleImage} source={require("./../../assets/shuttle.jpg")} />
+                <View style={styles.menuButtonContainer}>
+                    <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
+                        <Feather name="menu" style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.titleViewContainer}>
+                    <Text style={styles.mainLabel}>Shuttle Bus</Text>
+                    <Text style={styles.shortLabel}>Winter 2020 Departures</Text>
+                </View>
             </View>
 
-
-            <View style={styles.menuButtonContainer}>
-                <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
-                    <Feather name="menu" style={styles.icon} />
-                </TouchableOpacity>
-            </View>
-
-            <Text style={styles.mainLabel}>Shuttle Bus</Text>
-            <Text style={styles.shortLabel}>Winter 2020 Departures</Text>
-            <View style={styles.controlTabContainer}>
+            <View style={styles.tabContainerView}>
                 <SegmentedControlTab
                     tabsContainerStyle={styles.tabsContainerStyle}
                     values={["SGW", "Loyola"]}
@@ -147,30 +234,13 @@ function ShuttleBus (props) {
                     }}
                 />
                 {selectedTab === 0 && (
-                    <Text style={styles.tabContent}> Tab one</Text>
-                    // <View style={styles.tabContent}>
-                    //     <SafeAreaView style={styles.buttonContainer}>
-                    //     <Button transparent style={styles.mapButton}>
-                    //         <View style={styles.iconContainer}>
-                    //             <MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.mapPin} />
-                    //         </View>
-                    //         <View style={styles.separator}></View>
-                    //         <View style={styles.buttonTextContainer}>
-                    //             <Text style={styles.mapPinLabel}></Text>
-                    //             {/* <Text> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text> */}
-                    //         </View>
-                    //     </Button>
-                    //     {/* </SafeAreaView> */}
-                    // </View>
-                    // // <Text style={styles.tabContent}> {getShuttleBusTimes[sgw].MondayToThursday[0].hour}:{getShuttleBusTimes[sgw].MondayToThursday[0].minutes}</Text>
-
+                    <TimesToDisplay campus="SGW" data={results} />
                 )}
                 {selectedTab === 1 && (
-                    <Text style={styles.tabContent}> Tab two</Text>
+                    <TimesToDisplay campus="Loyola" data={results} />
                 )}
             </View>
-
-        </View>
+        </View >
     );
 }
 
@@ -182,28 +252,22 @@ ShuttleBus.propTypes = {
 export const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        justifyContent: "space-between",
         height: "100%",
         width: "100%",
+        flexDirection: "column",
         backgroundColor: "#2A2E43"
     },
     mainLabel: {
         color: "#FFFFFF",
-        position: "absolute",
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "25%",
-        right: "55%"
     },
     shortLabel: {
         color: "#FFFFFF",
         opacity: 0.7,
-        position: "absolute",
         fontSize: 15,
         fontFamily: "encodeSansExpanded",
-        top: "29%",
-        right: "52%"
     },
     icon: {
         alignSelf: "center",
@@ -219,11 +283,11 @@ export const styles = StyleSheet.create({
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        top: "7%",
+        top: "10%",
     },
     imageContainer: {
         width: "100%",
-        height: "32%",
+        height: "100%",
         position: "absolute",
         opacity: 0.3,
         backgroundColor: "#000"
@@ -233,13 +297,7 @@ export const styles = StyleSheet.create({
         height: "100%",
         position: "relative"
     },
-    controlTabContainer: {
-        top: "6%",
-        alignContent: "space-between"
-    },
     tabsContainerStyle: {
-        bottom: "100%",
-        top: "-130%",
         backgroundColor: "#2A2E43",
     },
     tabStyle: {
@@ -262,60 +320,50 @@ export const styles = StyleSheet.create({
         backgroundColor: "#2A2E43",
         fontWeight: "bold"
     },
-    test: {
-        backgroundColor: "yellow",
-        bottom: "100%",
-        top: "-130%",
-    },
-    tabContent: {
-        color: "#fff",
-        fontSize: 18,
-        margin: 24,
-        bottom: "100%",
-    },
-    mapPin: {
+    leftIcon: {
         color: "#FFFFFF",
         position: "absolute",
+        marginHorizontal: "5%"
     },
-    iconContainer: {
-        height: "150%",
-        width: ICON_SIZE * 2,
-        backgroundColor: "#353A50",
-        borderRadius: 10,
-        justifyContent: "center",
-        alignItems: "center"
+    titleStyle: {
+        color: "white",
+        marginLeft: "15%",
     },
-    buttonContainer: {
-        top: "40%",
+    subtitleStyle: {
+        color: "white",
+        marginLeft: "15%",
+        fontFamily: "encodeSansExpanded",
+    },
+    containerStyle: {
+        backgroundColor: "#2A2E43",
+        borderRadius: 5,
+        marginHorizontal: "2%"
+    },
+    rightTitleStyle: {
+        color: "grey",
+        fontFamily: "encodeSansExpanded",
+        fontWeight: "bold",
+        fontSize: 20
+    },
+    SafeAreaViewStyle: {
+        top: "2%",
+        width: "100%"
+    },
+    topViewContainer: {
+        width: "100%",
+        height: "32%",
+    },
+    titleViewContainer: {
+        position: "absolute",
         flexDirection: "column",
-        justifyContent: "flex-end",
+        top: "75%",
+        right: "50%"
+    },
+    tabContainerView: {
+        top: "2%",
+        width: "100%",
         height: "100%",
-        width: "90%",
-        alignItems: "center",
-    },
-    separator: {
-        height: "100%",
-        width: "4%",
-        justifyContent: "center",
-    },
-    mapPinLabel: {
-        color: "#FFFFFF",
-        fontSize: 13,
-        fontFamily: "encodeSansExpanded",
-        position: "absolute",
-    },
-    smallLabel: {
-        color: "#FFFFFF",
-        fontSize: 10,
-        fontFamily: "encodeSansExpanded",
-        bottom: "10%"
-        // position: "absolute",
-    },
-    buttonTextContainer: {
-        height: "100%",
-        width: "80%",
-        justifyContent: "center",
-        alignSelf: "flex-end",
+        backgroundColor: "#2A2E43"
     },
 });
 
