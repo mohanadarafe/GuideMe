@@ -63,6 +63,7 @@ function ShuttleBus (props) {
 
     const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "saturday", "sunday"];
     const friday = ["friday"];
+    const weekends = ["saturday", "sunday"];
 
     const getShuttleBusTimes = ShuttleBusTimes();
 
@@ -102,10 +103,10 @@ function ShuttleBus (props) {
     const calculateTimeDifference = (nextStop) => {
         var diffHours = nextStop.hour - currentTime.Hour;
         var diffMinutes = nextStop.minutes - currentTime.Minutes;
-        if (Math.abs(diffMinutes) < 10 && diffHours > 1) {
+        if (diffHours >= 1 && Math.abs(diffMinutes) < 10) {
             return ({
                 Hours: diffHours + "h",
-                Minutes: "0" + Math.abs(diffMinutes)
+                Minutes: "0" + Math.abs(diffMinutes) + "min"
             });
         }
         else if (diffHours < 1) {
@@ -116,7 +117,7 @@ function ShuttleBus (props) {
         }
         else if (Math.abs(diffMinutes) < 1) {
             return ({
-                Hours: diffHours + "h",
+                Hours: diffHours + " h",
                 Minutes: ""
             });
         }
@@ -139,7 +140,6 @@ function ShuttleBus (props) {
         let index = 0;
         for (var key in list) {
             if (list[key].hour >= currentTime.Hour && list[key].minutes >= currentTime.Minutes) {
-                // console.log("Never here");
                 nextStops = list.slice(index, list.length - 1);
                 break;
             }
@@ -166,7 +166,7 @@ function ShuttleBus (props) {
         var scheduleTimesLoyola = [];
         const sgwCampus = "SGW";
         const loyolaCampus = "Loyola";
-        if (currentDay && weekDays.includes(currentDay.toString()) && currentDay.toString()) {
+        if (currentDay && weekDays.includes(currentDay.toString()) && !friday.includes(currentDay.toString()) && !weekends.includes(currentDay.toString())) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
         }
