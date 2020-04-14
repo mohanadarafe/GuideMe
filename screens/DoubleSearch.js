@@ -255,7 +255,7 @@ function DoubleSearch(props) {
 
         if(namePointOfInterest){
         addItem(pointOfInterest)
-        setPlaceholder(pointOfInterest)
+        setPlaceholder(namePointOfInterest)
         }
         
     }, []);
