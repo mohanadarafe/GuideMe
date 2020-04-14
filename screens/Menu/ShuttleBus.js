@@ -20,7 +20,7 @@ function TimesToDisplay (props) {
         DATA = props.data.LoyolaStops;
     }
     return (
-        <SafeAreaView style={{ top: "2%", width: "100%" }}>
+        <SafeAreaView style={styles.SafeAreaViewStyle}>
             <FlatList
                 data={DATA}
                 showsVerticalScrollIndicator={true}
@@ -28,23 +28,16 @@ function TimesToDisplay (props) {
                 renderItem={({ item }) => (
                     <ListItem
                         title={`Shuttle Bus to ${campus}`}
-                        titleStyle={{
-                            color: "white", marginLeft: "5%",
-                        }}
+                        titleStyle={styles.titleStyle}
                         subtitle={`${item.hour}:${item.minutes}`}
-                        subtitleStyle={{
-                            color: "white", marginLeft: "5%", fontFamily: "encodeSansExpanded",
-                        }}
+                        subtitleStyle={styles.subtitleStyle}
                         bottomDivider
-                        containerStyle={{ backgroundColor: "#2A2E43", borderRadius: 5, marginHorizontal: "2%" }}
+                        containerStyle={styles.containerStyle}
                         leftIcon={<MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.leftIcon} />}
                         rightTitle={`${item.timeDifference.Hours}:${item.timeDifference.Minutes}`}
-                        rightTitleStyle={{
-                            color: "grey", fontFamily: "encodeSansExpanded", fontWeight: "bold"
-                        }}
+                        rightTitleStyle={styles.rightTitleStyle}
                     />
-                )
-                }
+                )}
             />
         </SafeAreaView>
     );
@@ -124,12 +117,17 @@ function ShuttleBus (props) {
 
     };
 
+    /**
+     * Function that returns an object containing the id, timeDifference as well as the time of the next buses on schedule
+     * @param {*} list 
+     */
     const fetchNextStops = (list) => {
         var nextStops = [];
         var results = [];
         let index = 0;
         for (var key in list) {
             if (list[key].hour >= currentTime.Hour && list[key].minutes >= currentTime.Minutes) {
+                console.log("Never here");
                 nextStops = list.slice(index, list.length - 1);
                 break;
             }
@@ -189,12 +187,7 @@ function ShuttleBus (props) {
 
     return (
         <View style={styles.container}>
-            <View style={{
-                position: "abolute",
-                width: "100%",
-                height: "32%",
-                backgroundColor: "green"
-            }}>
+            <View style={styles.topViewContainer}>
                 <View style={styles.imageContainer}>
                     <Image style={styles.shuttleImage} source={require("./../../assets/shuttle.jpg")} />
                 </View>
@@ -204,13 +197,13 @@ function ShuttleBus (props) {
                         <Feather name="menu" style={styles.icon} />
                     </TouchableOpacity>
                 </View>
-                <View style={{ position: "absolute", flexDirection: "column", top: "75%", right: "50%" }}>
+                <View style={styles.titleViewContainer}>
                     <Text style={styles.mainLabel}>Shuttle Bus</Text>
                     <Text style={styles.shortLabel}>Winter 2020 Departures</Text>
                 </View>
             </View>
 
-            <View style={{ top: "2%", width: "100%", height: "100%", backgroundColor: "#2A2E43" }}>
+            <View style={styles.tabContainerView}>
                 <SegmentedControlTab
                     tabsContainerStyle={styles.tabsContainerStyle}
                     values={["SGW", "Loyola"]}
@@ -240,7 +233,6 @@ function ShuttleBus (props) {
         </View >
     );
 }
-
 
 ShuttleBus.propTypes = {
     navigation: PropTypes.object,
@@ -281,7 +273,7 @@ export const styles = StyleSheet.create({
     menuButtonContainer: {
         width: "100%",
         height: "6%",
-        top: "7%",
+        top: "10%",
     },
     imageContainer: {
         width: "100%",
@@ -321,6 +313,48 @@ export const styles = StyleSheet.create({
     leftIcon: {
         color: "#FFFFFF",
         position: "absolute",
+    },
+    titleStyle: {
+        color: "white",
+        marginLeft: "5%",
+    },
+    subtitleStyle: {
+        color: "white",
+        marginLeft: "5%",
+        fontFamily: "encodeSansExpanded",
+    },
+    containerStyle: {
+        backgroundColor: "#2A2E43",
+        borderRadius: 5,
+        marginHorizontal: "2%"
+    },
+    rightTitleStyle: {
+        color: "grey",
+        fontFamily: "encodeSansExpanded",
+        fontWeight: "bold",
+        fontSize: 20
+    },
+    SafeAreaViewStyle: {
+        top: "2%",
+        width: "100%"
+    },
+    topViewContainer: {
+        // position: "absolute",
+        width: "100%",
+        height: "32%",
+        // backgroundColor: "green"
+    },
+    titleViewContainer: {
+        position: "absolute",
+        flexDirection: "column",
+        top: "75%",
+        right: "50%"
+    },
+    tabContainerView: {
+        top: "2%",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#2A2E43"
     },
 });
 
