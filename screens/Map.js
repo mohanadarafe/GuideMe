@@ -77,7 +77,7 @@ function Map ({ navigation }) {
                 // selectedItemMarker = {addMarkerToSearchItem.bind(this)}
                 />
                 <View style={styles.CurrentBuildingLocation}>
-                        <CurrentBuildingLocation />
+                        {/* <CurrentBuildingLocation /> */}
                 </View>
             <BottomMenu navigation={navigation} campus = {setSelectedCampus.bind(this)}/>
             </View>

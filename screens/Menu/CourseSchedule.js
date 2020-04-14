@@ -29,7 +29,7 @@ function CourseSchedule(props) {
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState("false");
     const [refresh, setRefresh] = React.useState(false);
-
+    const [loop, setLoop] = React.useState(null);
     //TODO Show only events after current date
     // let currentDate = new Date();
 
@@ -83,16 +83,21 @@ function CourseSchedule(props) {
         props.navigation.navigate("DoubleSearch", { CourseScheduleScreen: CourseScheduleScreen, CourseScheduleLocation: item.location });
     }
 
-    //FIXME: Creates memory leak when trying to sign in again to google-calendar (second attempt)
-    useEffect(() => {
-        const intervalId = setInterval(() => {
+      useEffect(() => {
+        setLoop(setInterval(() => {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
-        }, 1);
+        }, 1));
+        if (switchVal == "true") {
         getCalendarEvents();
-        return () => clearInterval(intervalId);
-    }, [selectedCalendarId, accessToken]);
+        }
+        return function cleanUp() {
+            clearInterval(loop);
+            clearImmediate(loop);
+            clearTimeout(loop);
+        }
+    }, [switchVal, selectedCalendarId, accessToken]);
 
     
     if (switchVal == "true" && calendarEventsList) {
