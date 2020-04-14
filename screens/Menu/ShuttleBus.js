@@ -34,7 +34,7 @@ function TimesToDisplay (props) {
                         bottomDivider
                         containerStyle={styles.containerStyle}
                         leftIcon={<MaterialCommunityIcons name="bus-clock" size={ICON_SIZE} style={styles.leftIcon} />}
-                        rightTitle={`${item.timeDifference.Hours}:${item.timeDifference.Minutes}`}
+                        rightTitle={`${item.timeDifference.Hours}${item.timeDifference.Minutes}`}
                         rightTitleStyle={styles.rightTitleStyle}
                     />
                 )}
@@ -102,16 +102,28 @@ function ShuttleBus (props) {
     const calculateTimeDifference = (nextStop) => {
         var diffHours = nextStop.hour - currentTime.Hour;
         var diffMinutes = nextStop.minutes - currentTime.Minutes;
-        if (Math.abs(diffMinutes) < 10) {
+        if (Math.abs(diffMinutes) < 10 && diffHours > 1) {
             return ({
-                Hours: diffHours,
+                Hours: diffHours + "h",
                 Minutes: "0" + Math.abs(diffMinutes)
+            });
+        }
+        else if (diffHours < 1) {
+            return ({
+                Hours: "",
+                Minutes: Math.abs(diffMinutes) + " min"
+            });
+        }
+        else if (Math.abs(diffMinutes) < 1) {
+            return ({
+                Hours: diffHours + "h",
+                Minutes: ""
             });
         }
         else {
             return ({
-                Hours: diffHours,
-                Minutes: Math.abs(diffMinutes)
+                Hours: diffHours + "h",
+                Minutes: Math.abs(diffMinutes) + "min"
             });
         }
 
@@ -154,9 +166,7 @@ function ShuttleBus (props) {
         var scheduleTimesLoyola = [];
         const sgwCampus = "SGW";
         const loyolaCampus = "Loyola";
-        let index = 0;
-        var results = [];
-        if (currentDay && weekDays.includes(currentDay.toString()) && currentDay.toString() !== "saturday" && currentDay.toString() !== "sunday") {
+        if (currentDay && weekDays.includes(currentDay.toString()) && currentDay.toString()) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
         }
@@ -178,7 +188,7 @@ function ShuttleBus (props) {
     useEffect(() => {
         const intervalId = setInterval(() => {
             getCurrentTime();
-        }, 1000);
+        }, 100);
         if (currentTime && currentDay && campus) {
             setResults(getNextStops());
         }
@@ -313,14 +323,15 @@ export const styles = StyleSheet.create({
     leftIcon: {
         color: "#FFFFFF",
         position: "absolute",
+        marginHorizontal: "5%"
     },
     titleStyle: {
         color: "white",
-        marginLeft: "5%",
+        marginLeft: "15%",
     },
     subtitleStyle: {
         color: "white",
-        marginLeft: "5%",
+        marginLeft: "15%",
         fontFamily: "encodeSansExpanded",
     },
     containerStyle: {
