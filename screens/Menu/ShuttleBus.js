@@ -156,7 +156,7 @@ function ShuttleBus (props) {
         const loyolaCampus = "Loyola";
         let index = 0;
         var results = [];
-        if (currentDay && weekDays.includes(currentDay.toString())) {
+        if (currentDay && weekDays.includes(currentDay.toString()) && currentDay.toString() !== "saturday" && currentDay.toString() !== "sunday") {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
         }
