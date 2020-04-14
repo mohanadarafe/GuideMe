@@ -88,9 +88,9 @@ function DoubleSearch(props) {
 
     // var fromScreen; 
     const CourseSchedule = props.navigation.getParam("CourseScheduleScreen", "null");
-    const CourseScheduleLocation = props.navigation.getParam("CourseScheduleLocation", "");
+    const CourseScheduleLocationProps = props.navigation.getParam("CourseScheduleLocation", "");
     const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
-    const InitialTo = props.navigation.getParam("destinationName", "");
+    const DestinationProps = props.navigation.getParam("destinationName", "");
 
 
     const goBack = () => {
@@ -225,8 +225,8 @@ function DoubleSearch(props) {
      * A.U
      */
     useEffect(() => {
-        setCourseScheduleLocation(CourseScheduleLocation);
-        setInitialTo(InitialTo);
+        setCourseScheduleLocation(CourseScheduleLocationProps);
+        setInitialTo(DestinationProps);
             if (to.name === undefined) {
                 if (initialTo !== "") {
                     setCoordinatesTo(getCoordinates(initialTo));
