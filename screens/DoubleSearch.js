@@ -106,17 +106,19 @@ function DoubleSearch(props) {
      */
 
     const goToPreviewDirectionScreen = () => {
-        if (to.name == from.name) {
-            return alert("Origin and destination are the same. Please try Again.");
-        }
+      
         // current location to POI
-        else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords && pointOfInterest !==null) {
+        if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords && pointOfInterest !==null) {
             props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesPOI, fromName: "Current Location", toName: pointOfInterest });
 
         }
         // building name to POI
         else if (coordinatesFrom && pointOfInterest !==null) {
             props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesPOI, fromName: from.name, toName: pointOfInterest });
+        }
+
+        else if (to.name == from.name) {
+            return alert("Origin and destination are the same. Please try Again.");
         }
 
         // current location to building name
