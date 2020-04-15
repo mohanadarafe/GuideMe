@@ -40,7 +40,12 @@ function Settings(props) {
     const signInOrOut = async (val) => {
         if (val) {
             const respCalendars = await signInWithGoogleAsync();
-            getFilteredGoogleCalendarList(respCalendars);
+            if (respCalendars.error == true){
+                setSwitchVal2("false");
+            }
+            else{
+                getFilteredGoogleCalendarList(respCalendars);
+            }
         }
         else {
             if (accessToken) {
@@ -110,7 +115,6 @@ function Settings(props) {
         getSwitchValue();
     }, []);
 
-    console.log(switchVal2);
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
