@@ -10,8 +10,8 @@ import { MapData } from "../components/MapData";
  * 
  * @param {*} buildingName Name of building to get data of
  */
-export function fetchData (buildingName) {
-  const buildingInfo = MapData({ buildingToSearch: buildingName, context:"More Details"});
+export function fetchData(buildingName) {
+  const buildingInfo = MapData({ buildingToSearch: buildingName, context: "More Details" });
   return buildingInfo;
 }
 
@@ -25,7 +25,7 @@ export function fetchData (buildingName) {
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails (props) {
+function MoreDetails(props) {
   const [data, setData] = React.useState(null);
 
   const goBack = () => {
@@ -40,51 +40,51 @@ function MoreDetails (props) {
     setData(fetchData(name));
   }, []);
 
-    return (
-      <View style={styles.container} data-test="MoreDetailsComponent">
-        <SafeAreaView style={styles.buttonContainer}>
-          <Button transparent style={styles.mapButton}>
-            <View style={styles.iconContainer}>
-              <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
-            </View>
-            <View style={styles.separator}></View>
-            <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>{data ? data.address : "N/A"}</Text>
-            </View>
-          </Button>
-          <Button transparent style={styles.phoneButton}>
-            <View style={styles.iconContainer}>
-              <Icon type="Feather" name="phone" style={styles.phone}></Icon>
-            </View>
-            <SafeAreaView style={styles.separator}></SafeAreaView>
-            <View style={styles.buttonTextContainer}>
-              <Text style={styles.mapPinLabel}>{(data && data.phone) ? data.phone : "N/A"}</Text>
-            </View>
-          </Button>
-          <Button testID="MoreDetails_getDirectionsButton" style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
-        </SafeAreaView>
-        <View style={styles.imageContainer}>
-          <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
-        </View>
-        <Text style={styles.mainLabel}>{name ? name: "N/A"}</Text>
-        <Text style={styles.subLabel}>{data ? data.fullName: "N/A"}</Text>
-        <Text style={styles.reviewLabel}>19 Reviews</Text>
-        <SafeAreaView testID="MoreDetails_moreInfoScrollView" style={styles.scrollTextContainer}>
-          <SectionList
-            sections={[
-              { title: "Departments ", data:  (data && data.departments.length > 0) ? data.departments : ["None"]},
-              { title: "Services", data: (data && data.services.length > 0) ? data.services : ["None"]},
-              { title: "Accessibility", data: (data && data.accessibilityItems.length > 0) ? data.accessibilityItems : ["None"] },
-            ]}
-            renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
-            renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-            keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={ () => <View style={styles.line}/>}
-          />
-        </SafeAreaView>
-        <Icon testID="MoreDetails_bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+  return (
+    <View style={styles.container} data-test="MoreDetailsComponent">
+      <SafeAreaView style={styles.buttonContainer}>
+        <Button transparent style={styles.mapButton}>
+          <View style={styles.iconContainer}>
+            <Icon type="Feather" name="map-pin" style={styles.mapPin}></Icon>
+          </View>
+          <View style={styles.separator}></View>
+          <View style={styles.buttonTextContainer}>
+            <Text style={styles.mapPinLabel}>{data ? data.address : "N/A"}</Text>
+          </View>
+        </Button>
+        <Button transparent style={styles.phoneButton}>
+          <View style={styles.iconContainer}>
+            <Icon type="Feather" name="phone" style={styles.phone}></Icon>
+          </View>
+          <SafeAreaView style={styles.separator}></SafeAreaView>
+          <View style={styles.buttonTextContainer}>
+            <Text style={styles.mapPinLabel}>{(data && data.phone) ? data.phone : "N/A"}</Text>
+          </View>
+        </Button>
+        <Button testID="MoreDetails_getDirectionsButton" style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+      </SafeAreaView>
+      <View style={styles.imageContainer}>
+        <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
       </View>
-    );
+      <Text style={styles.mainLabel}>{name ? name : "N/A"}</Text>
+      <Text style={styles.subLabel}>{data ? data.fullName : "N/A"}</Text>
+      <Text style={styles.reviewLabel}>19 Reviews</Text>
+      <SafeAreaView testID="MoreDetails_moreInfoScrollView" style={styles.scrollTextContainer}>
+        <SectionList
+          sections={[
+            { title: "Departments ", data: (data && data.departments.length > 0) ? data.departments : ["None"] },
+            { title: "Services", data: (data && data.services.length > 0) ? data.services : ["None"] },
+            { title: "Accessibility", data: (data && data.accessibilityItems.length > 0) ? data.accessibilityItems : ["None"] },
+          ]}
+          renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
+          renderSectionHeader={({ section }) => <Text testID="MoreDetails_SectionListHeader" style={styles.sectionHeader}>{section.title}</Text>}
+          keyExtractor={(item, index) => index}
+          ItemSeparatorComponent={() => <View style={styles.line} />}
+        />
+      </SafeAreaView>
+      <Icon testID="MoreDetails_bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+    </View>
+  );
 }
 export const styles = StyleSheet.create({
   container: {
@@ -277,6 +277,6 @@ export const styles = StyleSheet.create({
     height: 1,
     width: "100%",
     backgroundColor: "#353A50",
-},
+  },
 });
 export default MoreDetails;

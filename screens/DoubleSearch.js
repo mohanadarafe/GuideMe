@@ -9,10 +9,10 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-function fetchData () {
-    const searchInfo = MapData({context: "Search"});
+function fetchData() {
+    const searchInfo = MapData({ context: "Search" });
     return searchInfo;
-  }
+}
 
 
 /**
@@ -51,15 +51,15 @@ function DoubleSearch(props) {
     const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
     const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
     const goBack = () => {
-        if(CourseScheduleDetailsScreen === true){
+        if (CourseScheduleDetailsScreen === true) {
             props.navigation.goBack();
             props.navigation.navigate("CourseScheduleDetails")
         }
-        else if (NearbyInterestDetailsScreen === true){
+        else if (NearbyInterestDetailsScreen === true) {
             props.navigation.goBack();
             props.navigation.navigate("NearbyInterestDetails")
         }
-        else{
+        else {
             props.navigation.goBack();
         }
     };
@@ -82,22 +82,22 @@ function DoubleSearch(props) {
             return alert("Origin and destination are the same. Please try Again.");
         }
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName: to.name });
         }
-        else if(from.name.includes("Washroom") || from.name.includes("Water")){
+        else if (from.name.includes("Washroom") || from.name.includes("Water")) {
             alert("Directions from indoor points of interests are not supported! Try going to the point of interest.")
         }
-        else if(!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+        else if (!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))) {
             alert("Directions to indoor points of interests are only accepted from classrooms!")
         }
-        else if(coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+        else if (coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName:from.name, toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName: from.name, toName: to.name });
         }
         else {
             return alert("The destination or origin field is missing or invalid. Please try again.");
@@ -110,15 +110,15 @@ function DoubleSearch(props) {
      * 
      */
     const fetchCurrentPosition = () => {
-        
-        getPosition().then(({coords}) => {
+
+        getPosition().then(({ coords }) => {
             setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                })
+                latitude: coords.latitude,
+                longitude: coords.longitude
             })
+        })
             .catch((err) => {
-            alert (err.message);
+                alert(err.message);
             });
     }
 
@@ -137,30 +137,30 @@ function DoubleSearch(props) {
         let classRoomsList = ClassRooms();
         if (/\d/.test(name)) {
             for (var key in classRoomsList) {
-                if(classRoomsList[key].room.includes(name)) {
-                const buildingCoords = buildingList[key].coordinates;
-                const isClassroom = {isClassRoom: name};
-                const result = {...buildingCoords, ...isClassroom};
-                return result;
+                if (classRoomsList[key].room.includes(name)) {
+                    const buildingCoords = buildingList[key].coordinates;
+                    const isClassroom = { isClassRoom: name };
+                    const result = { ...buildingCoords, ...isClassroom };
+                    return result;
                 }
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) ||  buildingList[key].fullName.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) || buildingList[key].fullName.includes(name)) {
                 return buildingList[key].coordinates;
             }
         }
         if (name == "Current Location") {
-            fetchCurrentPosition();           
+            fetchCurrentPosition();
         }
         return null;
     };
 
     var getPosition = function (options) {
         return new Promise(function (resolve, reject) {
-          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+            navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
-      }
+    }
 
     let fromName = from.name;
     let toName = to.name;
@@ -206,11 +206,11 @@ function DoubleSearch(props) {
             <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
             <View style={styles.searchbarsContainer}>
-                <View style={styles.originSearchContainer}>
+                <View testID="2" style={styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
                         testID="DoubleSearch_FromSearchBar"
-                        onTextChange={val => val} 
+                        onTextChange={val => val}
                         onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
                         defaultIndex={"0"}
                         textInputStyle={styles.textInputStyle}
@@ -228,7 +228,7 @@ function DoubleSearch(props) {
                         }}
                     />
                 </View>
-                <View style={styles.destinationSearchContainer}>
+                <View testID="1" style={styles.destinationSearchContainer}>
                     <Text style={styles.searchBarLabels}>To: </Text>
                     <SearchableDropdown
                         testID="DoubleSearch_ToSearchBar"
@@ -251,7 +251,7 @@ function DoubleSearch(props) {
                     />
                 </View>
             </View>
-            {(currentLocationCoords || coordinatesFrom != null) && 
+            {(currentLocationCoords || coordinatesFrom != null) &&
                 <Button transparent testID="DoubleSearch_enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
             }
             {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&
