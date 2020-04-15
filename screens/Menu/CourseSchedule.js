@@ -39,8 +39,8 @@ function CourseSchedule(props) {
     };
 
     const getAccessToken = async () => {
-        let accessToken = await AsyncStorage.getItem("accessToken");
-        setAccessToken(accessToken);
+        let AccessToken = await AsyncStorage.getItem("accessToken");
+        setAccessToken(AccessToken);
     };
 
     const getSwitchValue = async () => {
@@ -136,7 +136,7 @@ function CourseSchedule(props) {
             </View>
         );
     }
-    if (switchVal == "false") {
+    else{
         return (
             <View style={styles.container2}>
                 <View style={styles.menuButtonContainer}>

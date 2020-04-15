@@ -110,6 +110,7 @@ function Settings(props) {
         getSwitchValue();
     }, []);
 
+    console.log(switchVal2);
     return (
         <View style={styles.container}>
             <View style={styles.menuButtonContainer}>
