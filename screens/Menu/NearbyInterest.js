@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity, AsyncStorage } from "react-native";
 import { Icon } from "native-base";
 import { Feather } from "@expo/vector-icons";
-// import { Entypo } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
-import Menu, { MenuItem, Position } from "react-native-enhanced-popup-menu";
+
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -54,18 +53,7 @@ function NearbyInterest(props) {
      * @param  {} =>{props.navigation.navigate("NearbyInterestDetails)"
      */
     const goToNearbyInterestDetails = (item) => {
-        props.navigation.navigate("NearbyInterestDetails", {
-            photoref: item.img,
-            name: item.key,
-            rating: item.rating,
-            hours: item.open_hours,
-            address: item.address,
-            phone: item.phone,
-            web: item.web,
-            latitude: item.latitude,
-            longitude: item.longitude,
-            reviews: item.reviews
-        });
+        props.navigation.navigate("NearbyInterestDetails", {item: item});
     };
     /**
      * The method will let us navigate to the Map screen 
@@ -92,17 +80,6 @@ function NearbyInterest(props) {
         try {
             let keyId = await AsyncStorage.getItem("apiKeyId");
             let SGW_COORDS = "45.496996, -73.578481";
-
-            /**
-             * This line is serves to change the radius of search of the places nearby
-             * To prevent excessive API calls, this line will be commented,
-             * To use this feature simply uncomment this and the places the "searchRadius" variable in the HTTP URL
-             * 
-             * C.S.B
-             */
-
-            // var searchRadius = radius;
-
             let RADIUS = 100;
             let TYPE = `restaurant`;
             let MAX_WIDTH = `500`;
@@ -121,11 +98,6 @@ function NearbyInterest(props) {
     const getFilteredjsonElementArray_SGW = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
 
         var filtering = jsonResp.results.map(element => {
-
-
-            // to display the web and phone number on the detail page, uncomment this line, lines 140 to 153,  lines 165 to 185 - C.S.B
-            // fetchDetailData(element.place_id);
-
 
             return {
                 key: element.name,
@@ -147,17 +119,6 @@ function NearbyInterest(props) {
             let keyId = await AsyncStorage.getItem("apiKeyId");
             let LOY_COORDS = "45.458371,-73.638239";
 
-
-            /**
-             * This line is serves to change the radius of search of the places nearby
-             * To prevent excessive API calls, this line will be commented,
-             * To use this feature simply uncomment this and the places the "searchRadius" variable in the HTTP URL
-             * 
-             * C.S.B
-             */
-
-            // var searchRadius = radius;
-
             let RADIUS = 500;
             let TYPE = `restaurant`;
             let MAX_WIDTH = `500`;
@@ -177,11 +138,6 @@ function NearbyInterest(props) {
 
         var filtering = jsonResp.results.map(element => {
 
-
-            // to display the web and phone number on the detail page, uncomment this line, lines 140 to 153,  lines 165 to 185, and replace the detail   - C.S.B
-            // fetchDetailData(element.place_id);
-
-
             return {
                 key: element.name,
                 rating: element.rating,
@@ -196,21 +152,6 @@ function NearbyInterest(props) {
         return filtering;
     }
 
-    // const fetchDetailData = async (placeId) => {
-    //     try {
-    //         let keyId = await AsyncStorage.getItem("apiKeyId");
-    //         let resp = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=formatted_phone_number,website&key=${keyId}`);
-    //         let jsonResp = await resp.json();
-
-    //         setPhone(prevState => [...prevState, jsonResp.result.formatted_phone_number]);
-    //         setWeb(prevState => [...prevState, jsonResp.result.website]);
-
-    //     } catch (error) {
-    //         alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
-    //     }
-    // }
-
-
     useEffect(() => {
         const intervalId = setInterval(() => {
             getFromScreen();
@@ -219,95 +160,6 @@ function NearbyInterest(props) {
         fetchData_LOY();
         return () => clearInterval(intervalId);
     }, []);
-
-    /**
-     * This map method lets us create an array that will contain the JSON Objects
-     * The reason of this array is because we're taking in two new fields to create the JSON Object
-     * The two new fields are taking the data fetched from the Map Place Detail API
-     * The two fields are the Phone Number and Website 
-     * 
-     * 
-     * However for execissive calls prevention reason we will comment this out, will be used if ever having to demo
-     * You will have to replace the actually arrays in the data={} variable in the flat list, by this array
-     * 
-     * C.S.B
-     */
-
-
-    // if (jsonElementArray_SGW && phone !== undefined && web !== undefined) {
-
-    //     var count = 0;
-    //     var Detail_Array_SGW = jsonElementArray_SGW.map(element => {
-    //         //    console.log(count++);
-    //         count++;
-    //         return {
-    //             key: element.key,
-    //             rating: element.rating,
-    //             open_hours: element.open_hours,
-    //             address: element.address,
-    //             phone: phone[count - 1],
-    //             web: web[count - 1],
-    //             latitude: element.latitude,
-    //             longitude: element.longitude,
-    //             img: element.img,
-    //             reviews: element.reviews
-    //         }
-
-    //     })
-    // }
-    // if (jsonElementArray_LOY && phone !== undefined && web !== undefined) {
-
-    //     var count = 0;
-    //     var Detail_Array_LOY = jsonElementArray_LOY.map(element => {
-    //         //    console.log(count++);
-    //         count++;
-    //         return {
-    //             key: element.key,
-    //             rating: element.rating,
-    //             open_hours: element.open_hours,
-    //             address: element.address,
-    //             phone: phone[count - 1],
-    //             web: web[count - 1],
-    //             latitude: element.latitude,
-    //             longitude: element.longitude,
-    //             img: element.img,
-    //             reviews: element.reviews
-    //         }
-
-    //     })
-    // }
-
-
-    /**
-     *code for the pop menu that will the user change the search radius 
-     * in order to display this feature button you need to uncomment these lines 
-     * lines 286 to 298, lines 299 to 306, lines 330 to 337
-     * C.S.B
-     */
-
-    // let textRef = React.createRef();
-    // let menuRef = null;
-
-    // const setMenuRef = ref => {
-    //     menuRef = ref;
-    // }
-    // const hideMenu = () => {
-    //     menuRef.hide();
-    // }
-    // const showMenu = () => {
-    //     menuRef.show(textRef.current, stickTo = Position.BOTTOM_CENTER);
-    // }
-    /**
-     * This method retrived the radius value when the button in the menu is pressed
-     * @param  {} value
-     */
-
-    // const itemSelected = (value) => {
-    //     setRadius(value);
-    //     hideMenu();
-    // }
-
-
 
     return (
         <View style={styles.container}>
@@ -324,21 +176,6 @@ function NearbyInterest(props) {
                 }
 
             </View>
-
-            {/*             
-            <TouchableOpacity style={styles.optionButton} onPress={showMenu} ref={textRef}>
-                <Entypo name="popup" style={styles.option} />
-            </TouchableOpacity>
-
-            <Menu ref={setMenuRef}>
-                <MenuItem id="100btn" onPress={() => { itemSelected(100) }}> 100 meters</MenuItem>
-
-                <MenuItem id="250btn" onPress={() => { itemSelected(250) }}>250 meters</MenuItem>
-
-                <MenuItem id="500btn" onPress={() => { itemSelected(500) }}>500 meters</MenuItem>
-
-                <MenuItem id="1500btn"onPress={() => { itemSelected(1500) }}>> 1000 meters</MenuItem>
-            </Menu> */}
 
             <Text style={styles.mainLabel}>Points of Interest</Text>
             <Text style={styles.radiusLabel}>Search radius: {radius} meters</Text>

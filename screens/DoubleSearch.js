@@ -56,8 +56,7 @@ function DoubleSearch(props) {
     const addItem = () => {
             destinationItems.unshift({ id: 0, name: namePointOfInterest});   
     }
-    const [courseScheduleLocation, setCourseScheduleLocation] = React.useState("");
-    const [initialTo, setInitialTo] = React.useState("");
+
     const [placeholder, setPlaceholder] = React.useState("");
 
 
@@ -65,28 +64,20 @@ function DoubleSearch(props) {
      * Description: Method to back to the previous screen.
      * Using Stack navigator.
      */
-
-    // var fromScreen; 
-    const CourseSchedule = props.navigation.getParam("CourseScheduleScreen", "null");
+    
     const CourseScheduleLocation = props.navigation.getParam("CourseScheduleLocation", "");
-    const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
-    const InitialTo = props.navigation.getParam("destinationName", "");
 
 
     const goBack = () => {
-        if (CourseSchedule === true) {
-            props.navigation.goBack();
-            props.navigation.navigate("CourseSchedule")
-        }
-        else if (NearbyInterestDetailsScreen === true) {
-            destinationItems.shift()
-            props.navigation.goBack();
-            props.navigation.navigate("NearbyInterestDetails")
+            if(namePointOfInterest){
+                destinationItems.shift();
+                props.navigation.goBack();
 
-        }
-        else {
-            props.navigation.goBack();
-        }
+            }else{
+                props.navigation.goBack();
+            }
+
+         
     };
 
    
@@ -231,18 +222,17 @@ function DoubleSearch(props) {
      * A.U
      */
     useEffect(() => {
-        setCourseScheduleLocation(CourseScheduleLocation);
-        setInitialTo(InitialTo);
+
             if (to.name === undefined) {
-                if (initialTo !== "") {
-                    setCoordinatesTo(getCoordinates(initialTo));
-                    setTo({ name: initialTo });
-                    setPlaceholder(initialTo);
+                if (destinationName) {
+                    setCoordinatesTo(getCoordinates(destinationName));
+                    setTo({ name: destinationName });
+                    setPlaceholder(destinationName);
                 }
-                if (courseScheduleLocation !== "") {
-                    setCoordinatesTo(getCoordinates(courseScheduleLocation));
-                    setTo({ name: courseScheduleLocation });
-                    setPlaceholder(courseScheduleLocation);
+                if (CourseScheduleLocation) {
+                    setCoordinatesTo(getCoordinates(CourseScheduleLocation));
+                    setTo({ name: CourseScheduleLocation });
+                    setPlaceholder(CourseScheduleLocation);
                 }
             }
         if (from.name === undefined) {
@@ -256,7 +246,7 @@ function DoubleSearch(props) {
         })
 
         if(namePointOfInterest){
-        addItem(pointOfInterest)
+        addItem()
         setPlaceholder(namePointOfInterest)
         }
         

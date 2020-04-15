@@ -62,7 +62,6 @@ function CourseSchedule(props) {
         return filteredList;
     };
 
-    const CourseScheduleScreen = true;
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -73,7 +72,7 @@ function CourseSchedule(props) {
     };
 
     const goToDoubleSearch = (item) => {
-        props.navigation.navigate("DoubleSearch", { CourseScheduleScreen: CourseScheduleScreen, CourseScheduleLocation: item.location });
+        props.navigation.navigate("DoubleSearch", { CourseScheduleLocation: item.location });
     }
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, SafeAreaView, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import { Icon, Button } from "native-base";
 import StarRating from "react-native-star-rating";
 
@@ -21,28 +21,27 @@ import StarRating from "react-native-star-rating";
  */
 
 function NearbyInterestDetails(props) {
-/**
- * navigation that serves to go back to previous screen
- * @param  {} =>{props.navigation.goBack(
- */
+    /**
+     * navigation that serves to go back to previous screen
+     * @param  {} =>{props.navigation.goBack(
+     */
 
     const goBack = () => {
         props.navigation.goBack();
     }
 
-    const photoref = props.navigation.getParam("photoref", null);
-    const name = props.navigation.getParam("name", null);
-    const rating = props.navigation.getParam("rating", null);
-    const hours = props.navigation.getParam("hours", null);
-    const address = props.navigation.getParam("address", null);
-    const phone = props.navigation.getParam("phone", null);
-    const web = props.navigation.getParam("web", null);
-    const latitude = props.navigation.getParam("latitude", null);
-    const longitude = props.navigation.getParam("longitude", null);
-    const reviews = props.navigation.getParam("reviews", null);
+    const item = props.navigation.getParam("item", null);
+    const name = item.key;
+    const photoref = item.img;
+    const rating = item.rating;
+    const hours = item.open_hours;
+    const address = item.address;
+    const phone = item.phone;
+    const web = item.web;
+    const latitude = item.latitude;
+    const longitude = item.longitude;
+    const reviews = item.reviews;
 
-    // this boolean serves for the back button of the DoubleSearch component 
-    const NearbyInterestDetailsScreen = true;
     /**
      * This navigation function allows the navigation and the sending of props to DoubleSearch component
      * @param  {} =>{props.navigation.navigate("DoubleSearch"
@@ -55,23 +54,24 @@ function NearbyInterestDetails(props) {
     const goToDoubleSearch = () => {
 
         props.navigation.navigate("DoubleSearch", {
-            NearbyInterestDetailsScreen: NearbyInterestDetailsScreen,
             name_POI: name,
             latitude_POI: latitude,
             longitude_POI: longitude,
         });
     }
 
-    const opening = (hours === true ? "Open Now" : "Close Now");
+    const opening = (hours === true ? "Open Now" : "Closed Now");
 
     return (
         <View style={styles.container}>
 
-            <View style={styles.imageContainer}>
-                <Image style={styles.placeImage} source={{ uri: photoref }} />
-            </View>
+
 
             <SafeAreaView style={styles.buttonContainer}>
+
+                <View style={styles.imageContainer}>
+                    <Image style={styles.placeImage} source={{ uri: photoref }} />
+                </View>
 
                 <View style={styles.backArrowContainer}>
                     <Button transparent style={styles.backArrow} onPress={goBack}>
@@ -126,7 +126,7 @@ function NearbyInterestDetails(props) {
                     </View>
                     <SafeAreaView style={styles.separator}></SafeAreaView>
                     <View style={styles.buttonTextContainer}>
-                        <Text style={styles.btnLabel}>{phone ? phone : "N/A"}</Text>
+                        <Text style={styles.btnLabel}>{phone ? phone : "Coming Soon"}</Text>
                     </View>
                 </Button>
 
@@ -136,7 +136,7 @@ function NearbyInterestDetails(props) {
                     </View>
                     <View style={styles.separator}></View>
                     <View style={styles.buttonTextContainer}>
-                        <Text style={styles.btnLabel}>{web ? web : "N/A"}</Text>
+                        <Text style={styles.btnLabel}>{web ? web : "Coming Soon"}</Text>
                     </View>
                 </Button>
 
@@ -190,14 +190,15 @@ export const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignContent: "center",
         alignItems: "center",
-        bottom: "44%"
+        bottom: "38%"
     },
     imageContainer: {
         width: "100%",
         height: "32%",
         position: "absolute",
         opacity: 0.3,
-        backgroundColor: "#000"
+        backgroundColor: "#000",
+        bottom:"78%"
     },
     placeImage: {
         width: "100%",
@@ -206,24 +207,21 @@ export const styles = StyleSheet.create({
     },
     mainLabel: {
         color: "#FFFFFF",
-        left: "5%",
-        position: "absolute",
+        right: "31%",
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "17%"
+        bottom: "35%"
     },
     totalReviewLabel: {
         color: "#FFFFFF",
-        left: "5%",
-        position: "absolute",
+        right: "30%",
         fontSize: 20,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "24%"
+        bottom: "33%"
     },
     subLabel: {
-        position: "absolute",
         top: "24%",
         left: "5%",
         color: "#FFFFFF",
@@ -232,20 +230,21 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded"
     },
     reviewLabel: {
-        position: "absolute",
-        top: "25%",
         color: "#FFFFFF",
         fontSize: 20,
         fontFamily: "encodeSansExpanded",
-        alignSelf: "center"
+        alignSelf: "center",
+        left:"20%",
+        bottom:"2%"
 
     },
     buttonContainer: {
         flexDirection: "column",
         justifyContent: "flex-end",
         height: "100%",
-        width: "90%",
+        width: "100%",
         alignItems: "center",
+        // backgroundColor: "red"
     },
     buttonTextContainer: {
         height: "100%",
@@ -256,12 +255,12 @@ export const styles = StyleSheet.create({
     hourButton: {
         bottom: "61%",
         height: "8%",
-        width: "100%"
+        width: "90%"
     },
     mapButton: {
         bottom: "59%",
         height: "8%",
-        width: "100%"
+        width: "90%"
     },
     iconBtn: {
         color: "#FFFFFF",
@@ -271,7 +270,7 @@ export const styles = StyleSheet.create({
     phoneButton: {
         bottom: "57%",
         height: "8%",
-        width: "100%",
+        width: "90%",
     },
     btnLabel: {
         position: "absolute",
@@ -282,7 +281,7 @@ export const styles = StyleSheet.create({
     webButton: {
         bottom: "55%",
         height: "8%",
-        width: "100%"
+        width: "90%"
     },
     iconContainer: {
         height: "100%",
