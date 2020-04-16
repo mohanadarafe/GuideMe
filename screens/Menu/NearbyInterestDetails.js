@@ -32,15 +32,15 @@ function NearbyInterestDetails(props) {
 
     const item = props.navigation.getParam("item", null);
     const name = props.navigation.getParam("name", null);
-    const photoref = item.img;
-    const rating = item.rating;
-    const hours = item.open_hours;
-    const address = item.address;
-    const phone = item.phone;
-    const web = item.web;
-    const latitude = item.latitude;
-    const longitude = item.longitude;
-    const reviews = item.reviews;
+    const photoref = item ? item.img : null;
+    const rating = item ? item.rating : null;
+    const hours = item ? item.open_hours: null;
+    const address = item ? item.address : null;
+    const phone = item ? item.phone : null;
+    const web = item ? item.web : null;
+    const latitude = item ? item.latitude : null;
+    const longitude = item ? item.longitude : null;
+    const reviews = item ? item.reviews : null;
 
     /**
      * This navigation function allows the navigation and the sending of props to DoubleSearch component
@@ -80,7 +80,7 @@ function NearbyInterestDetails(props) {
                 </View>
 
                 {name.length > 19 &&
-                    <Text style={styles.mainLabel}>{name.substring(0, 19) + "..."}</Text>
+                    <Text style={styles.mainLabel}>{item ?name.substring(0, 19) + "..." : "N/A"}</Text>
                 }
                 {name.length <= 19 &&
                     <Text style={styles.mainLabel}>{name}</Text>
