@@ -53,7 +53,7 @@ function NearbyInterest(props) {
      * @param  {} =>{props.navigation.navigate("NearbyInterestDetails)"
      */
     const goToNearbyInterestDetails = (item) => {
-        props.navigation.navigate("NearbyInterestDetails", {item: item});
+        props.navigation.navigate("NearbyInterestDetails", {item: item, name: item.key});
     };
     /**
      * The method will let us navigate to the Map screen 

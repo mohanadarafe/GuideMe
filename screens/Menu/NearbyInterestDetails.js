@@ -31,7 +31,7 @@ function NearbyInterestDetails(props) {
     }
 
     const item = props.navigation.getParam("item", null);
-    const name = item.key;
+    const name = props.navigation.getParam("name", null);
     const photoref = item.img;
     const rating = item.rating;
     const hours = item.open_hours;
