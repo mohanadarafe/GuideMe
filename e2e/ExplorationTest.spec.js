@@ -7,9 +7,12 @@ describe("Exploring the map Feature", () => {
    * US-7 : As a user, I would like to know the departments provided inside a building
    * US-8 : As a user, I would like to know the services provided inside a building
    * US-9 : As a user, I would like to know the accessibility of a building
+   * US-11 : As a user, I want to be able to select a start building by typing its name
    * US-12 : As a user, I want to be able to select a destination building by clicking on it
    * US-13 : As a user, I want to be able to select a destination building by typing its name
    * US-37 : As a user, I would like to navigate through building floors
+   * US-38 : As a user, I would like to search for a department/faculty by name
+   * US-39 : As a user, I would like to search for a service by its name
    */
 
   /** BEFORE Each Test
@@ -108,7 +111,7 @@ describe("Exploring the map Feature", () => {
    * 4. Check that the GET DIRECTIONS button exist
    * 5. Click Get DIRECTIONS button
    * 6. Check you get to the get directions screen and the view route button is disabled
-   * 7. Check that TO search bar is filled with the building full name "Henry F. Hall Building"
+   * 7. Check that TO search bar is filled with the building full name "Hall Building"
    */
   it.skip("Select a building as a destination point by typing its name (Hall building)", async () => {
     await element(by.id("Map_searchBar")).tap();
@@ -117,7 +120,7 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
-    //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the To search bar    
+    //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the TO search bar    
     await expect(element(by.label("Hall Building"))).toExist();
   });
 
@@ -128,7 +131,7 @@ describe("Exploring the map Feature", () => {
    * 3. Check that the GET DIRECTIONS button is present
    * 4. click on the GET DIRECTIONS button
    * 5. Check you get to the get directions screen and the view route button is disabled
-   * 6. Check that TO search bar is filled with the building full name "Henry F. Hall Building"
+   * 6. Check that TO search bar is filled with the building name "Hall Building"
    */
   it("Select a building as a destination point by clicking on it (Hall building)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
@@ -136,7 +139,76 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("MoreDetails_getDirectionsButton"))).toExist();
     await element(by.id("MoreDetails_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
-    //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the To search bar  
+    //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the TO search bar  
     await expect(element(by.label("Hall Building")).atIndex(2)).toExist();
+  });
+
+    /** Scenario: Select a building as a starting point by typing its name (EV building)
+   * US-11 : As a user, I want to be able to select a start building by typing its name
+   * 1. Click on the searchBar
+   * 2. Enter the name of a building: "hall building"
+   * 3. Select the corresponding item from the dropdown list
+   * 4. Check that the GET DIRECTIONS button exist
+   * 5. Click Get DIRECTIONS button
+   * 6. Check you get to the get directions screen and the view route button is disabled
+   * 7. Click on the FROM Search Bar
+   * 8. Enter the name of a building (EV building)
+   * 9. Select the corresponding item from the dropdown list
+   * 10. Check that FROM search bar is filled with the building full name "Henry F. Hall Building"
+   */
+  it.skip("Select a building as a destination point by typing its name (Hall building)", async () => {
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("hall building");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
+    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    await element(by.id("DoubleSearch_FromSearchBarView")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("EV building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
+    //TODO: Fix the workaround (next line) to check that "EV Building" is written in the FROM search bar    
+    await expect(element(by.label("EV building"))).toExist();
+  });
+
+  /** Scenario: Select a building as a destination point by typing its name (Hall building)
+   * US-38 : As a user, I would like to search for a department/faculty by name
+   * 1. Click on the searchBar
+   * 2. Enter the name of a deparment: "School of Irish Studies"
+   * 3. Select the corresponding item from the dropdown list
+   * 4. Check that the GET DIRECTIONS button exist
+   * 5. Click Get DIRECTIONS button
+   * 6. Check you get to the get directions screen and the view route button is disabled
+   * 7. Check that TO search bar is filled with the department's name building full name "School of Irish Studies"
+   */
+  it.skip("search for a department/faculty by name (School of Irish Studies)", async () => {
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("School of Irish Studies");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
+    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    //TODO: Fix the workaround (next line) to check that "School of Irish Studies" is written in the TO search bar    
+    await expect(element(by.label("School of Irish Studies"))).toExist();
+  });
+
+  /** Scenario: Select a building as a destination point by typing its name (Hall building)
+   * US-39 : As a user, I would like to search for a service by its name
+   * 1. Click on the searchBar
+   * 2. Enter the name of a deparment: "Welcome Crew"
+   * 3. Select the corresponding item from the dropdown list
+   * 4. Check that the GET DIRECTIONS button exist
+   * 5. Click Get DIRECTIONS button
+   * 6. Check you get to the get directions screen and the view route button is disabled
+   * 7. Check that TO search bar is filled with the department's name building full name "Welcome Crew"
+   */
+  it.skip("search for a department/faculty by name (Welcome Crew)", async () => {
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("Welcome Crew");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
+    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    //TODO: Fix the workaround (next line) to check that "Welcome Crew" is written in the TO search bar    
+    await expect(element(by.label("Welcome Crew"))).toExist();
   });
 });
