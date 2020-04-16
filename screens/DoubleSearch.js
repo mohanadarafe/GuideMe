@@ -242,7 +242,7 @@ function DoubleSearch(props) {
         if (from.name === undefined) {
             fetchCurrentPosition();
         }
-    });
+    },[courseScheduleLocation, initialTo]);
 
     return (
         <View style={styles.container} data-test="DoubleSearch">

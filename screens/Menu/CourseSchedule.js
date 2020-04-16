@@ -33,14 +33,17 @@ function CourseSchedule(props) {
     //TODO Show only events after current date
     // let currentDate = new Date();
 
+    //TODO Show only events after current date THIS FORMAT 2020-04-18
+    let currentDate = new Date();
+
     const getCalendarId = async () => {
         let calendarId = await AsyncStorage.getItem("calendarId");
         setSelectedCalendarId(calendarId);
     };
 
     const getAccessToken = async () => {
-        let accessToken = await AsyncStorage.getItem("accessToken");
-        setAccessToken(accessToken);
+        let AccessToken = await AsyncStorage.getItem("accessToken");
+        setAccessToken(AccessToken);
     };
 
     const getSwitchValue = async () => {
@@ -53,13 +56,21 @@ function CourseSchedule(props) {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
-        setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
+        let filteredList = getFilteredGoogleCalendarEvents(resp);
+        let result = filteredList.filter(element => element.summary)
+        setCalendarEventsList(result);
         setRefresh(false);
     }
 
     const getFilteredGoogleCalendarEvents = (resp) => {
         var filteredList = resp.items.map(element => {
-            return { id: element.id, summary: element.summary, description: element.description, location: element.location };
+            let elementDate = new Date (element.start.date);
+            if(elementDate > currentDate){
+                return { id: element.id, summary: element.summary, description: element.description, location: element.location };
+            }
+            else{
+                return {};
+            }
         });
         return filteredList;
     };
