@@ -101,7 +101,7 @@ function CourseSchedule(props) {
         return () => clearInterval(intervalId);
     }, [selectedCalendarId, accessToken]);
 
-    if (switchVal == "true") {
+    if (switchVal == "true" && calendarEventsList) {
     return (
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
