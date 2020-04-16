@@ -298,18 +298,20 @@ export const styles = StyleSheet.create({
     },
     DirectionTextHeaderStyle: {
         color: "white",
-        fontSize: 25
+        fontSize: 18,
+        bottom: "20%",
+        fontFamily: "encodeSansExpanded",
     },
     lineHeader: {
         borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
-        top: "10%"
+        top: "50%"
     },
     backIcon: {
         color: "white",
         left: "5%",
-        top: "40%"
+        top: "80%"
     },
     bottomArrowDirectionContainer: {
         top: "90%",

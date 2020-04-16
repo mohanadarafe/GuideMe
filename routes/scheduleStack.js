@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation-stack";
 import CourseSchedule from "../screens/Menu/CourseSchedule";
 import CourseScheduleDetails from "../screens/Menu/CourseScheduleDetails";
-import DoubleSearch from "../screens/DoubleSearch";
-import PreviewDirections from "../screens/PreviewDirections";
-import MapDirections from "../screens/Directions";
+import { constantStacks } from "../constants/constantStack";
+
+const additionalScreens = constantStacks
 
 const screens = {
 
@@ -19,26 +19,8 @@ const screens = {
             headerShown: false,
         }
     },
-    DoubleSearch: {
-        screen: DoubleSearch,
-        navigationOptions: {
-            headerShown: false,
-        }
-    },
-    PreviewDirections: {
-        screen: PreviewDirections,
-        navigationOptions: {
-            headerShown: false
-        }
-    },
-    Directions: {
-        screen: MapDirections,
-        navigationOptions: {
-            headerShown: false
-        }
-    },
 };
 
-const scheduleStack = createStackNavigator(screens);
+const scheduleStack = createStackNavigator({...screens,...additionalScreens});
 
 export default scheduleStack; 

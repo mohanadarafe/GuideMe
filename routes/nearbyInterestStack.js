@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation-stack";
 import NearbyInterest from "../screens/Menu/NearbyInterest";
 import NearbyInterestDetails from "../screens/Menu/NearbyInterestDetails";
-import DoubleSearch from "../screens/DoubleSearch";
-import PreviewDirections from "../screens/PreviewDirections";
-import MapDirections from "../screens/Directions";
+import { constantStacks } from "../constants/constantStack";
+
+    const additionalScreens = constantStacks
 
     const screens = {
         NearbyInterest: {
@@ -18,27 +18,8 @@ import MapDirections from "../screens/Directions";
                 headerShown: false,
             }
         },
-        DoubleSearch: {
-            screen: DoubleSearch,
-            navigationOptions: {
-                headerShown: false,
-            }
-        },
-        PreviewDirections: {
-            screen: PreviewDirections,
-            navigationOptions: {
-                headerShown: false
-            }
-        },
-        Directions: {
-            screen: MapDirections,
-            navigationOptions: {
-                headerShown: false
-            }
-        },
-    
     };
 
-const nearbyInterestStack = createStackNavigator(screens);
+const nearbyInterestStack = createStackNavigator({...screens, ...additionalScreens});
 
 export default nearbyInterestStack; 
