@@ -85,14 +85,16 @@ const ICON_SIZE = 35;
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 function ShuttleBus (props) {
+    /**
+     * The SonarQube error 'campus' is declared but its value is never read' should be 
+     * ignored because campus is called in another function :)
+     */
+    const [campus, setCampus] = React.useState("SGW");
     const [selectedTab, setSelectedTab] = React.useState(0);
     const [currentTime, setCurrentTime] = React.useState(null);
-    const [currentDay, setCurrentDay] = React.useState(null);
-    const [campus, setCampus] = React.useState("SGW");
     const [results, setResults] = React.useState([]);
     const [isUnavailable, setIsUnavailable] = React.useState(true);
 
-    const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
     const getShuttleBusTimes = ShuttleBusTimes();
 
@@ -155,7 +157,7 @@ function ShuttleBus (props) {
      */
     const fetchNextStops = (list) => {
         var nextStops = [];
-        var results = [];
+        var resultsArray = [];
         let index = 0;
         for (var key in list) {
             if (list[key].hour >= currentTime.Hour && list[key].minutes >= currentTime.Minutes) {
@@ -165,16 +167,16 @@ function ShuttleBus (props) {
             index++;
         }
         if (nextStops.length > 0) {
-            results = nextStops.map((element, index) => {
+            resultsArray = nextStops.map((element, key) => {
                 return ({
-                    id: index.toString(),
+                    id: key.toString(),
                     timeDifference: calculateTimeDifference(element),
                     hour: element.hour,
                     minutes: element.minutes
                 });
             });
         }
-        return results;
+        return resultsArray;
     };
 
     /**
@@ -186,6 +188,7 @@ function ShuttleBus (props) {
         const sgwCampus = "SGW";
         const loyolaCampus = "Loyola";
         let currentDayIndex = new Date().getDay();
+
         if (currentDayIndex > 0 && currentDayIndex < 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
@@ -212,21 +215,11 @@ function ShuttleBus (props) {
         const intervalId = setInterval(() => {
             getCurrentTime();
         }, 100);
-        if (currentTime && currentDay && campus) {
+        if (currentTime) {
             setResults(getNextStops());
         }
         return () => clearInterval(intervalId);
-    }, [currentTime, currentDay, campus]);
-
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         getCurrentTime();
-    //     }, 100);
-    //     if (currentTime) {
-    //         setResults(getNextStops());
-    //     }
-    //     return () => clearInterval(intervalId);
-    // }, [currentTime, campus]);
+    }, [currentTime]);
 
     return (
         <View style={styles.container}>
@@ -298,7 +291,6 @@ export const styles = StyleSheet.create({
     },
     shortLabel: {
         color: "#FFFFFF",
-        opacity: 0.7,
         fontSize: 15,
         fontFamily: "encodeSansExpanded",
     },
@@ -423,7 +415,6 @@ export const styles = StyleSheet.create({
     },
     svgContainer: {
         width: "100%",
-        // bottom: "10%",
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
