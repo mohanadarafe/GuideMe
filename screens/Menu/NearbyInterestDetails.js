@@ -86,8 +86,6 @@ function NearbyInterestDetails(props) {
                     <Text style={styles.mainLabel}>{name}</Text>
                 }
 
-                <Text style={styles.totalReviewLabel}>{reviews ? reviews + " Reviews" : "N/A"}</Text>
-
                 <Button transparent style={styles.ratingContainer}>
                     <View style={styles.ratingNumberContainer}>
                         <Text style={styles.reviewLabel}>{rating ? rating : "N/A"}</Text>
@@ -100,8 +98,19 @@ function NearbyInterestDetails(props) {
                     </View>
                 </Button>
 
+                <Button transparent style={styles.reviewContainer}>
+                <View style={styles.iconContainer}>
+                        <Icon type="Feather" name="users" style={styles.iconBtn}></Icon>
+                    </View>
+                    <View style={styles.separator}></View>
+                    <View style={styles.buttonTextContainer}>
+                    <Text style={styles.btnLabel}>{reviews ? reviews +" Reviews": "N/A"}</Text>
+                    </View>
+                </Button>
+
+
                 <Button transparent style={styles.hourButton}>
-                    <View style={styles.iconContainer}>
+                <View style={styles.iconContainer}>
                         <Icon type="Feather" name="clock" style={styles.iconBtn}></Icon>
                     </View>
                     <View style={styles.separator}></View>
@@ -190,7 +199,7 @@ export const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignContent: "center",
         alignItems: "center",
-        bottom: "38%"
+        bottom: "33%"
     },
     imageContainer: {
         width: "100%",
@@ -207,11 +216,12 @@ export const styles = StyleSheet.create({
     },
     mainLabel: {
         color: "#FFFFFF",
-        right: "31%",
+        width: "90%",
         fontSize: 30,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        bottom: "35%"
+        bottom: "28%",
+        textAlign:"left"
     },
     totalReviewLabel: {
         color: "#FFFFFF",
@@ -221,14 +231,6 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         bottom: "33%"
     },
-    subLabel: {
-        top: "24%",
-        left: "5%",
-        color: "#FFFFFF",
-        fontSize: 11,
-        fontWeight: "bold",
-        fontFamily: "encodeSansExpanded"
-    },
     reviewLabel: {
         color: "#FFFFFF",
         fontSize: 20,
@@ -237,6 +239,14 @@ export const styles = StyleSheet.create({
         left:"20%",
         bottom:"2%"
 
+    },
+    subLabel: {
+        top: "24%",
+        left: "5%",
+        color: "#FFFFFF",
+        fontSize: 11,
+        fontWeight: "bold",
+        fontFamily: "encodeSansExpanded"
     },
     buttonContainer: {
         flexDirection: "column",
@@ -252,13 +262,18 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "flex-end"
     },
+    reviewContainer: {
+        bottom: "49%",
+        height: "8%",
+        width: "90%"
+    },
     hourButton: {
-        bottom: "61%",
+        bottom: "47%",
         height: "8%",
         width: "90%"
     },
     mapButton: {
-        bottom: "59%",
+        bottom: "45%",
         height: "8%",
         width: "90%"
     },
@@ -268,7 +283,7 @@ export const styles = StyleSheet.create({
         alignSelf: "center"
     },
     phoneButton: {
-        bottom: "57%",
+        bottom: "43%",
         height: "8%",
         width: "90%",
     },
@@ -279,7 +294,7 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded"
     },
     webButton: {
-        bottom: "55%",
+        bottom: "41%",
         height: "8%",
         width: "90%"
     },
@@ -301,14 +316,15 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
     },
     ratingContainer: {
-        bottom: "66%",
+        bottom: "50%",
         height: "8%",
         width: "100%"
     },
     ratingStarsContainer: {
         width: "60%",
         height: "40%",
-    }
+    },
+ 
 
 
 
