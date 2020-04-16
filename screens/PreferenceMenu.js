@@ -22,6 +22,8 @@ function PreferenceMenu (props) {
 
     const transportSavedState = props.navigation.getParam("transportType", "null");
 
+    const isIndoor = props.navigation.getParam("indoor", "null");
+
     const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState ? personaSavedState : null });
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState ? mobilitySavedState : null });
     const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState ? transportSavedState : null });
@@ -56,9 +58,17 @@ function PreferenceMenu (props) {
         });
     };
 
+    const goToIndoorMap = () => {
+        props.navigation.navigate("IndoorMapView", {
+            personaType: onPressFirstCategory.selectedButton,
+            mobilityType: onPressSecondCategory.selectedButton,
+            transportType: onPressThirdCategory.selectedButton,
+        });
+    };
+
     return (
         <View style={styles.container}>
-            <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={goToPreviewDirections} />
+            <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => {(isIndoor ? goToIndoorMap : goToPreviewDirections)}} />
 
             <Text style={styles.mainLabel}>Preferences</Text>
 

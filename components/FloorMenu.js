@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage, View } from "react-native";
 import SwitchSelector from "react-native-switch-selector";
+import { whichPathToTake } from "./IndoorDirections/IndoorScenario";
+import { getFloorNumber } from "./IndoorDirections/Dijkstra/DijkstraAlgorithm";
 
 const hallFloors = [
   { label: "1", value: "1" },
@@ -39,21 +41,53 @@ const vlFloors = [
   { label: "1", value: "1" }
 ];
 
-export function FloorMenu() {
-  const [floorNumber, setFloorNumber] = React.useState("1");
-  const [selectedBuilding, setSelectedBuilding] = React.useState("");
-  AsyncStorage.setItem("floorSelected", floorNumber);
+/**
+ * The following function will determine where the initial
+ * floor should be when navigating indoors & sets it intially.
+ * 
+ * Examples
+ * H811 to H525 => initial floor 8
+ * Grey Nuns to H525 => initial floor 1 (enter the building)
+ * H920 to EV Building => initial floor 9 (leave the class)
+ * @param {*} from | starting place
+ * @param {*} to | ending place
+ */
+export const initialFloor = (from, to) => {
+  const path = whichPathToTake(from, to); 
 
+  if(path == "SAME_FLOOR" || path == "DIFFERENT_FLOOR" || path == "INTEREST") {
+    var floor = getFloorNumber(from)
+    AsyncStorage.setItem("floorSelected", floor.toString());
+    return floor;
+  }
+  if(path == "DIFFERENT_BUILDING") {
+    if (from.includes(" ")) {
+      AsyncStorage.setItem("floorSelected", "1");
+      return 1;
+    } else {
+      var floor = getFloorNumber(from)
+      AsyncStorage.setItem("floorSelected", floor.toString());
+      return floor;
+    }
+  }
+  if(path == "DIFFERENT_CAMPUS") {
+    AsyncStorage.setItem("floorSelected", "1");
+    return 1;
+  }
+}
+
+export function FloorMenu(props) {
+  const [floorNumber, setFloorNumber] = React.useState(props.from != null && props.to != null ? initialFloor(props.from, props.to) : 1);
+  const [selectedBuilding, setSelectedBuilding] = React.useState("");
+  AsyncStorage.setItem("floorSelected", floorNumber.toString());
+  
   const getSelectedBuilding = async () => {
     let name = await AsyncStorage.getItem("buildingSelected");
     setSelectedBuilding(name);
   };
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      getSelectedBuilding();
-    }, 100);
-    return () => clearInterval(intervalId);
+    getSelectedBuilding();
   });
 
   return (
@@ -62,7 +96,7 @@ export function FloorMenu() {
         <SwitchSelector
           style={styles.selector}
           options={hallFloors}
-          initial={0}
+          initial={floorNumber-1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
@@ -73,7 +107,7 @@ export function FloorMenu() {
         <SwitchSelector
           style={styles.selector}
           options={jmsbFloors}
-          initial={0}
+          initial={floorNumber-1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
@@ -84,7 +118,7 @@ export function FloorMenu() {
         <SwitchSelector
           style={styles.selector}
           options={vlFloors}
-          initial={0}
+          initial={floorNumber-1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
@@ -96,7 +130,7 @@ export function FloorMenu() {
           id="floor_select_none"
           style={styles.selector}
           options={hallFloors}
-          initial={0}
+          initial={floorNumber-1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);

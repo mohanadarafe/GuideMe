@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { View, ScrollView, AsyncStorage, StyleSheet, Text } from "react-native";
-import { Icon } from "native-base";
-import { Button } from "react-native-paper";
+import { View, ScrollView, AsyncStorage, StyleSheet } from "react-native";
+import { BottomMenu } from "../../components/BottomMenu";
 import { JMSBFloor1 } from "../../assets/floormaps/mb/JMSBFloor1";
 import { HallFloor9 } from "../../assets/floormaps/hall/HallFloor9";
 import { JMSBFloor2 } from "../../assets/floormaps/mb/JMSBFloor2";
@@ -13,21 +12,16 @@ import VLFloor1 from "../../assets/floormaps/vl/VLFloor1";
 function IndoorMapView(props) {
 
     const [selectedFloor, setSelectedFloor] = React.useState("");
+    const [mobility, setMobility] = React.useState("");
+
+    const getMobility = async () => {
+        let name = await AsyncStorage.getItem("secondCategory");
+        setMobility(name);
+    };
 
     const getFloorSelected = async () => {
         let name = await AsyncStorage.getItem("floorSelected");
         setSelectedFloor(name);
-    };
-
-    const goBack = () => {
-        props.navigation.goBack();
-    };
-
-    const goToMoreDetails = () => {
-        props.navigation.navigate("MoreDetails", {
-            name: selectedBuilding,
-            navigation: props.navigation,
-        });
     };
 
     const selectedBuilding = props.navigation.getParam("selectedBuilding", "Hall Building");
@@ -38,6 +32,7 @@ function IndoorMapView(props) {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
+            getMobility();
             getFloorSelected();
         }, 1);
         return () => clearInterval(intervalId);
@@ -51,10 +46,10 @@ function IndoorMapView(props) {
                         <VLFloor1 from={from} to={to} />
                     }
                     {((selectedBuilding === "Hall Building" && selectedFloor !== "9") || (((from != null && from.includes("H") && isFirst != null) || (to != null && to.includes("H") && isLast != null)) && selectedFloor !== "9")) &&
-                        <HallFloorX from={from ? from : null} to={to ? to : null} />
+                        <HallFloorX from={from ? from : null} to={to ? to : null} mobility={mobility} />
                     }
                     {((selectedBuilding === "Hall Building" && selectedFloor == "9") || (((from != null && from.includes("H") && isFirst != null) || (to != null && to.includes("H") && isLast != null)) && selectedFloor == "9")) &&
-                        <HallFloor9 from={from ? from : null} to={to ? to : null} />
+                        <HallFloor9 from={from ? from : null} to={to ? to : null} mobility={mobility} />
                     }
                     {selectedBuilding === "MB Building" && selectedFloor === "1" &&
                         <JMSBFloor1 />
@@ -70,23 +65,7 @@ function IndoorMapView(props) {
                     }
                 </ScrollView>
             </ScrollView>
-
-            <View style={styles.insideBuildingContainer}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
-                {from == null && to == null &&
-                    <Text style={styles.mainLabel}>{selectedBuilding}</Text>
-                }
-                {from != null && to != null &&
-                    <Text style={styles.mainLabel}>{((from.includes("VL") && isFirst != null) || (to.includes("VL") && isLast != null)) ? "VL Building" : "Hall Building" }</Text>
-                }
-                <Text style={styles.shortLabel}>More info</Text>
-                <Button testID="IndoorMapView_ExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
-                    <Text style={styles.btnText}>Exit Building</Text>
-                </Button>
-                <View style={styles.changeFloor}>
-                    <FloorMenu />
-                </View>
-            </View>
+            <BottomMenu navigation={props.navigation} indoor={true} inDirections={from != null && to != null} from={from} to={to} building={selectedBuilding}/>
         </View>
     );
 }

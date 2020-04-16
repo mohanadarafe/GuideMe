@@ -77,7 +77,6 @@ export function ClassRooms () {
       "H862",
       "H820",
       "H832",
-      "H902",
       "H903",
       "H906",
       "H907",
