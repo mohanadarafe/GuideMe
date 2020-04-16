@@ -5,6 +5,7 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
+import { ShuttleBusSVG } from "../../assets/ShuttleBusSVG";
 
 /**
  * This a function is a mini component that returns the layout and the data of each active tab
@@ -13,7 +14,15 @@ import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
 function TimesToDisplay (props) {
     let DATA = [];
     let campus = props.campus;
-    if (props.campus == "SGW") {
+    let isUnavailable = props.isUnavailable;
+    if (isUnavailable && (props.campus == "SGW" || props.campus == "Loyola")) {
+        return (
+            <View>
+                <DisplayDisclaimer />
+            </View>
+        );
+    }
+    else if (props.campus == "SGW") {
         DATA = props.data.sgwStops;
     }
     else if (props.campus == "Loyola") {
@@ -46,8 +55,38 @@ function TimesToDisplay (props) {
 TimesToDisplay.propTypes = {
     props: PropTypes.object,
     campus: PropTypes.any,
-    data: PropTypes.any
+    data: PropTypes.any,
+    isUnavailable: PropTypes.any
 };
+
+function DisplayDisclaimer () {
+    return (
+        <SafeAreaView style={{
+            top: "10%",
+            width: "100%",
+            // backgroundColor: "green",
+            alignItems: "center",
+            alignContent: "center",
+            paddingHorizontal: "5%"
+        }}>
+            <View style={{
+                alignItems: "center",
+                alignContent: "center",
+                paddingVertical: "5%"
+            }}>
+                <Text style={{ color: "white", fontSize: 20, fontWeight: "bold", paddingBottom: "2%" }}>Disclaimer:</Text>
+                <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>Unfortunately, there is no shuttle bus during weekdays after 11 pm and on weekends as well. Please check back another time! </Text>
+            </View>
+
+            <View style={styles.svgContainer}>
+                <ShuttleBusSVG />
+            </View>
+        </SafeAreaView>
+
+
+    );
+}
+
 
 const ICON_SIZE = 35;
 
@@ -60,8 +99,9 @@ function ShuttleBus (props) {
     const [currentDay, setCurrentDay] = React.useState(null);
     const [campus, setCampus] = React.useState("SGW");
     const [results, setResults] = React.useState([]);
+    const [isUnavailable, setIsUnavailable] = React.useState(true);
 
-    const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "saturday", "sunday"];
+    const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
     const friday = ["friday"];
     const weekends = ["saturday", "sunday"];
 
@@ -154,8 +194,9 @@ function ShuttleBus (props) {
                     minutes: element.minutes
                 });
             });
+            return results;
         }
-        return results;
+        // return results;
     };
 
     /**
@@ -166,19 +207,23 @@ function ShuttleBus (props) {
         var scheduleTimesLoyola = [];
         const sgwCampus = "SGW";
         const loyolaCampus = "Loyola";
-        if (currentDay && weekDays.includes(currentDay.toString()) && !friday.includes(currentDay.toString()) && !weekends.includes(currentDay.toString())) {
+        let currentDayIndex = new Date().getDay();
+        if (currentDayIndex > 0 && currentDayIndex < 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
         }
-        else if (currentDay && friday.includes(currentDay.toString())) {
+        else if (currentDayIndex === 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].Friday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].Friday;
         }
         else {
-            return alert("There is no shuttle bus on weekends. Please check back during the week!");
+            setIsUnavailable(true);
         }
         var nextStopsSGW = fetchNextStops(scheduleTimesSGW);
         var nextStopsLoyola = fetchNextStops(scheduleTimesLoyola);
+        if (nextStopsSGW === undefined || nextStopsLoyola === undefined) {
+            setIsUnavailable(true);
+        }
         return ({
             sgwStops: nextStopsSGW,
             LoyolaStops: nextStopsLoyola
@@ -194,6 +239,16 @@ function ShuttleBus (props) {
         }
         return () => clearInterval(intervalId);
     }, [currentTime, currentDay, campus]);
+
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         getCurrentTime();
+    //     }, 100);
+    //     if (currentTime) {
+    //         setResults(getNextStops());
+    //     }
+    //     return () => clearInterval(intervalId);
+    // }, [currentTime, campus]);
 
     return (
         <View style={styles.container}>
@@ -234,10 +289,10 @@ function ShuttleBus (props) {
                     }}
                 />
                 {selectedTab === 0 && (
-                    <TimesToDisplay campus="SGW" data={results} />
+                    <TimesToDisplay campus="SGW" data={results} isUnavailable={isUnavailable} />
                 )}
                 {selectedTab === 1 && (
-                    <TimesToDisplay campus="Loyola" data={results} />
+                    <TimesToDisplay campus="Loyola" data={results} isUnavailable={isUnavailable} />
                 )}
             </View>
         </View >
@@ -282,8 +337,8 @@ export const styles = StyleSheet.create({
     },
     menuButtonContainer: {
         width: "100%",
-        height: "6%",
-        top: "10%",
+        height: "15%",
+        top: "17%"
     },
     imageContainer: {
         width: "100%",
@@ -346,9 +401,15 @@ export const styles = StyleSheet.create({
         fontSize: 20
     },
     SafeAreaViewStyle: {
-        top: "2%",
+        top: "10%",
         width: "100%"
     },
+    // SafeAreaViewContainer: {
+    //     top: "5%",
+    //     width: "100%",
+    //     backgroundColor: "green",
+
+    // },
     topViewContainer: {
         width: "100%",
         height: "32%",
@@ -364,6 +425,14 @@ export const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         backgroundColor: "#2A2E43"
+    },
+    svgContainer: {
+        width: "100%",
+        // bottom: "10%",
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        top: "85%",
     },
 });
 
