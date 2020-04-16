@@ -15,6 +15,7 @@ function TimesToDisplay (props) {
     let DATA = [];
     let campus = props.campus;
     let isUnavailable = props.isUnavailable;
+
     if (isUnavailable && (props.campus == "SGW" || props.campus == "Loyola")) {
         return (
             <View>
@@ -59,34 +60,24 @@ TimesToDisplay.propTypes = {
     isUnavailable: PropTypes.any
 };
 
+/**
+ * This mini component is called when the user views the shuttle bus schedule at a time where it is 
+ * unavailable such as weekends and weekdays after 11 pm
+ */
 function DisplayDisclaimer () {
     return (
-        <SafeAreaView style={{
-            top: "10%",
-            width: "100%",
-            // backgroundColor: "green",
-            alignItems: "center",
-            alignContent: "center",
-            paddingHorizontal: "5%"
-        }}>
-            <View style={{
-                alignItems: "center",
-                alignContent: "center",
-                paddingVertical: "5%"
-            }}>
-                <Text style={{ color: "white", fontSize: 20, fontWeight: "bold", paddingBottom: "2%" }}>Disclaimer:</Text>
-                <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>Unfortunately, there is no shuttle bus during weekdays after 11 pm and on weekends as well. Please check back another time! </Text>
+        <SafeAreaView style={styles.SafeAreaViewDisclaimerContainer}>
+            <View style={styles.disclaimerTextContainer}>
+                <Text style={styles.disclaimerTitle}>Disclaimer:</Text>
+                <Text style={styles.disclaimerText}>Unfortunately, there is no shuttle bus during weekdays after 11 pm and on weekends as well. Please check back another time! </Text>
             </View>
 
             <View style={styles.svgContainer}>
                 <ShuttleBusSVG />
             </View>
         </SafeAreaView>
-
-
     );
 }
-
 
 const ICON_SIZE = 35;
 
@@ -102,8 +93,6 @@ function ShuttleBus (props) {
     const [isUnavailable, setIsUnavailable] = React.useState(true);
 
     const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-    const friday = ["friday"];
-    const weekends = ["saturday", "sunday"];
 
     const getShuttleBusTimes = ShuttleBusTimes();
 
@@ -123,16 +112,6 @@ function ShuttleBus (props) {
         let currentMinutes = new Date().getMinutes();
         //set current time 
         setCurrentTime({ Hour: currentHour, Minutes: currentMinutes });
-
-        let CurrentDayIndex = new Date().getDay();
-        let days = [];
-        days = weekDays;
-        days.forEach((item, index) => {
-            if (index == CurrentDayIndex) {
-                //set current day
-                setCurrentDay(item);
-            }
-        });
     };
 
     /**
@@ -194,9 +173,8 @@ function ShuttleBus (props) {
                     minutes: element.minutes
                 });
             });
-            return results;
         }
-        // return results;
+        return results;
     };
 
     /**
@@ -404,12 +382,29 @@ export const styles = StyleSheet.create({
         top: "10%",
         width: "100%"
     },
-    // SafeAreaViewContainer: {
-    //     top: "5%",
-    //     width: "100%",
-    //     backgroundColor: "green",
-
-    // },
+    SafeAreaViewDisclaimerContainer: {
+        top: "10%",
+        width: "100%",
+        alignItems: "center",
+        alignContent: "center",
+        paddingHorizontal: "5%"
+    },
+    disclaimerTextContainer: {
+        alignItems: "center",
+        alignContent: "center",
+        paddingVertical: "5%",
+    },
+    disclaimerTitle: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingBottom: "2%"
+    },
+    disclaimerText: {
+        color: "white",
+        fontSize: 20,
+        textAlign: "center"
+    },
     topViewContainer: {
         width: "100%",
         height: "32%",
