@@ -23,7 +23,7 @@ function Settings(props) {
     const [accessToken, setAccessToken] = React.useState("");
 
     var switchLabel1 = switchVal1 ? "ON" : "OFF";
-    var switchLabel2 = switchVal2 ? "ON" : "OFF";
+    var switchLabel2 = switchVal2 == "true" ? "ON" : "OFF";
 
     //Put function in Async storage
     const getSwitchValue = async () => {
