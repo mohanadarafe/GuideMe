@@ -58,7 +58,9 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("BottomMenu_getInsideButton"))).toExist();
     await element(by.id("BottomMenu_getInsideButton")).tap();
     await expect(element(by.id("FloorMenu_floorBarMenuView"))).toExist();
+    //TODO: Fix the workaround (next line) of tapping on a floor level
     await element(by.id("FloorMenu_floorBarMenuView")).tapAtPoint({ x: 192, y: 23 });
+    //TODO: Adding Assertion to check that the floor number is the desired one
     //await expect(element(by.id("FloorMenu_hallSwitchSelector"))).toHaveValue("9");
     await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
     await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "fast");
@@ -88,13 +90,10 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("BottomMenu_arrowUpIcon"))).toExist();
     await element(by.id("BottomMenu_arrowUpIcon")).tapAtPoint({ x: 10, y: 20 });
     await expect(element(by.id("MoreDetails_moreInfoScrollView"))).toExist();
-
     await expect(element(by.label("Departments"))).toExist();
     await expect(element(by.label("Services"))).toExist();
     await expect(element(by.label("Accessibility"))).toExist();
-
-    //await expect(element(by.label("Welcome Crew"))).toExist();
-
+    //TODO: Adding Assertions that the related services/departments are listed on the screen
     await element(by.id("MoreDetails_moreInfoScrollView")).swipe("up");
     await expect(element(by.id("MoreDetails_bottomArrowIcon"))).toExist();
     await element(by.id("MoreDetails_bottomArrowIcon")).tap();
@@ -118,9 +117,8 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
-    //Added step (step 7) for checking US-13 at the same time. Might have problems with the displaying if the name vs full name      
+    //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the To search bar    
     await expect(element(by.label("Hall Building"))).toExist();
-    //await expect(element(by.id("DoubleSearch_ToSearchBar"))).toHaveText("Hall Henry F. Hall Building");
   });
 
   /** Scenario: Select a building as a destination point by clicking on it (Hall building)
@@ -138,7 +136,7 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("MoreDetails_getDirectionsButton"))).toExist();
     await element(by.id("MoreDetails_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
-
+    //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the To search bar  
     await expect(element(by.label("Hall Building")).atIndex(2)).toExist();
   });
 });
