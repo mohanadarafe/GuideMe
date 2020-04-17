@@ -41,7 +41,7 @@ function MoreDetails(props) {
   }, []);
 
   return (
-    <View style={styles.container} data-test="MoreDetailsComponent">
+    <View testID="MoreDetails_MoreDetailsScreenView" style={styles.container} data-test="MoreDetailsComponent">
       <SafeAreaView style={styles.buttonContainer}>
         <Button transparent style={styles.mapButton}>
           <View style={styles.iconContainer}>

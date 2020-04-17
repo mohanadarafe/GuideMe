@@ -194,7 +194,7 @@ function DoubleSearch(props) {
     }, []);
 
     return (
-        <View style={styles.container} data-test="DoubleSearch">
+        <View testID="DoubleSearch_ScreenView" style={styles.container} data-test="DoubleSearch">
             <View style={styles.backArrowContainer}>
                 <TouchableOpacity onPress={goBack}>
                     <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
