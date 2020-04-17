@@ -214,6 +214,7 @@ function ShuttleBus (props) {
     };
 
     useEffect(() => {
+        setIsUnavailable(); //here
         const intervalId = setInterval(() => {
             getCurrentTime();
         }, 100);
@@ -373,7 +374,7 @@ export const styles = StyleSheet.create({
         fontSize: 20
     },
     SafeAreaViewStyle: {
-        top: "3%",
+        // top: "3%",
         width: "100%"
     },
     SafeAreaViewDisclaimerContainer: {
