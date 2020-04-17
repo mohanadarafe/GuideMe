@@ -220,94 +220,102 @@ function DoubleSearch(props) {
         AsyncStorage.setItem("toLocation", destinationName);
     }
 
-    /**
-     * Used an useEffect to fetch the currentLocation
-     * A.U
-     */
-    useEffect(() => {
-        setCourseScheduleLocation(CourseScheduleLocationProps);
-        setInitialTo(DestinationProps);
-            if (to.name === undefined) {
-                if (initialTo !== "") {
-                    setCoordinatesTo(getCoordinates(initialTo));
-                    setTo({ name: initialTo });
-                    setPlaceholder(initialTo);
-                }
-                if (courseScheduleLocation !== "") {
-                    setCoordinatesTo(getCoordinates(courseScheduleLocation));
-                    setTo({ name: courseScheduleLocation });
-                    setPlaceholder(courseScheduleLocation);
-                }
-            }
-        if (from.name === undefined) {
-            fetchCurrentPosition();
+    //Depending on the condition will return disabled button or not
+    var goToPreviewDirectionButton;
+    if (coordinatesTo != null || coordinatesFrom != null) {
+        goToPreviewDirectionButton = <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+    }
+    else if (coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) {
+        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+    }
+    else {
+        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        alert("Invalid Location! Please try to enter a valid classroom or building name");
+    }
+
+/**
+ * Used an useEffect to fetch the currentLocation
+ * A.U
+ */
+useEffect(() => {
+    setCourseScheduleLocation(CourseScheduleLocationProps);
+    setInitialTo(DestinationProps);
+    if (to.name === undefined) {
+        if (initialTo !== "") {
+            setCoordinatesTo(getCoordinates(initialTo));
+            setTo({ name: initialTo });
+            setPlaceholder(initialTo);
         }
-    },[courseScheduleLocation, initialTo]);
+        if (courseScheduleLocation !== "") {
+            setCoordinatesTo(getCoordinates(courseScheduleLocation));
+            setTo({ name: courseScheduleLocation });
+            setPlaceholder(courseScheduleLocation);
+        }
+    }
+    if (from.name === undefined) {
+        fetchCurrentPosition();
+    }
+}, [courseScheduleLocation, initialTo]);
 
-    return (
-        <View style={styles.container} data-test="DoubleSearch">
-            <View style={styles.backArrowContainer}>
-                <TouchableOpacity onPress={goBack}>
-                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.svgContainer}>
-                <DoubleSearchSVG />
-            </View>
-            <Text style={styles.titleLabel}>Starting Point & Destination</Text>
+return (
+    <View style={styles.container} data-test="DoubleSearch">
+        <View style={styles.backArrowContainer}>
+            <TouchableOpacity onPress={goBack}>
+                <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.svgContainer}>
+            <DoubleSearchSVG />
+        </View>
+        <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
-            <View style={styles.searchbarsContainer}>
-                <View style={styles.originSearchContainer}>
-                    <Text style={styles.searchBarLabels}>From: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val}
-                        onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={"0"}
-                        textInputStyle={styles.textInputStyle}
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        items={originItems}
-                        placeholder={"Starting Position"}
-                        placeholderTextColor={"grey"}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
-                <View style={styles.destinationSearchContainer}>
-                    <Text style={styles.searchBarLabels}>To: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val}
-                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
-                        textInputStyle={styles.textInputStyle}
-                        defaultIndex={(String)(value)} //Refer TODO: A)
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor={"black"}
-                        items={destinationItems}
-                        placeholder={placeholder}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
+        <View style={styles.searchbarsContainer}>
+            <View style={styles.originSearchContainer}>
+                <Text style={styles.searchBarLabels}>From: </Text>
+                <SearchableDropdown
+                    onTextChange={val => val}
+                    onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
+                    defaultIndex={"0"}
+                    textInputStyle={styles.textInputStyle}
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    items={originItems}
+                    placeholder={"Starting Position"}
+                    placeholderTextColor={"grey"}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
             </View>
-            {(currentLocationCoords || coordinatesFrom != null) &&
-                <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            }
-            {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&
-                <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            }
-        </View >
-    );
+            <View style={styles.destinationSearchContainer}>
+                <Text style={styles.searchBarLabels}>To: </Text>
+                <SearchableDropdown
+                    onTextChange={val => val}
+                    onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
+                    textInputStyle={styles.textInputStyle}
+                    defaultIndex={(String)(value)} //Refer TODO: A)
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"black"}
+                    items={destinationItems}
+                    placeholder={placeholder}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
+            </View>
+        </View>
+        {goToPreviewDirectionButton}
+    </View >
+);
 }
 export const styles = StyleSheet.create({
     container: {

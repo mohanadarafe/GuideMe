@@ -56,23 +56,36 @@ function CourseSchedule(props) {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
-        let filteredList = getFilteredGoogleCalendarEvents(resp);
-        let result = filteredList.filter(element => element.summary)
-        setCalendarEventsList(result);
-        setRefresh(false);
+        if (resp.items.length > 0) {
+            let filteredList = getFilteredGoogleCalendarEvents(resp);
+            setCalendarEventsList(filteredList);
+            setRefresh(false);
+        }
+        else {
+            setCalendarEventsList({ NoEvent: true })
+        }
     }
 
     const getFilteredGoogleCalendarEvents = (resp) => {
-        var filteredList = resp.items.map(element => {
-            let elementDate = new Date (element.start.date);
-            if(elementDate > currentDate){
-                return { id: element.id, summary: element.summary, description: element.description, location: element.location };
+        var eventsFromCurrentDay = [];
+        let elementDate;
+        resp.items.forEach(element => {
+            if (element.end.dateTime == undefined) {
+                elementDate = new Date(element.end.date);
             }
-            else{
-                return {};
+            else {
+                elementDate = new Date(element.end.dateTime);
+            }
+            if (elementDate > currentDate) {
+                eventsFromCurrentDay.push({ id: element.id, summary: element.summary, description: element.description, location: element.location });
             }
         });
-        return filteredList;
+        if (eventsFromCurrentDay.length > 0) {
+            return eventsFromCurrentDay;
+        }
+        else {
+            return ({ NoEvent: true })
+        }
     };
 
     const handleRefresh = () => {
@@ -99,10 +112,8 @@ function CourseSchedule(props) {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
-        }, 1));
-        if (switchVal == "true") {
+        }, 1000));
         getCalendarEvents();
-        }
         return function cleanUp() {
             clearInterval(loop);
             clearImmediate(loop);
@@ -112,7 +123,7 @@ function CourseSchedule(props) {
 
     
     if (switchVal == "true" && calendarEventsList) {
-    return (
+        return (
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
                     <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
@@ -121,7 +132,7 @@ function CourseSchedule(props) {
                 </View>
                 <Text style={styles.mainLabel}>My Course Schedule</Text>
                 <View style={styles.scrollTextContainer}>
-                    {(switchVal == "true" && calendarEventsList) &&
+                    {(switchVal == "true" && calendarEventsList.length > 0) &&
                         <FlatList
                             data={calendarEventsList}
                             keyExtractor={(item) => item.id}
@@ -149,6 +160,9 @@ function CourseSchedule(props) {
                             refreshing={refresh}
                             onRefresh={handleRefresh}
                         />
+                    }
+                    {calendarEventsList.NoEvent &&
+                        <Text style={styles.noClassText}>No Upcoming classes!</Text>
                     }
                 </View>
             </View>
@@ -246,6 +260,15 @@ export const styles = StyleSheet.create({
     },
     courseScheduleInstructions: {
         bottom: "30%",
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        color: "white",
+        textAlign: 'center',
+        alignSelf: "center",
+        position: "absolute",
+        fontSize: 18,
+    },
+    noClassText: {
         paddingLeft: "5%",
         paddingRight: "5%",
         color: "white",
