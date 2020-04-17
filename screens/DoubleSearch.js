@@ -9,10 +9,10 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-function fetchData () {
-    const searchInfo = MapData({context: "Search"});
+function fetchData() {
+    const searchInfo = MapData({ context: "Search" });
     return searchInfo;
-  }
+}
 
 
 /**
@@ -42,24 +42,33 @@ function DoubleSearch(props) {
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
+    const [courseScheduleLocation, setCourseScheduleLocation] = React.useState("");
+    const [initialTo, setInitialTo] = React.useState("");
+    const [placeholder, setPlaceholder] = React.useState("");
+
+
     /**
-     * Description: Method to go back to the previous screen.
+     * Description: Method to back to the previous screen.
      * Using Stack navigator.
      */
 
     // var fromScreen; 
-    const CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
+    const CourseSchedule = props.navigation.getParam("CourseScheduleScreen", "null");
+    const CourseScheduleLocationProps = props.navigation.getParam("CourseScheduleLocation", "");
     const NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
+    const DestinationProps = props.navigation.getParam("destinationName", "");
+
+
     const goBack = () => {
-        if(CourseScheduleDetailsScreen === true){
+        if (CourseSchedule === true) {
             props.navigation.goBack();
-            props.navigation.navigate("CourseScheduleDetails")
+            props.navigation.navigate("CourseSchedule")
         }
-        else if (NearbyInterestDetailsScreen === true){
+        else if (NearbyInterestDetailsScreen === true) {
             props.navigation.goBack();
             props.navigation.navigate("NearbyInterestDetails")
         }
-        else{
+        else {
             props.navigation.goBack();
         }
     };
@@ -82,22 +91,22 @@ function DoubleSearch(props) {
             return alert("Origin and destination are the same. Please try Again.");
         }
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName: to.name });
         }
-        else if(from.name.includes("Washroom") || from.name.includes("Water")){
+        else if (from.name.includes("Washroom") || from.name.includes("Water")) {
             alert("Directions from indoor points of interests are not supported! Try going to the point of interest.")
         }
-        else if(!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+        else if (!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))) {
             alert("Directions to indoor points of interests are only accepted from classrooms!")
         }
-        else if(coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+        else if (coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName:from.name, toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName: from.name, toName: to.name });
         }
         else {
             return alert("The destination or origin field is missing or invalid. Please try again.");
@@ -110,15 +119,15 @@ function DoubleSearch(props) {
      * 
      */
     const fetchCurrentPosition = () => {
-        
-        getPosition().then(({coords}) => {
+
+        getPosition().then(({ coords }) => {
             setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                })
+                latitude: coords.latitude,
+                longitude: coords.longitude
             })
+        })
             .catch((err) => {
-            alert (err.message);
+                alert(err.message);
             });
     }
 
@@ -137,30 +146,30 @@ function DoubleSearch(props) {
         let classRoomsList = ClassRooms();
         if (/\d/.test(name)) {
             for (var key in classRoomsList) {
-                if(classRoomsList[key].room.includes(name)) {
-                const buildingCoords = buildingList[key].coordinates;
-                const isClassroom = {isClassRoom: name};
-                const result = {...buildingCoords, ...isClassroom};
-                return result;
+                if (classRoomsList[key].room.includes(name)) {
+                    const buildingCoords = buildingList[key].coordinates;
+                    const isClassroom = { isClassRoom: name };
+                    const result = { ...buildingCoords, ...isClassroom };
+                    return result;
                 }
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) ||  buildingList[key].fullName.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) || buildingList[key].fullName.includes(name)) {
                 return buildingList[key].coordinates;
             }
         }
         if (name == "Current Location") {
-            fetchCurrentPosition();           
+            fetchCurrentPosition();
         }
         return null;
     };
 
     var getPosition = function (options) {
         return new Promise(function (resolve, reject) {
-          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+            navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
-      }
+    }
 
     let fromName = from.name;
     let toName = to.name;
@@ -177,86 +186,102 @@ function DoubleSearch(props) {
         AsyncStorage.setItem("toLocation", destinationName);
     }
 
-    /**
-     * Used an useEffect to fetch the currentLocation
-     * A.U
-     */
-    useEffect(() => {
+    //Depending on the condition will return disabled button or not
+    var goToPreviewDirectionButton;
+    if (coordinatesTo != null || coordinatesFrom != null) {
+        goToPreviewDirectionButton = <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+    }
+    else if (coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) {
+        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+    }
+    else {
+        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        alert("Invalid Location! Please try to enter a valid classroom or building name");
+    }
 
-        if (to.name === undefined) {
-            const initialTo = props.navigation.getParam("destinationName", "Destination");
+/**
+ * Used an useEffect to fetch the currentLocation
+ * A.U
+ */
+useEffect(() => {
+    setCourseScheduleLocation(CourseScheduleLocationProps);
+    setInitialTo(DestinationProps);
+    if (to.name === undefined) {
+        if (initialTo !== "") {
             setCoordinatesTo(getCoordinates(initialTo));
             setTo({ name: initialTo });
+            setPlaceholder(initialTo);
         }
-        if (from.name === undefined) {
-            fetchCurrentPosition();
+        if (courseScheduleLocation !== "") {
+            setCoordinatesTo(getCoordinates(courseScheduleLocation));
+            setTo({ name: courseScheduleLocation });
+            setPlaceholder(courseScheduleLocation);
         }
-    }, []);
+    }
+    if (from.name === undefined) {
+        fetchCurrentPosition();
+    }
+}, [courseScheduleLocation, initialTo]);
 
-    return (
-        <View style={styles.container} data-test="DoubleSearch">
-            <View style={styles.backArrowContainer}>
-                <TouchableOpacity onPress={goBack}>
-                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.svgContainer}>
-                <DoubleSearchSVG />
-            </View>
-            <Text style={styles.titleLabel}>Starting Point & Destination</Text>
+return (
+    <View style={styles.container} data-test="DoubleSearch">
+        <View style={styles.backArrowContainer}>
+            <TouchableOpacity onPress={goBack}>
+                <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.svgContainer}>
+            <DoubleSearchSVG />
+        </View>
+        <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
-            <View style={styles.searchbarsContainer}>
-                <View style={styles.originSearchContainer}>
-                    <Text style={styles.searchBarLabels}>From: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val} 
-                        onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={"0"}
-                        textInputStyle={styles.textInputStyle}
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        items={originItems}
-                        placeholder={"Starting Position"}
-                        placeholderTextColor={"grey"}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
-                <View style={styles.destinationSearchContainer}>
-                    <Text style={styles.searchBarLabels}>To: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val}
-                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
-                        textInputStyle={styles.textInputStyle}
-                        defaultIndex={(String)(value)} //Refer TODO: A)
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor={"black"}
-                        items={destinationItems}
-                        placeholder={destinationName}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
+        <View style={styles.searchbarsContainer}>
+            <View style={styles.originSearchContainer}>
+                <Text style={styles.searchBarLabels}>From: </Text>
+                <SearchableDropdown
+                    onTextChange={val => val}
+                    onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
+                    defaultIndex={"0"}
+                    textInputStyle={styles.textInputStyle}
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    items={originItems}
+                    placeholder={"Starting Position"}
+                    placeholderTextColor={"grey"}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
             </View>
-            {(currentLocationCoords || coordinatesFrom != null) && 
-                <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            }
-            {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&
-                <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            }
-        </View >
-    );
+            <View style={styles.destinationSearchContainer}>
+                <Text style={styles.searchBarLabels}>To: </Text>
+                <SearchableDropdown
+                    onTextChange={val => val}
+                    onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
+                    textInputStyle={styles.textInputStyle}
+                    defaultIndex={(String)(value)} //Refer TODO: A)
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"black"}
+                    items={destinationItems}
+                    placeholder={placeholder}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
+            </View>
+        </View>
+        {goToPreviewDirectionButton}
+    </View >
+);
 }
 export const styles = StyleSheet.create({
     container: {
