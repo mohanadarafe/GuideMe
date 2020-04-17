@@ -5,6 +5,7 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 
 /**
  * This a function is a mini component that returns the layout and the data of each active tab
@@ -249,14 +250,7 @@ ShuttleBus.propTypes = {
     openDrawer: PropTypes.func,
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        height: "100%",
-        width: "100%",
-        flexDirection: "column",
-        backgroundColor: "#2A2E43"
-    },
+const ShutteBusStyle = {
     mainLabel: {
         color: "#FFFFFF",
         fontSize: 30,
@@ -268,22 +262,6 @@ export const styles = StyleSheet.create({
         opacity: 0.7,
         fontSize: 15,
         fontFamily: "encodeSansExpanded",
-    },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "10%",
     },
     imageContainer: {
         width: "100%",
@@ -328,6 +306,7 @@ export const styles = StyleSheet.create({
     titleStyle: {
         color: "white",
         marginLeft: "15%",
+        fontFamily: "encodeSansExpanded",
     },
     subtitleStyle: {
         color: "white",
@@ -365,6 +344,7 @@ export const styles = StyleSheet.create({
         height: "100%",
         backgroundColor: "#2A2E43"
     },
-});
+}
+export const styles = StyleSheet.create({...sideMenuStyle, ...ShutteBusStyle});
 
 export default ShuttleBus;

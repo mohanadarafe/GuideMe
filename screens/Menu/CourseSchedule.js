@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { AsyncStorage, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CheckBox, ListItem } from "react-native-elements";
 import { CourseScheduleSVG } from "../../assets/CourseScheduleSVG.js";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling.js";
 
 
 /**
@@ -150,14 +151,8 @@ CourseSchedule.propTypes = {
     navigate: PropTypes.func
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43"
-    },
+const courseScheduleStyle = {
+
     container2: {
         alignItems: "center",
         height: "100%",
@@ -172,27 +167,10 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         top: "15%"
     },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35,
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "7%",
-    },
     scrollTextContainer: {
         width: "100%",
         height: "75%",
         bottom: "0%",
-        // position: "absolute",
     },
     sectionHeader: {
         paddingTop: 2,
@@ -228,6 +206,8 @@ export const styles = StyleSheet.create({
         position: "absolute",
         fontSize: 18,
     }
-});
+}
+
+export const styles = StyleSheet.create({...sideMenuStyle, ...courseScheduleStyle});
 
 export default CourseSchedule;

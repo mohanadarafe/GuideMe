@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import { Icon, Button } from "native-base";
 import StarRating from "react-native-star-rating";
-
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling"
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -158,21 +158,7 @@ function NearbyInterestDetails(props) {
         </View >
     );
 }
-
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43"
-    },
-    icon: {
-        position: "absolute",
-        color: "#FFFFFF",
-        alignSelf: "center",
-        fontSize: 35
-    },
+const nearbyInterestDetailsStyle = { 
     routeButton: {
         width: "90%",
         height: "8%",
@@ -238,7 +224,6 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         left:"20%",
         bottom:"2%"
-
     },
     subLabel: {
         top: "24%",
@@ -254,7 +239,6 @@ export const styles = StyleSheet.create({
         height: "100%",
         width: "100%",
         alignItems: "center",
-        // backgroundColor: "red"
     },
     buttonTextContainer: {
         height: "100%",
@@ -324,10 +308,7 @@ export const styles = StyleSheet.create({
         width: "60%",
         height: "40%",
     },
- 
-
-
-
-});
+}
+export const styles = StyleSheet.create({...sideMenuStyle,...nearbyInterestDetailsStyle});
 
 export default NearbyInterestDetails;

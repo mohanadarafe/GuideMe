@@ -4,6 +4,7 @@ import { Icon } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 
 
 /**
@@ -250,14 +251,7 @@ NearbyInterest.propTypes = {
     navigate: PropTypes.func
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43"
-    },
+const nearbyInterestStyle = {
     mainLabel: {
         color: "#FFFFFF",
         position: "absolute",
@@ -290,12 +284,6 @@ export const styles = StyleSheet.create({
         color: "#FFFFFF",
         fontSize: 35,
     },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
     option: {
         alignSelf: "center",
         color: "#FFFFFF",
@@ -304,11 +292,6 @@ export const styles = StyleSheet.create({
     optionButton: {
         bottom: "5%",
         left: "40%",
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "7%",
     },
     flatListContainer: {
         height: "65%",
@@ -389,6 +372,8 @@ export const styles = StyleSheet.create({
     itemImage: {
         height: "100%", width: "100%"
     }
-});
+}
+
+export const styles = StyleSheet.create({...sideMenuStyle, ...nearbyInterestStyle});
 
 export default NearbyInterest;
