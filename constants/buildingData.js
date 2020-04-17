@@ -1,4 +1,21 @@
+export const CampusRegion = {
+  sgwCoord: {
+      latitude: 45.496557,
+      longitude: -73.578896,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+  },
+  loyCoord: {
+      latitude: 45.457841,
+      longitude: -73.640307,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+  }
+};
+
 export function buildingData () {
+
+
   var buildings = [];
   buildings["B Annex"] = {
     name: "B Building",

@@ -5,7 +5,8 @@ import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { store } from "../redux/reducers/index";
 import { FloorMenu } from "./FloorMenu";
-// import { useStore } from 'react-redux'
+import {CampusRegion} from "../constants/buildingData";
+
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -20,12 +21,11 @@ import { FloorMenu } from "./FloorMenu";
 
 function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState(null);
-    const [switchVal, setSwitchVal] = React.useState(true);
+    const [swtichCampus, setSwitchCampus] = React.useState(true);
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
-    // const store = useStore();
     const viewIndoor = props.indoor;
     const inDirections = props.inDirections;
     const building = props.building;
@@ -92,6 +92,20 @@ function BottomMenu (props) {
             unsubscribe();
         }
     });
+
+
+    const switchCampuses = () => {
+        if (swtichCampus) {
+            props.mapReference.current.animateToRegion(CampusRegion.sgwCoord);        }
+        else {
+            props.mapReference.current.animateToRegion(CampusRegion.loyCoord);
+        }
+    }
+
+    useEffect(() => {
+        switchCampuses();
+    }, [swtichCampus])
+    
 
     if (viewIndoor) {
         return(
@@ -174,8 +188,8 @@ function BottomMenu (props) {
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View testID="intialBottomMenuToggleButton" style={styles.toggle}>
                     <Switch
-                        value={switchVal}
-                        onValueChange={(val) => { setSwitchVal(val); props.campus(val)}}>
+                        value={swtichCampus}
+                        onValueChange={(val) => { setSwitchCampus(val);}}>
                     </Switch>
                 </View>
             </View>
