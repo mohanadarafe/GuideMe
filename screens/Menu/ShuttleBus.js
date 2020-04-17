@@ -20,8 +20,8 @@ function TimesToDisplay (props) {
     let currentDayKey = new Date().getDay();
 
     /**
-     * This function sets the current day 
-     */
+    * This function sets the current day 
+    */
     const getDay = () => {
         let days = [];
         days = week;
