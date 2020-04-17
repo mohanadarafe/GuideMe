@@ -15,6 +15,27 @@ function TimesToDisplay (props) {
     let DATA = [];
     let campus = props.campus;
     let isUnavailable = props.isUnavailable;
+    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const [currentDay, setCurrentDay] = React.useState("");
+    let currentDayKey = new Date().getDay();
+
+    /**
+     * This function sets the current day 
+     */
+    const getDay = () => {
+        let days = [];
+        days = week;
+        days.forEach((item, index) => {
+            if (index == currentDayKey) {
+                //set current day	                
+                setCurrentDay(item);
+            }
+        });
+    };
+
+    useEffect(() => {
+        getDay();
+    });
 
     if (isUnavailable && (props.campus == "SGW" || props.campus == "Loyola")) {
         return (
@@ -31,6 +52,9 @@ function TimesToDisplay (props) {
     }
     return (
         <SafeAreaView style={styles.SafeAreaViewStyle}>
+            <View style={styles.currentDayWrapper}>
+                <Text style={styles.currentDayText}>{currentDay}:</Text>
+            </View>
             <FlatList
                 data={DATA}
                 showsVerticalScrollIndicator={true}
@@ -148,7 +172,6 @@ function ShuttleBus (props) {
                 Minutes: Math.abs(diffMinutes) + "min"
             });
         }
-
     };
 
     /**
@@ -192,10 +215,12 @@ function ShuttleBus (props) {
         if (currentDayIndex > 0 && currentDayIndex < 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
+            setIsUnavailable(false);
         }
         else if (currentDayIndex === 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].Friday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].Friday;
+            setIsUnavailable(false);
         }
         else {
             setIsUnavailable(true);
@@ -371,8 +396,17 @@ export const styles = StyleSheet.create({
         fontSize: 20
     },
     SafeAreaViewStyle: {
-        top: "10%",
+        top: "3%",
         width: "100%"
+    },
+    currentDayWrapper: {
+        marginHorizontal: "5%",
+        marginBottom: "4%"
+    },
+    currentDayText: {
+        fontSize: 19,
+        color: "#3ACCE1",
+        fontWeight: "bold"
     },
     SafeAreaViewDisclaimerContainer: {
         top: "10%",
