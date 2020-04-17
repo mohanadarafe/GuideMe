@@ -101,6 +101,7 @@ function Settings(props) {
         } else {
             setIsConnected({ checked: checked.filter(a => a != item) });
         }
+        AsyncStorage.setItem("calendarId", item);
     };
 
     /**
@@ -158,7 +159,8 @@ function Settings(props) {
                         data={calendarList}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => { press(item.id) }}>
+                            <TouchableOpacity onPress={() => { press(item.id);
+                             }}>
                                 <ListItem
                                     title={item.summary}
                                     titleStyle={{ color: "white" }}
@@ -177,7 +179,6 @@ function Settings(props) {
                                             checkedColor='#3ACCE1'
                                             onPress={() => {
                                                 press(item.id);
-                                                AsyncStorage.setItem("calendarId", item.id)
                                             }}
                                             checked={isConnected.checked.includes(item.id)}
                                         />}
