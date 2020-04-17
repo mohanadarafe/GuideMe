@@ -306,7 +306,6 @@ const ShutteBusStyle = {
     titleStyle: {
         color: "white",
         marginLeft: "15%",
-        fontFamily: "encodeSansExpanded",
     },
     subtitleStyle: {
         color: "white",
