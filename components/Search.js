@@ -7,16 +7,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {getCoordinates} from "../screens/DoubleSearch";
 
-function mapStateToProps(value) {
+function mapStateToProps(state) {
   return {
-      mainSearchBarDestination: value
+      goToSearchedItem: state.goToSearchedItem
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setMainSearchBarDestination: (value) => dispatch({ type: "SEARCH_BAR_VALUE", payload: value }),
-    setMainSearchMarker: (value) => dispatch({ type: "SEARCH_BAR_MARLER", payload: value })
+    goToSearchedItemAction: (coords, name) => dispatch({ 
+      type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER", 
+      payload: {coordinates: coords, name: name}})
   }
 }
 
@@ -39,16 +40,15 @@ export function Search (props) {
   // eslint-disable-next-line no-unused-vars
 
   const [data, setData] = React.useState(null);
-  const [searchItemCoordinates, setSearchItemCoordinates] = React.useState(null);
+  const [searchItem, setSearchItem] = React.useState(null);
 
   useEffect(() => {
     setData(fetchData());
   }, []);
 
   useEffect(() => {
-    // addMarker();
-    goToSearchItemCoordinate();
-  }, [searchItemCoordinates]);
+    updateSearchItem();
+  }, [searchItem]);
 
   
   const goToMenu = () => {
@@ -56,24 +56,15 @@ export function Search (props) {
     props.navigation.openDrawer();
   };
 
-  const addMarker = () => {
-    if (searchItemCoordinates) {
-      props.selectedItemMarker(searchItemCoordinates);
+  const updateSearchItem = () => {
+    if (searchItem) {
+      props.goToSearchedItemAction({
+        latitude: searchItem.coordinates.latitude,
+        longitude: searchItem.coordinates.longitude
+      }, searchItem.name);
     }
   }
   
-  const goToSearchItemCoordinate = (coordinates) => { 
-    if(coordinates) {
-      // console.log("jerrrre")
-      props.mapReference.current.animateToRegion({
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
-        latitudeDelta: 0.003,
-        longitudeDelta: 0.003
-      });
-    }
-}
-
 
   return (
     <View style={styles.container} testID={props.testID}>
@@ -86,7 +77,7 @@ export function Search (props) {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => { props.setMainSearchBarDestination(item.name); goToSearchItemCoordinate(getCoordinates(item.name))}}
+        onItemSelect={item => {  setSearchItem({name: item.name, coordinates: getCoordinates(item.name)});  }}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}
@@ -94,7 +85,7 @@ export function Search (props) {
         itemsContainerStyle={styles.itemsContainerStyle}
         items={data}
         placeholder="Where to?"
-        resetValue={false}
+        resetValue={true}
       />
     </View>
   );
@@ -121,7 +112,8 @@ export const styles = StyleSheet.create({
     borderBottomStartRadius: 20
   },
   test: {
-    width: "90%"
+    width: "90%",
+    backgroundColor: "brown"
   },
   container: {
     width: "80%",
@@ -159,5 +151,3 @@ export const styles = StyleSheet.create({
     maxHeight: "60%",
   }
 });
-
-// export { Search };

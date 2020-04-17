@@ -17,7 +17,8 @@ const initialState = {
   mainSearchBarDestination: null,
   personaType: "UNDERGRADUATE",
   mobilityReducedType: "MOBILITY_NOT_REDUCED",
-  transportType: "driving"
+  transportType: "driving",
+  searchItemMarker: null
   }
   const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -27,6 +28,14 @@ const initialState = {
             return { selectedBuildingName: action.payload}
         case 'SEARCH_BAR_VALUE':
             return { mainSearchBarDestination: action.payload}
+        case 'SEARCH_BAR_MARKER':
+            return { searchItemMarker: action.payload}
+        case 'UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER':
+            return { 
+              searchItemMarker: action.payload.coordinates,
+              selectedBuildingName: action.payload.name,
+              mainSearchBarDestination: action.payload.name
+            }
     }
     return state;
   }
