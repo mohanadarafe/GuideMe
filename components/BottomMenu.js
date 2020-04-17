@@ -150,7 +150,7 @@ function BottomMenu (props) {
     if (previewDirections) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {goToPreferenceMenu(false)}} />
+                <Icon testID="BottomMenu_arrowUpToPreferenceMenuIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={() => {goToPreferenceMenu(false)}} />
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
@@ -170,7 +170,7 @@ function BottomMenu (props) {
         }
         return (
             <View style={styles.container}>
-                <Icon testID="BottomMenu_arrowUpIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
+                <Icon testID="BottomMenu_arrowUpToMoreDetailsIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 {selectedBuilding.length > 13
                     ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>

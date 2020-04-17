@@ -111,7 +111,7 @@ describe("Outdoor Directions Feature", () => {
     await expect(element(by.id("PreviewDirections_MapView"))).toBeVisible();
     await expect(element(by.id("PreviewDirection_MapViewPolyline"))).toExist();
     await expect(element(by.id("PreviewDirection_MapViewDefaultPolyline"))).toExist(); 
-    //TODO: Go to the preference Menu 
+    await element(by.id("BottomMenu_arrowUpToPreferenceMenuIcon")).tap();
     await expect(element(by.id("PreferenceMenu_ScreenView"))).toBeVisible();
     //TODO: 11. Check that "driving" is the means of transportation selected
     await element(by.id("PreferenceMenu_WalkingButton")).tap();

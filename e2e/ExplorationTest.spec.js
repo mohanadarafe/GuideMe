@@ -90,8 +90,8 @@ describe("Exploring the map Feature", () => {
    */
   it.skip("Get more details about a building (Hall)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
-    await expect(element(by.id("BottomMenu_arrowUpIcon"))).toExist();
-    await element(by.id("BottomMenu_arrowUpIcon")).tapAtPoint({ x: 10, y: 20 });
+    await expect(element(by.id("BottomMenu_arrowUpToMoreDetailsIcon"))).toExist();
+    await element(by.id("BottomMenu_arrowUpToMoreDetailsIcon")).tapAtPoint({ x: 10, y: 20 });
     await expect(element(by.id("MoreDetails_moreInfoScrollView"))).toExist();
     await expect(element(by.label("Departments"))).toExist();
     await expect(element(by.label("Services"))).toExist();
@@ -135,7 +135,7 @@ describe("Exploring the map Feature", () => {
    */
   it("Select a building as a destination point by clicking on it (Hall building)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
-    await element(by.id("BottomMenu_arrowUpIcon")).tapAtPoint({ x: 10, y: 20 });
+    await element(by.id("BottomMenu_arrowUpToMoreDetailsIcon")).tapAtPoint({ x: 10, y: 20 });
     await expect(element(by.id("MoreDetails_getDirectionsButton"))).toExist();
     await element(by.id("MoreDetails_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
