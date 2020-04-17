@@ -309,6 +309,6 @@ const nearbyInterestDetailsStyle = {
         height: "40%",
     },
 }
-export const styles = StyleSheet.create(nearbyInterestDetailsStyle);
+export const styles = StyleSheet.create({...sideMenuStyle,...nearbyInterestDetailsStyle});
 
 export default NearbyInterestDetails;

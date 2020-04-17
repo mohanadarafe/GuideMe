@@ -303,6 +303,6 @@ const settingsStyle = {
     }
 }
 
-export const styles = StyleSheet.create(settingsStyle);
+export const styles = StyleSheet.create({...sideMenuStyle, ...settingsStyle});
 
 export default Settings;

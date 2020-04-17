@@ -131,7 +131,7 @@ function NearbyInterest(props) {
 
         } catch (error) {
 
-            alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+            // alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
     }
 
@@ -374,6 +374,6 @@ const nearbyInterestStyle = {
     }
 }
 
-export const styles = StyleSheet.create(nearbyInterestStyle);
+export const styles = StyleSheet.create({...sideMenuStyle, ...nearbyInterestStyle});
 
 export default NearbyInterest;

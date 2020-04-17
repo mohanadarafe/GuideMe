@@ -162,6 +162,6 @@ const aboutUsStyle = {
     }
 }
 
-export const styles = StyleSheet.create(aboutUsStyle);
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...aboutUsStyle});
 
 export default AboutUs;

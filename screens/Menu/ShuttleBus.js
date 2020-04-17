@@ -176,7 +176,7 @@ function ShuttleBus (props) {
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].Friday;
         }
         else {
-            return alert("There is no shuttle bus on weekends. Please check back during the week!");
+            // return alert("There is no shuttle bus on weekends. Please check back during the week!");
         }
         var nextStopsSGW = fetchNextStops(scheduleTimesSGW);
         var nextStopsLoyola = fetchNextStops(scheduleTimesLoyola);
@@ -344,6 +344,6 @@ const ShutteBusStyle = {
         backgroundColor: "#2A2E43"
     },
 }
-export const styles = StyleSheet.create(ShutteBusStyle);
+export const styles = StyleSheet.create({...sideMenuStyle, ...ShutteBusStyle});
 
 export default ShuttleBus;
