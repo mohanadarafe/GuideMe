@@ -29,8 +29,9 @@ function CourseSchedule(props) {
     const [selectedCalendarId, setSelectedCalendarId] = React.useState(null);
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState("false");
+    const [refresh, setRefresh] = React.useState(false);
 
-    //TODO Show only events after current date
+    //TODO Show only events after current date THIS FORMAT 2020-04-18
     let currentDate = new Date();
 
     const getCalendarId = async () => {
@@ -39,8 +40,8 @@ function CourseSchedule(props) {
     };
 
     const getAccessToken = async () => {
-        let accessToken = await AsyncStorage.getItem("accessToken");
-        setAccessToken(accessToken);
+        let AccessToken = await AsyncStorage.getItem("accessToken");
+        setAccessToken(AccessToken);
     };
 
     const getSwitchValue = async () => {
@@ -50,19 +51,45 @@ function CourseSchedule(props) {
 
     const getCalendarEvents = async () => {
         let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
-            headers: { Authorization: `Bearer ${accessToken}` }, singleEvents: true, orderBy: 'startTime'
+            headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
-        setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
+        if (resp.items.length > 0) {
+            let filteredList = getFilteredGoogleCalendarEvents(resp);
+            setCalendarEventsList(filteredList);
+            setRefresh(false);
+        }
+        else {
+            setCalendarEventsList({ NoEvent: true })
+        }
     }
 
     const getFilteredGoogleCalendarEvents = (resp) => {
-        var filteredList = resp.items.map(element => {
-            return { id: element.id, summary: element.summary, description: element.description, location: element.location };
+        var eventsFromCurrentDay = [];
+        let elementDate;
+        resp.items.forEach(element => {
+            if (element.end.dateTime == undefined) {
+                elementDate = new Date(element.end.date);
+            }
+            else {
+                elementDate = new Date(element.end.dateTime);
+            }
+            if (elementDate > currentDate) {
+                eventsFromCurrentDay.push({ id: element.id, summary: element.summary, description: element.description, location: element.location });
+            }
         });
-        return filteredList;
+        if (eventsFromCurrentDay.length > 0) {
+            return eventsFromCurrentDay;
+        }
+        else {
+            return ({ NoEvent: true })
+        }
     };
 
+    const handleRefresh = () => {
+        setRefresh(true);
+        getCalendarEvents();
+    }
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -81,14 +108,13 @@ function CourseSchedule(props) {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
-        }, 1);
+        }, 1000);
         getCalendarEvents();
         return () => clearInterval(intervalId);
     }, [selectedCalendarId, accessToken]);
 
-    
-    if (switchVal == "true") {
-    return (
+    if (switchVal == "true" && calendarEventsList) {
+        return (
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
                     <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
@@ -97,7 +123,7 @@ function CourseSchedule(props) {
                 </View>
                 <Text style={styles.mainLabel}>My Course Schedule</Text>
                 <View style={styles.scrollTextContainer}>
-                    {(switchVal == "true" && calendarEventsList) &&
+                    {(switchVal == "true" && calendarEventsList.length > 0) &&
                         <FlatList
                             data={calendarEventsList}
                             keyExtractor={(item) => item.id}
@@ -122,13 +148,18 @@ function CourseSchedule(props) {
                                         />}
                                 />
                             )}
+                            refreshing={refresh}
+                            onRefresh={handleRefresh}
                         />
+                    }
+                    {calendarEventsList.NoEvent &&
+                        <Text style={styles.noClassText}>No Upcoming classes!</Text>
                     }
                 </View>
             </View>
         );
     }
-    if (switchVal == "false") {
+    else {
         return (
             <View style={styles.container2}>
                 <View style={styles.menuButtonContainer}>
@@ -138,7 +169,7 @@ function CourseSchedule(props) {
                 </View>
                 <Text style={styles.mainLabel}>My Course Schedule</Text>
                 <CourseScheduleSVG />
-                <Text style={styles.courseScheduleInstructions}>Sync your google calendar account to use this feature</Text>
+                <Text style={styles.courseScheduleInstructions}>Sync your Google Calendar account in the settings page to use this feature</Text>
             </View>
         );
     }
@@ -160,12 +191,12 @@ const courseScheduleStyle = {
         backgroundColor: "#2A2E43"
     },
     mainLabel: {
+        top: "15%",
         color: "#FFFFFF",
         position: "absolute",
         fontSize: 25,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-        top: "15%"
     },
     scrollTextContainer: {
         width: "100%",
@@ -197,11 +228,20 @@ const courseScheduleStyle = {
         backgroundColor: "#353A50",
     },
     courseScheduleInstructions: {
+        bottom: "30%",
+        paddingLeft: "5%",
+        paddingRight: "5%",
         color: "white",
-        paddingLeft: "10%",
-        paddingRight: "10%",
         textAlign: 'center',
-        paddingTop: "130%",
+        alignSelf: "center",
+        position: "absolute",
+        fontSize: 18,
+    },
+    noClassText: {
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        color: "white",
+        textAlign: 'center',
         alignSelf: "center",
         position: "absolute",
         fontSize: 18,

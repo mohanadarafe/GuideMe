@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
 import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
+import { ShuttleBusSVG } from "../../assets/ShuttleBusSVG";
 
 /**
  * This a function is a mini component that returns the layout and the data of each active tab
@@ -14,7 +15,16 @@ import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 function TimesToDisplay (props) {
     let DATA = [];
     let campus = props.campus;
-    if (props.campus == "SGW") {
+    let isUnavailable = props.isUnavailable;
+
+    if (isUnavailable && (props.campus == "SGW" || props.campus == "Loyola")) {
+        return (
+            <View>
+                <DisplayDisclaimer />
+            </View>
+        );
+    }
+    else if (props.campus == "SGW") {
         DATA = props.data.sgwStops;
     }
     else if (props.campus == "Loyola") {
@@ -47,8 +57,28 @@ function TimesToDisplay (props) {
 TimesToDisplay.propTypes = {
     props: PropTypes.object,
     campus: PropTypes.any,
-    data: PropTypes.any
+    data: PropTypes.any,
+    isUnavailable: PropTypes.any
 };
+
+/**
+ * This mini component is called when the user views the shuttle bus schedule at a time where it is 
+ * unavailable such as weekends and weekdays after 11 pm
+ */
+function DisplayDisclaimer () {
+    return (
+        <SafeAreaView style={styles.SafeAreaViewDisclaimerContainer}>
+            <View style={styles.disclaimerTextContainer}>
+                <Text style={styles.disclaimerTitle}>Disclaimer:</Text>
+                <Text style={styles.disclaimerText}>Unfortunately, there is no shuttle bus during weekdays after 11 pm and on weekends as well. Please check back another time! </Text>
+            </View>
+
+            <View style={styles.svgContainer}>
+                <ShuttleBusSVG />
+            </View>
+        </SafeAreaView>
+    );
+}
 
 const ICON_SIZE = 35;
 
@@ -56,15 +86,16 @@ const ICON_SIZE = 35;
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 function ShuttleBus (props) {
+    /**
+     * The SonarQube error 'campus' is declared but its value is never read' should be 
+     * ignored because campus is called in another function :)
+     */
+    const [campus, setCampus] = React.useState("SGW");
     const [selectedTab, setSelectedTab] = React.useState(0);
     const [currentTime, setCurrentTime] = React.useState(null);
-    const [currentDay, setCurrentDay] = React.useState(null);
-    const [campus, setCampus] = React.useState("SGW");
     const [results, setResults] = React.useState([]);
+    const [isUnavailable, setIsUnavailable] = React.useState(true);
 
-    const weekDays = ["sunday", "monday", "tuesday", "wednesday", "thursday", "saturday", "sunday"];
-    const friday = ["friday"];
-    const weekends = ["saturday", "sunday"];
 
     const getShuttleBusTimes = ShuttleBusTimes();
 
@@ -84,16 +115,6 @@ function ShuttleBus (props) {
         let currentMinutes = new Date().getMinutes();
         //set current time 
         setCurrentTime({ Hour: currentHour, Minutes: currentMinutes });
-
-        let CurrentDayIndex = new Date().getDay();
-        let days = [];
-        days = weekDays;
-        days.forEach((item, index) => {
-            if (index == CurrentDayIndex) {
-                //set current day
-                setCurrentDay(item);
-            }
-        });
     };
 
     /**
@@ -137,7 +158,7 @@ function ShuttleBus (props) {
      */
     const fetchNextStops = (list) => {
         var nextStops = [];
-        var results = [];
+        var resultsArray = [];
         let index = 0;
         for (var key in list) {
             if (list[key].hour >= currentTime.Hour && list[key].minutes >= currentTime.Minutes) {
@@ -147,16 +168,16 @@ function ShuttleBus (props) {
             index++;
         }
         if (nextStops.length > 0) {
-            results = nextStops.map((element, index) => {
+            resultsArray = nextStops.map((element, key) => {
                 return ({
-                    id: index.toString(),
+                    id: key.toString(),
                     timeDifference: calculateTimeDifference(element),
                     hour: element.hour,
                     minutes: element.minutes
                 });
             });
         }
-        return results;
+        return resultsArray;
     };
 
     /**
@@ -167,19 +188,26 @@ function ShuttleBus (props) {
         var scheduleTimesLoyola = [];
         const sgwCampus = "SGW";
         const loyolaCampus = "Loyola";
-        if (currentDay && weekDays.includes(currentDay.toString()) && !friday.includes(currentDay.toString()) && !weekends.includes(currentDay.toString())) {
+        let currentDayIndex = new Date().getDay();
+
+        if (currentDayIndex > 0 && currentDayIndex < 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
+            setIsUnavailable(false);
         }
-        else if (currentDay && friday.includes(currentDay.toString())) {
+        else if (currentDayIndex === 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].Friday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].Friday;
+            setIsUnavailable(false);
         }
         else {
-            alert("There is no shuttle bus on weekends. Please check back during the week!");
+            setIsUnavailable(true);
         }
         var nextStopsSGW = fetchNextStops(scheduleTimesSGW);
         var nextStopsLoyola = fetchNextStops(scheduleTimesLoyola);
+        if (nextStopsSGW === undefined || nextStopsLoyola === undefined) {
+            setIsUnavailable(true);
+        }
         return ({
             sgwStops: nextStopsSGW,
             LoyolaStops: nextStopsLoyola
@@ -187,14 +215,15 @@ function ShuttleBus (props) {
     };
 
     useEffect(() => {
+        setIsUnavailable(); //here
         const intervalId = setInterval(() => {
             getCurrentTime();
         }, 100);
-        if (currentTime && currentDay && campus) {
+        if (currentTime) {
             setResults(getNextStops());
         }
         return () => clearInterval(intervalId);
-    }, [currentTime, currentDay, campus]);
+    }, [currentTime]);
 
     return (
         <View style={styles.container}>
@@ -235,10 +264,10 @@ function ShuttleBus (props) {
                     }}
                 />
                 {selectedTab === 0 && (
-                    <TimesToDisplay campus="SGW" data={results} />
+                    <TimesToDisplay campus="SGW" data={results} isUnavailable={isUnavailable} />
                 )}
                 {selectedTab === 1 && (
-                    <TimesToDisplay campus="Loyola" data={results} />
+                    <TimesToDisplay campus="Loyola" data={results} isUnavailable={isUnavailable} />
                 )}
             </View>
         </View >
@@ -259,7 +288,6 @@ const ShutteBusStyle = {
     },
     shortLabel: {
         color: "#FFFFFF",
-        opacity: 0.7,
         fontSize: 15,
         fontFamily: "encodeSansExpanded",
     },
@@ -324,8 +352,31 @@ const ShutteBusStyle = {
         fontSize: 20
     },
     SafeAreaViewStyle: {
-        top: "2%",
+        // top: "3%",
         width: "100%"
+    },
+    SafeAreaViewDisclaimerContainer: {
+        top: "10%",
+        width: "100%",
+        alignItems: "center",
+        alignContent: "center",
+        paddingHorizontal: "5%"
+    },
+    disclaimerTextContainer: {
+        alignItems: "center",
+        alignContent: "center",
+        paddingVertical: "5%",
+    },
+    disclaimerTitle: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        paddingBottom: "2%"
+    },
+    disclaimerText: {
+        color: "white",
+        fontSize: 20,
+        textAlign: "center"
     },
     topViewContainer: {
         width: "100%",
@@ -342,6 +393,24 @@ const ShutteBusStyle = {
         width: "100%",
         height: "100%",
         backgroundColor: "#2A2E43"
+    },
+    svgContainer: {
+        width: "100%",
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        top: "85%",
+    },
+    menuButton: {
+        height: "100%",
+        width: "20%",
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    menuButtonContainer: {
+        width: "100%",
+        height: "10%",
+        top: "20%",
     },
 }
 export const styles = StyleSheet.create({...sideMenuStyle, ...ShutteBusStyle});

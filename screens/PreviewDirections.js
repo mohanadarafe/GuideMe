@@ -330,14 +330,15 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        marginTop: 25,
+        // marginTop: 25,
         flexDirection: "column"
     },
     fortmatLowerHeader: {
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent:"center", 
-        height: "100%",
+        height: "70%",
+        bottom:"35%",
     },
     directionText: {
         justifyContent: "center",
@@ -396,7 +397,10 @@ export const styles = StyleSheet.create({
     backIcon: {
         color: "white",
         left: "5%",
-        top: "80%"
+        top: "85%",
+        width:"10%",
+        height :"50%",
+        textAlign: "center"
     },
     directionTextHeader: {
         justifyContent: "center",
@@ -406,6 +410,7 @@ export const styles = StyleSheet.create({
         color: "white",
         fontSize: 20,
         bottom: "20%",
+        fontFamily: "encodeSansExpanded",
     },
     fromToSideLabels: {
         fontSize: 20,

@@ -282,15 +282,16 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        height: "38%",
-        marginTop: 25,
+        // height: "38%",
+        // marginTop: 25,
         flexDirection: "column",
     },
     lowerHeader: {
         flexDirection: "column", 
-        width: "100%", 
-        maxHeight:"60%",
-        backgroundColor:"#2A2E43"
+        alignItems: "center", 
+        justifyContent:"center", 
+        height: "70%",
+        bottom:"25%",
     },
     directionTextHeader: {
         justifyContent: "center",
@@ -298,7 +299,7 @@ export const styles = StyleSheet.create({
     },
     DirectionTextHeaderStyle: {
         color: "white",
-        fontSize: 18,
+        fontSize: 20,
         bottom: "20%",
         fontFamily: "encodeSansExpanded",
     },
@@ -311,7 +312,10 @@ export const styles = StyleSheet.create({
     backIcon: {
         color: "white",
         left: "5%",
-        top: "80%"
+        top: "85%",
+        width:"10%",
+        height :"50%",
+        textAlign: "center"
     },
     bottomArrowDirectionContainer: {
         top: "90%",

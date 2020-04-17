@@ -7,22 +7,6 @@ import { CheckBox, ListItem } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 
-
-/**
- * TODO: 
- * TODO google calendar:
- * display the calendars in a flatlist (done)
- * let him select one (done)
- * Pass the calendarID and accesstoken to courseSchedule page --> (done)
- * Display the list of events in that page + Rename Go to my Next Class Button (done)
- * Make sure toggle off doesn't display calendardsList in Settings. (done)
- * 3. Make sure when the toggle is off in Settings, that we don't show the events (Pass toggle switch value in asyncStorage and check if its true in course schedule)
- * 4. Sign out when toggle is false (needs to be done).
- * **PR can be made at this point : Check up UI inconsistencies (between phone screen sizes)**
- * Bonus
- * 5. Information in what to do in google calendar.
- */
-
 /**
  * Description: This method holds the toggle switches 
  * that will compose the setting screen. The screen will have 
@@ -40,7 +24,7 @@ function Settings(props) {
     const [accessToken, setAccessToken] = React.useState("");
 
     var switchLabel1 = switchVal1 ? "ON" : "OFF";
-    var switchLabel2 = switchVal2 ? "ON" : "OFF";
+    var switchLabel2 = switchVal2 == "true" ? "ON" : "OFF";
 
     //Put function in Async storage
     const getSwitchValue = async () => {
@@ -57,7 +41,12 @@ function Settings(props) {
     const signInOrOut = async (val) => {
         if (val) {
             const respCalendars = await signInWithGoogleAsync();
-            getFilteredGoogleCalendarList(respCalendars);
+            if (respCalendars.error == true){
+                setSwitchVal2("false");
+            }
+            else{
+                getFilteredGoogleCalendarList(respCalendars);
+            }
         }
         else {
             if (accessToken) {
@@ -80,7 +69,7 @@ function Settings(props) {
             if (result.type === 'success') {
                 AsyncStorage.setItem("accessToken", result.accessToken);
                 setAccessToken(result.accessToken);
-                return getUsersCalendarList(result.accessToken); //Here We are getting all the calendars in a json...
+                return getUsersCalendarList(result.accessToken); //Here We are getting all the calendars in a json
             } else {
                 return { cancelled: true };
             }
@@ -104,7 +93,7 @@ function Settings(props) {
         return resp;
     }
 
-    const press = (item) => {   // The onPress method 
+    const press = (item) => { 
         var { checked } = isConnected;
         // These ensures that multiple checkboxes don't all get affected when one is clicked
         if (!checked.includes(item) || checked.length == 1) {
@@ -113,34 +102,8 @@ function Settings(props) {
         } else {
             setIsConnected({ checked: checked.filter(a => a != item) });
         }
+        AsyncStorage.setItem("calendarId", item);
     };
-
-
-    // //CHECK IF IT WORKS
-    // const restrictSizeOfLabels = (filteredList) => {
-    //     var restrictedSizeList = filteredList.items.map(element => {
-    //         //If both the title and the description of the calendar is greater than 20 char, add ...
-    //         if (element.summary.length > 20 && element.description.length > 20) {
-    //             updatedSummary = element.summary.substring(0, 20) + "...";
-    //             updatedDescription = element.description.substring(0, 20) + "...";
-    //             return { id: element.id, summary: element.updatedSummary, description: element.updatedDescription };
-    //         }
-    //         //If the description of the calendar is greater than 20 char, add ...
-    //         if (element.description.length > 20) {
-    //             updatedDescription = element.description.substring(0, 20) + "...";
-    //             return { id: element.id, summary: element.summary, description: element.updatedDescription };
-    //         }
-    //         //If the title of the calendar is greater than 20 char, add ...
-    //         if (element.summary.length > 20) {
-    //             updatedDescription = element.summary.substring(0, 20) + "...";
-    //             return { id: element.id, summary: element.summary, description: element.updatedDescription };
-    //         }
-    //         else {
-    //             return { id: element.id, summary: element.summary, description: element.description };
-    //         }
-    //     });
-    //     setCalendarList(restrictedSizeList);
-    // }
 
     /**
     * The method will slide the side menu from the right side of the screen
@@ -150,7 +113,6 @@ function Settings(props) {
         props.navigation.openDrawer();
     };
 
-    //Same problem that with course schedule before with the accessToken (Not sure how to fix...)
     useEffect(() => {
         getSwitchValue();
     }, []);
@@ -180,9 +142,9 @@ function Settings(props) {
                         <Text style={styles.container2SubText}>Current Status is {switchLabel2}</Text>
                         <View style={styles.toggle}>
                             <Switch
-                                value={switchVal2 == "true" ? true : false} //Maybe not working because it is not a boolean
+                                value={switchVal2 == "true" ? true : false}
                                 onValueChange={(val) => {
-                                    AsyncStorage.setItem("switchVal", JSON.stringify(val)); //Passing a boolean to a Async storage
+                                    AsyncStorage.setItem("switchVal", JSON.stringify(val));
                                     setSwitchVal2(val.toString());
                                     signInOrOut(val);
                                 }
@@ -198,7 +160,8 @@ function Settings(props) {
                         data={calendarList}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => { press(item.id) }}>
+                            <TouchableOpacity onPress={() => { press(item.id);
+                             }}>
                                 <ListItem
                                     title={item.summary}
                                     titleStyle={{ color: "white" }}
@@ -217,7 +180,6 @@ function Settings(props) {
                                             checkedColor='#3ACCE1'
                                             onPress={() => {
                                                 press(item.id);
-                                                AsyncStorage.setItem("calendarId", item.id)
                                             }}
                                             checked={isConnected.checked.includes(item.id)}
                                         />}
@@ -296,7 +258,7 @@ const settingsStyle = {
         top: "30%"
     },
     flatlist: {
-        height: "60%", 
+        height: "60%",
         width: "100%",
         marginLeft: 20,
         flexDirection: "column",
