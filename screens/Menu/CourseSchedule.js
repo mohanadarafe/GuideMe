@@ -208,6 +208,6 @@ const courseScheduleStyle = {
     }
 }
 
-export const styles = StyleSheet.create({...sideMenuStyle, ...courseScheduleStyle});
+export const styles = StyleSheet.create(courseScheduleStyle);
 
 export default CourseSchedule;

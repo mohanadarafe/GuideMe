@@ -374,6 +374,6 @@ const nearbyInterestStyle = {
     }
 }
 
-export const styles = StyleSheet.create({...sideMenuStyle, ...nearbyInterestStyle});
+export const styles = StyleSheet.create(nearbyInterestStyle);
 
 export default NearbyInterest;

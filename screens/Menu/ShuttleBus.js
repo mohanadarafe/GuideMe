@@ -344,6 +344,6 @@ const ShutteBusStyle = {
         backgroundColor: "#2A2E43"
     },
 }
-export const styles = StyleSheet.create({...sideMenuStyle, ...ShutteBusStyle});
+export const styles = StyleSheet.create(ShutteBusStyle);
 
 export default ShuttleBus;
