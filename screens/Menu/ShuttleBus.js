@@ -15,27 +15,27 @@ function TimesToDisplay (props) {
     let DATA = [];
     let campus = props.campus;
     let isUnavailable = props.isUnavailable;
-    const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const [currentDay, setCurrentDay] = React.useState("");
-    let currentDayKey = new Date().getDay();
+    // const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    // const [currentDay, setCurrentDay] = React.useState("");
 
-    /**
-    * This function sets the current day 
-    */
-    const getDay = () => {
-        let days = [];
-        days = week;
-        days.forEach((item, index) => {
-            if (index == currentDayKey) {
-                //set current day	                
-                setCurrentDay(item);
-            }
-        });
-    };
+    // /**
+    // * This function sets the current day 
+    // */
+    // const getDay = () => {
+    //     let currentDayKey = new Date().getDay();
+    //     let days = [];
+    //     days = week;
+    //     days.forEach((item, index) => {
+    //         if (index == currentDayKey) {
+    //             //set current day	                
+    //             setCurrentDay(item);
+    //         }
+    //     });
+    // };
 
-    useEffect(() => {
-        getDay();
-    });
+    // useEffect(() => {
+    //     getDay();
+    // });
 
     if (isUnavailable && (props.campus == "SGW" || props.campus == "Loyola")) {
         return (
@@ -50,11 +50,12 @@ function TimesToDisplay (props) {
     else if (props.campus == "Loyola") {
         DATA = props.data.LoyolaStops;
     }
+
     return (
         <SafeAreaView style={styles.SafeAreaViewStyle}>
-            <View style={styles.currentDayWrapper}>
-                <Text style={styles.currentDayText}>{currentDay}:</Text>
-            </View>
+            {/* <View style={styles.currentDayWrapper}>
+                <Text style={styles.currentDayText}>{currentDay}</Text>
+            </View> */}
             <FlatList
                 data={DATA}
                 showsVerticalScrollIndicator={true}
