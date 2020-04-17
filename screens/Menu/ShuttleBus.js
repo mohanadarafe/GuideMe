@@ -192,10 +192,12 @@ function ShuttleBus (props) {
         if (currentDayIndex > 0 && currentDayIndex < 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].MondayToThursday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].MondayToThursday;
+            setIsUnavailable(false);
         }
         else if (currentDayIndex === 5) {
             scheduleTimesSGW = getShuttleBusTimes[sgwCampus].Friday;
             scheduleTimesLoyola = getShuttleBusTimes[loyolaCampus].Friday;
+            setIsUnavailable(false);
         }
         else {
             setIsUnavailable(true);
@@ -371,7 +373,7 @@ export const styles = StyleSheet.create({
         fontSize: 20
     },
     SafeAreaViewStyle: {
-        top: "10%",
+        top: "3%",
         width: "100%"
     },
     SafeAreaViewDisclaimerContainer: {
