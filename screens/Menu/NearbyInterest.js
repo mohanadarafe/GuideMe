@@ -131,7 +131,7 @@ function NearbyInterest(props) {
 
         } catch (error) {
 
-            // alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
+            alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
     }
 
