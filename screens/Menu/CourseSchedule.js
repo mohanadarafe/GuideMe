@@ -54,12 +54,12 @@ function CourseSchedule(props) {
         });
         let resp = await calendarEvents.json();
         if (resp.items.length > 0) {
-        let filteredList = getFilteredGoogleCalendarEvents(resp);   
-        setCalendarEventsList(filteredList);
-        setRefresh(false);
+            let filteredList = getFilteredGoogleCalendarEvents(resp);
+            setCalendarEventsList(filteredList);
+            setRefresh(false);
         }
         else {
-            setCalendarEventsList({NoEvent: true})
+            setCalendarEventsList({ NoEvent: true })
         }
     }
 
@@ -67,13 +67,13 @@ function CourseSchedule(props) {
         var eventsFromCurrentDay = [];
         let elementDate;
         resp.items.forEach(element => {
-            if(element.end.dateTime == undefined){
-                elementDate = new Date (element.end.date);
+            if (element.end.dateTime == undefined) {
+                elementDate = new Date(element.end.date);
             }
-            else{
-                elementDate = new Date (element.end.dateTime);
+            else {
+                elementDate = new Date(element.end.dateTime);
             }
-            if(elementDate > currentDate){
+            if (elementDate > currentDate) {
                 eventsFromCurrentDay.push({ id: element.id, summary: element.summary, description: element.description, location: element.location });
             }
         });
@@ -81,7 +81,7 @@ function CourseSchedule(props) {
             return eventsFromCurrentDay;
         }
         else {
-            return ({NoEvent: true})
+            return ({ NoEvent: true })
         }
     };
 
@@ -152,6 +152,9 @@ function CourseSchedule(props) {
                             refreshing={refresh}
                             onRefresh={handleRefresh}
                         />
+                    }
+                    {calendarEventsList.NoEvent &&
+                        <Text style={styles.noClassText}>No Upcoming classes!</Text>
                     }
                 </View>
             </View>
@@ -249,6 +252,15 @@ export const styles = StyleSheet.create({
     },
     courseScheduleInstructions: {
         bottom: "30%",
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        color: "white",
+        textAlign: 'center',
+        alignSelf: "center",
+        position: "absolute",
+        fontSize: 18,
+    },
+    noClassText: {
         paddingLeft: "5%",
         paddingRight: "5%",
         color: "white",

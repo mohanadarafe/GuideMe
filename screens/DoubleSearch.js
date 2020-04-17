@@ -146,7 +146,6 @@ function DoubleSearch(props) {
         let classRoomsList = ClassRooms();
         if (/\d/.test(name)) {
             for (var key in classRoomsList) {
-                console.log("HERE");
                 if (classRoomsList[key].room.includes(name)) {
                     const buildingCoords = buildingList[key].coordinates;
                     const isClassroom = { isClassRoom: name };
