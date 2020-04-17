@@ -19,6 +19,36 @@ describe("IndoorScenario component", () => {
         expect(tree).toMatchSnapshot();
     })
 
+    test("renders hall to loyola same floor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"H825"} to={"VL103"} building={"VL Building"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
+    test("renders hall to loyola different floor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"H825"} to={"VL103"} building={"Hall Building"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
+    test("renders loyola to hall same floor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"VL103"} to={"H920"} building={"VL Building"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
+    test("renders loyola to hall different floor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"VL103"} to={"H937"} building={"Hall Building"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
+    test("renders POI correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"H825"} to={"Water Fountain"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
+    test("renders not indoor correctly", () => {
+        const tree = renderer.create(<IndoorScenario from={"Grey Nuns"} to={"EV Building"} />).toJSON();
+        expect(tree).toMatchSnapshot();
+    })
+
     test("directions starts at correct initial floor", () => {
         const testCases = [
             {from: "H820", to: "H720"},
