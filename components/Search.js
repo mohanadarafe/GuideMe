@@ -43,7 +43,8 @@ export function Search (props) {
   const [searchItem, setSearchItem] = React.useState(null);
 
   useEffect(() => {
-    setData(fetchData());
+    const items = fetchData();
+    setData(items.slice(0, items.length - 3));
   }, []);
 
   useEffect(() => {
