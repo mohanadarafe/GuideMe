@@ -67,7 +67,7 @@ export function BuildingHighlight (props) {
                 id="tap_lb"
                 coordinates={coord.lb.coordinates}
                 tappable={true}
-                onPress={() => onPressHighlight(buildings["Hall Building"].name)}
+                onPress={() => onPressHighlight(buildings["LB Building"].name)}
                 fillColor={buildingHighlighted == buildings["LB Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["LB Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["LB Building"].name ? 4 : 0}

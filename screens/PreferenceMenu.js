@@ -32,16 +32,14 @@ function mapDispatchToProps(dispatch) {
 function PreferenceMenu (props) {
 
     const personaSavedState = props.navigation.getParam("personaType", "null");
-
     const mobilitySavedState = props.navigation.getParam("mobilityType", "null");
-
     const transportSavedState = props.navigation.getParam("transportType", "null");
-
     const isIndoor = props.navigation.getParam("indoor", "null");
 
     const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState ? personaSavedState : null });
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState ? mobilitySavedState : null });
     const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState ? transportSavedState : null });
+
 
     let firstRow = onPressFirstCategory.selectedButton;
     let secondRow = onPressSecondCategory.selectedButton;
@@ -81,6 +79,28 @@ function PreferenceMenu (props) {
         });
     };
 
+    const onPressElement = (category, value) => {
+
+        switch (category) {
+            case "PersonaType":
+                setOnPressFirstCategory({selectedButton: value});
+                props.setPersonaType(value);
+                break;
+            case "Mobility":
+                setOnPressSecondCategory({selectedButton: value});
+                props.setMobilityReduced(value);
+                break;
+            case "MethodOfTravel":
+                console.log("here");
+                setOnPressThirdCategory({selectedButton: value});
+                props.setMethodOfTravel(value);
+                break;
+            default:
+                return null
+        }
+        
+    }
+
     return (
         <View style={styles.container}>
             <Icon name="ios-arrow-down" style={styles.arrowDown} onPress={() => {(isIndoor ? goToIndoorMap : goToPreviewDirections)}} />
@@ -93,34 +113,22 @@ function PreferenceMenu (props) {
                 </View>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "GRADUATE" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                        setOnPressFirstCategory({ selectedButton: "GRADUATE" })
-                        props.setPersonaType("GRADUATE");
-                    }}>
+                    onPress={() => onPressElement("PersonaType", "GRADUATE")}>
                     <Text style={styles.buttonLabel}>Graduate Student</Text>
                 </Button>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNDERGRADUATE" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                        setOnPressFirstCategory({ selectedButton: "UNDERGRADUATE" })
-                        props.setPersonaType("UNDERGRADUATE");
-                    }}>
+                    onPress={() => onPressElement("PersonaType", "UNDERGRADUATE")}>
                     <Text style={styles.buttonLabel}>Undergrad Student</Text>
                 </Button>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                        setOnPressFirstCategory({ selectedButton: "VISITOR" })
-                        props.setPersonaType("VISITOR");
-                    }}>
+                   onPress={() => onPressElement("PersonaType", "VISITOR")}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
 
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "UNIVERSITY_STAFF" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                        setOnPressFirstCategory({ selectedButton: "UNIVERSITY_STAFF" })
-                        props.setPersonaType("UNIVERSITY_STAFF");
-                    }}>
+                    onPress={() => onPressElement("PersonaType", "UNIVERSITY_STAFF")}>
                     <Text style={styles.buttonLabel}>University Staff</Text>
                 </Button>
             </View>
@@ -130,17 +138,11 @@ function PreferenceMenu (props) {
                     <Text style={styles.shortLabel}>Mobility Reduced: </Text>
                 </View>
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_REDUCED" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => { 
-                        setOnPressSecondCategory({ selectedButton: "MOBILITY_REDUCED" })
-                        props.setMobilityReduced("MOBILITY_REDUCED");
-                    }}>
+                    onPress={() => onPressElement("Mobility", "MOBILITY_REDUCED")}>
                     <Text style={styles.buttonLabelMobility} > Yes </Text>
                 </Button>
                 <Button transparent style={[styles.buttonContainer, { backgroundColor: onPressSecondCategory.selectedButton === "MOBILITY_NOT_REDUCED" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => { 
-                        setOnPressSecondCategory({ selectedButton: "MOBILITY_NOT_REDUCED" })
-                        props.setMobilityReduced("MOBILITY_NOT_REDUCED");
-                    }}>
+                    onPress={() => onPressElement("Mobility", "MOBILITY_NOT_REDUCED")}>
                     <Text style={styles.buttonLabelMobility}>No</Text>
                 </Button>
             </View>
@@ -151,11 +153,7 @@ function PreferenceMenu (props) {
                 </View>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "driving" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                        setOnPressThirdCategory({ selectedButton: "driving" })
-                        props.setMethodOfTravel("driving");
-                        }}>
-
+                    onPress={() => onPressElement("MethodOfTravel", "driving")}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-car" style={styles.icon}></Icon>
                     </View>
@@ -165,10 +163,7 @@ function PreferenceMenu (props) {
                 </Button>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "walking" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                    setOnPressThirdCategory({ selectedButton: "walking" })
-                    props.setMethodOfTravel("walking");
-                    }}>
+                    onPress={() => onPressElement("MethodOfTravel", "walking")}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-walk" style={styles.icon}></Icon>
                     </View>
@@ -178,10 +173,7 @@ function PreferenceMenu (props) {
                 </Button>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "bicycling" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => {
-                        setOnPressThirdCategory({ selectedButton: "bicycling" });
-                        props.setMethodOfTravel("bicycling");
-                    }}>
+                   onPress={() => onPressElement("MethodOfTravel", "bicycling")}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bicycle" style={styles.icon}></Icon>
                     </View>
@@ -191,10 +183,7 @@ function PreferenceMenu (props) {
                 </Button>
 
                 <Button transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "transit" ? "#f0b400" : "#353A50" }]}
-                    onPress={() => { 
-                        setOnPressThirdCategory({ selectedButton: "transit" });
-                        props.setMethodOfTravel("transit");
-                        }}>
+                   onPress={() => onPressElement("MethodOfTravel", "transit")}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>
