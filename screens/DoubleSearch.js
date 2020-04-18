@@ -206,7 +206,7 @@ function DoubleSearch(props) {
             <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
             <View style={styles.searchbarsContainer}>
-                <View testID="DoubleSearch_FromSearchBarView" style={styles.originSearchContainer}>
+                <View testID="DoubleSearch_FromSearchBarViewFrom" style={styles.originSearchContainer}>
                     <Text style={styles.searchBarLabels}>From: </Text>
                     <SearchableDropdown
                         testID="DoubleSearch_FromSearchBar"
@@ -228,7 +228,7 @@ function DoubleSearch(props) {
                         }}
                     />
                 </View>
-                <View testID="DoubleSearch_ToSearchBarView" style={styles.destinationSearchContainer}>
+                <View testID="DoubleSearch_ToSearchBarViewTo" style={styles.destinationSearchContainer}>
                     <Text style={styles.searchBarLabels}>To: </Text>
                     <SearchableDropdown
                         testID="DoubleSearch_ToSearchBar"

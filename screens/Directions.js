@@ -16,7 +16,7 @@ import CurrentLocationButton from "../components/CurrentLocationButton";
  * TODO: There are other user stories to refer.
  * This is our main screen which includes all the components inside a map.
  */
-function Directions (props) {
+function Directions(props) {
 
     const [instructionIndex, setInstructionIndex] = React.useState(0);
     const [isLastInstruction, setIsLastInstruction] = React.useState(false);
@@ -58,7 +58,7 @@ function Directions (props) {
             }
         }
         else if (!destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
-        setIndoorScenario2(true);
+            setIndoorScenario2(true);
         }
         else if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
             setIndoorScenario3(true);
@@ -161,15 +161,15 @@ function Directions (props) {
             >
                 {destinationResponse ? destinationResponse.steps.map((step, index) => (
                     <Polyline key={index}
-                        coordinates = {step.polylines.values}
-                        strokeWidth = {5}
-                        strokeColor = {step.polylines.color}
-                    />     
-                    )) : <Polyline
+                        coordinates={step.polylines.values}
+                        strokeWidth={5}
+                        strokeColor={step.polylines.color}
+                    />
+                )) : <Polyline
                         coordinates={decodedPolylines}
                         strokeWidth={5}
                         strokeColor="pink"
-                     /> 
+                    />
                 }
             </MapView>
             <View style={styles.circleCurrentLocation}>
@@ -185,50 +185,50 @@ function Directions (props) {
                         <View style={styles.lineHeader}></View>
                     </View>
                 </View>
-                <View style = {styles.lowerHeader}>
+                <View style={styles.lowerHeader}>
                     <View style={styles.detailedInstructions}>
-                            <HTML
-                                html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "<div style=\"font-size:1.6em;color:white;\">Invalid.</div>"}
-                            />
-                            <View style={styles.infoMetrics}>
-                                <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
-                                <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
-                                <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
-                            </View>
+                        <HTML
+                            html={destinationResponse ? destinationResponse.steps[instructionIndex].htmlInstructions : "<div style=\"font-size:1.6em;color:white;\">Invalid.</div>"}
+                        />
+                        <View style={styles.infoMetrics}>
+                            <Text style={styles.stepMetrics}>Duration: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].duration : "N/A"}</Text></Text>
+                            <Text style={styles.stepMetrics}>Distance: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].distance : "N/A"}</Text></Text>
+                            <Text style={styles.stepMetrics}>By: <Text style={styles.stepMetricsValues}>{destinationResponse ? destinationResponse.steps[instructionIndex].travelMode : "N/A"}</Text></Text>
+                        </View>
                     </View>
                 </View>
             </View>
             {
-            isFirstInstruction &&
+                isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirectionDisabled} disabled={true}>
                     <View>
                         <Icon name="arrow-back" style={styles.disabledArrow} />
                     </View>
-                </TouchableOpacity> 
+                </TouchableOpacity>
             }
             {
-            isFirstInstruction && (indoorScenario1) &&
+                isFirstInstruction && (indoorScenario1) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View>
-                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })}} />
+                        <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress }) }} />
                     </View>
-                </TouchableOpacity> 
+                </TouchableOpacity>
             }
             {
-            (isFirstInstruction && indoorScenario3) &&
+                (isFirstInstruction && indoorScenario3) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View>
-                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true })}} />
+                        <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true }) }} />
                     </View>
-                </TouchableOpacity> 
+                </TouchableOpacity>
             }
             {
-            (isLastInstruction && indoorScenario3) &&
+                (isLastInstruction && indoorScenario3) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View>
-                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isLast: true })}} />
+                        <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isLast: true }) }} />
                     </View>
-                </TouchableOpacity> 
+                </TouchableOpacity>
             }
             {!isFirstInstruction &&
                 <TouchableOpacity style={styles.arrowLeftDirection} onPress={goToPreviousInstruction}>
@@ -238,10 +238,10 @@ function Directions (props) {
                 </TouchableOpacity>
             }
             {
-            isLastInstruction && (indoorScenario2) &&
+                isLastInstruction && (indoorScenario2) &&
                 <TouchableOpacity style={styles.indoorBuilding}>
                     <View >
-                        <Icon type="FontAwesome5" name="building" onPress={() => {props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.startAddress, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom })}} />
+                        <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.startAddress, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom }) }} />
                     </View>
                 </TouchableOpacity>
             }
@@ -253,7 +253,7 @@ function Directions (props) {
                 </TouchableOpacity>
             }
             {!isLastInstruction &&
-                <TouchableOpacity style={styles.arrowRightDirection} onPress={goToNextInstruction}>
+                <TouchableOpacity testID="Directions_BottomRightButton" style={styles.arrowRightDirection} onPress={goToNextInstruction}>
                     <View >
                         <Icon name="arrow-forward" />
                     </View>
@@ -287,10 +287,10 @@ export const styles = StyleSheet.create({
         flexDirection: "column",
     },
     lowerHeader: {
-        flexDirection: "column", 
-        width: "100%", 
-        maxHeight:"60%",
-        backgroundColor:"#2A2E43"
+        flexDirection: "column",
+        width: "100%",
+        maxHeight: "60%",
+        backgroundColor: "#2A2E43"
     },
     directionTextHeader: {
         justifyContent: "center",
@@ -398,7 +398,7 @@ export const styles = StyleSheet.create({
         left: "80%",
         width: 60,
         height: 60,
-        borderRadius: 100/2,
+        borderRadius: 100 / 2,
         backgroundColor: "#f0b400",
         justifyContent: "center",
         alignItems: "center"

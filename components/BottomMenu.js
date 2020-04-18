@@ -16,7 +16,7 @@ import { FloorMenu } from "./FloorMenu";
  * button GetInside.
 */
 
-function BottomMenu (props) {
+function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
@@ -83,7 +83,7 @@ function BottomMenu (props) {
                 transportType: methodTravel
             });
         }
-        
+
     };
 
     const goToMoreDetails = () => {
@@ -132,16 +132,16 @@ function BottomMenu (props) {
     };
 
     if (viewIndoor) {
-        return(
+        return (
             <View style={styles.insideBuildingContainer} data-test="BottomMenu" testID="bottomMenuInitalView">
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {(inDirections ? goToPreferenceMenu(true) : goToMoreDetails)}} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { (inDirections ? goToPreferenceMenu(true) : goToMoreDetails) }} />
                 <Text style={styles.mainLabel}>{building ? building : selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
                 <Button testID="indoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>
-                    <FloorMenu from={from} to={to}/>
+                    <FloorMenu from={from} to={to} />
                 </View>
             </View>
         )
@@ -150,11 +150,11 @@ function BottomMenu (props) {
     if (previewDirections) {
         return (
             <View style={styles.container}>
-                <Icon testID="BottomMenu_arrowUpToPreferenceMenuIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={() => {goToPreferenceMenu(false)}} />
+                <Icon testID="BottomMenu_arrowUpToPreferenceMenuIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={() => { goToPreferenceMenu(false) }} />
                 <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
-                    <Button style={styles.btnGetDirectionPosition}
+                    <Button testID="BottomMenu_PreferenceStartButton" style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
                         <Text style={styles.btnText}>Start</Text>
                     </Button>
@@ -190,7 +190,7 @@ function BottomMenu (props) {
         }
         return (
             <View style={styles.container} >
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", {name: destination})}} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
                 {destination.length > 13
                     ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
                     : <Text style={styles.mainLabel}>{destination}</Text>
