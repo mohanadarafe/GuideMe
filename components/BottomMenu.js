@@ -19,15 +19,9 @@ import {CampusRegion} from "../constants/buildingData";
  * button GetInside.
 */
 
-<<<<<<< HEAD
-function BottomMenu(props) {
-    const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [switchVal, setSwitchVal] = React.useState(true);
-=======
 function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState(null);
     const [swtichCampus, setSwitchCampus] = React.useState(true);
->>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
@@ -139,11 +133,7 @@ function BottomMenu (props) {
                  {!props.directionResponse &&
                     <Text style={styles.mainLabel}>N/A</Text>
                 }
-<<<<<<< HEAD
-                <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
-=======
                 <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
->>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
