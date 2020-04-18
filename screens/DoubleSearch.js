@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet, AsyncStorage, TouchableOpacity } from "react-native";
 import { Icon, Button } from "native-base";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { MapData } from "../components/MapData";
@@ -9,16 +9,8 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-/**
- * FIXME: 
- * 1) FetchData Returns duplicate sometimes in the searchItems and I think it concerns services and departements.
- * 2) TODO: - Services and departments should not be in the searchItems.
- *      Thus different parameters need to be sent to MapData()
- * 
- * A.U
- */
 function fetchData() {
-    const searchInfo = MapData({ passBuildingName: "", buildingName: true, classRooms: true, departments: true, services: true, accesibility: false, flatten: true }, ClassRooms(), buildingData());
+    const searchInfo = MapData({ context: "Search" });
     return searchInfo;
 }
 
@@ -34,51 +26,61 @@ DoubleSearch.propTypes = {
     navigation: PropTypes.object
 };
 
-/**
- * FIXME: Refers to fetchData()
- *
- * A.U
- */
 var originItems = fetchData();
-var destinationItems = [];
-destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
+var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
 originItems.unshift({ "id": 0, "name": "Current Location" });
-
 
 /**
  * Overall :
- * TODO: 1.  Algorithm for another Classrom, refers to B) and fetchData() - 3
  * 
  * A.U
  * @param {*} props 
  */
+
 function DoubleSearch(props) {
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
     const [coordinatesTo, setCoordinatesTo] = React.useState("");
     const [currentLocationCoords, setCurrentLocationCoords] = React.useState(null);
+    const [pointOfInterest, setPointOfInterest] = React.useState(null);
+    const [coordinatesPOI, setCoordinatesPOI] = React.useState({ latitude: null, longitude: null });
+
+
+    const namePointOfInterest = props.navigation.getParam("name_POI", null);
+    const latitudePointOfInterest = props.navigation.getParam("latitude_POI", null);
+    const longitudePointOfInterest = props.navigation.getParam("longitude_POI", null);
+    
     /**
-     * Description: Method to go back to the previous screen.
+     * Adding the point of interest as an item in the dropdownlist of the Destination search bar
+     */
+    const addItem = () => {
+            destinationItems.unshift({ id: 0, name: namePointOfInterest});   
+    }
+
+    const [placeholder, setPlaceholder] = React.useState("");
+
+
+    /**
+     * Description: Method to back to the previous screen.
      * Using Stack navigator.
      */
+    
+    const CourseScheduleLocation = props.navigation.getParam("CourseScheduleLocation", "");
 
-    // var fromScreen; 
-    CourseScheduleDetailsScreen = props.navigation.getParam("CourseScheduleDetailsScreen", "null");
-    NearbyInterestDetailsScreen = props.navigation.getParam("NearbyInterestDetailsScreen", "null");
     const goBack = () => {
-        if(CourseScheduleDetailsScreen === true){
-            props.navigation.goBack();
-            props.navigation.navigate("CourseScheduleDetails")
-        }
-        else if (NearbyInterestDetailsScreen === true){
-            props.navigation.goBack();
-            props.navigation.navigate("NearbyInterestDetails")
-        }
-        else{
-            props.navigation.goBack();
-        }
+            if(namePointOfInterest){
+                destinationItems.shift();
+                props.navigation.goBack();
+
+            }else{
+                props.navigation.goBack();
+            }
+
+         
     };
+
+   
     /**
      * Description: This method will navigate between the DoubleSearch screen to the PreviewDirection screen.
      * Particularity: 
@@ -93,19 +95,50 @@ function DoubleSearch(props) {
      * 
      * A.U
      */
+
     const goToPreviewDirectionScreen = () => {
-        if (to.name == from.name) {
+      
+        // current location to POI
+        if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords && pointOfInterest !==null) {
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesPOI, fromName: "Current Location", toName: pointOfInterest });
+
+        }
+        // building name to POI
+        else if (coordinatesFrom && pointOfInterest !==null) {
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesPOI, fromName: from.name, toName: pointOfInterest });
+        }
+
+        else if (to.name == from.name) {
             return alert("Origin and destination are the same. Please try Again.");
         }
+
+        // current location to building name
         else if ((from.name == "Current Location" || from.name == undefined) && currentLocationCoords) {
-            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: currentLocationCoords, To: coordinatesTo, fromName: "Current Location", toName: to.name });
         }
+    
+        else if(from.name.includes("Washroom") || from.name.includes("Water")){
+            alert("Directions from indoor points of interests are not supported! Try going to the point of interest.")
+        }
+
+        else if(!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+            alert("Directions to indoor points of interests are only accepted from classrooms!")
+        }
+
+        // class room to washroom or water fountain 
+        else if(coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))){
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
+        }
+        // classroom to classroom
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
             props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
         }
+
+        // building to buildling 
         else if (coordinatesFrom && coordinatesTo) {
-            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName:from.name, toName:to.name });
+            props.navigation.navigate("PreviewDirections", { From: coordinatesFrom, To: coordinatesTo, fromName: from.name, toName: to.name });
         }
+
         else {
             return alert("The destination or origin field is missing or invalid. Please try again.");
         }
@@ -117,21 +150,23 @@ function DoubleSearch(props) {
      * 
      */
     const fetchCurrentPosition = () => {
-        
-        getPosition().then(({coords}) => {
+
+        getPosition().then(({ coords }) => {
             setCurrentLocationCoords({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude
-                })
+                latitude: coords.latitude,
+                longitude: coords.longitude
             })
+        })
             .catch((err) => {
-            alert (err.message);
+                alert(err.message);
             });
     }
 
     /**
      * Algorithm to find the coordinates of a given building name or classroom name.
-     * returns longitude and latitude
+     * returns longitude and latitude.
+     * In the case of a service or department, it will return the coordinates of the
+     * building it belongs to.
      * 
      * A.U
      * @param {*} name 
@@ -142,30 +177,30 @@ function DoubleSearch(props) {
         let classRoomsList = ClassRooms();
         if (/\d/.test(name)) {
             for (var key in classRoomsList) {
-                if(classRoomsList[key].room.includes(name)) {
-                const buildingCoords = buildingList[key].coordinates;
-                const isClassroom = {isClassRoom: name};
-                const result = {...buildingCoords, ...isClassroom};
-                return result;
+                if (classRoomsList[key].room.includes(name)) {
+                    const buildingCoords = buildingList[key].coordinates;
+                    const isClassroom = { isClassRoom: name };
+                    const result = { ...buildingCoords, ...isClassroom };
+                    return result;
                 }
             }
         }
         for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name)) {
+            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) || buildingList[key].fullName.includes(name)) {
                 return buildingList[key].coordinates;
             }
         }
         if (name == "Current Location") {
-            fetchCurrentPosition();           
+            fetchCurrentPosition();
         }
         return null;
     };
 
     var getPosition = function (options) {
         return new Promise(function (resolve, reject) {
-          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+            navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
-      }
+    }
 
     let fromName = from.name;
     let toName = to.name;
@@ -183,85 +218,114 @@ function DoubleSearch(props) {
     }
 
     /**
-     * Used an useEffect to fetch the currentLocation
-     * A.U
+     * Used an useEffect to fetch the currentLocation, to fetch the set CourseSchedule and POI props in their rightful hook
      */
     useEffect(() => {
 
-        if (to.name === undefined) {
-            const initialTo = props.navigation.getParam("destinationName", "Destination");
-            setCoordinatesTo(getCoordinates(initialTo));
-            setTo({ name: initialTo });
-        }
+            if (to.name === undefined) {
+                if (destinationName) {
+                    setCoordinatesTo(getCoordinates(destinationName));
+                    setTo({ name: destinationName });
+                    setPlaceholder(destinationName);
+                }
+                if (CourseScheduleLocation) {
+                    setCoordinatesTo(getCoordinates(CourseScheduleLocation));
+                    setTo({ name: CourseScheduleLocation });
+                    setPlaceholder(CourseScheduleLocation);
+                }
+            }
         if (from.name === undefined) {
             fetchCurrentPosition();
         }
+
+        setPointOfInterest(namePointOfInterest)
+        setCoordinatesPOI({
+            latitude: latitudePointOfInterest,
+            longitude: longitudePointOfInterest
+        })
+
+        if(namePointOfInterest){
+        addItem()
+        setPlaceholder(namePointOfInterest)
+        }
+        
     }, []);
 
-    return (
-        <View style={styles.container} data-test="DoubleSearch">
-            <View style={styles.backArrowContainer}>
-                <Button transparent style={styles.backArrow} onPress={goBack}>
-                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                </Button>
-            </View>
-            <View style={styles.svgContainer}>
-                <DoubleSearchSVG />
-            </View>
-            <Text style={styles.titleLabel}>Starting Point & Destination</Text>
+    
+    //Depending on the condition will return disabled button or not
+    var goToPreviewDirectionButton;
+    if (coordinatesTo != null || coordinatesFrom != null || pointOfInterest != null) {
+        goToPreviewDirectionButton = <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+    }
+    else if (coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) {
+        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+    }
+    else {
+        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        alert("Invalid Location! Please try to enter a valid classroom or building name");
+    }
 
-            <View style={styles.searchbarsContainer}>
-                <View style={styles.originSearchContainer}>
-                    <Text style={styles.searchBarLabels}>From: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val} //Refer TODO: A)
-                        onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={"0"} //Refer TODO: A)
-                        textInputStyle={styles.textInputStyle}
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        items={originItems}
-                        placeholder={"Starting Position"}
-                        placeholderTextColor={"grey"}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
-                <View style={styles.destinationSearchContainer}>
-                    <Text style={styles.searchBarLabels}>To: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val}
-                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); }}
-                        textInputStyle={styles.textInputStyle}
-                        defaultIndex={(String)(value)} //Refer TODO: A)
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor={"black"}
-                        items={destinationItems}
-                        placeholder={destinationName}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
+
+
+return (
+    <View style={styles.container} data-test="DoubleSearch">
+        <View style={styles.backArrowContainer}>
+            <TouchableOpacity onPress={goBack}>
+                <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.svgContainer}>
+            <DoubleSearchSVG />
+        </View>
+        <Text style={styles.titleLabel}>Starting Point & Destination</Text>
+
+        <View style={styles.searchbarsContainer}>
+            <View style={styles.originSearchContainer}>
+                <Text style={styles.searchBarLabels}>From: </Text>
+                <SearchableDropdown
+                    onTextChange={val => val}
+                    onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
+                    defaultIndex={"0"}
+                    textInputStyle={styles.textInputStyle}
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    items={originItems}
+                    placeholder={"Starting Position"}
+                    placeholderTextColor={"grey"}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
             </View>
-            {(currentLocationCoords || coordinatesFrom != null) && 
-                <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            }
-            {(coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) &&
-                <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>
-            }
-        </View >
-    );
+            <View style={styles.destinationSearchContainer}>
+                <Text style={styles.searchBarLabels}>To: </Text>
+                <SearchableDropdown
+                    onTextChange={val => val}
+                    onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); (namePointOfInterest == item.name ? setPointOfInterest(namePointOfInterest) : setPointOfInterest(null));}}
+                    textInputStyle={styles.textInputStyle}
+                    defaultIndex={(String)(value)} 
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"black"}
+                    items={destinationItems}
+                    placeholder={placeholder}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
+            </View>
+        </View>
+        {goToPreviewDirectionButton}
+    </View >
+);
 }
 export const styles = StyleSheet.create({
     container: {
@@ -337,25 +401,15 @@ export const styles = StyleSheet.create({
     itemsContainerStyle: {
         maxHeight: "60%",
     },
-    backArrow: {
-        height: "100%",
-        width: "100%",
-        flexDirection: "row",
-        left: "10%"
-    },
     backArrowContainer: {
         width: "100%",
         height: "6%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignContent: "center",
-        alignItems: "center",
-        top: "7%"
+        top: "6%"
     },
     icon: {
         position: "absolute",
         color: "#FFFFFF",
-        alignSelf: "center",
+        left: "5%",
         fontSize: 35
     },
     routeButton: {

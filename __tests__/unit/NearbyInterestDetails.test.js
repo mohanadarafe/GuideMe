@@ -4,7 +4,12 @@ import renderer from "react-test-renderer";
 
 describe("Nearby Interest Details component", () => {
     test("renders correctly", () => {
-        const tree = renderer.create(<NearbyInterestDetails />).toJSON();
+        const navigation = {
+            getParam: (param, defaultValue) => {
+              return "Tim Hortons"
+            }
+          };
+        const tree = renderer.create(<NearbyInterestDetails navigation={navigation}/>).toJSON();
         expect(tree).toMatchSnapshot();
     });
 });

@@ -3,25 +3,32 @@ import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
-
+import { FloorMenu } from "./FloorMenu";
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
+/**TODO: When updating BottomMenu from Main SearchBar, I personally think
+ * it should be More Info as a button instead of GetDirections as it 
+ * can confuse the user since when clicking on a building, we have the 
+ * button GetInside.
+*/
 
-function BottomMenu (props) {
+function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
-    const [iconSelected, setIconSelected] = React.useState(false);
     const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
+    const viewIndoor = props.indoor;
+    const inDirections = props.inDirections;
+    const building = props.building;
     const previewDirections = props.previewMode;
-
-    //const [mapPressed, setmapPressed] = React.useState("");
+    const from = props.from;
+    const to = props.to;
 
     AsyncStorage.setItem("toggle", switchVal.toString());
     const getBuildingSelected = async () => {
@@ -49,6 +56,10 @@ function BottomMenu (props) {
         setMethodTravel(name);
     };
 
+    const goBack = () => {
+        props.navigation.goBack();
+    };
+
     const goToDoubleSearchBar = () => {
         props.navigation.navigate("DoubleSearch", { destinationName: destination });
     };
@@ -56,12 +67,23 @@ function BottomMenu (props) {
         props.navigation.navigate("Directions", { destinationResponse: props.directionResponse });
     };
 
-    const goToPreferenceMenu = () => {
-        props.navigation.navigate("PreferenceMenu", {
-            personaType: personaType,
-            mobilityType: mobilityReduced,
-            transportType: methodTravel
-        });
+    const goToPreferenceMenu = (isIndoor) => {
+        if (isIndoor) {
+            props.navigation.navigate("PreferenceMenu", {
+                indoor: true,
+                personaType: personaType,
+                mobilityType: mobilityReduced,
+                transportType: methodTravel
+            });
+        } else {
+            props.navigation.navigate("PreferenceMenu", {
+                indoor: false,
+                personaType: personaType,
+                mobilityType: mobilityReduced,
+                transportType: methodTravel
+            });
+        }
+
     };
 
     const goToMoreDetails = () => {
@@ -78,11 +100,6 @@ function BottomMenu (props) {
         AsyncStorage.setItem("sideMenu", "mapView");
         props.navigation.navigate("NearbyInterest");
     };
-
-    // const currentAltitude = async () => {
-    //     let altitude = await AsyncStorage.getItem("altitude");
-    // };
-
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -114,11 +131,36 @@ function BottomMenu (props) {
         }
     };
 
+    if (viewIndoor) {
+        return (
+            <View style={styles.insideBuildingContainer} data-test="BottomMenu" testID="bottomMenuInitalView">
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { (inDirections ? goToPreferenceMenu(true) : goToMoreDetails) }} />
+                <Text style={styles.mainLabel}>{building ? building : selectedBuilding}</Text>
+                <Text style={styles.shortLabel}>More info</Text>
+                <Button testID="indoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                    <Text style={styles.btnText}>Exit Building</Text>
+                </Button>
+                <View style={styles.changeFloor}>
+                    <FloorMenu from={from} to={to} />
+                </View>
+            </View>
+        )
+    }
+
     if (previewDirections) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToPreferenceMenu} />
-                <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { goToPreferenceMenu(false) }} />
+
+                {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length > 12 &&
+                    <Text style={styles.mainLabel}>{props.directionResponse.generalRouteInfo.totalDuration}</Text>
+                }
+                 {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length <= 12 &&
+                    <Text style={styles.mainLabel}>{props.directionResponse.generalRouteInfo.totalDuration } {props.directionResponse.generalRouteInfo.totalDistance}</Text>
+                }
+                 {!props.directionResponse &&
+                    <Text style={styles.mainLabel}>N/A</Text>
+                }
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
@@ -157,7 +199,7 @@ function BottomMenu (props) {
         }
         return (
             <View style={styles.container} >
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { setIconSelected(true); }} />
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
                 {destination.length > 13
                     ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
                     : <Text style={styles.mainLabel}>{destination}</Text>

@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, SectionList, TouchableOpacity } from "react-native";
-import { Button } from "native-base";
 import { Feather } from "@expo/vector-icons";
 import PropTypes from "prop-types";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 
 /**
  * Description: This is the about page for an
@@ -16,10 +16,10 @@ import PropTypes from "prop-types";
 */
 function AboutUs(props) {
 
-     /**
-     * The method will slide the side menu from the right side of the screen
-     * @param  {} =>{props.navigation.openDrawer(
-     */
+    /**
+    * The method will slide the side menu from the right side of the screen
+    * @param  {} =>{props.navigation.openDrawer(
+    */
     const goToMenu = () => {
         props.navigation.openDrawer();
     };
@@ -81,15 +81,8 @@ AboutUs.propTypes = {
     openDrawer: PropTypes.func
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43",
-        flex: 1
-    },
+const aboutUsStyle = {
+
     scrollViewTextContainer: {
         bottom: "59%",
         height: "15%",
@@ -127,22 +120,6 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: "encodeSansExpanded",
         top: "43%"
-    },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35,
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "7%",
     },
     scrollTextContainer: {
         width: "100%",
@@ -182,7 +159,8 @@ export const styles = StyleSheet.create({
         textAlign: "center",
         lineHeight: 30
     }
+}
 
-});
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...aboutUsStyle});
 
 export default AboutUs;
