@@ -147,6 +147,26 @@ function BottomMenu (props) {
             </View>
         );
     }
+    if (destination) {
+        if (destination.length > 13) {
+            var updatedDestination = destination.substring(0, 13) + "...";
+        }
+        return (
+            <View style={styles.container} >
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
+                {destination.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+                    : <Text style={styles.mainLabel}>{destination}</Text>
+                }
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btnGetDirection}>
+                    <Button testID="getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+                        <Text style={styles.btnText}>Get Directions</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
 
     if (selectedBuilding) {
         if (selectedBuilding.length > 13) {
@@ -165,27 +185,6 @@ function BottomMenu (props) {
                 <Button testID="getInsideButton" style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
                     <Text style={styles.btnText}>Get Inside</Text>
                 </Button>
-            </View>
-        );
-    }
-
-    if (destination) {
-        if (destination.length > 13) {
-            var updatedDestination = destination.substring(0, 13) + "...";
-        }
-        return (
-            <View style={styles.container} >
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
-                {destination.length > 13
-                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
-                    : <Text style={styles.mainLabel}>{destination}</Text>
-                }
-                <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.btnGetDirection}>
-                    <Button testID="getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
-                        <Text style={styles.btnText}>Get Directions</Text>
-                    </Button>
-                </View>
             </View>
         );
     }
