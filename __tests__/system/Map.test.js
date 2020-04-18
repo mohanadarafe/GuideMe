@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Map from "../../screens/Map";
+import { Map } from "../../screens/Map";
 import {findByTestAtrr} from "../../utils/Index";
 import { BottomMenu } from "../../components/BottomMenu";
 
