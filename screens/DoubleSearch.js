@@ -252,13 +252,13 @@ function DoubleSearch(props) {
     //Depending on the condition will return disabled button or not
     var goToPreviewDirectionButton;
     if (coordinatesTo != null || coordinatesFrom != null || pointOfInterest != null) {
-        goToPreviewDirectionButton = <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        goToPreviewDirectionButton = <Button transparent testID="DoubleSearch_enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
     }
     else if (coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) {
-        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        goToPreviewDirectionButton = <Button transparent testID="DoubleSearch_disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
     }
     else {
-        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        goToPreviewDirectionButton = <Button transparent testID="DoubleSeach_disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
         alert("Invalid Location! Please try to enter a valid classroom or building name");
     }
 
