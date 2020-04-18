@@ -4,7 +4,22 @@ import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {getCoordinates} from "../screens/DoubleSearch";
 
+function mapStateToProps(state) {
+  return {
+      goToSearchedItem: state.goToSearchedItem
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    goToSearchedItemAction: (coords, name) => dispatch({ 
+      type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER", 
+      payload: {coordinates: coords, name: name}})
+  }
+}
 
 /**
  * US11 - As a user, I would like to see auto-fill options when I type a query
@@ -21,42 +36,36 @@ function fetchData () {
   return searchInfo;
 }
 
-function Search (props) {
+export function Search (props) {
   // eslint-disable-next-line no-unused-vars
-  const [buildingName, setBuildingName] = React.useState("");
-  const [from, setFrom] = React.useState("");
-  const [to, setTo] = React.useState("");
+
   const [data, setData] = React.useState(null);
-
-  let toName = to.name;
-
-  if (toName === undefined) {
-    toName = "";
-    AsyncStorage.setItem("toLocation", toName.toString());
-    AsyncStorage.setItem("toLocation", toName.toString());
-    AsyncStorage.setItem("buildingSelected", buildingName.toString());
-  }
-  else {
-    AsyncStorage.setItem("fromLocation", from.toString());
-    AsyncStorage.setItem("toLocation", toName.toString());
-    AsyncStorage.setItem("buildingSelected", buildingName.toString());
-  }
-
-  function destinationSetter (to) {
-    // resets the value of the buildingName label when on pressing on a searched item
-    setTo(to);
-    setFrom("Current Location");
-    setBuildingName("");
-  }
+  const [searchItem, setSearchItem] = React.useState(null);
 
   useEffect(() => {
-    setData(fetchData());
+    const items = fetchData();
+    setData(items.slice(0, items.length - 3));
   }, []);
 
+  useEffect(() => {
+    updateSearchItem();
+  }, [searchItem]);
+
+  
   const goToMenu = () => {
-    AsyncStorage.setItem("sideMenu", "sideMenu");
+    AsyncStorage.setItem("sideMenu", "sideMenu"); 
     props.navigation.openDrawer();
   };
+
+  const updateSearchItem = () => {
+    if (searchItem) {
+      props.goToSearchedItemAction({
+        latitude: searchItem.coordinates.latitude,
+        longitude: searchItem.coordinates.longitude
+      }, searchItem.name);
+    }
+  }
+  
 
   return (
     <View style={styles.container} testID={props.testID}>
@@ -69,7 +78,7 @@ function Search (props) {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => destinationSetter(item)}
+        onItemSelect={item => {  setSearchItem({name: item.name, coordinates: getCoordinates(item.name)});  }}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}
@@ -77,7 +86,7 @@ function Search (props) {
         itemsContainerStyle={styles.itemsContainerStyle}
         items={data}
         placeholder="Where to?"
-        resetValue={false}
+        resetValue={true}
       />
     </View>
   );
@@ -87,6 +96,9 @@ Search.propTypes = {
   testID: PropTypes.string,
   navigation: PropTypes.object
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
+
 
 export const styles = StyleSheet.create({
   buttonStyle: {
@@ -139,5 +151,3 @@ export const styles = StyleSheet.create({
     maxHeight: "60%",
   }
 });
-
-export { Search };
