@@ -30,15 +30,9 @@ function CourseSchedule(props) {
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState("false");
     const [refresh, setRefresh] = React.useState(false);
-<<<<<<< HEAD
     const [loop, setLoop] = React.useState(null);
     //TODO Show only events after current date
-    // let currentDate = new Date();
-=======
-
-    //TODO Show only events after current date THIS FORMAT 2020-04-18
     let currentDate = new Date();
->>>>>>> 5174a9521872e843fa58cb021bc8aa89b5cd35ba
 
     const getCalendarId = async () => {
         let calendarId = await AsyncStorage.getItem("calendarId");
@@ -114,8 +108,7 @@ function CourseSchedule(props) {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
-<<<<<<< HEAD
-        }, 1));
+        }, 1000));
         if (switchVal == "true") {
         getCalendarEvents();
         }
@@ -129,15 +122,6 @@ function CourseSchedule(props) {
     
     if (switchVal == "true" && calendarEventsList) {
     return (
-=======
-        }, 1000);
-        getCalendarEvents();
-        return () => clearInterval(intervalId);
-    }, [selectedCalendarId, accessToken]);
-
-    if (switchVal == "true" && calendarEventsList) {
-        return (
->>>>>>> 5174a9521872e843fa58cb021bc8aa89b5cd35ba
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
                     <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>

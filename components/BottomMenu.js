@@ -18,13 +18,8 @@ import { FloorMenu } from "./FloorMenu";
  * button GetInside.
 */
 
-<<<<<<< HEAD
-function BottomMenu (props) {
-    const [selectedBuilding, setSelectedBuilding] = React.useState(null);
-=======
 function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
->>>>>>> 5174a9521872e843fa58cb021bc8aa89b5cd35ba
     const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("driving");
@@ -117,11 +112,6 @@ function BottomMenu(props) {
     if (previewDirections) {
         return (
             <View style={styles.container}>
-<<<<<<< HEAD
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => {goToPreferenceMenu(false)}} />
-                <Text style={styles.mainLabel}>{props.directionResponse ? props.directionResponse.generalRouteInfo.totalDuration : "N/A"} ({props.directionResponse ? props.directionResponse.generalRouteInfo.totalDistance : "N/A"})</Text>
-                <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
-=======
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { goToPreferenceMenu(false) }} />
 
                 {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length > 12 &&
@@ -134,7 +124,6 @@ function BottomMenu(props) {
                     <Text style={styles.mainLabel}>N/A</Text>
                 }
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
->>>>>>> 5174a9521872e843fa58cb021bc8aa89b5cd35ba
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
