@@ -75,8 +75,9 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        AsyncStorage.setItem("sideMenu", "mapView"); //FIXME: WHY?
-        props.navigation.navigate("NearbyInterest");
+        AsyncStorage.setItem("sideMenu", "mapView"); //FIXME: WHY? - to know from what component you're reaching to NearbyInterest, the key in the AsyncStorage get overriden - C.S.B
+        props.navigation.navigate("NearbyInterest", { campusBool: swtichCampus});
+    
     };
 
     

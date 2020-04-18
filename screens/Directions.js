@@ -177,7 +177,7 @@ function Directions (props) {
             </View>
             <View style={styles.navigationHeader}>
                 <View style={styles.navigationHeaderNestedView}>
-                    <TouchableOpacity onPress={goBackPressHandler}>
+                    <TouchableOpacity onPress={goBackPressHandler} style={styles.backButtonContainer}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
@@ -282,40 +282,43 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        // height: "38%",
-        // marginTop: 25,
+        top: "15%",
         flexDirection: "column",
     },
     lowerHeader: {
-        flexDirection: "column", 
-        alignItems: "center", 
-        justifyContent:"center", 
-        height: "70%",
-        bottom:"25%",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "50%",
+        bottom: "65%"
     },
     directionTextHeader: {
         justifyContent: "center",
         alignItems: "center",
+        bottom: "78%"
     },
     DirectionTextHeaderStyle: {
         color: "white",
         fontSize: 20,
-        bottom: "20%",
+        bottom: "100%",
         fontFamily: "encodeSansExpanded",
     },
     lineHeader: {
         borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
-        top: "50%"
+        bottom: "20%",
     },
     backIcon: {
         color: "white",
+        width: "100%",
+    },
+    backButtonContainer: {
         left: "5%",
-        top: "85%",
-        width:"10%",
-        height :"50%",
-        textAlign: "center"
+        top: "10%",
+        textAlign: "center",
+        width: "10%",
+        height: "100%"
     },
     bottomArrowDirectionContainer: {
         top: "90%",
@@ -412,12 +415,12 @@ export const styles = StyleSheet.create({
     detailedInstructions: {
         justifyContent: "center",
         alignItems: "center",
-        height: "100%"
+        height: "100%",
     },
     infoMetrics: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "90%"
+        width: "90%",
     },
     stepMetrics: {
         fontSize: 18,

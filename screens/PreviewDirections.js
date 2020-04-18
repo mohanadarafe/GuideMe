@@ -141,7 +141,7 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * 
  * 
  */
-function PreviewDirections (props) {
+function PreviewDirections(props) {
     // console.log(props);
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
@@ -150,7 +150,7 @@ function PreviewDirections (props) {
     const store = useStore();
 
 
-    
+
     /**
       * Description: Go back to previous screen method.
       * Using Stack Navigator
@@ -173,7 +173,7 @@ function PreviewDirections (props) {
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
     // The variables retrived from the preference page 
 
- 
+
     /**
      * Description: fetchData() is an async method that makes the API request to Google Maps.
      * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
@@ -205,7 +205,7 @@ function PreviewDirections (props) {
             alert("An error Occurred with your request. Make sure you have valid inputs in your Search. Please try again.");
             goBackPressHandler();
         }
-    };  
+    };
 
 
     /**
@@ -235,7 +235,7 @@ function PreviewDirections (props) {
         }, 100);
     };
 
-    useLayoutEffect (() => {
+    useLayoutEffect(() => {
         const unsubscribe = store.subscribe(() => {
             setTransportType(store.getState().transportType);
         });
@@ -268,36 +268,36 @@ function PreviewDirections (props) {
             >
                 {detailedInstructionsObject ? detailedInstructionsObject.steps.map((step, index) => (
                     <Polyline key={index}
-                        coordinates = {step.polylines.values}
-                        strokeWidth = {5}
-                        strokeColor = {step.polylines.color}
-                    />     
-                    )) : <Polyline 
+                        coordinates={step.polylines.values}
+                        strokeWidth={5}
+                        strokeColor={step.polylines.color}
+                    />
+                )) : <Polyline
                         coordinates={decodedPolylines}
                         strokeWidth={5}
                         strokeColor="pink"
-                     /> 
+                    />
                 }
             </MapView>
 
             <View style={styles.navigationHeader}>
                 <View style={styles.navigationHeaderNestedView}>
-                    <TouchableOpacity onPress={goBackPressHandler}>
+                    <TouchableOpacity onPress={goBackPressHandler} style={styles.backButtonContainer}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
                         <Text style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
                         <View style={styles.lineHeader}></View>
-                    </View> 
+                    </View>
                 </View>
                 <View style={styles.lowerHeaderContainer}>
-                    <View style ={styles.fortmatLowerHeader}>
+                    <View style={styles.fortmatLowerHeader}>
                         <View style={styles.addressContainer}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>From: </Text>
                             </View>
-                            <Text style={styles.directionLabels}>{fromName ? fromName: "N/A"}</Text>
+                            <Text style={styles.directionLabels}>{fromName ? fromName : "N/A"}</Text>
                         </View>
                         <View style={styles.addressContainer2}>
                             <View style={styles.iconAndTextContainter}>
@@ -333,15 +333,13 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        // marginTop: 25,
-        flexDirection: "column"
+        top: "15%",
+        flexDirection: "column",
     },
     fortmatLowerHeader: {
-        flexDirection: "column", 
-        alignItems: "center", 
-        justifyContent:"center", 
-        height: "70%",
-        bottom:"35%",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
     },
     directionText: {
         justifyContent: "center",
@@ -394,25 +392,28 @@ export const styles = StyleSheet.create({
         borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
-        top: "50%",
-
+        bottom: "20%",
     },
     backIcon: {
         color: "white",
+        width: "100%",
+    },
+    backButtonContainer: {
         left: "5%",
-        top: "85%",
-        width:"10%",
-        height :"50%",
-        textAlign: "center"
+        top: "10%",
+        textAlign: "center",
+        width: "10%",
+        height: "100%"
     },
     directionTextHeader: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        bottom: "78%"
     },
     DirectionTextHeaderStyle: {
         color: "white",
         fontSize: 20,
-        bottom: "20%",
+        bottom: "100%",
         fontFamily: "encodeSansExpanded",
     },
     fromToSideLabels: {
@@ -447,8 +448,8 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         height: "50%",
+        bottom: "68%"
     }
-
 });
 
 export default PreviewDirections;
