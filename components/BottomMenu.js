@@ -5,7 +5,8 @@ import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { store } from "../redux/reducers/index";
 import { FloorMenu } from "./FloorMenu";
-// import { useStore } from 'react-redux'
+import {CampusRegion} from "../constants/buildingData";
+
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
@@ -18,14 +19,19 @@ import { FloorMenu } from "./FloorMenu";
  * button GetInside.
 */
 
+<<<<<<< HEAD
 function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState("");
     const [switchVal, setSwitchVal] = React.useState(true);
+=======
+function BottomMenu (props) {
+    const [selectedBuilding, setSelectedBuilding] = React.useState(null);
+    const [swtichCampus, setSwitchCampus] = React.useState(true);
+>>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
     const [destination, setDestination] = React.useState("");
     const [methodTravel, setMethodTravel] = React.useState("driving");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
-    // const store = useStore();
     const viewIndoor = props.indoor;
     const inDirections = props.inDirections;
     const building = props.building;
@@ -93,6 +99,16 @@ function BottomMenu(props) {
         }
     });
 
+
+    const switchCampuses = (value) => {
+        setSwitchCampus(value);
+        if (value) {
+            props.mapReference.current.animateToRegion(CampusRegion.sgwCoord);        }
+        else {
+            props.mapReference.current.animateToRegion(CampusRegion.loyCoord);
+        }
+    }
+
     if (viewIndoor) {
         return (
             <View style={styles.insideBuildingContainer} data-test="BottomMenu" testID="bottomMenuInitalView">
@@ -123,11 +139,35 @@ function BottomMenu(props) {
                  {!props.directionResponse &&
                     <Text style={styles.mainLabel}>N/A</Text>
                 }
+<<<<<<< HEAD
                 <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
+=======
+                <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
+>>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
                         <Text style={styles.btnText}>Start</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
+    if (destination) {
+        if (destination.length > 13) {
+            var updatedDestination = destination.substring(0, 13) + "...";
+        }
+        return (
+            <View style={styles.container} >
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
+                {destination.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+                    : <Text style={styles.mainLabel}>{destination}</Text>
+                }
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btnGetDirection}>
+                    <Button testID="getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+                        <Text style={styles.btnText}>Get Directions</Text>
                     </Button>
                 </View>
             </View>
@@ -154,27 +194,6 @@ function BottomMenu(props) {
             </View>
         );
     }
-
-    if (destination) {
-        if (destination.length > 13) {
-            var updatedDestination = destination.substring(0, 13) + "...";
-        }
-        return (
-            <View style={styles.container} >
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
-                {destination.length > 13
-                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
-                    : <Text style={styles.mainLabel}>{destination}</Text>
-                }
-                <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.btnGetDirection}>
-                    <Button testID="getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
-                        <Text style={styles.btnText}>Get Directions</Text>
-                    </Button>
-                </View>
-            </View>
-        );
-    }
     else {
         return (
             <View style={styles.container} data-test="BottomMenu" testID="bottomMenuInitalView">
@@ -183,8 +202,8 @@ function BottomMenu(props) {
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View testID="intialBottomMenuToggleButton" style={styles.toggle}>
                     <Switch
-                        value={switchVal}
-                        onValueChange={(val) => { setSwitchVal(val); props.campus(val)}}>
+                        value={swtichCampus}
+                        onValueChange={(val) => { switchCampuses(val);}}>
                     </Switch>
                 </View>
             </View>

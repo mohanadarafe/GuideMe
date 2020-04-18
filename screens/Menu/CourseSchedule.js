@@ -32,6 +32,12 @@ function CourseSchedule(props) {
     const [refresh, setRefresh] = React.useState(false);
     const [loop, setLoop] = React.useState(null);
     //TODO Show only events after current date
+<<<<<<< HEAD
+=======
+    // let currentDate = new Date();
+
+    //TODO Show only events after current date THIS FORMAT 2020-04-18
+>>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
     let currentDate = new Date();
 
     const getCalendarId = async () => {
@@ -109,9 +115,11 @@ function CourseSchedule(props) {
             getAccessToken();
             getSwitchValue();
         }, 1000));
+<<<<<<< HEAD
         if (switchVal == "true") {
+=======
+>>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
         getCalendarEvents();
-        }
         return function cleanUp() {
             clearInterval(loop);
             clearImmediate(loop);
@@ -121,7 +129,11 @@ function CourseSchedule(props) {
 
     
     if (switchVal == "true" && calendarEventsList) {
+<<<<<<< HEAD
     return (
+=======
+        return (
+>>>>>>> 655350e6ae2f06eb530798eb5f49313dfbad41a1
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
                     <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>

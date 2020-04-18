@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { View } from "react-native";
 import { Polygon } from "react-native-maps";
 import coord from "../constants/buildingCoordinates";
 import { buildingData } from "../constants/buildingData";
 import { connect } from "react-redux";
+import { store } from "../redux/reducers/index";
 
 
-function mapStateToProps(buildingName) {
+function mapStateToProps(state) {
     return {
-        selectedBuildingName: buildingName
+        selectedBuildingName: state.selectedBuildingName
     }
 }
 
@@ -26,8 +27,17 @@ function mapDispatchToProps(dispatch) {
  */
 
 export function BuildingHighlight (props) {
-    const [buildingName, setBuildingName] = React.useState("");
+    const [buildingHighlighted, setBuildingHighlighted] = React.useState("");
     var buildings = buildingData();
+
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setBuildingHighlighted(store.getState().selectedBuildingName);
+        });
+        return function cleanUp() {
+            unsubscribe();
+        }
+    });
 
     return (
         <View>
@@ -36,17 +46,19 @@ export function BuildingHighlight (props) {
                 coordinates={coord.h.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["Hall Building"].name) {
-                        setBuildingName(buildings["Hall Building"].name);
+                    if (buildingHighlighted != buildings["Hall Building"].name) {
+                        setBuildingHighlighted(buildings["Hall Building"].name);
                         props.setSelectedBuildingName(buildings["Hall Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 }
 
             }
-                fillColor={buildingName == buildings["Hall Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["Hall Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["Hall Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["Hall Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -54,15 +66,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.lb.coordinates}
                 tappable={true}
                 onPress={() => {
-                    if (buildingName != buildings["LB Building"].name) {
-                    setBuildingName(buildings["LB Building"].name);
+                    if (buildingHighlighted != buildings["LB Building"].name) {
+                    setBuildingHighlighted(buildings["LB Building"].name);
                     props.setSelectedBuildingName(buildings["LB Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 } }
-                fillColor={buildingName == buildings["LB Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["LB Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["LB Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["LB Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -70,15 +84,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.gm.coordinates}
                 tappable={true}
                 onPress={() => {
-                    if (buildingName != buildings["GM Building"].name) {
-                    setBuildingName(buildings["GM Building"].name)
+                    if (buildingHighlighted != buildings["GM Building"].name) {
+                    setBuildingHighlighted(buildings["GM Building"].name)
                     props.setSelectedBuildingName(buildings["GM Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingName == buildings["GM Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["GM Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["GM Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["GM Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -86,16 +102,18 @@ export function BuildingHighlight (props) {
                 coordinates={coord.ev.coordinates}
                 tappable={true}
                 onPress={() => {
-                    if (buildingName != buildings["EV Building"].name) {
-                    setBuildingName(buildings["EV Building"].name)
+                    if (buildingHighlighted != buildings["EV Building"].name) {
+                    setBuildingHighlighted(buildings["EV Building"].name)
                     props.setSelectedBuildingName(buildings["EV Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                     }
                 }
-                fillColor={buildingName == buildings["EV Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["EV Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["EV Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["EV Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -103,15 +121,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.mb.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["MB Building"].name) {
-                    setBuildingName(buildings["MB Building"].name);
+                    if (buildingHighlighted != buildings["MB Building"].name) {
+                    setBuildingHighlighted(buildings["MB Building"].name);
                     props.setSelectedBuildingName(buildings["MB Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingName == buildings["MB Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["MB Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["MB Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["MB Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -119,15 +139,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.sp.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["SP Building"].name) {
-                    setBuildingName(buildings["SP Building"].name);
+                    if (buildingHighlighted != buildings["SP Building"].name) {
+                    setBuildingHighlighted(buildings["SP Building"].name);
                     props.setSelectedBuildingName(buildings["SP Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingName == buildings["SP Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["SP Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["SP Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["SP Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -135,15 +157,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.cj.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["CJ Building"].name) {
-                    setBuildingName(buildings["CJ Building"].name)
+                    if (buildingHighlighted != buildings["CJ Building"].name) {
+                    setBuildingHighlighted(buildings["CJ Building"].name)
                     props.setSelectedBuildingName(buildings["CJ Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
             }}
-            fillColor={buildingName == buildings["CJ Building"].name ? "#3ACCE1": "#a282e0"}
+            fillColor={buildingHighlighted == buildings["CJ Building"].name ? "#3ACCE1": "#b1b0f8"}
+            strokeColor = {buildingHighlighted == buildings["CJ Building"].name ? "#0494a9": "#b1b0f8"}
+            strokeWidth = {buildingHighlighted == buildings["CJ Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -151,15 +175,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.cc.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["CC Building"].name) {
-                    setBuildingName(buildings["CC Building"].name);
+                    if (buildingHighlighted != buildings["CC Building"].name) {
+                    setBuildingHighlighted(buildings["CC Building"].name);
                     props.setSelectedBuildingName(buildings["CC Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
             }}
-            fillColor={buildingName == buildings["CC Building"].name ? "#3ACCE1": "#a282e0"}
+            fillColor={buildingHighlighted == buildings["CC Building"].name ? "#3ACCE1": "#b1b0f8"}
+            strokeColor = {buildingHighlighted == buildings["CC Building"].name ? "#0494a9": "#b1b0f8"}
+            strokeWidth = {buildingHighlighted == buildings["CC Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -167,15 +193,17 @@ export function BuildingHighlight (props) {
                 coordinates={coord.ad.coordinates}
                 tappable={true}
                 onPress={() => {
-                    if (buildingName != buildings["AD Building"].name) {
-                    setBuildingName(buildings["AD Building"].name);
+                    if (buildingHighlighted != buildings["AD Building"].name) {
+                    setBuildingHighlighted(buildings["AD Building"].name);
                     props.setSelectedBuildingName(buildings["AD Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingName == buildings["AD Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["AD Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["AD Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["AD Building"].name ? 4 : 0}
                 />
 
             <Polygon
@@ -183,30 +211,34 @@ export function BuildingHighlight (props) {
                 coordinates={coord.gn.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["Grey Nuns"].name) {
-                    setBuildingName(buildings["Grey Nuns"].name)
+                    if (buildingHighlighted != buildings["Grey Nuns"].name) {
+                    setBuildingHighlighted(buildings["Grey Nuns"].name)
                     props.setSelectedBuildingName(buildings["Grey Nuns"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingName == buildings["Grey Nuns"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["Grey Nuns"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["Grey Nuns"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["Grey Nuns"].name ? 4 : 0}
             />
             <Polygon
                 id="tap_vl"
                 coordinates={coord.vl.coordinates}
                 tappable={true}
                 onPress={() => { 
-                    if (buildingName != buildings["VL Building"].name) {
-                    setBuildingName(buildings["VL Building"].name)
+                    if (buildingHighlighted != buildings["VL Building"].name) {
+                    setBuildingHighlighted(buildings["VL Building"].name)
                     props.setSelectedBuildingName(buildings["VL Building"].name);
                     } else {
-                        setBuildingName(null);
+                        setBuildingHighlighted(null);
                         props.setSelectedBuildingName(null);
                     }
             }}
-            fillColor={buildingName == buildings["VL Building"].name ? "#3ACCE1": "#a282e0"}
+            fillColor={buildingHighlighted == buildings["VL Building"].name ? "#3ACCE1": "#b1b0f8"}
+            strokeColor = {buildingHighlighted == buildings["VL Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["VL Building"].name ? 4 : 0}
             />
         </View>
     );
