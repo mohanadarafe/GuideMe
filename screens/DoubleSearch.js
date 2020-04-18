@@ -228,7 +228,7 @@ function DoubleSearch(props) {
                         }}
                     />
                 </View>
-                <View testID="DoubleSearch_FromSearchBarView" style={styles.destinationSearchContainer}>
+                <View testID="DoubleSearch_ToSearchBarView" style={styles.destinationSearchContainer}>
                     <Text style={styles.searchBarLabels}>To: </Text>
                     <SearchableDropdown
                         testID="DoubleSearch_ToSearchBar"
