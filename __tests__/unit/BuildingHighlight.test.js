@@ -12,7 +12,6 @@ describe("Building Highlight component", () => {
   const setState = jest.fn();
   const useStateSpy = jest.spyOn(React, "useState");
   useStateSpy.mockImplementation((init) => [init, setState]);
-  let component;
   const props = {
     isFetching: false,
     dispatch: jest.fn(),
@@ -21,12 +20,6 @@ describe("Building Highlight component", () => {
   beforeEach(() => {
     wrapper = shallow(<BuildingHighlight {...props}/>);
   });
-
-  // component = renderer.create(
-  //   <Provider store={store}>
-  //     <BuildingHighlight />
-  //   </Provider>
-  // );
 
   test("renders correctly", () => {
     const tree = renderer.create(<BuildingHighlight {...props}/>).toJSON();

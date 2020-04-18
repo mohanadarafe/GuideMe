@@ -142,7 +142,6 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * 
  */
 function PreviewDirections (props) {
-    // console.log(props);
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const [transportType, setTransportType] = React.useState(null);
@@ -194,7 +193,6 @@ function PreviewDirections (props) {
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? fromCoordinates.isClassRoom : null;
                 filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? toCoordinates.isClassRoom : null;
-                // console.log(filteredInstruction.steps);
                 setdetailedInstructionsObject(filteredInstruction);
             }
             else { //Error handling
