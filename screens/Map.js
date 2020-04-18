@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React, {useLayoutEffect, useEffect} from "react";
-import { StyleSheet } from "react-native";
+import React from "react";
+import { StyleSheet, Keyboard  } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import BuildingHighlight  from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-export function Map (props) { //FIXME: change import name
+export function Map (props) { 
 
     const [isMapClicked, setIsMapClicked] = React.useState(false);
     const mapRef = React.useRef(null);
@@ -55,15 +55,19 @@ export function Map (props) { //FIXME: change import name
                     onPress = {() => { 
                         if(isMapClicked) {
                             setIsMapClicked(false);
+                            Keyboard.dismiss();
                         }
-                        else {setIsMapClicked(true)
+                        else {
+                            setIsMapClicked(true);
+                            Keyboard.dismiss();
                             props.setSelectedBuildingName(null);
                         }
                     }}
+
                 >
                     <BuildingHighlight />
                     <BuildingIdentification />
-                    <LocationMarker mapReference = {mapRef} mapClicked = {isMapClicked} />
+                    <LocationMarker mapReference = {mapRef} />
                 </MapView>
                 <Search testID="searchBar" 
                 navigation = {props.navigation} 
@@ -95,6 +99,5 @@ export const styles = StyleSheet.create({
     }
 });
 
-// export default Map;
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
 

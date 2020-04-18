@@ -29,18 +29,14 @@ export function LocationMarker (props) {
           })
         }
     }, [searchItemMarker])
+
     
-    if (searchItemMarker && !props.mapClicked) {
     return (
         <View>
             <Marker
-                coordinate = {searchItemMarker}
+                coordinate = {searchItemMarker ? searchItemMarker : {latitude: 0, longitude: 0}}
             />
         </View>
     )
-    }
-    else {
-        return null;
-    }
 }
 
