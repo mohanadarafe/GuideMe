@@ -6,6 +6,7 @@ import BuildingHighlight  from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
 import CurrentBuildingLocation  from "../components/CurrentBuildingLocation";
+import CurrentLocationButton  from "../components/CurrentLocationButton";
 import { View } from "native-base";
 import Search  from "../components/Search";
 import PropTypes from "prop-types";
@@ -74,7 +75,10 @@ export function Map (props) {
                 mapReference = {mapRef} 
                 />
                 <View style={styles.CurrentBuildingLocation}>
-                        <CurrentBuildingLocation mapReference = {mapRef}/>
+                    <CurrentBuildingLocation mapReference = {mapRef}/>
+                </View>
+                <View style={styles.CurrentLocationButton}>
+                    <CurrentLocationButton mapReference = {mapRef} />
                 </View>
             <BottomMenu navigation={props.navigation} mapReference = {mapRef} />
             </View>
@@ -95,6 +99,11 @@ export const styles = StyleSheet.create({
     CurrentBuildingLocation: {
         position: "absolute",
         top: "80%",
+        left: "80%"
+    },
+    CurrentLocationButton: {
+        position: "absolute",
+        top: "72%",
         left: "80%"
     }
 });
