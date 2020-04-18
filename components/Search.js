@@ -112,8 +112,7 @@ export const styles = StyleSheet.create({
     borderBottomStartRadius: 20
   },
   test: {
-    width: "90%",
-    backgroundColor: "brown"
+    width: "90%"
   },
   container: {
     width: "80%",

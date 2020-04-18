@@ -56,7 +56,9 @@ export function BuildingHighlight (props) {
                 }
 
             }
-                fillColor={buildingHighlighted == buildings["Hall Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["Hall Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["Hall Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["Hall Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -72,7 +74,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
                 } }
-                fillColor={buildingHighlighted == buildings["LB Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["LB Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["LB Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["LB Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -88,7 +92,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingHighlighted == buildings["GM Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["GM Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["GM Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["GM Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -105,7 +111,9 @@ export function BuildingHighlight (props) {
                     }
                     }
                 }
-                fillColor={buildingHighlighted == buildings["EV Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["EV Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["EV Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["EV Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -121,7 +129,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingHighlighted == buildings["MB Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["MB Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["MB Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["MB Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -137,7 +147,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingHighlighted == buildings["SP Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["SP Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["SP Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["SP Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -153,7 +165,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
             }}
-            fillColor={buildingHighlighted == buildings["CJ Building"].name ? "#3ACCE1": "#a282e0"}
+            fillColor={buildingHighlighted == buildings["CJ Building"].name ? "#3ACCE1": "#b1b0f8"}
+            strokeColor = {buildingHighlighted == buildings["CJ Building"].name ? "#0494a9": "#b1b0f8"}
+            strokeWidth = {buildingHighlighted == buildings["CJ Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -169,7 +183,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
             }}
-            fillColor={buildingHighlighted == buildings["CC Building"].name ? "#3ACCE1": "#a282e0"}
+            fillColor={buildingHighlighted == buildings["CC Building"].name ? "#3ACCE1": "#b1b0f8"}
+            strokeColor = {buildingHighlighted == buildings["CC Building"].name ? "#0494a9": "#b1b0f8"}
+            strokeWidth = {buildingHighlighted == buildings["CC Building"].name ? 4 : 0}
             />
 
             <Polygon
@@ -185,7 +201,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingHighlighted == buildings["AD Building"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["AD Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["AD Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["AD Building"].name ? 4 : 0}
                 />
 
             <Polygon
@@ -201,7 +219,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
                 }}
-                fillColor={buildingHighlighted == buildings["Grey Nuns"].name ? "#3ACCE1": "#a282e0"}
+                fillColor={buildingHighlighted == buildings["Grey Nuns"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["Grey Nuns"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["Grey Nuns"].name ? 4 : 0}
             />
             <Polygon
                 id="tap_vl"
@@ -216,7 +236,9 @@ export function BuildingHighlight (props) {
                         props.setSelectedBuildingName(null);
                     }
             }}
-            fillColor={buildingHighlighted == buildings["VL Building"].name ? "#3ACCE1": "#a282e0"}
+            fillColor={buildingHighlighted == buildings["VL Building"].name ? "#3ACCE1": "#b1b0f8"}
+            strokeColor = {buildingHighlighted == buildings["VL Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["VL Building"].name ? 4 : 0}
             />
         </View>
     );
