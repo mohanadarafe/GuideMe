@@ -48,28 +48,25 @@ describe("Exploring the map Feature", () => {
    * 2. Check if the GET INSIDE Button appears on the bottom menu
    * 3. Click the GET INSIDE button
    * 4. Check that the floor bar menu exists
-   * 5. Change floors (8th floor)
-   * 6. Check that the floor selected value corresponds to the one tapped (8th floor)
-   * 7. Check that indoor map scroll view exists
-   * 8. Scroll across the floor map
-   * 9. Check that the EXIT BUILDING button exists
-   * 10. Click EXIT BUILDING button
-   * 11. Check the map is present
+   * 5. Change floors (9th floor)
+   * 6. Check that indoor map scroll view exists
+   * 7. Scroll across the floor map
+   * 8. Check that the EXIT BUILDING button exists
+   * 9. Click EXIT BUILDING button
+   * 10. Check the map is present
    */
   it.skip("Navigate through different indoor floors (Hall)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
-    await expect(element(by.id("BottomMenu_getInsideButton"))).toExist();
+    await expect(element(by.id("BottomMenu_getInsideButton"))).toBeVisible();
     await element(by.id("BottomMenu_getInsideButton")).tap();
     await expect(element(by.id("FloorMenu_floorBarMenuView"))).toExist();
     //TODO: Fix the workaround (next line) of tapping on a floor level
     await element(by.id("FloorMenu_floorBarMenuView")).tapAtPoint({ x: 192, y: 23 });
-    //TODO: Adding Assertion to check that the floor number is the desired one
-    //await expect(element(by.id("FloorMenu_hallSwitchSelector"))).toHaveValue("9");
-    await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
+    await expect(element(by.id("IndoorMapView_FloorScrollView"))).toBeVisible();
     await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "fast");
-    await expect(element(by.id("IndoorMapView_ExitBuildingButton"))).toExist();
-    await element(by.id("IndoorMapView_ExitBuildingButton")).tap();
-    await expect(element(by.id("Map_mapView"))).toExist();
+    await expect(element(by.id("BottomMenu_IndoorMapExitBuildingButton"))).toBeVisible();
+    await element(by.id("BottomMenu_IndoorMapExitBuildingButton")).tap();
+    await expect(element(by.id("Map_mapView"))).toBeVisible();
   });
 
   /** Scenario: Get more details about a building (Hall building))
@@ -83,10 +80,11 @@ describe("Exploring the map Feature", () => {
    * 5. Check that the departments section is present
    * 6. Check that the services section is present
    * 7. Check that the accessibility section is present
-   * 8. Scroll through the different departments and faculities
-   * 9. Check that the arrow-down exists on the page
-   * 10. Tap the arrow down key
-   * 11. Check the map is present
+   * 8. Check that items are present in the sections
+   * 9. Scroll through the different departments and faculities
+   * 10. Check that the arrow-down exists on the page
+   * 11. Tap the arrow down key
+   * 12. Check the map is present
    */
   it.skip("Get more details about a building (Hall)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
@@ -96,7 +94,7 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.label("Departments"))).toExist();
     await expect(element(by.label("Services"))).toExist();
     await expect(element(by.label("Accessibility"))).toExist();
-    //TODO: Adding Assertions that the related services/departments are listed on the screen
+    await expect(element(by.id("MoreDetails_SectionListItems")).atIndex(1)).toExist;
     await element(by.id("MoreDetails_moreInfoScrollView")).swipe("up");
     await expect(element(by.id("MoreDetails_bottomArrowIcon"))).toExist();
     await element(by.id("MoreDetails_bottomArrowIcon")).tap();
@@ -117,9 +115,9 @@ describe("Exploring the map Feature", () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("hall building");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toBeVisible();
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the TO search bar    
     await expect(element(by.label("Hall Building"))).toExist();
   });
@@ -133,17 +131,17 @@ describe("Exploring the map Feature", () => {
    * 5. Check you get to the get directions screen and the view route button is disabled
    * 6. Check that TO search bar is filled with the building name "Hall Building"
    */
-  it("Select a building as a destination point by clicking on it (Hall building)", async () => {
+  it.skip("Select a building as a destination point by clicking on it (Hall building)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
     await element(by.id("BottomMenu_arrowUpToMoreDetailsIcon")).tapAtPoint({ x: 10, y: 20 });
-    await expect(element(by.id("MoreDetails_getDirectionsButton"))).toExist();
+    await expect(element(by.id("MoreDetails_getDirectionsButton"))).toBeVisible();
     await element(by.id("MoreDetails_getDirectionsButton")).tap();
-    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     //TODO: Fix the workaround (next line) to check that "Hall Building" is written in the TO search bar  
     await expect(element(by.label("Hall Building")).atIndex(2)).toExist();
   });
 
-    /** Scenario: Select a building as a starting point by typing its name (EV building)
+  /** Scenario: Select a building as a starting point by typing its name (EV building)
    * US-11 : As a user, I want to be able to select a start building by typing its name
    * 1. Click on the searchBar
    * 2. Enter the name of a building: "hall building"
@@ -156,21 +154,21 @@ describe("Exploring the map Feature", () => {
    * 9. Select the corresponding item from the dropdown list
    * 10. Check that FROM search bar is filled with the building full name "Henry F. Hall Building"
    */
-  it.skip("Select a building as a destination point by typing its name (Hall building)", async () => {
+  it.skip("Select a building as a starting point by typing its name (EV building)", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("hall building");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toBeVisible();
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     await element(by.id("DoubleSearch_FromSearchBarView")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("EV building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("EV Building");
     await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
     //TODO: Fix the workaround (next line) to check that "EV Building" is written in the FROM search bar    
-    await expect(element(by.label("EV building"))).toExist();
+    await expect(element(by.text("EV Building"))).toExist();
   });
 
-  /** Scenario: Select a building as a destination point by typing its name (Hall building)
+  /** Scenario: earch for a department/faculty by name (School of Irish Studies)
    * US-38 : As a user, I would like to search for a department/faculty by name
    * 1. Click on the searchBar
    * 2. Enter the name of a deparment: "School of Irish Studies"
@@ -184,14 +182,14 @@ describe("Exploring the map Feature", () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("School of Irish Studies");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toBeVisible();
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     //TODO: Fix the workaround (next line) to check that "School of Irish Studies" is written in the TO search bar    
     await expect(element(by.label("School of Irish Studies"))).toExist();
   });
 
-  /** Scenario: Select a building as a destination point by typing its name (Hall building)
+  /** Scenario: search for a service by name (Welcome Crew)
    * US-39 : As a user, I would like to search for a service by its name
    * 1. Click on the searchBar
    * 2. Enter the name of a deparment: "Welcome Crew"
@@ -201,13 +199,13 @@ describe("Exploring the map Feature", () => {
    * 6. Check you get to the get directions screen and the view route button is disabled
    * 7. Check that TO search bar is filled with the department's name building full name "Welcome Crew"
    */
-  it.skip("search for a department/faculty by name (Welcome Crew)", async () => {
+  it.skip("search for a service by name (Welcome Crew)", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("Welcome Crew");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
-    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toExist();
+    await expect(element(by.id("BottomMenu_getDirectionsButton"))).toBeVisible();
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await expect(element(by.id("DoubleSearch_disabledViewRouteButton"))).toExist();
+    await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     //TODO: Fix the workaround (next line) to check that "Welcome Crew" is written in the TO search bar    
     await expect(element(by.label("Welcome Crew"))).toExist();
   });
