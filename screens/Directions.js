@@ -13,7 +13,6 @@ import CurrentLocationButton from "../components/CurrentLocationButton";
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
- * TODO: There are other user stories to refer.
  * This is our main screen which includes all the components inside a map.
  */
 function Directions (props) {
@@ -71,7 +70,6 @@ function Directions (props) {
     /**
      * The useEffect is a hook that will set the state FirstInstruction and LastInstruction to true when the conditions are met.
      * Also, it calls the indoor scenario.
-     * FIXME: I think the if and if else are not doing anything. To review. Is this method called multiple times or only once? A.J.U.U
      */
     useEffect(() => {
         if (instructionIndex == 0) {

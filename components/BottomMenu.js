@@ -13,11 +13,6 @@ import {CampusRegion} from "../constants/buildingData";
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
-/**TODO: When updating BottomMenu from Main SearchBar, I personally think
- * it should be More Info as a button instead of GetDirections as it 
- * can confuse the user since when clicking on a building, we have the 
- * button GetInside.
-*/
 
 function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState(null);
@@ -75,7 +70,7 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        AsyncStorage.setItem("sideMenu", "mapView"); //FIXME: WHY? - to know from what component you're reaching to NearbyInterest, the key in the AsyncStorage get overriden - C.S.B
+        AsyncStorage.setItem("sideMenu", "mapView"); 
         props.navigation.navigate("NearbyInterest", { campusBool: swtichCampus});
     
     };

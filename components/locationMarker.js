@@ -4,7 +4,7 @@ import { View } from "native-base";
 import { Marker } from "react-native-maps";
 import { store } from "../redux/reducers/";
 
-
+//TODO: I don't think this component needs to be unit tested, it would be more of a e2e test
 
 export function LocationMarker (props) {
 
