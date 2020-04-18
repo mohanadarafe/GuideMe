@@ -69,7 +69,7 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.id("Map_mapView"))).toBeVisible();
   });
 
-  /** Scenario: Get more details about a building (Hall building))
+  /** Scenario: Get more details about a building (Hall building)
    * US-7 : As a user, I would like to know the departments provided inside a building
    * US-8 : As a user, I would like to know the services provided inside a building
    * US-9 : As a user, I would like to know the accessibility of a building
@@ -86,7 +86,7 @@ describe("Exploring the map Feature", () => {
    * 11. Tap the arrow down key
    * 12. Check the map is present
    */
-  it.skip("Get more details about a building (Hall)", async () => {
+  it.skip("Get more details about a building (Hall Building)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
     await expect(element(by.id("BottomMenu_arrowUpToMoreDetailsIcon"))).toExist();
     await element(by.id("BottomMenu_arrowUpToMoreDetailsIcon")).tapAtPoint({ x: 10, y: 20 });
@@ -168,7 +168,7 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.text("EV Building"))).toExist();
   });
 
-  /** Scenario: earch for a department/faculty by name (School of Irish Studies)
+  /** Scenario: Search for a department/faculty by name (School of Irish Studies)
    * US-38 : As a user, I would like to search for a department/faculty by name
    * 1. Click on the searchBar
    * 2. Enter the name of a deparment: "School of Irish Studies"
@@ -189,7 +189,7 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.label("School of Irish Studies"))).toExist();
   });
 
-  /** Scenario: search for a service by name (Welcome Crew)
+  /** Scenario: Search for a service by name (Welcome Crew)
    * US-39 : As a user, I would like to search for a service by its name
    * 1. Click on the searchBar
    * 2. Enter the name of a deparment: "Welcome Crew"
