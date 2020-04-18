@@ -5,7 +5,7 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import BuildingHighlight  from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
-import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
+import CurrentBuildingLocation  from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
 import Search  from "../components/Search";
 import PropTypes from "prop-types";
@@ -74,7 +74,7 @@ export function Map (props) {
                 mapReference = {mapRef} 
                 />
                 <View style={styles.CurrentBuildingLocation}>
-                        {/* <CurrentBuildingLocation /> */}
+                        <CurrentBuildingLocation mapReference = {mapRef}/>
                 </View>
             <BottomMenu navigation={props.navigation} mapReference = {mapRef} />
             </View>
@@ -94,7 +94,7 @@ export const styles = StyleSheet.create({
     },
     CurrentBuildingLocation: {
         position: "absolute",
-        top: "82%",
+        top: "80%",
         left: "80%"
     }
 });
