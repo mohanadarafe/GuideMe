@@ -38,7 +38,7 @@ function IndoorMapView(props) {
     });
 
     return (
-        <View testID="indoorMapFloorScrollView">
+        <View testID="IndoorMapView_FloorScrollView">
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
                     {((selectedBuilding === "VL Building") || (from != null && from.includes("VL") && isFirst != null) || (to != null && to.includes("VL") && isLast != null)) && 

@@ -46,7 +46,7 @@ export function SameFloorDirections(props) {
     const arrow = getArrowCoordinates(rooms[to].nearestPoint.x, rooms[to].nearestPoint.y, rooms[to].x, rooms[to].y);
     if(props.floor == floor) {
         return(
-            <G>
+            <G testID="SameFloorDirections_GraphDirections">
                 <Line x1={rooms[from].x} y1={rooms[from].y} x2={rooms[from].nearestPoint.x} y2={rooms[from].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     lines.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5"/>)

@@ -238,7 +238,7 @@ function PreviewDirections (props) {
         }
     };
     /**
-     * The useEffect is a hook that will constantly (every second) calls fetchTransportType in case teh value of the transport changes
+     * The useEffect is a hook that will constantly (every second) calls fetchTransportType in case the value of the transport changes
      * in the PreferenceMenu context. When that happens, the state outdoorTransportType will change which will trigger the fetchData() 
      * method to be call again. This logic must be implemented in the IndoorMap context since we want to know the other two fields: 
      * persona and mobility type.
@@ -252,8 +252,8 @@ function PreviewDirections (props) {
     }, [outdoorTransportType]);
 
     return (
-        <View>
-            <MapView
+        <View testID="PreviewDirections_ScreenView">
+            <MapView testID="PreviewDirections_MapView"
                 ref={mapRef}
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
@@ -264,12 +264,12 @@ function PreviewDirections (props) {
                 showsIndoors={false}
             >
                 {detailedInstructionsObject ? detailedInstructionsObject.steps.map((step, index) => (
-                    <Polyline key={index}
+                    <Polyline testID="PreviewDirection_MapViewPolyline" key={index}
                         coordinates = {step.polylines.values}
                         strokeWidth = {5}
                         strokeColor = {step.polylines.color}
                     />     
-                    )) : <Polyline 
+                    )) : <Polyline testID="PreviewDirection_MapViewDefaultPolyline"
                         coordinates={decodedPolylines}
                         strokeWidth={5}
                         strokeColor="pink"
@@ -277,13 +277,13 @@ function PreviewDirections (props) {
                 }
             </MapView>
 
-            <View style={styles.navigationHeader}>
+            <View testID="PreviewDirections_NavigationHeaderView" style={styles.navigationHeader}>
                 <View style={styles.navigationHeaderNestedView}>
                     <TouchableOpacity onPress={goBackPressHandler}>
-                        <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
+                        <Icon testID="PreviewDirections_GoBackIcon" name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
-                        <Text style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
+                        <Text testID="PreviewDirections_ScreenTitleText" style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
                         <View style={styles.lineHeader}></View>
                     </View> 
                 </View>
@@ -294,14 +294,14 @@ function PreviewDirections (props) {
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>From: </Text>
                             </View>
-                            <Text style={styles.directionLabels}>{fromName ? fromName: "N/A"}</Text>
+                            <Text testID="PreviewDirections_FromLocationText" style={styles.directionLabels}>{fromName ? fromName: "N/A"}</Text>
                         </View>
                         <View style={styles.addressContainer2}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>To: </Text>
                             </View>
-                            <Text style={styles.directionLabels}>{toName ? toName : "N/A"}</Text>
+                            <Text testID="PreviewDirections_ToLocationText" style={styles.directionLabels}>{toName ? toName : "N/A"}</Text>
                         </View>
                     </View>
                 </View>

@@ -75,9 +75,7 @@ function DoubleSearch(props) {
 
             }else{
                 props.navigation.goBack();
-            }
-
-         
+            }   
     };
 
    
@@ -251,7 +249,6 @@ function DoubleSearch(props) {
         
     }, []);
 
-    
     //Depending on the condition will return disabled button or not
     var goToPreviewDirectionButton;
     if (coordinatesTo != null || coordinatesFrom != null || pointOfInterest != null) {
@@ -265,10 +262,8 @@ function DoubleSearch(props) {
         alert("Invalid Location! Please try to enter a valid classroom or building name");
     }
 
-
-
 return (
-    <View style={styles.container} data-test="DoubleSearch">
+    <View testID="DoubleSearch_ScreenView" style={styles.container} data-test="DoubleSearch">
         <View style={styles.backArrowContainer}>
             <TouchableOpacity onPress={goBack}>
                 <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
@@ -280,9 +275,10 @@ return (
         <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
         <View style={styles.searchbarsContainer}>
-            <View style={styles.originSearchContainer}>
+            <View testID="DoubleSearch_FromSearchBarView" style={styles.originSearchContainer}>
                 <Text style={styles.searchBarLabels}>From: </Text>
                 <SearchableDropdown
+                    testID="DoubleSearch_FromSearchBar"
                     onTextChange={val => val}
                     onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
                     defaultIndex={"0"}
@@ -301,9 +297,9 @@ return (
                     }}
                 />
             </View>
-            <View style={styles.destinationSearchContainer}>
+            <View testID="DoubleSearch_ToSearchBarView" style={styles.destinationSearchContainer}>
                 <Text style={styles.searchBarLabels}>To: </Text>
-                <SearchableDropdown
+                <SearchableDropdown testID="DoubleSearch_ToSearchBar"
                     onTextChange={val => val}
                     onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); (namePointOfInterest == item.name ? setPointOfInterest(namePointOfInterest) : setPointOfInterest(null));}}
                     textInputStyle={styles.textInputStyle}
