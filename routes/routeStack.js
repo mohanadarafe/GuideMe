@@ -31,14 +31,12 @@ const screens = {
     buildingMoreDetails: {
         screen: MoreDetails,
     },
-
     DoubleSearch: {
         screen: DoubleSearch,
         navigationOptions: {
             headerShown: false,
         }
     },
-
     PreferenceMenu: {
         screen: PreferenceMenu,
         navigationOptions: {
@@ -46,7 +44,6 @@ const screens = {
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
     },
-
     MoreDetails: {
         screen: MoreDetails,
         navigationOptions: {
@@ -54,7 +51,6 @@ const screens = {
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
     },
-
     IndoorMapView: {
         screen: IndoorMapView,
         navigationOptions: {

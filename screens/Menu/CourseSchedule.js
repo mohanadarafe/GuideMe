@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { AsyncStorage, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CheckBox, ListItem } from "react-native-elements";
 import { CourseScheduleSVG } from "../../assets/CourseScheduleSVG.js";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling.js";
 
 
 /**
@@ -29,9 +30,15 @@ function CourseSchedule(props) {
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState("false");
     const [refresh, setRefresh] = React.useState(false);
+<<<<<<< HEAD
     const [loop, setLoop] = React.useState(null);
     //TODO Show only events after current date
     // let currentDate = new Date();
+=======
+
+    //TODO Show only events after current date THIS FORMAT 2020-04-18
+    let currentDate = new Date();
+>>>>>>> 5174a9521872e843fa58cb021bc8aa89b5cd35ba
 
     const getCalendarId = async () => {
         let calendarId = await AsyncStorage.getItem("calendarId");
@@ -39,8 +46,8 @@ function CourseSchedule(props) {
     };
 
     const getAccessToken = async () => {
-        let accessToken = await AsyncStorage.getItem("accessToken");
-        setAccessToken(accessToken);
+        let AccessToken = await AsyncStorage.getItem("accessToken");
+        setAccessToken(AccessToken);
     };
 
     const getSwitchValue = async () => {
@@ -53,23 +60,42 @@ function CourseSchedule(props) {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
-        setCalendarEventsList(getFilteredGoogleCalendarEvents(resp));
-        setRefresh(false);
+        if (resp.items.length > 0) {
+            let filteredList = getFilteredGoogleCalendarEvents(resp);
+            setCalendarEventsList(filteredList);
+            setRefresh(false);
+        }
+        else {
+            setCalendarEventsList({ NoEvent: true })
+        }
     }
 
     const getFilteredGoogleCalendarEvents = (resp) => {
-        var filteredList = resp.items.map(element => {
-            return { id: element.id, summary: element.summary, description: element.description, location: element.location };
+        var eventsFromCurrentDay = [];
+        let elementDate;
+        resp.items.forEach(element => {
+            if (element.end.dateTime == undefined) {
+                elementDate = new Date(element.end.date);
+            }
+            else {
+                elementDate = new Date(element.end.dateTime);
+            }
+            if (elementDate > currentDate) {
+                eventsFromCurrentDay.push({ id: element.id, summary: element.summary, description: element.description, location: element.location });
+            }
         });
-        return filteredList;
+        if (eventsFromCurrentDay.length > 0) {
+            return eventsFromCurrentDay;
+        }
+        else {
+            return ({ NoEvent: true })
+        }
     };
 
     const handleRefresh = () => {
         setRefresh(true);
         getCalendarEvents();
     }
-
-    const CourseScheduleScreen = true;
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -80,7 +106,7 @@ function CourseSchedule(props) {
     };
 
     const goToDoubleSearch = (item) => {
-        props.navigation.navigate("DoubleSearch", { CourseScheduleScreen: CourseScheduleScreen, CourseScheduleLocation: item.location });
+        props.navigation.navigate("DoubleSearch", { CourseScheduleLocation: item.location });
     }
 
       useEffect(() => {
@@ -88,6 +114,7 @@ function CourseSchedule(props) {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
+<<<<<<< HEAD
         }, 1));
         if (switchVal == "true") {
         getCalendarEvents();
@@ -102,6 +129,15 @@ function CourseSchedule(props) {
     
     if (switchVal == "true" && calendarEventsList) {
     return (
+=======
+        }, 1000);
+        getCalendarEvents();
+        return () => clearInterval(intervalId);
+    }, [selectedCalendarId, accessToken]);
+
+    if (switchVal == "true" && calendarEventsList) {
+        return (
+>>>>>>> 5174a9521872e843fa58cb021bc8aa89b5cd35ba
             <View style={styles.container}>
                 <View style={styles.menuButtonContainer}>
                     <TouchableOpacity style={styles.menuButton} onPress={goToMenu}>
@@ -110,7 +146,7 @@ function CourseSchedule(props) {
                 </View>
                 <Text style={styles.mainLabel}>My Course Schedule</Text>
                 <View style={styles.scrollTextContainer}>
-                    {(switchVal == "true" && calendarEventsList) &&
+                    {(switchVal == "true" && calendarEventsList.length > 0) &&
                         <FlatList
                             data={calendarEventsList}
                             keyExtractor={(item) => item.id}
@@ -139,6 +175,9 @@ function CourseSchedule(props) {
                             onRefresh={handleRefresh}
                         />
                     }
+                    {calendarEventsList.NoEvent &&
+                        <Text style={styles.noClassText}>No Upcoming classes!</Text>
+                    }
                 </View>
             </View>
         );
@@ -166,14 +205,8 @@ CourseSchedule.propTypes = {
     navigate: PropTypes.func
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        justifyContent: "space-between",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43"
-    },
+const courseScheduleStyle = {
+
     container2: {
         alignItems: "center",
         height: "100%",
@@ -187,22 +220,6 @@ export const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
-    },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35,
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "7%",
     },
     scrollTextContainer: {
         width: "100%",
@@ -242,7 +259,18 @@ export const styles = StyleSheet.create({
         alignSelf: "center",
         position: "absolute",
         fontSize: 18,
+    },
+    noClassText: {
+        paddingLeft: "5%",
+        paddingRight: "5%",
+        color: "white",
+        textAlign: 'center',
+        alignSelf: "center",
+        position: "absolute",
+        fontSize: 18,
     }
-});
+}
+
+export const styles = StyleSheet.create({...sideMenuStyle, ...courseScheduleStyle});
 
 export default CourseSchedule;

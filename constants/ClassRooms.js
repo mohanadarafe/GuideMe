@@ -4,7 +4,7 @@ export function ClassRooms () {
     room: [
       "VL103"
     ]
-  }
+  };
   rooms["Hall Building"] = {
     room: [
       "H501",
