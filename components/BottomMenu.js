@@ -94,18 +94,14 @@ function BottomMenu (props) {
     });
 
 
-    const switchCampuses = () => {
-        if (swtichCampus) {
+    const switchCampuses = (value) => {
+        setSwitchCampus(value);
+        if (value) {
             props.mapReference.current.animateToRegion(CampusRegion.sgwCoord);        }
         else {
             props.mapReference.current.animateToRegion(CampusRegion.loyCoord);
         }
     }
-
-    useEffect(() => {
-        switchCampuses();
-    }, [swtichCampus])
-    
 
     if (viewIndoor) {
         return (
@@ -137,7 +133,7 @@ function BottomMenu (props) {
                  {!props.directionResponse &&
                     <Text style={styles.mainLabel}>N/A</Text>
                 }
-                <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
+                <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
@@ -197,7 +193,7 @@ function BottomMenu (props) {
                 <View testID="intialBottomMenuToggleButton" style={styles.toggle}>
                     <Switch
                         value={swtichCampus}
-                        onValueChange={(val) => { setSwitchCampus(val);}}>
+                        onValueChange={(val) => { switchCampuses(val);}}>
                     </Switch>
                 </View>
             </View>
