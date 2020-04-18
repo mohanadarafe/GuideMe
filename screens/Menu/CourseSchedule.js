@@ -31,10 +31,7 @@ function CourseSchedule(props) {
     const [switchVal, setSwitchVal] = React.useState("false");
     const [refresh, setRefresh] = React.useState(false);
     const [loop, setLoop] = React.useState(null);
-    //TODO Show only events after current date
-    // let currentDate = new Date();
 
-    //TODO Show only events after current date THIS FORMAT 2020-04-18
     let currentDate = new Date();
 
     const getCalendarId = async () => {
