@@ -47,6 +47,7 @@
       "!**/database.config.js",
       "!**/routes/routeStack.js",
       "!**/constants/buildingCoordinates.js",
+      "!**/constants/constantStack.js",
       "!**/screens/Directions.js",
       "!**/screens/PreviewDirections.js",
       "!**/screens/SideMenu.js",

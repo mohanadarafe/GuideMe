@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
+      "left": "10%",
+      "position": "absolute",
+      "top": 50,
+      "width": "80%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#fff",
+        "borderBottomStartRadius": 20,
+        "borderColor": "#ccc",
+        "borderRightWidth": 0,
+        "borderWidth": 1,
+        "justifyContent": "center",
+        "maxHeight": 44,
+        "width": "15%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View>
+        <View>
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text />
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    keyboardShouldPersist="always"
+    style={
+      Object {
+        "width": "90%",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      placeholder="Where to?"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderColor": "#ccc",
+          "borderLeftWidth": 0,
+          "borderWidth": 1,
+          "fontFamily": "encodeSansExpanded",
+          "padding": 12,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+  </View>
+</View>
+`;

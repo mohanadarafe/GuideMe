@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nearby interest component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#2A2E43",
+      "height": "100%",
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "height": "6%",
+        "top": "7%",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <Text />
+    </View>
+  </View>
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 25,
+        "fontWeight": "bold",
+        "position": "absolute",
+        "top": "15%",
+      }
+    }
+  >
+    Points of Interest
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "position": "absolute",
+        "top": "20%",
+      }
+    }
+  >
+    Search radius: 
+    100
+     meters
+  </Text>
+  <View
+    removeClippedSubviews={false}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "flexDirection": "row",
+        },
+        Object {
+          "top": "13%",
+        },
+      ]
+    }
+  >
+    <View
+      accessibilityLabel="SGW"
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#2A2E43",
+          "borderBottomColor": "#3ACCE1",
+          "borderBottomLeftRadius": 0,
+          "borderColor": "white",
+          "borderRightWidth": 1,
+          "borderTopLeftRadius": 0,
+          "borderWidth": 0,
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingHorizontal": "15%",
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#0076FF",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontWeight": "bold",
+              },
+              Array [
+                Object {
+                  "color": "white",
+                },
+                Object {
+                  "backgroundColor": "#2A2E43",
+                  "color": "#3ACCE1",
+                  "fontWeight": "bold",
+                },
+              ],
+            ]
+          }
+        >
+          SGW
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityLabel="LOY"
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#2A2E43",
+          "borderBottomColor": "#FFFFFF",
+          "borderBottomRightRadius": 0,
+          "borderColor": "white",
+          "borderLeftWidth": 0,
+          "borderTopRightRadius": 0,
+          "borderWidth": 0,
+          "flex": 1,
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingHorizontal": "15%",
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "color": "#0076FF",
+              },
+              Object {
+                "color": "#FFFFFF",
+                "fontWeight": "bold",
+              },
+              Object {},
+            ]
+          }
+        >
+          LOY
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "bottom": "4%",
+        "height": "65%",
+      }
+    }
+  >
+    <RCTScrollView
+      contentContainerStyle={
+        Object {
+          "flexDirection": "column",
+        }
+      }
+      data={null}
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={2}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={0}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View />
+    </RCTScrollView>
+  </View>
+</View>
+`;

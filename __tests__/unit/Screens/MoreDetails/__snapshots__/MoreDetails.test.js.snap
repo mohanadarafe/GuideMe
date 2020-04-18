@@ -1,0 +1,540 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MoreDetails component renders correctly 1`] = `
+<View
+  data-test="MoreDetailsComponent"
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#2A2E43",
+      "height": "100%",
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <RCTSafeAreaView
+    emulateUnlessSupported={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "column",
+        "height": "100%",
+        "justifyContent": "flex-end",
+        "width": "90%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomWidth": null,
+          "borderColor": "#007aff",
+          "borderLeftWidth": null,
+          "borderRadius": 5,
+          "borderRightWidth": null,
+          "borderTopWidth": null,
+          "borderWidth": undefined,
+          "bottom": "19%",
+          "elevation": 0,
+          "flexDirection": "row",
+          "height": "8%",
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "paddingBottom": 6,
+          "paddingTop": 6,
+          "shadowColor": null,
+          "shadowOffset": null,
+          "shadowOpacity": null,
+          "shadowRadius": null,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#353A50",
+            "borderRadius": 10,
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "16%",
+          }
+        }
+      >
+        <Text />
+      </View>
+      <View
+        style={
+          Object {
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "4%",
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-end",
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "80%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "encodeSansExpanded",
+              "fontSize": 13,
+              "position": "absolute",
+            }
+          }
+        >
+          N/A
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      focusable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderBottomWidth": null,
+          "borderColor": "#007aff",
+          "borderLeftWidth": null,
+          "borderRadius": 5,
+          "borderRightWidth": null,
+          "borderTopWidth": null,
+          "borderWidth": undefined,
+          "bottom": "17%",
+          "elevation": 0,
+          "flexDirection": "row",
+          "height": "8%",
+          "justifyContent": "space-between",
+          "opacity": 1,
+          "paddingBottom": 6,
+          "paddingTop": 6,
+          "shadowColor": null,
+          "shadowOffset": null,
+          "shadowOpacity": null,
+          "shadowRadius": null,
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#353A50",
+            "borderRadius": 10,
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "16%",
+          }
+        }
+      >
+        <Text />
+      </View>
+      <RCTSafeAreaView
+        emulateUnlessSupported={true}
+        style={
+          Object {
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "4%",
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-end",
+            "height": "100%",
+            "justifyContent": "center",
+            "width": "80%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#FFFFFF",
+              "fontFamily": "encodeSansExpanded",
+              "fontSize": 13,
+              "position": "absolute",
+            }
+          }
+        >
+          N/A
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#3ACCE1",
+          "borderBottomWidth": null,
+          "borderColor": "#007aff",
+          "borderLeftWidth": null,
+          "borderRadius": 10,
+          "borderRightWidth": null,
+          "borderTopWidth": null,
+          "borderWidth": undefined,
+          "bottom": "8%",
+          "elevation": 2,
+          "flexDirection": "row",
+          "fontSize": 25,
+          "height": "8%",
+          "justifyContent": "center",
+          "opacity": 1,
+          "paddingBottom": 6,
+          "paddingTop": 6,
+          "shadowColor": undefined,
+          "shadowOffset": undefined,
+          "shadowOpacity": undefined,
+          "shadowRadius": undefined,
+          "width": "90%",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "white",
+          }
+        }
+      >
+        Get Directions
+      </Text>
+    </View>
+  </RCTSafeAreaView>
+  <View
+    style={
+      Object {
+        "height": "32%",
+        "opacity": 0.3,
+        "position": "absolute",
+        "top": "0%",
+        "width": "100%",
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": "100%",
+          "position": "relative",
+          "top": "0%",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 30,
+        "fontWeight": "bold",
+        "left": "5%",
+        "position": "absolute",
+        "top": "19%",
+      }
+    }
+  >
+    MB Building
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "left": "5%",
+        "position": "absolute",
+        "top": "24%",
+      }
+    }
+  >
+    N/A
+  </Text>
+  <Text
+    style={
+      Object {
+        "color": "#FFFFFF",
+        "fontFamily": "encodeSansExpanded",
+        "fontSize": 20,
+        "left": "5%",
+        "position": "absolute",
+        "top": "27%",
+      }
+    }
+  >
+    19 Reviews
+  </Text>
+  <RCTSafeAreaView
+    emulateUnlessSupported={true}
+    style={
+      Object {
+        "height": "32%",
+        "position": "absolute",
+        "top": "32%",
+        "width": "100%",
+      }
+    }
+    testID="moreInfoScrollView"
+  >
+    <RCTScrollView
+      data={
+        Array [
+          Object {
+            "data": Array [
+              "None",
+            ],
+            "title": "Departments ",
+          },
+          Object {
+            "data": Array [
+              "None",
+            ],
+            "title": "Services",
+          },
+          Object {
+            "data": Array [
+              "None",
+            ],
+            "title": "Accessibility",
+          },
+        ]
+      }
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      renderItem={[Function]}
+      renderSectionHeader={[Function]}
+      scrollEventThrottle={50}
+      sections={
+        Array [
+          Object {
+            "data": Array [
+              "None",
+            ],
+            "title": "Departments ",
+          },
+          Object {
+            "data": Array [
+              "None",
+            ],
+            "title": "Services",
+          },
+          Object {
+            "data": Array [
+              "None",
+            ],
+            "title": "Accessibility",
+          },
+        ]
+      }
+      stickyHeaderIndices={
+        Array [
+          0,
+          3,
+          6,
+        ]
+      }
+      stickySectionHeadersEnabled={true}
+      updateCellsBatchingPeriod={50}
+      windowSize={21}
+    >
+      <View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "backgroundColor": "#353A50",
+                "color": "#ffffff",
+                "fontFamily": "encodeSansExpanded",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "paddingBottom": 2,
+                "paddingLeft": 22,
+                "paddingRight": 10,
+                "paddingTop": 2,
+              }
+            }
+          >
+            Departments 
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "color": "#D3D3D3",
+                "fontFamily": "encodeSansExpanded",
+                "fontSize": 12,
+                "height": 44,
+                "padding": 10,
+                "paddingLeft": 22,
+              }
+            }
+          >
+            None
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        />
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "backgroundColor": "#353A50",
+                "color": "#ffffff",
+                "fontFamily": "encodeSansExpanded",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "paddingBottom": 2,
+                "paddingLeft": 22,
+                "paddingRight": 10,
+                "paddingTop": 2,
+              }
+            }
+          >
+            Services
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "color": "#D3D3D3",
+                "fontFamily": "encodeSansExpanded",
+                "fontSize": 12,
+                "height": 44,
+                "padding": 10,
+                "paddingLeft": 22,
+              }
+            }
+          >
+            None
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        />
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "backgroundColor": "#353A50",
+                "color": "#ffffff",
+                "fontFamily": "encodeSansExpanded",
+                "fontSize": 18,
+                "fontWeight": "bold",
+                "paddingBottom": 2,
+                "paddingLeft": 22,
+                "paddingRight": 10,
+                "paddingTop": 2,
+              }
+            }
+          >
+            Accessibility
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        >
+          <Text
+            style={
+              Object {
+                "color": "#D3D3D3",
+                "fontFamily": "encodeSansExpanded",
+                "fontSize": 12,
+                "height": 44,
+                "padding": 10,
+                "paddingLeft": 22,
+              }
+            }
+          >
+            None
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={null}
+        />
+      </View>
+    </RCTScrollView>
+  </RCTSafeAreaView>
+  <Text />
+</View>
+`;
