@@ -5,6 +5,7 @@ import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import SegmentedControlTab from "react-native-segmented-control-tab";
 import { ShuttleBusTimes } from "../../constants/shuttleBustimes";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 import { ShuttleBusSVG } from "../../assets/ShuttleBusSVG";
 
 /**
@@ -278,14 +279,7 @@ ShuttleBus.propTypes = {
     openDrawer: PropTypes.func,
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        height: "100%",
-        width: "100%",
-        flexDirection: "column",
-        backgroundColor: "#2A2E43"
-    },
+const ShutteBusStyle = {
     mainLabel: {
         color: "#FFFFFF",
         fontSize: 30,
@@ -297,32 +291,16 @@ export const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: "encodeSansExpanded",
     },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "15%",
-        top: "17%"
-    },
     imageContainer: {
         width: "100%",
         height: "100%",
         position: "absolute",
-        opacity: 0.7
+        opacity: 0.3,
+        backgroundColor: "#000"
     },
     shuttleImage: {
         width: "100%",
         height: "100%",
-        top: "0%",
         position: "relative"
     },
     tabsContainerStyle: {
@@ -423,6 +401,18 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         top: "85%",
     },
-});
+    menuButton: {
+        height: "100%",
+        width: "20%",
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    menuButtonContainer: {
+        width: "100%",
+        height: "10%",
+        top: "20%",
+    },
+}
+export const styles = StyleSheet.create({...sideMenuStyle, ...ShutteBusStyle});
 
 export default ShuttleBus;

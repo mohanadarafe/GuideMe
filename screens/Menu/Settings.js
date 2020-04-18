@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { AsyncStorage, FlatList, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
 import { CheckBox, ListItem } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 
 /**
  * Description: This method holds the toggle switches 
@@ -197,14 +198,7 @@ Settings.propTypes = {
     openDrawer: PropTypes.func,
 };
 
-export const styles = StyleSheet.create({
-    container: {
-        alignItems: "center",
-        flexDirection: "column",
-        height: "100%",
-        width: "100%",
-        backgroundColor: "#2A2E43"
-    },
+const settingsStyle = {
     mainLabel: {
         color: "#FFFFFF",
         fontSize: 25,
@@ -212,22 +206,6 @@ export const styles = StyleSheet.create({
         fontFamily: "encodeSansExpanded",
         marginTop: "5%",
         marginBottom: "5%"
-    },
-    icon: {
-        alignSelf: "center",
-        color: "#FFFFFF",
-        fontSize: 35,
-    },
-    menuButton: {
-        height: "100%",
-        width: "20%",
-        flexDirection: "row",
-        justifyContent: "center"
-    },
-    menuButtonContainer: {
-        width: "100%",
-        height: "6%",
-        top: "7%",
     },
     container1: {
         width: "100%",
@@ -285,6 +263,8 @@ export const styles = StyleSheet.create({
         marginLeft: 20,
         flexDirection: "column",
     }
-});
+}
+
+export const styles = StyleSheet.create({...sideMenuStyle, ...settingsStyle});
 
 export default Settings;

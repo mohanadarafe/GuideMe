@@ -296,7 +296,7 @@ function PreviewDirections (props) {
                             </View>
                             <Text style={styles.directionLabels}>{fromName ? fromName: "N/A"}</Text>
                         </View>
-                        <View style={styles.addressContainer}>
+                        <View style={styles.addressContainer2}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>To: </Text>
@@ -330,14 +330,15 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        marginTop: 25,
+        // marginTop: 25,
         flexDirection: "column"
     },
     fortmatLowerHeader: {
         flexDirection: "column", 
         alignItems: "center", 
         justifyContent:"center", 
-        height: "100%",
+        height: "70%",
+        bottom:"35%",
     },
     directionText: {
         justifyContent: "center",
@@ -390,12 +391,16 @@ export const styles = StyleSheet.create({
         borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
-        top: "10%"
+        top: "50%",
+
     },
     backIcon: {
         color: "white",
         left: "5%",
-        top: "40%"
+        top: "85%",
+        width:"10%",
+        height :"50%",
+        textAlign: "center"
     },
     directionTextHeader: {
         justifyContent: "center",
@@ -403,12 +408,14 @@ export const styles = StyleSheet.create({
     },
     DirectionTextHeaderStyle: {
         color: "white",
-        fontSize: 22
+        fontSize: 20,
+        bottom: "20%",
+        fontFamily: "encodeSansExpanded",
     },
     fromToSideLabels: {
         fontSize: 20,
         color: "white",
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     sideIcons: {
         color: "white",
@@ -425,6 +432,12 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
+    },
+    addressContainer2: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        top: "4%"
     },
     lowerHeaderContainer: {
         width: "100%",
