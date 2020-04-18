@@ -2,9 +2,6 @@ import React from "react";
 import { BuildingHighlight } from "../../components/BuildingHighlight";
 import renderer from "react-test-renderer";
 import { shallow } from "enzyme";
-import configureMockStore from "redux-mock-store";
-
-const mockStore = configureMockStore();
 
 
 describe("Building Highlight component", () => {

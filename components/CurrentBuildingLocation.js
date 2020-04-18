@@ -53,7 +53,7 @@ export function CurrentBuildingLocation (props) {
 
         let withinBuilding = false;
         for (var key in coord) {
-            if (isPointInPolygon(dummyCurrentLocation, coord[key].coordinates)){
+            if (isPointInPolygon(currentLocation, coord[key].coordinates)){
                 withinBuilding = true;
                 props.setCurrentBuilding(coord[key].name);
                 break;
@@ -72,7 +72,7 @@ export function CurrentBuildingLocation (props) {
         }  
     }
 
-    //Uncomment this if you want to see how it works (This is GM Building)
+    //TODO: Uncomment this if you want to see how it works (This is GM Building)
     const dummyCurrentLocation = {
         altitude: 29.498906132077124,
         latitude: 45.495983,
