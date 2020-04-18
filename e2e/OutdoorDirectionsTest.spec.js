@@ -59,7 +59,7 @@ describe("Outdoor Directions Feature", () => {
     await expect(element(by.id("PreviewDirections_MapView"))).toBeVisible();
     await expect(element(by.id("PreviewDirections_NavigationHeaderView"))).toBeVisible();
     await expect(element(by.id("PreviewDirections_ToLocationText"))).toHaveText("VL Building");
-    await expect(element(by.id("PreviewDirections_FeomLocationText"))).toHaveText("Hall Building");
+    await expect(element(by.id("PreviewDirections_FromLocationText"))).toHaveText("Hall Building");
     await expect(element(by.id("PreviewDirection_MapViewPolyline"))).toExist();
     await expect(element(by.id("PreviewDirection_MapViewDefaultPolyline"))).toExist();
     await element(by.id("PreviewDirections_GoBackIcon")).tap();
@@ -72,7 +72,7 @@ describe("Outdoor Directions Feature", () => {
     await expect(element(by.id("PreviewDirections_MapView"))).toBeVisible();
     await expect(element(by.id("PreviewDirections_NavigationHeaderView"))).toBeVisible();
     await expect(element(by.id("PreviewDirections_ToLocationText"))).toHaveText("VL Building");
-    await expect(element(by.id("PreviewDirections_FeomLocationText"))).toHaveText("EV Building");
+    await expect(element(by.id("PreviewDirections_FromLocationText"))).toHaveText("EV Building");
     await expect(element(by.id("PreviewDirection_MapViewPolyline"))).toExist();
   });
 
