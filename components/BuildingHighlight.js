@@ -20,6 +20,8 @@ function mapDispatchToProps(dispatch) {
 }
 
 
+
+
 /**
  * US3 - As a user, I would like to be able to identify campus buildings and
  * distinguish them from other buildings.
@@ -29,6 +31,16 @@ function mapDispatchToProps(dispatch) {
 export function BuildingHighlight (props) {
     const [buildingHighlighted, setBuildingHighlighted] = React.useState("");
     var buildings = buildingData();
+
+    const onPressHighlight = (buildingName) => {
+        if (buildingHighlighted != buildingName) {
+            setBuildingHighlighted(buildingName);
+            props.setSelectedBuildingName(buildingName);
+        } else {
+            setBuildingHighlighted(null);
+            props.setSelectedBuildingName(null);
+        }
+    }
 
     useLayoutEffect(() => {
         const unsubscribe = store.subscribe(() => {
@@ -45,17 +57,7 @@ export function BuildingHighlight (props) {
                 id="tap_h"
                 coordinates={coord.h.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["Hall Building"].name) {
-                        setBuildingHighlighted(buildings["Hall Building"].name);
-                        props.setSelectedBuildingName(buildings["Hall Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                }
-
-            }
+                onPress={() => onPressHighlight(buildings["Hall Building"].name)}
                 fillColor={buildingHighlighted == buildings["Hall Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["Hall Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["Hall Building"].name ? 4 : 0}
@@ -65,15 +67,7 @@ export function BuildingHighlight (props) {
                 id="tap_lb"
                 coordinates={coord.lb.coordinates}
                 tappable={true}
-                onPress={() => {
-                    if (buildingHighlighted != buildings["LB Building"].name) {
-                    setBuildingHighlighted(buildings["LB Building"].name);
-                    props.setSelectedBuildingName(buildings["LB Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                } }
+                onPress={() => onPressHighlight(buildings["Hall Building"].name)}
                 fillColor={buildingHighlighted == buildings["LB Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["LB Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["LB Building"].name ? 4 : 0}
@@ -83,15 +77,7 @@ export function BuildingHighlight (props) {
                 id="tap_gm"
                 coordinates={coord.gm.coordinates}
                 tappable={true}
-                onPress={() => {
-                    if (buildingHighlighted != buildings["GM Building"].name) {
-                    setBuildingHighlighted(buildings["GM Building"].name)
-                    props.setSelectedBuildingName(buildings["GM Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                }}
+                onPress={() => onPressHighlight(buildings["GM Building"].name)}
                 fillColor={buildingHighlighted == buildings["GM Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["GM Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["GM Building"].name ? 4 : 0}
@@ -101,16 +87,7 @@ export function BuildingHighlight (props) {
                 id="tap_ev"
                 coordinates={coord.ev.coordinates}
                 tappable={true}
-                onPress={() => {
-                    if (buildingHighlighted != buildings["EV Building"].name) {
-                    setBuildingHighlighted(buildings["EV Building"].name)
-                    props.setSelectedBuildingName(buildings["EV Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                    }
-                }
+                onPress={() => onPressHighlight(buildings["EV Building"].name)}
                 fillColor={buildingHighlighted == buildings["EV Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["EV Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["EV Building"].name ? 4 : 0}
@@ -120,15 +97,7 @@ export function BuildingHighlight (props) {
                 id="tap_mb"
                 coordinates={coord.mb.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["MB Building"].name) {
-                    setBuildingHighlighted(buildings["MB Building"].name);
-                    props.setSelectedBuildingName(buildings["MB Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                }}
+                onPress={() => onPressHighlight(buildings["MB Building"].name)}
                 fillColor={buildingHighlighted == buildings["MB Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["MB Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["MB Building"].name ? 4 : 0}
@@ -138,15 +107,7 @@ export function BuildingHighlight (props) {
                 id="tap_sp"
                 coordinates={coord.sp.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["SP Building"].name) {
-                    setBuildingHighlighted(buildings["SP Building"].name);
-                    props.setSelectedBuildingName(buildings["SP Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                }}
+                onPress={() => onPressHighlight(buildings["SP Building"].name)}
                 fillColor={buildingHighlighted == buildings["SP Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["SP Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["SP Building"].name ? 4 : 0}
@@ -156,51 +117,27 @@ export function BuildingHighlight (props) {
                 id="tap_cj"
                 coordinates={coord.cj.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["CJ Building"].name) {
-                    setBuildingHighlighted(buildings["CJ Building"].name)
-                    props.setSelectedBuildingName(buildings["CJ Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-            }}
-            fillColor={buildingHighlighted == buildings["CJ Building"].name ? "#3ACCE1": "#b1b0f8"}
-            strokeColor = {buildingHighlighted == buildings["CJ Building"].name ? "#0494a9": "#b1b0f8"}
-            strokeWidth = {buildingHighlighted == buildings["CJ Building"].name ? 4 : 0}
+                onPress={() => onPressHighlight(buildings["CJ Building"].name)}
+                fillColor={buildingHighlighted == buildings["CJ Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["CJ Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["CJ Building"].name ? 4 : 0}
             />
 
             <Polygon
                 id="tap_cc"
                 coordinates={coord.cc.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["CC Building"].name) {
-                    setBuildingHighlighted(buildings["CC Building"].name);
-                    props.setSelectedBuildingName(buildings["CC Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-            }}
-            fillColor={buildingHighlighted == buildings["CC Building"].name ? "#3ACCE1": "#b1b0f8"}
-            strokeColor = {buildingHighlighted == buildings["CC Building"].name ? "#0494a9": "#b1b0f8"}
-            strokeWidth = {buildingHighlighted == buildings["CC Building"].name ? 4 : 0}
+                onPress={() => onPressHighlight(buildings["CC Building"].name)}
+                fillColor={buildingHighlighted == buildings["CC Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["CC Building"].name ? "#0494a9": "#b1b0f8"}
+                strokeWidth = {buildingHighlighted == buildings["CC Building"].name ? 4 : 0}
             />
 
             <Polygon
                 id="tap_ad"
                 coordinates={coord.ad.coordinates}
                 tappable={true}
-                onPress={() => {
-                    if (buildingHighlighted != buildings["AD Building"].name) {
-                    setBuildingHighlighted(buildings["AD Building"].name);
-                    props.setSelectedBuildingName(buildings["AD Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                }}
+                onPress={() => onPressHighlight(buildings["AD Building"].name)}
                 fillColor={buildingHighlighted == buildings["AD Building"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["AD Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["AD Building"].name ? 4 : 0}
@@ -210,15 +147,7 @@ export function BuildingHighlight (props) {
                 id="tap_gn"
                 coordinates={coord.gn.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["Grey Nuns"].name) {
-                    setBuildingHighlighted(buildings["Grey Nuns"].name)
-                    props.setSelectedBuildingName(buildings["Grey Nuns"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-                }}
+                onPress={() => onPressHighlight(buildings["Grey Nuns"].name)}
                 fillColor={buildingHighlighted == buildings["Grey Nuns"].name ? "#3ACCE1": "#b1b0f8"}
                 strokeColor = {buildingHighlighted == buildings["Grey Nuns"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["Grey Nuns"].name ? 4 : 0}
@@ -227,17 +156,9 @@ export function BuildingHighlight (props) {
                 id="tap_vl"
                 coordinates={coord.vl.coordinates}
                 tappable={true}
-                onPress={() => { 
-                    if (buildingHighlighted != buildings["VL Building"].name) {
-                    setBuildingHighlighted(buildings["VL Building"].name)
-                    props.setSelectedBuildingName(buildings["VL Building"].name);
-                    } else {
-                        setBuildingHighlighted(null);
-                        props.setSelectedBuildingName(null);
-                    }
-            }}
-            fillColor={buildingHighlighted == buildings["VL Building"].name ? "#3ACCE1": "#b1b0f8"}
-            strokeColor = {buildingHighlighted == buildings["VL Building"].name ? "#0494a9": "#b1b0f8"}
+                onPress={() => onPressHighlight(buildings["VL Building"].name)}
+                fillColor={buildingHighlighted == buildings["VL Building"].name ? "#3ACCE1": "#b1b0f8"}
+                strokeColor = {buildingHighlighted == buildings["VL Building"].name ? "#0494a9": "#b1b0f8"}
                 strokeWidth = {buildingHighlighted == buildings["VL Building"].name ? 4 : 0}
             />
         </View>
