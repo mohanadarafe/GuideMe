@@ -8,7 +8,7 @@ const setUpBottom = (props={}) => {
     return component;
  };
 
-describe("Bottom Menu Component", () => {
+describe("Map Component", () => {
    let component;
    beforeEach(() => {
        component = setUpBottom();

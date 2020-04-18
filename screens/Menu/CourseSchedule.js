@@ -30,8 +30,8 @@ function CourseSchedule(props) {
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
     const [switchVal, setSwitchVal] = React.useState("false");
     const [refresh, setRefresh] = React.useState(false);
-    const [loop, setLoop] = React.useState(null);
 
+    //TODO Show only events after current date THIS FORMAT 2020-04-18
     let currentDate = new Date();
 
     const getCalendarId = async () => {
@@ -103,21 +103,16 @@ function CourseSchedule(props) {
         props.navigation.navigate("DoubleSearch", { CourseScheduleLocation: item.location });
     }
 
-      useEffect(() => {
-        setLoop(setInterval(() => {
+    useEffect(() => {
+        const intervalId = setInterval(() => {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
-        }, 1000));
+        }, 1000);
         getCalendarEvents();
-        return function cleanUp() {
-            clearInterval(loop);
-            clearImmediate(loop);
-            clearTimeout(loop);
-        }
-    }, [switchVal, selectedCalendarId, accessToken]);
+        return () => clearInterval(intervalId);
+    }, [selectedCalendarId, accessToken]);
 
-    
     if (switchVal == "true" && calendarEventsList) {
         return (
             <View style={styles.container}>

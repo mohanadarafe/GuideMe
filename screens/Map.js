@@ -1,86 +1,81 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { StyleSheet, Keyboard  } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import BuildingHighlight  from "../components/BuildingHighlight";
+import { BuildingHighlight } from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
-import CurrentBuildingLocation  from "../components/CurrentBuildingLocation";
-import CurrentLocationButton  from "../components/CurrentLocationButton";
+import { CurrentBuildingLocation } from "../components/CurrentBuildingLocation";
 import { View } from "native-base";
-import Search  from "../components/Search";
+import { Search } from "../components/Search";
 import PropTypes from "prop-types";
-import { LocationMarker } from "../components/locationMarker";
-import {CampusRegion} from "../constants/buildingData";
-import { connect } from "react-redux";
 
-
-function mapStateToProps(state) {
-    return {
-        selectedBuildingName: state.selectedBuildingName
+const mapPosition = {
+    sgwCoord: {
+        latitude: 45.496557,
+        longitude: -73.578896,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+    },
+    loyCoord: {
+        latitude: 45.457841,
+        longitude: -73.640307,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
     }
-}
-
-
-function mapDispatchToProps(dispatch) {
-    return {
-        setSelectedBuildingName: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
-    }
-}
-
+};
 
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
  * This is our main screen which includes all the components inside a map.
+ * FIXME: When the app refreshes, a random component appears on in the upper
+ *        half of the screen for miliseconds...
  */
-export function Map (props) { 
+function Map ({ navigation }) {
+    const [switchVal, setswitchVal] = React.useState("");
+    const [getInsideBuild, setGetInsideBuild] = React.useState("");
+    const [mapPressed, setmapPressed] = React.useState("");
 
-    const [isMapClicked, setIsMapClicked] = React.useState(false);
-    const mapRef = React.useRef(null);
-    
+    //TODO: To have a functionality for when the user presses on the map
+    AsyncStorage.setItem("mapPressed", mapPressed);
+
+    const campusSelected = async () => {
+        let tog = await AsyncStorage.getItem("toggle");
+        let inside = await AsyncStorage.getItem("getInsideBuilding");
+        setswitchVal(tog);
+        setGetInsideBuild(inside);
+    };
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            campusSelected();
+        }, 1);
+        return () => clearInterval(intervalId);
+    });
+
     return (
         <View testID="Map_mapView" data-test="MapComponent">
             <View>
                 <MapView
                     data-test="MapViewComponent"
-                    ref={mapRef}
                     style={styles.map}
                     provider={PROVIDER_GOOGLE}
-                    initialRegion={CampusRegion.sgwCoord}
+                    region={switchVal === "true" ? mapPosition.sgwCoord : mapPosition.loyCoord}
                     showsUserLocation={true}
                     showsCompass={true}
                     showsBuildings={true}
                     showsIndoors={false}
-                    onPress = {() => { 
-                        if(isMapClicked) {
-                            setIsMapClicked(false);
-                            Keyboard.dismiss();
-                        }
-                        else {
-                            setIsMapClicked(true);
-                            Keyboard.dismiss();
-                            props.setSelectedBuildingName(null);
-                        }
-                    }}
-
                 >
                     <BuildingHighlight />
                     <BuildingIdentification />
-                    <LocationMarker mapReference = {mapRef} />
                 </MapView>
-                <Search testID="Map_searchBar" 
-                navigation = {props.navigation} 
-                mapReference = {mapRef} 
-                />
+                <Search testID="Map_searchBar" navigation={navigation} />
                 <View style={styles.CurrentBuildingLocation}>
-                    <CurrentBuildingLocation mapReference = {mapRef}/>
+                        <CurrentBuildingLocation />
                 </View>
-                <View style={styles.CurrentLocationButton}>
-                    <CurrentLocationButton mapReference = {mapRef} />
-                </View>
-            <BottomMenu navigation={props.navigation} mapReference = {mapRef} />
+            <BottomMenu navigation={navigation} />
             </View>
         </View>
     );
@@ -98,15 +93,9 @@ export const styles = StyleSheet.create({
     },
     CurrentBuildingLocation: {
         position: "absolute",
-        top: "80%",
-        left: "80%"
-    },
-    CurrentLocationButton: {
-        position: "absolute",
-        top: "72%",
+        top: "82%",
         left: "80%"
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map);
-
+export default Map;

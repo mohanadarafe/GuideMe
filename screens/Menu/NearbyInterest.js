@@ -27,12 +27,11 @@ function NearbyInterest(props) {
     const [jsonElementArray_SGW, setjsonElementArray_SGW] = React.useState(null);
     const [jsonElementArray_LOY, setjsonElementArray_LOY] = React.useState(null);
 
-
     const [selectedTab, setSelectedTab] = React.useState(0);
     const [radius, setRadius] = React.useState(100);
     const [campus, setCampus] = React.useState("SGW");
-
-    const campusBool = props.navigation.getParam("campusBool");
+    // const [phone, setPhone] = React.useState([]);
+    // const [web, setWeb] = React.useState([]);
     /**
      * The asyncstorage getter that will let us grab the value coming from the bottomMenu component
      * @param  {} =>{letname=awaitAsyncStorage.getItem("sideMenu)"
@@ -160,18 +159,8 @@ function NearbyInterest(props) {
         }, 1);
         fetchData_SGW();
         fetchData_LOY();
-        if(campusBool === false){
-            setRadius(1000);
-            setCampus("LOY");
-            setSelectedTab(1);
-        }
-        else if (campusBool === true){
-            setRadius(100);
-            setCampus("SGW");
-            setSelectedTab(0);
-        }
         return () => clearInterval(intervalId);
-    }, [campusBool]);
+    }, []);
 
     return (
         <View style={styles.container}>

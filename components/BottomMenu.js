@@ -1,24 +1,26 @@
 /* eslint-disable no-unused-vars */
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { View, AsyncStorage, Text, StyleSheet, Switch } from "react-native";
 import { Icon } from "native-base";
 import { Button } from "react-native-paper";
-import { store } from "../redux/reducers/index";
 import { FloorMenu } from "./FloorMenu";
-import {CampusRegion} from "../constants/buildingData";
-
 
 /**
  * US6 - As a user, I would like to switch between the SGW and the Loyola maps
  * The following function renders a menu at the bottom of the screen. The menu
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
+/**TODO: When updating BottomMenu from Main SearchBar, I personally think
+ * it should be More Info as a button instead of GetDirections as it 
+ * can confuse the user since when clicking on a building, we have the 
+ * button GetInside.
+*/
 
-function BottomMenu (props) {
-    const [selectedBuilding, setSelectedBuilding] = React.useState(null);
-    const [swtichCampus, setSwitchCampus] = React.useState(true);
+function BottomMenu(props) {
+    const [selectedBuilding, setSelectedBuilding] = React.useState("");
+    const [switchVal, setSwitchVal] = React.useState(true);
     const [destination, setDestination] = React.useState("");
-    const [methodTravel, setMethodTravel] = React.useState("driving");
+    const [methodTravel, setMethodTravel] = React.useState("");
     const [personaType, setPersonaType] = React.useState("");
     const [mobilityReduced, setMobilityReduced] = React.useState("");
     const viewIndoor = props.indoor;
@@ -27,7 +29,32 @@ function BottomMenu (props) {
     const previewDirections = props.previewMode;
     const from = props.from;
     const to = props.to;
-    
+
+    AsyncStorage.setItem("toggle", switchVal.toString());
+    const getBuildingSelected = async () => {
+        let name = await AsyncStorage.getItem("buildingSelected");
+        setSelectedBuilding(name);
+    };
+
+    const getDestination = async () => {
+        let searchItem = await AsyncStorage.getItem("toLocation");
+        setDestination(searchItem);
+    };
+
+    const getPersonaType = async () => {
+        let name = await AsyncStorage.getItem("firstCategory");
+        setPersonaType(name);
+    };
+
+    const getMobility = async () => {
+        let name = await AsyncStorage.getItem("secondCategory");
+        setMobilityReduced(name);
+    };
+
+    const getMethodTravel = async () => {
+        let name = await AsyncStorage.getItem("thirdCategory");
+        setMethodTravel(name);
+    };
 
     const goBack = () => {
         props.navigation.goBack();
@@ -61,7 +88,7 @@ function BottomMenu (props) {
 
     const goToMoreDetails = () => {
         props.navigation.navigate("MoreDetails", {
-            name: store.getState().selectedBuildingName
+            name: selectedBuilding
         });
     };
 
@@ -70,34 +97,39 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        AsyncStorage.setItem("sideMenu", "mapView"); 
-        props.navigation.navigate("NearbyInterest", { campusBool: swtichCampus});
-    
+        AsyncStorage.setItem("sideMenu", "mapView");
+        props.navigation.navigate("NearbyInterest");
     };
 
-    
-    useLayoutEffect(() => {
-        const unsubscribe = store.subscribe(() => {
-            setSelectedBuilding(store.getState().selectedBuildingName);
-            setDestination(store.getState().mainSearchBarDestination);
-            setPersonaType(store.getState().personaType);
-            setMobilityReduced(store.getState().mobilityReducedType);
-            setMethodTravel(store.getState().transportType);
-        });
-        return function cleanUp() {
-            unsubscribe();
-        }
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            getBuildingSelected();
+            getDestination();
+            getPersonaType();
+            getMobility();
+            getMethodTravel();
+        }, 1);
+        return () => clearInterval(intervalId);
     });
 
+    const nameMethodTravel = () => {
+        switch (methodTravel) {
+            case "driving":
+                return "Driving";
 
-    const switchCampuses = (value) => {
-        setSwitchCampus(value);
-        if (value) {
-            props.mapReference.current.animateToRegion(CampusRegion.sgwCoord);        }
-        else {
-            props.mapReference.current.animateToRegion(CampusRegion.loyCoord);
+            case "walking":
+                return "Walking";
+
+            case "transit":
+                return "Transit";
+
+            case "bicycling":
+                return "Bicycling";
+
+            default:
+                return "Driving";
         }
-    }
+    };
 
     if (viewIndoor) {
         return (
@@ -129,31 +161,11 @@ function BottomMenu (props) {
                  {!props.directionResponse &&
                     <Text style={styles.mainLabel}>N/A</Text>
                 }
-                <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
+                <Text style={styles.shortLabel}>Main Travel Mode: {nameMethodTravel()}</Text>
                 <View style={styles.btnGetDirection}>
                     <Button style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
                         <Text style={styles.btnText}>Start</Text>
-                    </Button>
-                </View>
-            </View>
-        );
-    }
-    if (destination) {
-        if (destination.length > 13) {
-            var updatedDestination = destination.substring(0, 13) + "...";
-        }
-        return (
-            <View style={styles.container} >
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
-                {destination.length > 13
-                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
-                    : <Text style={styles.mainLabel}>{destination}</Text>
-                }
-                <Text style={styles.shortLabel}>More info</Text>
-                <View style={styles.btnGetDirection}>
-                    <Button testID="BottomMenu_getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
-                        <Text style={styles.btnText}>Get Directions</Text>
                     </Button>
                 </View>
             </View>
@@ -180,6 +192,27 @@ function BottomMenu (props) {
             </View>
         );
     }
+
+    if (destination) {
+        if (destination.length > 13) {
+            var updatedDestination = destination.substring(0, 13) + "...";
+        }
+        return (
+            <View style={styles.container} >
+                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { props.navigation.navigate("MoreDetails", { name: destination }) }} />
+                {destination.length > 13
+                    ? <Text style={styles.mainLabel}>{updatedDestination}</Text>
+                    : <Text style={styles.mainLabel}>{destination}</Text>
+                }
+                <Text style={styles.shortLabel}>More info</Text>
+                <View style={styles.btnGetDirection}>
+                    <Button testID="BottomMenu_getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+                        <Text style={styles.btnText}>Get Directions</Text>
+                    </Button>
+                </View>
+            </View>
+        );
+    }
     else {
         return (
             <View style={styles.container} data-test="BottomMenu" testID="BottomMenu_initalView">
@@ -188,8 +221,8 @@ function BottomMenu (props) {
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
                 <View testID="BottomMenu_ToggleButton" style={styles.toggle}>
                     <Switch
-                        value={swtichCampus}
-                        onValueChange={(val) => { switchCampuses(val);}}>
+                        value={switchVal}
+                        onValueChange={(val) => setSwitchVal(val)}>
                     </Switch>
                 </View>
             </View>

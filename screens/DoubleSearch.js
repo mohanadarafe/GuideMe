@@ -30,40 +30,6 @@ var originItems = fetchData();
 var destinationItems = fetchData(); //We do not want the second search bar to Current Location as a search option in the dropdown.
 originItems.unshift({ "id": 0, "name": "Current Location" });
 
-   /**
-     * Algorithm to find the coordinates of a given building name or classroom name.
-     * returns longitude and latitude.
-     * In the case of a service or department, it will return the coordinates of the
-     * building it belongs to.
-     * 
-     * A.U
-     * @param {*} name 
-     */
-    export const getCoordinates = (name) => {
-
-        let buildingList = buildingData();
-        let classRoomsList = ClassRooms();
-        if (/\d/.test(name)) {
-            for (var key in classRoomsList) {
-                if(classRoomsList[key].room.includes(name)) {
-                const buildingCoords = buildingList[key].coordinates;
-                const isClassroom = {isClassRoom: name};
-                const result = {...buildingCoords, ...isClassroom};
-                return result;
-                }
-            }
-        }
-        for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) ||  buildingList[key].fullName.includes(name)) {
-                return buildingList[key].coordinates;
-            }
-        }
-        if (name == "Current Location") {
-            fetchCurrentPosition();           
-        }
-        return null;
-    };
-
 /**
  * Overall :
  * 

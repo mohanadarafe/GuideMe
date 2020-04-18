@@ -17,7 +17,7 @@ function CurrentLocationButton ({mapReference}) {
           }
         },
         (error) => alert('Error: Are location services on?'),
-        { enableHighAccuracy: false }
+        { enableHighAccuracy: true }
       )
     }
 
