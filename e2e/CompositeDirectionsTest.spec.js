@@ -18,7 +18,7 @@ describe("Composite Directions Feature", () => {
     await reloadApp();
   });
 
-  /** Scenario: Get directions and naviagte from a building (D building) to a classroom (H819)
+  /** Scenario: Get directions and navigate from a building (D building) to a classroom (H819)
   * US-15 : As a user, I want to be able to view directions on the map.
   * US-28 : As a user, I would like to show the shortest path possible between my start and destination point.
   * US-37 : As a user, I would like to navigate through building floors
@@ -66,7 +66,7 @@ describe("Composite Directions Feature", () => {
     //TODO: Find a solution for asserting the path shown on the map
   });
 
-  /** Scenario: Get directions and naviagte from a classroom (H815) to a classroom (VL103) on a different campus
+  /** Scenario: Get directions and navigate from a classroom (H815) to a classroom (VL103) on a different campus
   * US-15 : As a user, I want to be able to view directions on the map.
   * US-28 : As a user, I would like to show the shortest path possible between my start and destination point.
   * US-33 : As a user, I would like to be able to be given directions between classes from 2 different campuses

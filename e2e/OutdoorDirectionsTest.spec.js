@@ -136,7 +136,7 @@ describe("Outdoor Directions Feature", () => {
     //TODO: Find a solution for asserting the path shown on the map
   });
 
-  /** Scenario: Get Directions and navigate from a desired start point to a desired destination
+  /** Scenario: Get Directions and navigate from the desired start point to the desired destination
   * US-15 : As a user, I want to be able to view directions on the map.
   * US-27 : As a user, I would like to navigate from my desired start point/current location to my desired destination
   * US-28 : As a user, I would like to show the shortest path possible between my start and destination point.
