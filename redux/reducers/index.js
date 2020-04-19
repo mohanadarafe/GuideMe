@@ -43,7 +43,10 @@ const initialState = {
               searchItemMarker: action.payload.coordinates,
               selectedBuildingName: action.payload.name,
               mainSearchBarDestination: action.payload.name,
-              isDarkMode: action.payload.darkMode
+              isDarkMode: action.payload.darkMode,
+              personaType: "UNDERGRADUATE",
+              mobilityReducedType: "MOBILITY_NOT_REDUCED",
+              transportType: "driving"
             }
         case 'UPDATE_MAP_MODE':
             return {isDarkMode: action.payload }
