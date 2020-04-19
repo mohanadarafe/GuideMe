@@ -192,7 +192,7 @@ describe("Outdoor Directions Feature", () => {
     * 14. The first floor is examined and scrolled through
     * 14. The eigth floor is examined and scrolled through
     */
-  it("Get directions between building and classroom and route directions", async () => {
+  it.skip("Get directions between building and classroom and route directions", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("H819");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
