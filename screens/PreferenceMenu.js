@@ -1,5 +1,5 @@
 import React, {useLayoutEffect} from "react";
-import { View, Text, StyleSheet, AsyncStorage } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Icon, Button } from "native-base";
 import { connect } from "react-redux";
 import { store } from "../redux/reducers/index";
@@ -12,9 +12,14 @@ function mapStateToProps (transportType) {
 
 function mapDispatchToProps (dispatch) {
     return {
-        setPersonaType: (value, darkMode) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: {value: value, darkMode: darkMode} }),
-        setMobilityReduced: (value, darkMode) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: {value: value, darkMode: darkMode} }),
-        setMethodOfTravel: (value, darkMode) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: {value: value, darkMode: darkMode} }),
+        setPreferenceOptions: (persona, mobility, transport, darkMode) => dispatch({ 
+            type: "UPDATE_PREFERENCE_OPTIONS", 
+            payload: {
+            persona: persona, 
+            mobility: mobility, 
+            transport: transport, 
+            darkMode: darkMode
+        }})
     }
 }
 
@@ -41,37 +46,13 @@ export function PreferenceMenu (props) {
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState ? mobilitySavedState : null });
     const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState ? transportSavedState : null });
 
-    let firstRow = onPressFirstCategory.selectedButton;
-    let secondRow = onPressSecondCategory.selectedButton;
-    let thirdRow = onPressThirdCategory.selectedButton;
-
-    if (firstRow != undefined)
-        AsyncStorage.setItem("firstCategory", onPressFirstCategory.selectedButton.toString());
-
-    if (secondRow != undefined)
-        AsyncStorage.setItem("secondCategory", onPressSecondCategory.selectedButton.toString());
-
-    if (thirdRow != undefined)
-        AsyncStorage.setItem("thirdCategory", onPressThirdCategory.selectedButton.toString());
-
-    if (firstRow == undefined && secondRow == undefined && thirdRow === undefined) {
-        firstRow = "";
-        secondRow = "";
-        thirdRow = "";
-        AsyncStorage.setItem("firstCategory", firstRow);
-        AsyncStorage.setItem("secondCategory", secondRow);
-        AsyncStorage.setItem("thirdCategory", thirdRow);
-    }
-
     const goToPreviewDirections = () => {
-        props.navigation.navigate("PreviewDirections", {
-            personaType: onPressFirstCategory.selectedButton,
-            mobilityType: onPressSecondCategory.selectedButton,
-            transportType: onPressThirdCategory.selectedButton,
-        });
+        props.setPreferenceOptions(onPressFirstCategory.selectedButton, onPressSecondCategory.selectedButton, onPressThirdCategory.selectedButton, isDarkedMode);
+        props.navigation.navigate("PreviewDirections");
     };
 
     const goToIndoorMap = () => {
+        props.setPreferenceOptions(onPressFirstCategory.selectedButton, onPressSecondCategory.selectedButton, onPressThirdCategory.selectedButton, isDarkedMode);
         props.navigation.navigate("IndoorMapView", {
             personaType: onPressFirstCategory.selectedButton,
             mobilityType: onPressSecondCategory.selectedButton,
@@ -84,15 +65,12 @@ export function PreferenceMenu (props) {
         switch (category) {
             case "PersonaType":
                 setOnPressFirstCategory({selectedButton: value});
-                props.setPersonaType(value, isDarkedMode);
                 break;
             case "Mobility":
                 setOnPressSecondCategory({selectedButton: value});
-                props.setMobilityReduced(value, isDarkedMode);
                 break;
             case "MethodOfTravel":
                 setOnPressThirdCategory({selectedButton: value});
-                props.setMethodOfTravel(value, isDarkedMode);
                 break;
             default:
                 return null;
@@ -102,16 +80,24 @@ export function PreferenceMenu (props) {
 
     useLayoutEffect(() => {
         const unsubscribe = store.subscribe(() => {
-            setIsDarkMode(store.getState().isDarkMode)
+            setIsDarkMode(store.getState().isDarkMode);
+            setOnPressFirstCategory({selectedButton: store.getState().personaType});
+            setOnPressSecondCategory({selectedButton: store.getState().mobilityReducedType});
+            setOnPressThirdCategory({selectedButton: store.getState().transportType});
+
         });
         return function cleanUp() {
             unsubscribe();
         }
     });
 
+    useLayoutEffect(() => {
+        props.setPreferenceOptions(onPressFirstCategory.selectedButton, onPressSecondCategory.selectedButton, onPressThirdCategory.selectedButton, isDarkedMode);
+    }, [onPressFirstCategory.selectedButton, onPressSecondCategory.selectedButton, onPressThirdCategory.selectedButton])
+
     return (
         <View style={styles.container}>
-            <Icon id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={() => { (isIndoor ? goToIndoorMap : goToPreviewDirections); }} />
+            <Icon id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={isIndoor ? goToIndoorMap : goToPreviewDirections } />
 
             <Text style={styles.mainLabel}>Preferences</Text>
 

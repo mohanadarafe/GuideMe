@@ -23,15 +23,20 @@ const initialState = {
   }
   const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'UPDATE_TRANSPORT_TYPE':
+        case 'UPDATE_PREFERENCE_OPTIONS':
             return { 
-              transportType: action.payload.value,
+              mobilityReducedType: action.payload.mobility,
+              personaType: action.payload.persona,
+              transportType: action.payload.transport,
               isDarkMode: action.payload.darkMode
             }
         case 'UPDATE_SELECTED_BUILDING':
             return { 
               selectedBuildingName: action.payload.selectedBuilding,
-              isDarkMode: action.payload.darkMode
+              isDarkMode: action.payload.darkMode,
+              personaType: "UNDERGRADUATE",
+              mobilityReducedType: "MOBILITY_NOT_REDUCED",
+              transportType: "driving"
             }
         case 'UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER':
             return { 

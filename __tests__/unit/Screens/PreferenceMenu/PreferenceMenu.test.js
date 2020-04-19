@@ -2,15 +2,24 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {PreferenceMenu} from "../../../../screens/PreferenceMenu";
 import { shallow } from 'enzyme';
-import { Icon, Button } from "native-base";
 
 
 describe("Preference Menu Screen", () => {
+
+  const setState = jest.fn();
+  const useStateSpy = jest.spyOn(React, "useState");
+  useStateSpy.mockImplementation((init) => [init, setState]);
+  const props = {
+    isFetching: false,
+    dispatch: jest.fn(),
+    setPreferenceOptions: (value) => {return value},
+  }
+
     test("renders correctly", () => {
       const navigation = { getParam: (param, defaultValue) => {
           return "indoor";
         }};
-      const tree = renderer.create(<PreferenceMenu navigation={navigation} />).toJSON();
+      const tree = renderer.create(<PreferenceMenu {...props} navigation={navigation} />).toJSON();
       expect(tree).toMatchSnapshot();
     });
 
@@ -23,7 +32,7 @@ describe("Preference Menu Screen", () => {
           return "Hall Building"
         }
       };
-      const prefWrapper = shallow(<PreferenceMenu navigation={navigation} />);
+      const prefWrapper = shallow(<PreferenceMenu {...props} navigation={navigation} />);
       prefWrapper.find("#prefIcon").props().onPress();
     });
 
@@ -36,7 +45,7 @@ describe("Preference Menu Screen", () => {
           return "Hall Building"
         }
       };
-      const prefWrapper = shallow(<PreferenceMenu navigation={navigation} />);
+      const prefWrapper = shallow(<PreferenceMenu {...props} navigation={navigation} />);
       prefWrapper.find("#prefIcon").props().onPress();
     });
 
@@ -55,7 +64,7 @@ describe("Preference Menu Screen", () => {
           return "indoor"
         }
       };
-      const prefWrapper = shallow(<PreferenceMenu navigation={navigation} setPersonaType={setPersonaType} setMobilityReduced={setMobilityReduced} setMethodOfTravel={setMethodOfTravel} />);
+      const prefWrapper = shallow(<PreferenceMenu {...props} navigation={navigation} setPersonaType={setPersonaType} setMobilityReduced={setMobilityReduced} setMethodOfTravel={setMethodOfTravel} />);
       prefWrapper.find("#personaBtn").props().onPress();
       prefWrapper.find("#personaBtnUnderGrad").props().onPress();
       prefWrapper.find("#personaBtnVisitor").props().onPress();

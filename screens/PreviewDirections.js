@@ -236,6 +236,7 @@ function PreviewDirections (props) {
     useLayoutEffect(() => {
         const unsubscribe = store.subscribe(() => {
             setTransportType(store.getState().transportType);
+            setIsDarkMode(store.getState().isDarkMode);
         });
         return function cleanUp () {
             unsubscribe();
@@ -250,15 +251,6 @@ function PreviewDirections (props) {
 
         };
     }, [transportType]);
-
-    useLayoutEffect(() => {
-        const unsubscribe = store.subscribe(() => {
-            setIsDarkMode(store.getState().isDarkMode)
-        });
-        return function cleanUp() {
-            unsubscribe();
-        }
-    });
 
 
     return (
