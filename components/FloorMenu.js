@@ -91,9 +91,10 @@ export function FloorMenu(props) {
   });
 
   return (
-    <View testID="floorBarMenu">
+    <View testID="floorBarMenu" >
       {selectedBuilding === "Hall Building" && (
         <SwitchSelector
+          id = "floor_selected"
           style={styles.selector}
           options={hallFloors}
           initial={floorNumber-1}
@@ -105,6 +106,7 @@ export function FloorMenu(props) {
       )}
       {selectedBuilding === "MB Building" && (
         <SwitchSelector
+        id = "floor_selected"
           style={styles.selector}
           options={jmsbFloors}
           initial={floorNumber-1}
@@ -116,6 +118,7 @@ export function FloorMenu(props) {
       )}
       {selectedBuilding === "VL Building" && (
         <SwitchSelector
+        id = "floor_selected"
           style={styles.selector}
           options={vlFloors}
           initial={floorNumber-1}

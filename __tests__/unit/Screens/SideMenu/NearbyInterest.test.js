@@ -13,10 +13,7 @@ describe("Nearby interest component", () => {
   const navigation = {
     getParam: (param, defaultValue) => {
       return "Tim Hortons"
-    },
-    openDrawer: (param, defaultValue) => {
-      return "SideMenu"
-    },
+    }
   };
 
   test("renders correctly", () => {
@@ -30,6 +27,14 @@ describe("Nearby interest component", () => {
   });
 
   test("click on side menu", () => {
+    const navigation = {
+      getParam: (param, defaultValue) => {
+        return null
+      },
+      openDrawer: (param, defaultValue) => {
+        return "SideMenu"
+      },
+    };
     const wrapper = shallow(<NearbyInterest navigation={navigation}/>);
     wrapper.find(TouchableOpacity).at(0).simulate('onPress')
   });
