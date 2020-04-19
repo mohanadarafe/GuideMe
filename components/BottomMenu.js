@@ -27,7 +27,6 @@ function BottomMenu (props) {
     const previewDirections = props.previewMode;
     const from = props.from;
     const to = props.to;
-    
 
     const goBack = () => {
         props.navigation.goBack();
@@ -182,7 +181,7 @@ function BottomMenu (props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu" testID="bottomMenuInitalView">
+            <View style={styles.container} data-test="BottomMenu">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
