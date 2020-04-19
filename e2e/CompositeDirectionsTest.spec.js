@@ -37,7 +37,7 @@ describe("Composite Directions Feature", () => {
   * 14. The first floor is examined and scrolled through
   * 14. The eigth floor is examined and scrolled through
   */
-  it("Get directions and naviagte from a building (D building) to a classroom (H819)", async () => {
+  it.skip("Get directions and naviagte from a building (D building) to a classroom (H819)", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("H819");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
