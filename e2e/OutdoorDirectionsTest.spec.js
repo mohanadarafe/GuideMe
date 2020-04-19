@@ -150,10 +150,10 @@ describe("Outdoor Directions Feature", () => {
   * 11. Check if the directions button exists
   * 12. Click the directions button three times will checking
   */
-  it("Get directions between buildings and route directions", async () => {
+  it.skip("Get directions between buildings and route directions", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("EN Building");
-    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
     await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("Hall Building");
@@ -174,7 +174,46 @@ describe("Outdoor Directions Feature", () => {
 
   });
 
+  /**Scenario: Get directions from a classroom to a building
+    * US-
+    * 1. Click on the search bar
+    * 2. Enter the name of the classroom (H819)
+    * 3. Select the corresponding item from the dropdown list
+    * 4. Click on GET DIRECTIONS button
+    * 5. Click on the FROM search bar
+    * 6. Enter the number of a building from the SGW campus: "D Building"
+    * 7. Select the corresponding item from the dropdown list
+    * 8. Click on VIEW ROUTE
+    * 9. Check that the preview map view exists
+    * 10. Check if the start button exists
+    * 11. Check if the directions button exists
+    * 12. Click the directions button three times will checking
+    */
+  it("Get directions between building and classroom and route directions", async () => {
+    await element(by.id("Map_searchBar")).tap();
+    await element(by.id("Map_searchBar")).typeText("H819");
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("BottomMenu_getDirectionsButton")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("D Building");
+    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
+    await expect(element(by.id("PreviewDirections_MapView"))).toExist();
+    await expect(element(by.id("BottomMenu_PreferenceStartButton"))).toExist();
+    await element(by.id("BottomMenu_PreferenceStartButton")).tap();
+
+    await expect(element(by.id("Directions_BottomRightButton"))).toExist();
+    await element(by.id("Directions_BottomRightButton")).tap();
+
+    await expect(element(by.id("Directions_BottomRightButton"))).toExist();
+    await element(by.id("Directions_BottomRightButton")).tap();
+
+    await expect(element(by.id("Directions_BottomRightButton"))).toExist();
+    await element(by.id("Directions_BottomRightButton")).tap();
 
 
+
+
+  });
 
 });

@@ -143,19 +143,19 @@ describe("Exploring the map Feature", () => {
     await expect(element(by.label("Hall Building")).atIndex(2)).toExist();
   });
 
-    /** Scenario: Select a building as a starting point by typing its name (EV building)
-   * US-11 : As a user, I want to be able to select a start building by typing its name
-   * 1. Click on the searchBar
-   * 2. Enter the name of a building: "hall building"
-   * 3. Select the corresponding item from the dropdown list
-   * 4. Check that the GET DIRECTIONS button exist
-   * 5. Click Get DIRECTIONS button
-   * 6. Check you get to the get directions screen and the view route button is disabled
-   * 7. Click on the FROM Search Bar
-   * 8. Enter the name of a building (EV building)
-   * 9. Select the corresponding item from the dropdown list
-   * 10. Check that FROM search bar is filled with the building full name "Henry F. Hall Building"
-   */
+  /** Scenario: Select a building as a starting point by typing its name (EV building)
+ * US-11 : As a user, I want to be able to select a start building by typing its name
+ * 1. Click on the searchBar
+ * 2. Enter the name of a building: "hall building"
+ * 3. Select the corresponding item from the dropdown list
+ * 4. Check that the GET DIRECTIONS button exist
+ * 5. Click Get DIRECTIONS button
+ * 6. Check you get to the get directions screen and the view route button is disabled
+ * 7. Click on the FROM Search Bar
+ * 8. Enter the name of a building (EV building)
+ * 9. Select the corresponding item from the dropdown list
+ * 10. Check that FROM search bar is filled with the building full name "Henry F. Hall Building"
+ */
   it.skip("Select a building as a destination point by typing its name (Hall building)", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("hall building");
