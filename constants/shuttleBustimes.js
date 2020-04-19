@@ -1,3 +1,6 @@
+/**
+ * This function returns the shuttle bus times for Loyola & the SGW campuses
+ */
 export const ShuttleBusTimes = () => {
     const schedule = {
         "Loyola": {
