@@ -44,6 +44,7 @@ export function Map (props) {
         <View testID="Map_mapView" data-test="MapComponent">
             <View>
                 <MapView
+                    id="mainMap"
                     data-test="MapViewComponent"
                     ref={mapRef}
                     style={styles.map}
