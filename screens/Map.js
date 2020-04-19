@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, {useLayoutEffect} from "react";
 import { StyleSheet, Keyboard  } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import BuildingHighlight  from "../components/BuildingHighlight";
@@ -13,7 +13,8 @@ import PropTypes from "prop-types";
 import { LocationMarker } from "../components/locationMarker";
 import {CampusRegion} from "../constants/buildingData";
 import { connect } from "react-redux";
-
+import { store } from "../redux/reducers/index";
+import {darkMode} from "../assets/styling/mapDarkMode";
 
 function mapStateToProps(state) {
     return {
@@ -24,7 +25,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        setSelectedBuildingName: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
+        setSelectedBuildingName: (value, darkMode) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: {selectedBuilding: value, darkMode: darkMode} }),
     }
 }
 
@@ -38,7 +39,17 @@ function mapDispatchToProps(dispatch) {
 export function Map (props) { 
 
     const [isMapClicked, setIsMapClicked] = React.useState(false);
+    const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
     const mapRef = React.useRef(null);
+
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setIsDarkMode(store.getState().isDarkMode)
+        });
+        return function cleanUp() {
+            unsubscribe();
+        }
+    });
     
     return (
         <View testID="mapView" data-test="MapComponent">
@@ -54,6 +65,7 @@ export function Map (props) {
                     showsCompass={true}
                     showsBuildings={true}
                     showsIndoors={false}
+                    customMapStyle = {isDarkedMode ? darkMode : []} 
                     onPress = {() => { 
                         if(isMapClicked) {
                             setIsMapClicked(false);
@@ -62,7 +74,7 @@ export function Map (props) {
                         else {
                             setIsMapClicked(true);
                             Keyboard.dismiss();
-                            props.setSelectedBuildingName(null);
+                            props.setSelectedBuildingName(null, isDarkedMode);
                         }
                     }}
 
