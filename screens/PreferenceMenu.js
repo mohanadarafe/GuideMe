@@ -29,7 +29,7 @@ function mapDispatchToProps(dispatch) {
  * is set automatically (but can be modified) and the "to" contains the destination
  */
 
-function PreferenceMenu (props) {
+export function PreferenceMenu (props) {
 
     const personaSavedState = props.navigation.getParam("personaType", "null");
     const mobilitySavedState = props.navigation.getParam("mobilityType", "null");
