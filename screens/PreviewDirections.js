@@ -242,8 +242,6 @@ function PreviewDirections(props) {
         }
     });
 
-    /**
-     */
     useEffect(() => {
         fetchData();
         return function cleanUp() {
@@ -270,7 +268,7 @@ function PreviewDirections(props) {
                         strokeWidth={5}
                         strokeColor={step.polylines.color}
                     />
-                )) : <Polyline
+                )) : <Polyline testID="PreviewDirection_MapViewDefaultPolyline"
                         coordinates={decodedPolylines}
                         strokeWidth={5}
                         strokeColor="pink"

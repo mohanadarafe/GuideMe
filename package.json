@@ -117,7 +117,7 @@
     "@iconify/icons-fa-solid": "^1.0.7",
     "@iconify/react": "^1.1.2",
     "babel-preset-expo": "^8.1.0",
-    "detox": "^16.0.1",
+    "detox": "^16.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",

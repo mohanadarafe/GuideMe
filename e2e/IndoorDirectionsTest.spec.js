@@ -36,7 +36,7 @@ describe("Indoor Directions Feature", () => {
    * 12. Select the TO room floor (8th floor)
    * 13. Check that the path on the TO floor exists
    */
-  it("Getting directions from 1 room to another room on different floors", async () => {
+  it.skip("Getting directions from 1 room to another room on different floors", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("H813");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
