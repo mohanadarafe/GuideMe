@@ -6,6 +6,20 @@ import { AsyncStorage, FlatList, StyleSheet, Switch, Text, TouchableOpacity, Vie
 import { CheckBox, ListItem } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
+import { connect } from "react-redux";
+
+
+function mapStateToProps(state) {
+    return {
+        isDarkMode: state.isDarkMode
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setDarkMode: (value) => dispatch({ type: "UPDATE_MAP_MODE", payload: value }),
+    }
+}
 
 /**
  * Description: This method holds the toggle switches 
@@ -16,7 +30,7 @@ import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 /**Prop passed
 * @param  {} navigation props.navigation is the name of the object from Navigator library
 */
-function Settings(props) {
+export function Settings(props) {
     const [switchVal1, setSwitchVal1] = React.useState(false);
     const [switchVal2, setSwitchVal2] = React.useState(false);
     const [calendarList, setCalendarList] = React.useState(null);
@@ -128,12 +142,12 @@ function Settings(props) {
             <View style={styles.scrollContainer}>
                 <ScrollView scrollEnabled={false}>
                     <View style={styles.container1}>
-                        <Text style={styles.container1Text}>Notifications</Text>
+                        <Text style={styles.container1Text}>Map Dark mode</Text>
                         <Text style={styles.container1SubText}>Current Status is {switchLabel1}</Text>
                         <View style={styles.toggle}>
                             <Switch
                                 value={switchVal1}
-                                onValueChange={(val) => setSwitchVal1(val)}>
+                                onValueChange={(val) => { setSwitchVal1(val); props.setDarkMode(val)}}>
                             </Switch>
                         </View>
                     </View>
@@ -267,4 +281,6 @@ const settingsStyle = {
 
 export const styles = StyleSheet.create({...sideMenuStyle, ...settingsStyle});
 
-export default Settings;
+// export default Settings;
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+

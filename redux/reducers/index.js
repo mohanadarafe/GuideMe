@@ -18,24 +18,30 @@ const initialState = {
   personaType: "UNDERGRADUATE",
   mobilityReducedType: "MOBILITY_NOT_REDUCED",
   transportType: "driving",
-  searchItemMarker: null
+  searchItemMarker: null,
+  isDarkMode: false
   }
   const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'UPDATE_TRANSPORT_TYPE':
-            return { transportType: action.payload}
+            return { 
+              transportType: action.payload.value,
+              isDarkMode: action.payload.darkMode
+            }
         case 'UPDATE_SELECTED_BUILDING':
-            return { selectedBuildingName: action.payload}
-        case 'SEARCH_BAR_VALUE':
-            return { mainSearchBarDestination: action.payload}
-        case 'SEARCH_BAR_MARKER':
-            return { searchItemMarker: action.payload}
+            return { 
+              selectedBuildingName: action.payload.selectedBuilding,
+              isDarkMode: action.payload.darkMode
+            }
         case 'UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER':
             return { 
               searchItemMarker: action.payload.coordinates,
               selectedBuildingName: action.payload.name,
-              mainSearchBarDestination: action.payload.name
+              mainSearchBarDestination: action.payload.name,
+              isDarkMode: action.payload.darkMode
             }
+        case 'UPDATE_MAP_MODE':
+            return {isDarkMode: action.payload }
     }
     return state;
   }

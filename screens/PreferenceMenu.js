@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useLayoutEffect} from "react";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import { connect } from "react-redux";
+import { store } from "../redux/reducers/index";
 
 function mapStateToProps(transportType) {
     return {
@@ -11,9 +12,9 @@ function mapStateToProps(transportType) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        setPersonaType: (value) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: value }),
-        setMobilityReduced: (value) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: value }),
-        setMethodOfTravel: (value) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: value }),
+        setPersonaType: (value, darkMode) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: {value: value, darkMode: darkMode} }),
+        setMobilityReduced: (value, darkMode) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: {value: value, darkMode: darkMode} }),
+        setMethodOfTravel: (value, darkMode) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: {value: value, darkMode: darkMode} }),
     }
 }
 
@@ -35,11 +36,10 @@ function PreferenceMenu (props) {
     const mobilitySavedState = props.navigation.getParam("mobilityType", "null");
     const transportSavedState = props.navigation.getParam("transportType", "null");
     const isIndoor = props.navigation.getParam("indoor", "null");
-
+    const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
     const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState ? personaSavedState : null });
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState ? mobilitySavedState : null });
     const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState ? transportSavedState : null });
-
 
     let firstRow = onPressFirstCategory.selectedButton;
     let secondRow = onPressSecondCategory.selectedButton;
@@ -84,21 +84,30 @@ function PreferenceMenu (props) {
         switch (category) {
             case "PersonaType":
                 setOnPressFirstCategory({selectedButton: value});
-                props.setPersonaType(value);
+                props.setPersonaType(value, isDarkedMode);
                 break;
             case "Mobility":
                 setOnPressSecondCategory({selectedButton: value});
-                props.setMobilityReduced(value);
+                props.setMobilityReduced(value, isDarkedMode);
                 break;
             case "MethodOfTravel":
                 setOnPressThirdCategory({selectedButton: value});
-                props.setMethodOfTravel(value);
+                props.setMethodOfTravel(value, isDarkedMode);
                 break;
             default:
                 return null
         }
         
     }
+
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setIsDarkMode(store.getState().isDarkMode)
+        });
+        return function cleanUp() {
+            unsubscribe();
+        }
+    });
 
     return (
         <View style={styles.container}>
