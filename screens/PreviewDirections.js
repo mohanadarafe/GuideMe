@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useLayoutEffect } from "react";
 import { StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Polyline } from "react-native-maps";
 import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
+import { useStore } from 'react-redux'
 
 /**
  * Description: This method act as an interface. After taking the leg of the response
@@ -138,17 +139,16 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
  * 
- * Description: This is our main screen which includes all the components inside a map.
- * FIXME: 1. Direction, the headers in the Direction is not properly changing his UI
- *           more specifically the height.
  * 
  */
-function PreviewDirections (props) {
-
+function PreviewDirections(props) {
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
-    const [outdoorTransportType, setOutdoorTransportType] = React.useState("driving");
+    const [transportType, setTransportType] = React.useState(null);
     const mapRef = useRef(null);
+    const store = useStore();
+
+
 
     /**
       * Description: Go back to previous screen method.
@@ -163,6 +163,7 @@ function PreviewDirections (props) {
     const toCoordinates = props.navigation.getParam("To", null);
     const fromName = props.navigation.getParam("fromName", null);
     const toName = props.navigation.getParam("toName", null);
+
     if (!fromCoordinates || !toCoordinates) {
         alert("Sorry, could not load directions. The Starting Point or Destination might be wrong. Please Try again.");
         goBackPressHandler();
@@ -171,23 +172,24 @@ function PreviewDirections (props) {
     const destination = `${toCoordinates.latitude},${toCoordinates.longitude}`;
     // The variables retrived from the preference page 
 
+
     /**
-         * Description: fetchData() is an async method that makes the API request to Google Maps.
-         * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
-         * @param {*} transportType 
-        */
+     * Description: fetchData() is an async method that makes the API request to Google Maps.
+     * Particularity: Requires origin, destination latitudes and longitudes as well the API key. 
+     * @param {*} transportType 
+    */
     const fetchData = async () => {
         try {
             // Retrieving the apiKey from the AsyncStorage.
             let keyId = await AsyncStorage.getItem("apiKeyId");
-            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${outdoorTransportType}`);
+            let resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${keyId}&mode=${transportType}`);
             const jsonResponse = await resp.json();
             if (jsonResponse && jsonResponse.routes.length >= 1) { //Added for better error handling. A.U
                 const decodedPoints = decodedPolylinesAlgo(jsonResponse.routes[0].overview_polyline.points);
                 setDecodedPolylines(decodedPoints);
                 updateMapRegionToOverallPath(decodedPoints);
                 //Command Pattern
-                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0], outdoorTransportType);
+                let filteredInstruction = getFilteredDetailedInstructions(jsonResponse.routes[0].legs[0], transportType);
                 filteredInstruction.generalRouteInfo.overviewPolyline = decodedPoints;
                 filteredInstruction.generalRouteInfo.isStartAddressClassRoom = fromCoordinates.isClassRoom ? fromCoordinates.isClassRoom : null;
                 filteredInstruction.generalRouteInfo.isEndAddressClassRoom = toCoordinates.isClassRoom ? toCoordinates.isClassRoom : null;
@@ -230,29 +232,25 @@ function PreviewDirections (props) {
 
         }, 100);
     };
-    /**
-     * This method will fetch the value of the transport Type that is set in the asyncStorange.
-     * By default, the value is driving. 
-     */
-    const fetchTransportType = async () => {
-        let name = await AsyncStorage.getItem("thirdCategory");
-        if (name != null) {
-        setOutdoorTransportType(name);
+
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setTransportType(store.getState().transportType);
+        });
+        return function cleanUp() {
+            unsubscribe();
         }
-    };
+    });
+
     /**
-     * The useEffect is a hook that will constantly (every second) calls fetchTransportType in case the value of the transport changes
-     * in the PreferenceMenu context. When that happens, the state outdoorTransportType will change which will trigger the fetchData() 
-     * method to be call again. This logic must be implemented in the IndoorMap context since we want to know the other two fields: 
-     * persona and mobility type.
      */
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            fetchTransportType();
-        }, 1);
         fetchData();
-        return () => clearInterval(intervalId);
-    }, [outdoorTransportType]);
+        return function cleanUp() {
+
+        }
+    }, [transportType]);
+
 
     return (
         <View testID="PreviewDirections_ScreenView">
@@ -268,38 +266,38 @@ function PreviewDirections (props) {
             >
                 {detailedInstructionsObject ? detailedInstructionsObject.steps.map((step, index) => (
                     <Polyline testID="PreviewDirection_MapViewPolyline" key={index}
-                        coordinates = {step.polylines.values}
-                        strokeWidth = {5}
-                        strokeColor = {step.polylines.color}
-                    />     
-                    )) : <Polyline testID="PreviewDirection_MapViewDefaultPolyline"
+                        coordinates={step.polylines.values}
+                        strokeWidth={5}
+                        strokeColor={step.polylines.color}
+                    />
+                )) : <Polyline
                         coordinates={decodedPolylines}
                         strokeWidth={5}
                         strokeColor="pink"
-                     /> 
+                    />
                 }
             </MapView>
 
             <View testID="PreviewDirections_NavigationHeaderView" style={styles.navigationHeader}>
                 <View style={styles.navigationHeaderNestedView}>
-                    <TouchableOpacity onPress={goBackPressHandler}>
+                    <TouchableOpacity onPress={goBackPressHandler} style={styles.backButtonContainer}>
                         <Icon testID="PreviewDirections_GoBackIcon" name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
                         <Text testID="PreviewDirections_ScreenTitleText" style={styles.DirectionTextHeaderStyle}>Preview: Route Directions</Text>
                         <View style={styles.lineHeader}></View>
-                    </View> 
+                    </View>
                 </View>
                 <View style={styles.lowerHeaderContainer}>
-                    <View style ={styles.fortmatLowerHeader}>
+                    <View style={styles.fortmatLowerHeader}>
                         <View style={styles.addressContainer}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>From: </Text>
                             </View>
-                            <Text testID="PreviewDirections_FromLocationText" style={styles.directionLabels}>{fromName ? fromName: "N/A"}</Text>
+                            <Text testID="PreviewDirections_FromLocationText" style={styles.directionLabels}>{fromName ? fromName : "N/A"}</Text>
                         </View>
-                        <View style={styles.addressContainer}>
+                        <View style={styles.addressContainer2}>
                             <View style={styles.iconAndTextContainter}>
                                 <Icon name="location" type="Entypo" style={styles.sideIcons} />
                                 <Text style={styles.fromToSideLabels}>To: </Text>
@@ -333,14 +331,13 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        marginTop: 25,
-        flexDirection: "column"
+        top: "15%",
+        flexDirection: "column",
     },
     fortmatLowerHeader: {
-        flexDirection: "column", 
-        alignItems: "center", 
-        justifyContent:"center", 
-        height: "100%",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
     },
     directionText: {
         justifyContent: "center",
@@ -393,25 +390,34 @@ export const styles = StyleSheet.create({
         borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
-        top: "10%"
+        bottom: "20%",
     },
     backIcon: {
         color: "white",
+        width: "100%",
+    },
+    backButtonContainer: {
         left: "5%",
-        top: "40%"
+        top: "10%",
+        textAlign: "center",
+        width: "10%",
+        height: "100%"
     },
     directionTextHeader: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        bottom: "78%"
     },
     DirectionTextHeaderStyle: {
         color: "white",
-        fontSize: 22
+        fontSize: 20,
+        bottom: "100%",
+        fontFamily: "encodeSansExpanded",
     },
     fromToSideLabels: {
         fontSize: 20,
         color: "white",
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     sideIcons: {
         color: "white",
@@ -429,13 +435,19 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
+    addressContainer2: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        top: "4%"
+    },
     lowerHeaderContainer: {
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
         height: "50%",
+        bottom: "68%"
     }
-
 });
 
 export default PreviewDirections;

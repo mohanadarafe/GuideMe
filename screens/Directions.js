@@ -13,7 +13,6 @@ import CurrentLocationButton from "../components/CurrentLocationButton";
 /**
  * US1 - As a user, I would like to navigate through SGW campus.
  * US2 - As a user, I would like to navigate through Loyola campus.
- * TODO: There are other user stories to refer.
  * This is our main screen which includes all the components inside a map.
  */
 function Directions(props) {
@@ -71,7 +70,6 @@ function Directions(props) {
     /**
      * The useEffect is a hook that will set the state FirstInstruction and LastInstruction to true when the conditions are met.
      * Also, it calls the indoor scenario.
-     * FIXME: I think the if and if else are not doing anything. To review. Is this method called multiple times or only once? A.J.U.U
      */
     useEffect(() => {
         if (instructionIndex == 0) {
@@ -177,7 +175,7 @@ function Directions(props) {
             </View>
             <View style={styles.navigationHeader}>
                 <View style={styles.navigationHeaderNestedView}>
-                    <TouchableOpacity onPress={goBackPressHandler}>
+                    <TouchableOpacity onPress={goBackPressHandler} style={styles.backButtonContainer}>
                         <Icon name="md-arrow-round-back" style={styles.backIcon}></Icon>
                     </TouchableOpacity>
                     <View style={styles.directionTextHeader}>
@@ -282,34 +280,43 @@ export const styles = StyleSheet.create({
         position: "absolute"
     },
     navigationHeaderNestedView: {
-        height: "38%",
-        marginTop: 25,
+        top: "15%",
         flexDirection: "column",
     },
     lowerHeader: {
-        flexDirection: "column",
         width: "100%",
-        maxHeight: "60%",
-        backgroundColor: "#2A2E43"
+        justifyContent: "center",
+        alignItems: "center",
+        height: "50%",
+        bottom: "65%"
     },
     directionTextHeader: {
         justifyContent: "center",
         alignItems: "center",
+        bottom: "78%"
     },
     DirectionTextHeaderStyle: {
         color: "white",
-        fontSize: 25
+        fontSize: 20,
+        bottom: "100%",
+        fontFamily: "encodeSansExpanded",
     },
     lineHeader: {
         borderBottomColor: "white",
         width: "100%",
         borderBottomWidth: 2,
-        top: "10%"
+        bottom: "20%",
     },
     backIcon: {
         color: "white",
+        width: "100%",
+    },
+    backButtonContainer: {
         left: "5%",
-        top: "40%"
+        top: "10%",
+        textAlign: "center",
+        width: "10%",
+        height: "100%"
     },
     bottomArrowDirectionContainer: {
         top: "90%",
@@ -404,16 +411,14 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     detailedInstructions: {
-        // width: "100%",
-        // flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%"
+        height: "100%",
     },
     infoMetrics: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "90%"
+        width: "90%",
     },
     stepMetrics: {
         fontSize: 18,

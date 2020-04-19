@@ -36,16 +36,12 @@ export function IndoorScenario(props) {
                         return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={"VL Building"}/>;
                     }
                 }
-                break;
             case "SAME_FLOOR":
                 return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>
-                break;
             case "DIFFERENT_FLOOR":
                 return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} mobility={props.mobility}/>;
-                break;
             case "DIFFERENT_BUILDING":
                 return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
-                break;
             case "NOT_INDOOR":
                 break;
         }
