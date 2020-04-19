@@ -75,11 +75,10 @@ export function Map (props) {
                 navigation = {props.navigation} 
                 mapReference = {mapRef} 
                 />
-                <View style={styles.CurrentBuildingLocation}>
-                    <CurrentBuildingLocation mapReference = {mapRef}/>
-                </View>
-                <View style={styles.CurrentLocationButton}>
-                    <CurrentLocationButton mapReference = {mapRef} />
+                <View style = {styles.overlayButtons}>
+                        <CurrentBuildingLocation mapReference = {mapRef}/>
+                        <View style = {styles.spaceBetweenOverlayedButtons}></View>
+                        <CurrentLocationButton mapReference = {mapRef} />
                 </View>
             <BottomMenu navigation={props.navigation} mapReference = {mapRef} />
             </View>
@@ -97,16 +96,15 @@ export const styles = StyleSheet.create({
     map: {
         height: "100%"
     },
-    CurrentBuildingLocation: {
-        position: "absolute",
-        top: "80%",
-        left: "80%"
-    },
-    CurrentLocationButton: {
-        position: "absolute",
-        top: "72%",
-        left: "80%"
-    }
+   overlayButtons: {
+    position: "absolute", 
+    flexDirection: "column", 
+    top:"70%", 
+    left: "80%"
+   },
+   spaceBetweenOverlayedButtons: {
+       height: "5%"
+   }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

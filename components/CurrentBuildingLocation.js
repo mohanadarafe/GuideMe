@@ -35,21 +35,7 @@ export function CurrentBuildingLocation (props) {
         });
     }
 
-    const GetCurrentLocation = () => {
-
-        getPosition().then(({ coords }) => {
-            setCurrentLocation({
-                latitude: coords.latitude,
-                longitude: coords.longitude,
-                altitude: coords.altitude
-            })
-        })
-            .catch((err) => {
-                alert(err.message);
-            });
-    }
-
-    const checkIfWithinPolygon = () => {
+    const checkIfWithinPolygon = (currentLocation) => {
 
         let withinBuilding = false;
         for (var key in coord) {
@@ -61,8 +47,8 @@ export function CurrentBuildingLocation (props) {
         }
         if (withinBuilding) {
             props.mapReference.current.animateToRegion({
-                latitude: dummyCurrentLocation.latitude,
-                longitude: dummyCurrentLocation.longitude,
+                latitude: currentLocation.latitude,
+                longitude: currentLocation.longitude,
                 latitudeDelta: 0.003,
                 longitudeDelta: 0.003
               })
@@ -80,16 +66,13 @@ export function CurrentBuildingLocation (props) {
     }
 
     const onPressHandler = () => {
-        if(currentLocation) {
-            checkIfWithinPolygon();
-        }
+        getPosition().then(({ coords }) => {
+            checkIfWithinPolygon(coords);
+        })
+        .catch(() => {
+            alert("Error while fetching your current location. Check if you have allowed this app to use your location.");
+        });
     }
-    
-
-    useEffect(() => {
-        GetCurrentLocation();
-    }, []);
-
 
     return (
         <TouchableOpacity style ={styles.layout} onPress={onPressHandler}>

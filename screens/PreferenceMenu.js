@@ -91,7 +91,6 @@ function PreferenceMenu (props) {
                 props.setMobilityReduced(value);
                 break;
             case "MethodOfTravel":
-                console.log("here");
                 setOnPressThirdCategory({selectedButton: value});
                 props.setMethodOfTravel(value);
                 break;
