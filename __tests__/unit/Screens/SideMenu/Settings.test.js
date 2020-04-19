@@ -1,9 +1,8 @@
 import React from "react";
-import Settings from "../../../../screens/Menu/Settings";
+import {Settings} from "../../../../screens/Menu/Settings";
 import renderer from "react-test-renderer";
 import { TouchableOpacity, Switch } from "react-native";
 import { shallow } from "enzyme";
-import { CheckBox } from "react-native-elements";
 
 describe("Settings component", () => {
     test("renders correctly", () => {
