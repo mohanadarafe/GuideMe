@@ -55,9 +55,9 @@ describe("Outdoor Directions Feature", () => {
     await element(by.id("Map_searchBar")).typeText("VL Building");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("Hall Building");
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("DoubleSearch_FromSearchBarView")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("Hall Building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await expect(element(by.id("PreviewDirections_MapView"))).toExist();
     await expect(element(by.id("PreviewDirections_NavigationHeaderView"))).toBeVisible();
@@ -66,10 +66,10 @@ describe("Outdoor Directions Feature", () => {
     //TODO: Find a solution for asserting the path shown on the map
     await element(by.id("PreviewDirections_GoBackIcon")).tap();
     await expect(element(by.id("DoubleSearch_ScreenView"))).toBeVisible();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapBackspaceKey();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("Ev Building");
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("DoubleSearch_FromSearchBarView")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapBackspaceKey();
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("Ev Building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await expect(element(by.id("PreviewDirections_MapView"))).toExist();
     await expect(element(by.id("PreviewDirections_NavigationHeaderView"))).toBeVisible();
@@ -109,9 +109,9 @@ describe("Outdoor Directions Feature", () => {
     await element(by.id("Map_searchBar")).typeText("VL Building");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 75 });
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("Hall Building");
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("DoubleSearch_FromSearchBarView")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("Hall Building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await expect(element(by.id("PreviewDirections_MapView"))).toExist();
     //TODO: Find a solution for asserting the path shown on the map
@@ -158,9 +158,9 @@ describe("Outdoor Directions Feature", () => {
     await element(by.id("Map_searchBar")).typeText("EN Building");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("Hall Building");
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("DoubleSearch_FromSearchBarView")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("Hall Building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await expect(element(by.id("PreviewDirections_MapView"))).toExist();
     await expect(element(by.id("BottomMenu_PreferenceStartButton"))).toBeVisible();
