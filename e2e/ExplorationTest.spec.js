@@ -57,6 +57,7 @@ describe("Exploring the map Feature", () => {
    */
   it.skip("Navigate through different indoor floors (Hall)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
     await expect(element(by.id("BottomMenu_getInsideButton"))).toBeVisible();
     await element(by.id("BottomMenu_getInsideButton")).tap();
     await expect(element(by.id("FloorMenu_floorBarMenuView"))).toExist();
@@ -88,13 +89,14 @@ describe("Exploring the map Feature", () => {
    */
   it.skip("Get more details about a building (Hall Building)", async () => {
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
     await expect(element(by.id("BottomMenu_arrowUpToMoreDetailsIcon"))).toExist();
     await element(by.id("BottomMenu_arrowUpToMoreDetailsIcon")).tapAtPoint({ x: 10, y: 20 });
     await expect(element(by.id("MoreDetails_moreInfoScrollView"))).toExist();
     await expect(element(by.label("Departments"))).toExist();
     await expect(element(by.label("Services"))).toExist();
     await expect(element(by.label("Accessibility"))).toExist();
-    await expect(element(by.id("MoreDetails_SectionListItems")).atIndex(1)).toExist;
+    await expect(element(by.id("MoreDetails_SectionListItems")).atIndex(1)).toExist();
     await element(by.id("MoreDetails_moreInfoScrollView")).swipe("up");
     await expect(element(by.id("MoreDetails_bottomArrowIcon"))).toExist();
     await element(by.id("MoreDetails_bottomArrowIcon")).tap();
@@ -132,6 +134,7 @@ describe("Exploring the map Feature", () => {
    * 6. Check that TO search bar is filled with the building name "Hall Building"
    */
   it.skip("Select a building as a destination point by clicking on it (Hall building)", async () => {
+    await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 165, y: 370 });
     await element(by.id("BottomMenu_arrowUpToMoreDetailsIcon")).tapAtPoint({ x: 10, y: 20 });
     await expect(element(by.id("MoreDetails_getDirectionsButton"))).toBeVisible();
@@ -186,7 +189,7 @@ describe("Exploring the map Feature", () => {
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     //TODO: Fix the workaround (next line) to check that "School of Irish Studies" is written in the TO search bar    
-    await expect(element(by.label("School of Irish Studies"))).toExist();
+    await expect(element(by.text("School of Irish Studies"))).toExist();
   });
 
   /** Scenario: Search for a service by name (Welcome Crew)
@@ -207,6 +210,6 @@ describe("Exploring the map Feature", () => {
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
     await expect(element(by.id("DoubleSearch_enabledViewRouteButton"))).toBeVisible();
     //TODO: Fix the workaround (next line) to check that "Welcome Crew" is written in the TO search bar    
-    await expect(element(by.label("Welcome Crew"))).toExist();
+    await expect(element(by.text("Welcome Crew"))).toExist();
   });
 });
