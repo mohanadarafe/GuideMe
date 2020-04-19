@@ -18,9 +18,9 @@ function BottomMenu (props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState(null);
     const [swtichCampus, setSwitchCampus] = React.useState(true);
     const [destination, setDestination] = React.useState("");
-    const [methodTravel, setMethodTravel] = React.useState(store.getState().transportType);
-    const [personaType, setPersonaType] = React.useState(store.getState().personaType);
-    const [mobilityReduced, setMobilityReduced] = React.useState(store.getState().mobilityReducedType);
+    const [methodTravel, setMethodTravel] = React.useState("driving");
+    const [personaType, setPersonaType] = React.useState("UNDERGRADUATE");
+    const [mobilityReduced, setMobilityReduced] = React.useState("MOBILITY_NOT_REDUCED");
     const viewIndoor = props.indoor;
     const inDirections = props.inDirections;
     const building = props.building;

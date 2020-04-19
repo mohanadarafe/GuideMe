@@ -1,8 +1,10 @@
-import {buildingData} from "../constants/buildingData";
+import { buildingData } from "../constants/buildingData";
 
 
 const buildings = buildingData();
-
+/**
+ * Coordinates of some concordia buildings
+ */
 export default {
     "h": {
         coordinates: [
@@ -110,8 +112,8 @@ export default {
     },
     "vl": {
         coordinates: [
-            { latitude: 45.45859546323396, longitude:  -73.6383855342865},
-            { latitude: 45.45911471817363, longitude:  -73.6378812789917},
+            { latitude: 45.45859546323396, longitude: -73.6383855342865 },
+            { latitude: 45.45911471817363, longitude: -73.6378812789917 },
             { latitude: 45.4592351244332, longitude: -73.63816022872925 },
             { latitude: 45.45916739594383, longitude: -73.6382246017456 },
             { latitude: 45.45949851222957, longitude: -73.63913655281067 },
@@ -123,7 +125,7 @@ export default {
             { latitude: 45.45912976897015, longitude: -73.63893270492554 },
             { latitude: 45.45908461656855, longitude: -73.63882541656494 },
             { latitude: 45.458828752276666, longitude: -73.63903999328613 },
-            { latitude: 45.45859546323396, longitude:  -73.6383855342865}
+            { latitude: 45.45859546323396, longitude: -73.6383855342865 }
         ],
         name: buildings["VL Building"].name
     }

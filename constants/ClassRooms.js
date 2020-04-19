@@ -1,3 +1,6 @@
+/**
+ * Function that returns classrooms in each specified building
+ */
 export function ClassRooms () {
   var rooms = [];
   rooms["VL Building"] = {

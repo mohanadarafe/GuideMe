@@ -1,19 +1,20 @@
-import React from "react";
+import React, {useLayoutEffect} from "react";
 import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import { connect } from "react-redux";
+import { store } from "../redux/reducers/index";
 
-function mapStateToProps(transportType) {
+function mapStateToProps (transportType) {
     return {
         transportType: transportType
-    }
+    };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
-        setPersonaType: (value) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: value }),
-        setMobilityReduced: (value) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: value }),
-        setMethodOfTravel: (value) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: value }),
+        setPersonaType: (value, darkMode) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: {value: value, darkMode: darkMode} }),
+        setMobilityReduced: (value, darkMode) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: {value: value, darkMode: darkMode} }),
+        setMethodOfTravel: (value, darkMode) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: {value: value, darkMode: darkMode} }),
     }
 }
 
@@ -35,11 +36,10 @@ export function PreferenceMenu (props) {
     const mobilitySavedState = props.navigation.getParam("mobilityType", "null");
     const transportSavedState = props.navigation.getParam("transportType", "null");
     const isIndoor = props.navigation.getParam("indoor", "null");
-
+    const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
     const [onPressFirstCategory, setOnPressFirstCategory] = React.useState({ selectedButton: personaSavedState ? personaSavedState : null });
     const [onPressSecondCategory, setOnPressSecondCategory] = React.useState({ selectedButton: mobilitySavedState ? mobilitySavedState : null });
     const [onPressThirdCategory, setOnPressThirdCategory] = React.useState({ selectedButton: transportSavedState ? transportSavedState : null });
-
 
     let firstRow = onPressFirstCategory.selectedButton;
     let secondRow = onPressSecondCategory.selectedButton;
@@ -84,25 +84,34 @@ export function PreferenceMenu (props) {
         switch (category) {
             case "PersonaType":
                 setOnPressFirstCategory({selectedButton: value});
-                props.setPersonaType(value);
+                props.setPersonaType(value, isDarkedMode);
                 break;
             case "Mobility":
                 setOnPressSecondCategory({selectedButton: value});
-                props.setMobilityReduced(value);
+                props.setMobilityReduced(value, isDarkedMode);
                 break;
             case "MethodOfTravel":
                 setOnPressThirdCategory({selectedButton: value});
-                props.setMethodOfTravel(value);
+                props.setMethodOfTravel(value, isDarkedMode);
                 break;
             default:
-                return null
+                return null;
         }
-        
-    }
+
+    };
+
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setIsDarkMode(store.getState().isDarkMode)
+        });
+        return function cleanUp() {
+            unsubscribe();
+        }
+    });
 
     return (
         <View style={styles.container}>
-            <Icon id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={() => {(isIndoor ? goToIndoorMap : goToPreviewDirections)}} />
+            <Icon id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={() => { (isIndoor ? goToIndoorMap : goToPreviewDirections); }} />
 
             <Text style={styles.mainLabel}>Preferences</Text>
 
@@ -122,7 +131,7 @@ export function PreferenceMenu (props) {
                 </Button>
 
                 <Button id="personaBtnVisitor" transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" ? "#f0b400" : "#353A50" }]}
-                   onPress={() => onPressElement("PersonaType", "VISITOR")}>
+                    onPress={() => onPressElement("PersonaType", "VISITOR")}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
 
@@ -172,7 +181,7 @@ export function PreferenceMenu (props) {
                 </Button>
 
                 <Button id="bicycle" transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "bicycling" ? "#f0b400" : "#353A50" }]}
-                   onPress={() => onPressElement("MethodOfTravel", "bicycling")}>
+                    onPress={() => onPressElement("MethodOfTravel", "bicycling")}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bicycle" style={styles.icon}></Icon>
                     </View>
@@ -182,7 +191,7 @@ export function PreferenceMenu (props) {
                 </Button>
 
                 <Button id="bus" transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "transit" ? "#f0b400" : "#353A50" }]}
-                   onPress={() => onPressElement("MethodOfTravel", "transit")}>
+                    onPress={() => onPressElement("MethodOfTravel", "transit")}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>
