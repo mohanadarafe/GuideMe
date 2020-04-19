@@ -2,10 +2,9 @@ import { createStackNavigator } from "react-navigation-stack";
 import CourseSchedule from "../screens/Menu/CourseSchedule";
 import { constantStacks } from "../constants/constantStack";
 
-const additionalScreens = constantStacks
+const additionalScreens = constantStacks;
 
 const screens = {
-
     CourseSchedule: {
         screen: CourseSchedule,
         navigationOptions: {
@@ -14,6 +13,6 @@ const screens = {
     },
 };
 
-const scheduleStack = createStackNavigator({...screens,...additionalScreens});
+const scheduleStack = createStackNavigator({ ...screens, ...additionalScreens });
 
 export default scheduleStack; 

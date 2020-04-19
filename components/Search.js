@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
@@ -6,18 +6,19 @@ import { MapData } from "./MapData";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {getCoordinates} from "../screens/DoubleSearch";
+import { store } from "../redux/reducers/index";
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
-      goToSearchedItem: state.goToSearchedItem
-  }
+    goToSearchedItem: state.goToSearchedItem
+  };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
-    goToSearchedItemAction: (coords, name) => dispatch({ 
+    goToSearchedItemAction: (coords, name, darkMode) => dispatch({ 
       type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER", 
-      payload: {coordinates: coords, name: name}})
+      payload: {coordinates: coords, name: name, darkMode: darkMode}})
   }
 }
 
@@ -32,7 +33,7 @@ function mapDispatchToProps(dispatch) {
  */
 
 function fetchData () {
-  const searchInfo = MapData({context: "Search"});
+  const searchInfo = MapData({ context: "Search" });
   return searchInfo;
 }
 
@@ -41,6 +42,7 @@ export function Search (props) {
 
   const [data, setData] = React.useState(null);
   const [searchItem, setSearchItem] = React.useState(null);
+  const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
 
   useEffect(() => {
     const items = fetchData();
@@ -51,9 +53,9 @@ export function Search (props) {
     updateSearchItem();
   }, [searchItem]);
 
-  
+
   const goToMenu = () => {
-    AsyncStorage.setItem("sideMenu", "sideMenu"); 
+    AsyncStorage.setItem("sideMenu", "sideMenu");
     props.navigation.openDrawer();
   };
 
@@ -62,9 +64,18 @@ export function Search (props) {
       props.goToSearchedItemAction({
         latitude: searchItem.coordinates.latitude,
         longitude: searchItem.coordinates.longitude
-      }, searchItem.name);
+      }, searchItem.name, isDarkedMode);
     }
   }
+
+  useLayoutEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+        setIsDarkMode(store.getState().isDarkMode)
+    });
+    return function cleanUp() {
+        unsubscribe();
+    }
+});
   
 
   return (
@@ -78,7 +89,7 @@ export function Search (props) {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => {  setSearchItem({name: item.name, coordinates: getCoordinates(item.name)});  }}
+        onItemSelect={item => { setSearchItem({ name: item.name, coordinates: getCoordinates(item.name) }); }}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}

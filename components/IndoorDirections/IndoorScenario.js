@@ -1,22 +1,26 @@
-import React from 'react';
-import { G } from 'react-native-svg';
-import { HallXCoordinates } from '../../constants/HallXCoordinates';
-import { DifferentFloorDirections } from './TypesOfDirections/DifferentFloorDirections';
-import { SameFloorDirections } from './TypesOfDirections/SameFloorDirections';
-import { DifferentBuildingDirections } from './TypesOfDirections/DifferentBuildingDirections';
-import { getFloorNumber } from './Dijkstra/DijkstraAlgorithm';
-import { LoyolaCoordinates } from '../../constants/LoyolaCoordinates';
+import React from "react";
+import { G } from "react-native-svg";
+import { HallXCoordinates } from "../../constants/HallXCoordinates";
+import { DifferentFloorDirections } from "./TypesOfDirections/DifferentFloorDirections";
+import { SameFloorDirections } from "./TypesOfDirections/SameFloorDirections";
+import { DifferentBuildingDirections } from "./TypesOfDirections/DifferentBuildingDirections";
+import { getFloorNumber } from "./Dijkstra/DijkstraAlgorithm";
+import { LoyolaCoordinates } from "../../constants/LoyolaCoordinates";
 
-export function IndoorScenario(props) {
+/**
+ * Implementation of algorithm to get indoor directions in the same floor & different buildings
+ * @param {*} props 
+ */
+export function IndoorScenario (props) {
     const rooms = HallXCoordinates();
     const loyolaRooms = LoyolaCoordinates();
 
     if (props.from && props.to) {
         const routeToTake = whichPathToTake(props.from.toString(), props.to.toString());
-       
+
         switch (routeToTake) {
             case "INTEREST":
-                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} interest={true}/>
+                return < SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} interest={true} />;
             //There are two cases here:
             //CASE I: From VL to H 
             //Start at VL, go to exit, then go to H & go upstairs
@@ -24,29 +28,29 @@ export function IndoorScenario(props) {
             //Start at H, go to exit, then go to VL & go to classroom
             case "DIFFERENT_CAMPUS":
                 if (props.from.includes("VL")) {
-                    if (props.building == "VL Building"){
-                        return <SameFloorDirections rooms={loyolaRooms} floor={props.floor} from={props.from.toString()} to={"exit"} loy={true}/>
+                    if (props.building == "VL Building") {
+                        return <SameFloorDirections rooms={loyolaRooms} floor={props.floor} from={props.from.toString()} to={"exit"} loy={true} />;
                     } else {
-                        return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={"VL Building"} to={props.to.toString()}/>;
+                        return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={"VL Building"} to={props.to.toString()} />;
                     }
                 } else {
                     if (props.building == "VL Building") {
-                        return <SameFloorDirections rooms={loyolaRooms} floor={props.floor} from={"exit"} to={props.to.toString()} loy={true}/>;
+                        return <SameFloorDirections rooms={loyolaRooms} floor={props.floor} from={"exit"} to={props.to.toString()} loy={true} />;
                     } else {
-                        return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={"VL Building"}/>;
+                        return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={"VL Building"} />;
                     }
                 }
             case "SAME_FLOOR":
-                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>
+                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} />;
             case "DIFFERENT_FLOOR":
-                return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} mobility={props.mobility}/>;
+                return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} mobility={props.mobility} />;
             case "DIFFERENT_BUILDING":
-                return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()}/>;
+                return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} />;
             case "NOT_INDOOR":
                 break;
         }
     }
-    return(
+    return (
         <G></G>
     );
 }
@@ -78,15 +82,15 @@ export const whichPathToTake = (from, to) => {
         if (from.includes(" ") && to.includes(" ")) {
             return not_indoor;
         }
-    
+
         if ((from.includes(" ") || to.includes(" ")) && from.length != to.length) {
             return different_building;
         }
-    
+
         if (getFloorNumber(from) == getFloorNumber(to)) {
             return same_floor;
         } else {
             return different_floor;
         }
     }
-}
+};

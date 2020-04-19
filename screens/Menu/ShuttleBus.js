@@ -395,6 +395,7 @@ const ShutteBusStyle = {
         backgroundColor: "#2A2E43"
     },
     svgContainer: {
+        resizeMode: "contain",
         width: "100%",
         flex: 1,
         justifyContent: "center",
@@ -409,10 +410,10 @@ const ShutteBusStyle = {
     },
     menuButtonContainer: {
         width: "100%",
-        height: "10%",
-        top: "20%",
+        height: "15%",
+        top: "17%",
     },
-}
-export const styles = StyleSheet.create({...sideMenuStyle, ...ShutteBusStyle});
+};
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...ShutteBusStyle });
 
 export default ShuttleBus;

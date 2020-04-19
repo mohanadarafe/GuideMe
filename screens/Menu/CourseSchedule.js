@@ -24,7 +24,7 @@ import { sideMenuStyle } from "../../assets/styling/sideMenuStyling.js";
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
-function CourseSchedule(props) {
+function CourseSchedule (props) {
     const [accessToken, setAccessToken] = React.useState(null);
     const [selectedCalendarId, setSelectedCalendarId] = React.useState(null);
     const [calendarEventsList, setCalendarEventsList] = React.useState(null);
@@ -45,12 +45,12 @@ function CourseSchedule(props) {
     };
 
     const getSwitchValue = async () => {
-        let switchValue = await AsyncStorage.getItem('switchVal');
+        let switchValue = await AsyncStorage.getItem("switchVal");
         setSwitchVal(switchValue);
     };
 
     const getCalendarEvents = async () => {
-        let calendarEvents = await fetch('https://www.googleapis.com/calendar/v3/calendars/' + selectedCalendarId + '/events', {
+        let calendarEvents = await fetch("https://www.googleapis.com/calendar/v3/calendars/" + selectedCalendarId + "/events", {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
         let resp = await calendarEvents.json();
@@ -60,9 +60,9 @@ function CourseSchedule(props) {
             setRefresh(false);
         }
         else {
-            setCalendarEventsList({ NoEvent: true })
+            setCalendarEventsList({ NoEvent: true });
         }
-    }
+    };
 
     const getFilteredGoogleCalendarEvents = (resp) => {
         var eventsFromCurrentDay = [];
@@ -82,14 +82,14 @@ function CourseSchedule(props) {
             return eventsFromCurrentDay;
         }
         else {
-            return ({ NoEvent: true })
+            return ({ NoEvent: true });
         }
     };
 
     const handleRefresh = () => {
         setRefresh(true);
         getCalendarEvents();
-    }
+    };
 
     /**
      * The method will slide the side menu from the right side of the screen
@@ -101,23 +101,23 @@ function CourseSchedule(props) {
 
     const goToDoubleSearch = (item) => {
         props.navigation.navigate("DoubleSearch", { CourseScheduleLocation: item.location });
-    }
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         setLoop(setInterval(() => {
             getCalendarId();
             getAccessToken();
             getSwitchValue();
         }, 1000));
         getCalendarEvents();
-        return function cleanUp() {
+        return function cleanUp () {
             clearInterval(loop);
             clearImmediate(loop);
             clearTimeout(loop);
-        }
+        };
     }, [switchVal, selectedCalendarId, accessToken]);
 
-    
+
     if (switchVal == "true" && calendarEventsList) {
         return (
             <View style={styles.container}>
@@ -146,9 +146,9 @@ function CourseSchedule(props) {
                                             size={30}
                                             iconRight
                                             iconType='material'
-                                            uncheckedIcon={'arrow-forward'}
+                                            uncheckedIcon={"arrow-forward"}
                                             uncheckedColor="#3ACCE1"
-                                            onPress={() => { goToDoubleSearch(item) }
+                                            onPress={() => { goToDoubleSearch(item); }
                                             }
                                         />}
                                 />
@@ -237,7 +237,7 @@ const courseScheduleStyle = {
         paddingLeft: "5%",
         paddingRight: "5%",
         color: "white",
-        textAlign: 'center',
+        textAlign: "center",
         alignSelf: "center",
         position: "absolute",
         fontSize: 18,
@@ -246,13 +246,13 @@ const courseScheduleStyle = {
         paddingLeft: "5%",
         paddingRight: "5%",
         color: "white",
-        textAlign: 'center',
+        textAlign: "center",
         alignSelf: "center",
         position: "absolute",
         fontSize: 18,
     }
-}
+};
 
-export const styles = StyleSheet.create({...sideMenuStyle, ...courseScheduleStyle});
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...courseScheduleStyle });
 
 export default CourseSchedule;
