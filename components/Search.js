@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, AsyncStorage } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 import { Icon } from "react-native-elements";
@@ -6,6 +6,7 @@ import { MapData } from "./MapData";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {getCoordinates} from "../screens/DoubleSearch";
+import { store } from "../redux/reducers/index";
 
 function mapStateToProps(state) {
   return {
@@ -15,9 +16,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    goToSearchedItemAction: (coords, name) => dispatch({ 
+    goToSearchedItemAction: (coords, name, darkMode) => dispatch({ 
       type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER", 
-      payload: {coordinates: coords, name: name}})
+      payload: {coordinates: coords, name: name, darkMode: darkMode}})
   }
 }
 
@@ -41,6 +42,7 @@ export function Search (props) {
 
   const [data, setData] = React.useState(null);
   const [searchItem, setSearchItem] = React.useState(null);
+  const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
 
   useEffect(() => {
     const items = fetchData();
@@ -62,9 +64,18 @@ export function Search (props) {
       props.goToSearchedItemAction({
         latitude: searchItem.coordinates.latitude,
         longitude: searchItem.coordinates.longitude
-      }, searchItem.name);
+      }, searchItem.name, isDarkedMode);
     }
   }
+
+  useLayoutEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+        setIsDarkMode(store.getState().isDarkMode)
+    });
+    return function cleanUp() {
+        unsubscribe();
+    }
+});
   
 
   return (
