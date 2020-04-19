@@ -237,7 +237,7 @@ function Directions(props) {
             }
             {
                 isLastInstruction && (indoorScenario2) &&
-                <TouchableOpacity style={styles.indoorBuilding}>
+                <TouchableOpacity testID="Directions_InsideBuildingButton" style={styles.indoorBuilding}>
                     <View >
                         <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.startAddress, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom }) }} />
                     </View>

@@ -188,6 +188,9 @@ describe("Outdoor Directions Feature", () => {
     * 10. Check if the start button exists
     * 11. Check if the directions button exists
     * 12. Click the directions button three times will checking
+    * 13. Once the destionation is reached the inside building button is clicked
+    * 14. The first floor is examined and scrolled through
+    * 14. The eigth floor is examined and scrolled through
     */
   it("Get directions between building and classroom and route directions", async () => {
     await element(by.id("Map_searchBar")).tap();
@@ -211,8 +214,16 @@ describe("Outdoor Directions Feature", () => {
     await expect(element(by.id("Directions_BottomRightButton"))).toExist();
     await element(by.id("Directions_BottomRightButton")).tap();
 
+    await expect(element(by.id("Directions_InsideBuildingButton"))).toExist();
+    await element(by.id("Directions_InsideBuildingButton")).tap();
 
+    await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
+    await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "slow", 0.5);
 
+    await element(by.id("FloorMenu_floorBarMenuView")).tapAtPoint({ x: 180, y: 23 });
+
+    await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
+    await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "slow");
 
   });
 
