@@ -206,7 +206,7 @@ function Directions(props) {
             }
             {
                 isFirstInstruction && (indoorScenario1) &&
-                <TouchableOpacity style={styles.indoorBuilding}>
+                <TouchableOpacity testID="Directions_InsideBuildingIcon_F1"style={styles.indoorBuilding}>
                     <View>
                         <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress }) }} />
                     </View>
@@ -214,7 +214,7 @@ function Directions(props) {
             }
             {
                 (isFirstInstruction && indoorScenario3) &&
-                <TouchableOpacity style={styles.indoorBuilding}>
+                <TouchableOpacity testID="Directions_InsideBuildingIcon_F3" style={styles.indoorBuilding}>
                     <View>
                         <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isFirst: true }) }} />
                     </View>
@@ -222,7 +222,7 @@ function Directions(props) {
             }
             {
                 (isLastInstruction && indoorScenario3) &&
-                <TouchableOpacity style={styles.indoorBuilding}>
+                <TouchableOpacity testID="Directions_InsideBuildingIcon_L3" style={styles.indoorBuilding}>
                     <View>
                         <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom, isLast: true }) }} />
                     </View>
@@ -237,7 +237,7 @@ function Directions(props) {
             }
             {
                 isLastInstruction && (indoorScenario2) &&
-                <TouchableOpacity testID="Directions_InsideBuildingButton" style={styles.indoorBuilding}>
+                <TouchableOpacity testID="Directions_InsideBuildingIcon_L2" style={styles.indoorBuilding}>
                     <View >
                         <Icon type="FontAwesome5" name="building" onPress={() => { props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.startAddress, To: destinationResponse.generalRouteInfo.isEndAddressClassRoom }) }} />
                     </View>
@@ -251,7 +251,7 @@ function Directions(props) {
                 </TouchableOpacity>
             }
             {!isLastInstruction &&
-                <TouchableOpacity testID="Directions_BottomRightButton" style={styles.arrowRightDirection} onPress={goToNextInstruction}>
+                <TouchableOpacity testID="Directions_GoToNextInstructionButton" style={styles.arrowRightDirection} onPress={goToNextInstruction}>
                     <View >
                         <Icon name="arrow-forward" />
                     </View>

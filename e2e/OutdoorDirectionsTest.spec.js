@@ -21,7 +21,7 @@ describe("Outdoor Directions Feature", () => {
     await reloadApp();
   });
 
-  /**Scenario: Getting the preview directions for 1 building to another (from different campuses)
+  /** Scenario: Getting the preview directions for 1 building to another (from different campuses)
   * US-15 : As a user, I want to be able to view directions on the map.
   * US-16 : As a user, I would like to be able to be given directions between campuses
   * US-28 : As a user, I would like to show the shortest path possible between my start and destination point.
@@ -78,7 +78,7 @@ describe("Outdoor Directions Feature", () => {
     //TODO: Find a solution for asserting the path shown on the map
   });
 
-  /**Scenario: Get Directions and choose from different navigation options 
+  /** Scenario: Get Directions and choose from different navigation options 
   * US-15 : As a user, I want to be able to view directions on the map.
   * US-16 : As a user, I would like to be able to be given directions between campuses
   * US-18 : As a user, I should be able to choose "walking" as a means of transportation.
@@ -136,7 +136,7 @@ describe("Outdoor Directions Feature", () => {
     //TODO: Find a solution for asserting the path shown on the map
   });
 
-  /**Scenario: Get Directions and navigate from a desired start point to a desired destination
+  /** Scenario: Get Directions and navigate from a desired start point to a desired destination
   * US-15 : As a user, I want to be able to view directions on the map.
   * US-27 : As a user, I would like to navigate from my desired start point/current location to my desired destination
   * US-28 : As a user, I would like to show the shortest path possible between my start and destination point.
@@ -165,55 +165,12 @@ describe("Outdoor Directions Feature", () => {
     await expect(element(by.id("PreviewDirections_MapView"))).toExist();
     await expect(element(by.id("BottomMenu_PreferenceStartButton"))).toBeVisible();
     await element(by.id("BottomMenu_PreferenceStartButton")).tap();
-    await expect(element(by.id("Directions_BottomRightButton"))).toBeVisible();
-    await element(by.id("Directions_BottomRightButton")).tap();
-    await expect(element(by.id("Directions_BottomRightButton"))).toBeVisible();
-    await element(by.id("Directions_BottomRightButton")).tap();
-    await expect(element(by.id("Directions_BottomRightButton"))).toBeVisible();
-    await element(by.id("Directions_BottomRightButton")).tap();
+    await expect(element(by.id("Directions_GoToNextInstructionButton"))).toBeVisible();
+    await element(by.id("Directions_GoToNextInstructionButton")).tap();
+    await expect(element(by.id("Directions_GoToNextInstructionButton"))).toBeVisible();
+    await element(by.id("Directions_GoToNextInstructionButton")).tap();
+    await expect(element(by.id("Directions_GoToNextInstructionButton"))).toBeVisible();
+    await element(by.id("Directions_GoToNextInstructionButton")).tap();
     //TODO: Find a solution for asserting the path shown on the map
   });
-
-
-  it("Get directions and navigate from a classroom in Loyola to a classroom in Hall building", async () => {
-
-    //11 right buttons
-
-
-    await element(by.id("Map_searchBar")).tap();
-    await element(by.id("Map_searchBar")).typeText("VL103");
-    await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
-    await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("H815");
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
-    await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
-    await expect(element(by.id("PreviewDirections_MapView"))).toExist();
-
-    await expect(element(by.id("BottomMenu_PreferenceStartButton"))).toBeVisible();
-    await element(by.id("BottomMenu_PreferenceStartButton")).tap();
-
-    await expect(element(by.id("IndoorMapView_FloorScrollView"))).toExist();
-    await element(by.id("IndoorMapView_FloorScrollView")).swipe("left", "fast");
-
-    await expect(element(by.id("IndoorMapView_ExitBuildingButton"))).toExist();
-    await element(by.id("IndoorMapView_ExitBuildingButton")).tap();
-
-
-
-    await expect(element(by.id("Directions_BottomRightButton"))).toBeVisible();
-    await element(by.id("Directions_BottomRightButton")).tap();
-
-    for (let i = 0; i < 10; i++) {
-      await expect(element(by.id("Directions_BottomRightButton"))).toBeVisible();
-      await element(by.id("Directions_BottomRightButton")).tap();
-    }
-
-    await expect(element(by.id("Directions_InsideBuildingButton"))).toExist();
-    await element(by.id("Directions_InsideBuildingButton")).tap();
-
-    //TODO: Find a solution for asserting the path shown on the map
-  });
-
-
 });
