@@ -20,7 +20,7 @@ export function IndoorScenario (props) {
 
         switch (routeToTake) {
             case "INTEREST":
-                return <; SameFloorDirections rooms = { rooms } floor = { props.floor } from = { props.from.toString() } to = { props.to.toString() } interest = { true} />
+                return < SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} interest={true} />;
             //There are two cases here:
             //CASE I: From VL to H 
             //Start at VL, go to exit, then go to H & go upstairs
@@ -29,7 +29,7 @@ export function IndoorScenario (props) {
             case "DIFFERENT_CAMPUS":
                 if (props.from.includes("VL")) {
                     if (props.building == "VL Building") {
-                        ; return <SameFloorDirections rooms={loyolaRooms} floor={props.floor} from={props.from.toString()} to={"exit"} loy={true} />
+                        return <SameFloorDirections rooms={loyolaRooms} floor={props.floor} from={props.from.toString()} to={"exit"} loy={true} />;
                     } else {
                         return <DifferentBuildingDirections rooms={rooms} floor={props.floor} from={"VL Building"} to={props.to.toString()} />;
                     }
@@ -41,7 +41,7 @@ export function IndoorScenario (props) {
                     }
                 }
             case "SAME_FLOOR":
-                ; return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} />
+                return <SameFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} />;
             case "DIFFERENT_FLOOR":
                 return <DifferentFloorDirections rooms={rooms} floor={props.floor} from={props.from.toString()} to={props.to.toString()} mobility={props.mobility} />;
             case "DIFFERENT_BUILDING":
@@ -87,10 +87,10 @@ export const whichPathToTake = (from, to) => {
             return different_building;
         }
 
-        if (getFloorNumber(from) =;= getFloorNumber(to)) {
+        if (getFloorNumber(from) == getFloorNumber(to)) {
             return same_floor;
         } else {
             return different_floor;
         }
     }
-}
+};

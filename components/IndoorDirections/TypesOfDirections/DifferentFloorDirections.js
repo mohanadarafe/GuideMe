@@ -19,23 +19,23 @@ export function DifferentFloorDirections (props) {
     const pathToClass = dijkstra(floorTo == 9 ? Class9Graph() : graph, closestTransportationMethod, floorTo == 9 ? props.to : ConvertToHall8Floor(props.to)).path;
 
     var getNextRoomElevator = (index) => {
-        ; if (index < pathToElevator.length) {
+        if (index < pathToElevator.length) {
             return pathToElevator[++index];
         }
-    }
+    };
 
     var getNextRoomClass = (index) => {
-        ;
+
         if (index < pathToClass.length) {
             return pathToClass[++index];
         }
-    }
+    };
 
     var rooms = floorFrom == 9 ? Hall9Coordinates() : props.rooms;
     const linesToElevator = [];
     pathToElevator.forEach((element, index) => {
         if (index < pathToElevator.length - 1) {
-            linesToElevator.push({ id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[; getNextRoomElevator (index)].nearestPoint.x, y2: rooms[getNextRoomElevator(index)].nearestPoint.y })
+            linesToElevator.push({ id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoomElevator(index)].nearestPoint.x, y2: rooms[getNextRoomElevator(index)].nearestPoint.y });
         }
     });
 
@@ -43,7 +43,7 @@ export function DifferentFloorDirections (props) {
     const linesToClass = [];
     pathToClass.forEach((element, index) => {
         if (index < pathToClass.length - 1) {
-            linesToClass.push({ id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: ; rooms[getNextRoomClass(index)].nearestPoint.x, y2: rooms[getNextRoomClass(index)].nearestPoint.y })
+            linesToClass.push({ id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoomClass(index)].nearestPoint.x, y2: rooms[getNextRoomClass(index)].nearestPoint.y });
         }
     });
 
@@ -60,9 +60,9 @@ export function DifferentFloorDirections (props) {
                 }
                 <Line x1={rooms[closestTransportationMethod].x} y1={rooms[closestTransportationMethod].y} x2={rooms[closestTransportationMethod].nearestPoint.x} y2={rooms[closestTransportationMethod].nearestPoint.y} stroke="blue" strokeWidth="5" />
                 <Line x1={arrow.x3} y1={arrow.y3} x2={rooms[closestTransportationMethod].x} y2={rooms[closestTransportationMethod].y} stroke="blue" strokeWidth="5" />
-                <Line x1={arrow.x4} y1={arrow.y4} x2={rooms[closestTransportationMethod].x} y2; {rooms[closestTransportationMethod].y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x4} y1={arrow.y4} x2={rooms[closestTransportationMethod].x} y2={rooms[closestTransportationMethod].y} stroke="blue" strokeWidth="5" />
             </G>
-        )
+        );
     }
 
     if (props.floor == getFloorNumber(props.to)) {
@@ -77,11 +77,11 @@ export function DifferentFloorDirections (props) {
                 }
                 <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5" />
                 <Line x1={arrow.x3} y1={arrow.y3} x2={rooms[className].x} y2={rooms[className].y} stroke="blue" strokeWidth="5" />
-                <Line x1={arrow.x4} y1={arrow.y4} x2={room; {rooms[className].y} ;stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x4} y1={arrow.y4} x2={rooms[className].x} stroke="blue" strokeWidth="5" />
             </G>
-        )
+        );
     }
     return (
         <G></G>
-    )
+    );
 }

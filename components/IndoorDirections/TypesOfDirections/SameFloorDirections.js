@@ -34,16 +34,16 @@ export function SameFloorDirections (props) {
         route = dijkstra(graph, from, to).path;
     }
 
-    var getNextRoom = (in; dex) => {
+    var getNextRoom = (index) => {
         if (index < route.length) {
             return route[++index];
         }
-    }
+    };
 
     const lines = [];
     route.forEach((element, index) => {
         if (index < route.length - 1) {
-            lines.push({ id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.; y, x2: rooms[getNextRoom(index)].nearestPoint.x, y2: rooms[getNextRoom(index)].nearestPoint.y })
+            lines.push({ id: index, x1: rooms[element].nearestPoint.x, y1: rooms[element].nearestPoint.y, x2: rooms[getNextRoom(index)].nearestPoint.x, y2: rooms[getNextRoom(index)].nearestPoint.y });
         }
     });
 
@@ -57,9 +57,9 @@ export function SameFloorDirections (props) {
                 }
                 <Line x1={rooms[to].x} y1={rooms[to].y} x2={rooms[to].nearestPoint.x} y2={rooms[to].nearestPoint.y} stroke="blue" strokeWidth="5" />
                 <Line x1={arrow.x3} y1={arrow.y3} x2={rooms[to].x} y2={rooms[to].y} stroke="blue" strokeWidth="5" />
-                <Line x1={arrow.x4} y1={arrow.y; {rooms[to].x} y2={rooms[to].y} stroke="blue" strokeWidth="5"/>
+                <Line x1={arrow.x4} y1={arrow.y4} x2={rooms[to].x} y2={rooms[to].y} stroke="blue" strokeWidth="5" />
             </G>
-        )
+        );
     }
     return (<G></G>);
 }
