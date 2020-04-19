@@ -135,7 +135,21 @@ describe("Outdoor Directions Feature", () => {
   });
 
 
-
+  /**Scenario: Exploring route direactions
+  * US-
+  * 1. Click on the search bar
+  * 2. Enter the name of a building from the Loyola Campus "EN building"
+  * 3. Select the corresponding item from the dropdown list
+  * 4. Click on GET DIRECTIONS button
+  * 5. Click on the FROM search bar
+  * 6. Enter the number of a building from the SGW campus: "Hall Building"
+  * 7. Select the corresponding item from the dropdown list
+  * 8. Click on VIEW ROUTE
+  * 9. Check that the preview map view exists
+  * 10. Check if the start button exists
+  * 11. Check if the directions button exists
+  * 12. Click the directions button three times will checking
+  */
   it("Get directions between buildings and route directions", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("EN Building");
