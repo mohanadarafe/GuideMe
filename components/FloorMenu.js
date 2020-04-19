@@ -53,34 +53,34 @@ const vlFloors = [
  * @param {*} to | ending place
  */
 export const initialFloor = (from, to) => {
-  const path = whichPathToTake(from, to); 
+  const path = whichPathToTake(from, to);
 
-  if(path == "SAME_FLOOR" || path == "DIFFERENT_FLOOR" || path == "INTEREST") {
-    var floor = getFloorNumber(from)
+  if (path == "SAME_FLOOR" || path == "DIFFERENT_FLOOR" || path == "INTEREST") {
+    var floor = getFloorNumber(from);
     AsyncStorage.setItem("floorSelected", floor.toString());
     return floor;
   }
-  if(path == "DIFFERENT_BUILDING") {
+  if (path == "DIFFERENT_BUILDING") {
     if (from.includes(" ")) {
       AsyncStorage.setItem("floorSelected", "1");
       return 1;
     } else {
-      var floor = getFloorNumber(from)
+      var floor = getFloorNumber(from);
       AsyncStorage.setItem("floorSelected", floor.toString());
       return floor;
     }
   }
-  if(path == "DIFFERENT_CAMPUS") {
+  if (path == "DIFFERENT_CAMPUS") {
     AsyncStorage.setItem("floorSelected", "1");
     return 1;
   }
-}
+};
 
-export function FloorMenu(props) {
+export function FloorMenu (props) {
   const [floorNumber, setFloorNumber] = React.useState(props.from != null && props.to != null ? initialFloor(props.from, props.to) : 1);
   const [selectedBuilding, setSelectedBuilding] = React.useState("");
   AsyncStorage.setItem("floorSelected", floorNumber.toString());
-  
+
   const getSelectedBuilding = async () => {
     let name = await AsyncStorage.getItem("buildingSelected");
     setSelectedBuilding(name);
@@ -96,7 +96,7 @@ export function FloorMenu(props) {
         <SwitchSelector
           style={styles.selector}
           options={hallFloors}
-          initial={floorNumber-1}
+          initial={floorNumber - 1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
@@ -107,7 +107,7 @@ export function FloorMenu(props) {
         <SwitchSelector
           style={styles.selector}
           options={jmsbFloors}
-          initial={floorNumber-1}
+          initial={floorNumber - 1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
@@ -118,7 +118,7 @@ export function FloorMenu(props) {
         <SwitchSelector
           style={styles.selector}
           options={vlFloors}
-          initial={floorNumber-1}
+          initial={floorNumber - 1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
@@ -130,7 +130,7 @@ export function FloorMenu(props) {
           id="floor_select_none"
           style={styles.selector}
           options={hallFloors}
-          initial={floorNumber-1}
+          initial={floorNumber - 1}
           buttonColor={"#3ACCE1"}
           onPress={value => {
             setFloorNumber(value);
