@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore } from "redux";
 
 /**
  * Quick explanation of Redux here
@@ -19,26 +19,25 @@ const initialState = {
   mobilityReducedType: "MOBILITY_NOT_REDUCED",
   transportType: "driving",
   searchItemMarker: null
+};
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "UPDATE_TRANSPORT_TYPE":
+      return { transportType: action.payload };
+    case "UPDATE_SELECTED_BUILDING":
+      return { selectedBuildingName: action.payload };
+    case "SEARCH_BAR_VALUE":
+      return { mainSearchBarDestination: action.payload };
+    case "SEARCH_BAR_MARKER":
+      return { searchItemMarker: action.payload };
+    case "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER":
+      return {
+        searchItemMarker: action.payload.coordinates,
+        selectedBuildingName: action.payload.name,
+        mainSearchBarDestination: action.payload.name
+      };
   }
-  const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case 'UPDATE_TRANSPORT_TYPE':
-            return { transportType: action.payload}
-        case 'UPDATE_SELECTED_BUILDING':
-            return { selectedBuildingName: action.payload}
-        case 'SEARCH_BAR_VALUE':
-            return { mainSearchBarDestination: action.payload}
-        case 'SEARCH_BAR_MARKER':
-            return { searchItemMarker: action.payload}
-        case 'UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER':
-            return { 
-              searchItemMarker: action.payload.coordinates,
-              selectedBuildingName: action.payload.name,
-              mainSearchBarDestination: action.payload.name
-            }
-    }
-    return state;
-  }
-  export const store = createStore(reducer);
-  
- 
+  return state;
+};
+export const store = createStore(reducer);
+
