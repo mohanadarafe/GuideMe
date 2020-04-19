@@ -85,7 +85,7 @@ describe("Composite Directions Feature", () => {
   * 13. Once the destionation is reached, click the inside building button
   * 14. Check that it is the right building and right floor
   */
-  it("Get directions and naviagte from a classroom (H815) to a classroom (VL103) on a different campus", async () => {
+  it.skip("Get directions and naviagte from a classroom (H815) to a classroom (VL103) on a different campus", async () => {
     await element(by.id("Map_searchBar")).tap();
     await element(by.id("Map_searchBar")).typeText("VL103");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
