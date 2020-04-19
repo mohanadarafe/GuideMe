@@ -8,7 +8,11 @@ import { HallFloorX } from "../../assets/floormaps/hall/HallFloorX";
 import { JMSBFloorX } from "../../assets/floormaps/mb/JMSBFloorX";
 import VLFloor1 from "../../assets/floormaps/vl/VLFloor1";
 
-function IndoorMapView(props) {
+/**
+ * Screen that returns the indoor map
+ * @param {*} props 
+ */
+function IndoorMapView (props) {
 
     const [selectedFloor, setSelectedFloor] = React.useState("");
     const [mobility, setMobility] = React.useState("");
@@ -41,7 +45,7 @@ function IndoorMapView(props) {
         <View testID="indoorMapFloorScrollView">
             <ScrollView>
                 <ScrollView maximumZoomScale={2} horizontal={true} minimumZoomScale={0.25} >
-                    {((selectedBuilding === "VL Building") || (from != null && from.includes("VL") && isFirst != null) || (to != null && to.includes("VL") && isLast != null)) && 
+                    {((selectedBuilding === "VL Building") || (from != null && from.includes("VL") && isFirst != null) || (to != null && to.includes("VL") && isLast != null)) &&
                         <VLFloor1 from={from} to={to} />
                     }
                     {((selectedBuilding === "Hall Building" && selectedFloor !== "9") || (((from != null && from.includes("H") && isFirst != null) || (to != null && to.includes("H") && isLast != null)) && selectedFloor !== "9")) &&
@@ -64,10 +68,12 @@ function IndoorMapView(props) {
                     }
                 </ScrollView>
             </ScrollView>
-            <BottomMenu navigation={props.navigation} indoor={true} inDirections={from != null && to != null} from={from} to={to} building={selectedBuilding}/>
+            <BottomMenu navigation={props.navigation} indoor={true} inDirections={from != null && to != null} from={from} to={to} building={selectedBuilding} />
         </View>
     );
 }
+
+
 
 export const styles = StyleSheet.create({
     insideBuildingContainer: {

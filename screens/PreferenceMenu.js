@@ -3,18 +3,18 @@ import { View, Text, StyleSheet, AsyncStorage } from "react-native";
 import { Icon, Button } from "native-base";
 import { connect } from "react-redux";
 
-function mapStateToProps(transportType) {
+function mapStateToProps (transportType) {
     return {
         transportType: transportType
-    }
+    };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
         setPersonaType: (value) => dispatch({ type: "UPDATE_PERSONA_TYPE", payload: value }),
         setMobilityReduced: (value) => dispatch({ type: "UPDATE_MOBILITY_TYPE", payload: value }),
         setMethodOfTravel: (value) => dispatch({ type: "UPDATE_TRANSPORT_TYPE", payload: value }),
-    }
+    };
 }
 
 /**
@@ -83,26 +83,26 @@ export function PreferenceMenu (props) {
 
         switch (category) {
             case "PersonaType":
-                setOnPressFirstCategory({selectedButton: value});
+                setOnPressFirstCategory({ selectedButton: value });
                 props.setPersonaType(value);
                 break;
             case "Mobility":
-                setOnPressSecondCategory({selectedButton: value});
+                setOnPressSecondCategory({ selectedButton: value });
                 props.setMobilityReduced(value);
                 break;
             case "MethodOfTravel":
-                setOnPressThirdCategory({selectedButton: value});
+                setOnPressThirdCategory({ selectedButton: value });
                 props.setMethodOfTravel(value);
                 break;
             default:
-                return null
+                return null;
         }
-        
-    }
+
+    };
 
     return (
         <View style={styles.container}>
-            <Icon id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={() => {(isIndoor ? goToIndoorMap : goToPreviewDirections)}} />
+            <Icon id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={() => { (isIndoor ? goToIndoorMap : goToPreviewDirections); }} />
 
             <Text style={styles.mainLabel}>Preferences</Text>
 
@@ -122,7 +122,7 @@ export function PreferenceMenu (props) {
                 </Button>
 
                 <Button id="personaBtnVisitor" transparent style={[styles.buttonContainer, { backgroundColor: onPressFirstCategory.selectedButton === "VISITOR" ? "#f0b400" : "#353A50" }]}
-                   onPress={() => onPressElement("PersonaType", "VISITOR")}>
+                    onPress={() => onPressElement("PersonaType", "VISITOR")}>
                     <Text style={styles.buttonLabel}>Visitor</Text>
                 </Button>
 
@@ -172,7 +172,7 @@ export function PreferenceMenu (props) {
                 </Button>
 
                 <Button id="bicycle" transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "bicycling" ? "#f0b400" : "#353A50" }]}
-                   onPress={() => onPressElement("MethodOfTravel", "bicycling")}>
+                    onPress={() => onPressElement("MethodOfTravel", "bicycling")}>
                     <View style={styles.iconContainer}>
                         <Icon name="ios-bicycle" style={styles.icon}></Icon>
                     </View>
@@ -182,7 +182,7 @@ export function PreferenceMenu (props) {
                 </Button>
 
                 <Button id="bus" transparent style={[styles.buttonContainerMOT, { backgroundColor: onPressThirdCategory.selectedButton === "transit" ? "#f0b400" : "#353A50" }]}
-                   onPress={() => onPressElement("MethodOfTravel", "transit")}>
+                    onPress={() => onPressElement("MethodOfTravel", "transit")}>
                     <View style={styles.iconContainer}>
                         <Icon name="md-bus" style={styles.icon}></Icon>
                     </View>

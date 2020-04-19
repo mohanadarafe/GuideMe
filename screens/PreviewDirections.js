@@ -6,7 +6,7 @@ import { View, Text, Icon } from "native-base";
 import PolyLine from "@mapbox/polyline";
 import PropTypes from "prop-types";
 import { BottomMenu } from "../components/BottomMenu";
-import { useStore } from 'react-redux'
+import { useStore } from "react-redux";
 
 /**
  * Description: This method act as an interface. After taking the leg of the response
@@ -85,8 +85,8 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                         },
                         htmlInstructions: instructionsHtmlStyle + atomicStep.html_instructions + "</div>",
                         travelMode: atomicStep.travel_mode
-                    })
-                })
+                    });
+                });
             } else {
                 directionObject.steps.push({
                     distance: transitStep.distance.text,
@@ -105,7 +105,7 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                     },
                     htmlInstructions: instructionsHtmlStyle + transitStep.html_instructions + "</div>",
                     travelMode: transitStep.travel_mode
-                })
+                });
             }
         });
     }
@@ -237,18 +237,18 @@ function PreviewDirections (props) {
         const unsubscribe = store.subscribe(() => {
             setTransportType(store.getState().transportType);
         });
-        return function cleanUp() {
+        return function cleanUp () {
             unsubscribe();
-        }
+        };
     });
 
     /**
      */
     useEffect(() => {
         fetchData();
-        return function cleanUp() {
+        return function cleanUp () {
 
-        }
+        };
     }, [transportType]);
 
 

@@ -1,31 +1,31 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import { StyleSheet, Keyboard  } from "react-native";
+import { StyleSheet, Keyboard } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import BuildingHighlight  from "../components/BuildingHighlight";
+import BuildingHighlight from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
-import CurrentBuildingLocation  from "../components/CurrentBuildingLocation";
-import CurrentLocationButton  from "../components/CurrentLocationButton";
+import CurrentBuildingLocation from "../components/CurrentBuildingLocation";
+import CurrentLocationButton from "../components/CurrentLocationButton";
 import { View } from "native-base";
-import Search  from "../components/Search";
+import Search from "../components/Search";
 import PropTypes from "prop-types";
 import { LocationMarker } from "../components/locationMarker";
-import {CampusRegion} from "../constants/buildingData";
+import { CampusRegion } from "../constants/buildingData";
 import { connect } from "react-redux";
 
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
     return {
         selectedBuildingName: state.selectedBuildingName
-    }
+    };
 }
 
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
         setSelectedBuildingName: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
-    }
+    };
 }
 
 
@@ -35,11 +35,11 @@ function mapDispatchToProps(dispatch) {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-export function Map (props) { 
+export function Map (props) {
 
     const [isMapClicked, setIsMapClicked] = React.useState(false);
     const mapRef = React.useRef(null);
-    
+
     return (
         <View testID="mapView" data-test="MapComponent">
             <View>
@@ -54,8 +54,8 @@ export function Map (props) {
                     showsCompass={true}
                     showsBuildings={true}
                     showsIndoors={false}
-                    onPress = {() => { 
-                        if(isMapClicked) {
+                    onPress={() => {
+                        if (isMapClicked) {
                             setIsMapClicked(false);
                             Keyboard.dismiss();
                         }
@@ -69,18 +69,18 @@ export function Map (props) {
                 >
                     <BuildingHighlight />
                     <BuildingIdentification />
-                    <LocationMarker mapReference = {mapRef} />
+                    <LocationMarker mapReference={mapRef} />
                 </MapView>
-                <Search testID="searchBar" 
-                navigation = {props.navigation} 
-                mapReference = {mapRef} 
+                <Search testID="searchBar"
+                    navigation={props.navigation}
+                    mapReference={mapRef}
                 />
-                <View style = {styles.overlayButtons}>
-                        <CurrentBuildingLocation mapReference = {mapRef}/>
-                        <View style = {styles.spaceBetweenOverlayedButtons}></View>
-                        <CurrentLocationButton mapReference = {mapRef} />
+                <View style={styles.overlayButtons}>
+                    <CurrentBuildingLocation mapReference={mapRef} />
+                    <View style={styles.spaceBetweenOverlayedButtons}></View>
+                    <CurrentLocationButton mapReference={mapRef} />
                 </View>
-            <BottomMenu navigation={props.navigation} mapReference = {mapRef} />
+                <BottomMenu navigation={props.navigation} mapReference={mapRef} />
             </View>
         </View>
     );
@@ -96,15 +96,15 @@ export const styles = StyleSheet.create({
     map: {
         height: "100%"
     },
-   overlayButtons: {
-    position: "absolute", 
-    flexDirection: "column", 
-    top:"70%", 
-    left: "80%"
-   },
-   spaceBetweenOverlayedButtons: {
-       height: "5%"
-   }
+    overlayButtons: {
+        position: "absolute",
+        flexDirection: "column",
+        top: "70%",
+        left: "80%"
+    },
+    spaceBetweenOverlayedButtons: {
+        height: "5%"
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
