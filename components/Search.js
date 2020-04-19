@@ -8,13 +8,13 @@ import { connect } from "react-redux";
 import {getCoordinates} from "../screens/DoubleSearch";
 import { store } from "../redux/reducers/index";
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
-      goToSearchedItem: state.goToSearchedItem
-  }
+    goToSearchedItem: state.goToSearchedItem
+  };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     goToSearchedItemAction: (coords, name, darkMode) => dispatch({ 
       type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER", 
@@ -33,7 +33,7 @@ function mapDispatchToProps(dispatch) {
  */
 
 function fetchData () {
-  const searchInfo = MapData({context: "Search"});
+  const searchInfo = MapData({ context: "Search" });
   return searchInfo;
 }
 
@@ -53,9 +53,9 @@ export function Search (props) {
     updateSearchItem();
   }, [searchItem]);
 
-  
+
   const goToMenu = () => {
-    AsyncStorage.setItem("sideMenu", "sideMenu"); 
+    AsyncStorage.setItem("sideMenu", "sideMenu");
     props.navigation.openDrawer();
   };
 
@@ -89,7 +89,7 @@ export function Search (props) {
       </View>
       <SearchableDropdown
         onTextChange={val => val} //This must be here (does nothing)
-        onItemSelect={item => {  setSearchItem({name: item.name, coordinates: getCoordinates(item.name)});  }}
+        onItemSelect={item => { setSearchItem({ name: item.name, coordinates: getCoordinates(item.name) }); }}
         textInputStyle={styles.textInputStyle}
         itemStyle={styles.itemStyle}
         containerStyle={styles.test}

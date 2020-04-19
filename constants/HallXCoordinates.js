@@ -1,3 +1,8 @@
+/**
+ * Function that returns the coordinates of the different classes & 
+ * points of interest on the 8th floor of the Hall building
+ * @param {*} floorNumber 
+ */
 export function HallXCoordinates (floorNumber) {
     const rooms = {
         "elevator": {

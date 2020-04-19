@@ -7,13 +7,13 @@ import { connect } from "react-redux";
 import { store } from "../redux/reducers/index";
 
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
     return {
         selectedBuildingName: state.selectedBuildingName
-    }
+    };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
         setSelectedBuildingName: (value, darkMode) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: {selectedBuilding: value, darkMode: darkMode} }),
     }
@@ -41,16 +41,16 @@ export function BuildingHighlight (props) {
             setBuildingHighlighted(null);
             props.setSelectedBuildingName(null, isDarkedMode);
         }
-    }
+    };
 
     useLayoutEffect(() => {
         const unsubscribe = store.subscribe(() => {
             setBuildingHighlighted(store.getState().selectedBuildingName);
             setIsDarkMode(store.getState().isDarkMode)
         });
-        return function cleanUp() {
+        return function cleanUp () {
             unsubscribe();
-        }
+        };
     });
 
     return (

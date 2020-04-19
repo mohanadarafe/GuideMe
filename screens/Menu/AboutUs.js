@@ -14,7 +14,7 @@ import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 /**Prop passed
 * @param  {} navigation props.navigation is the name of the object from Navigator library
 */
-function AboutUs(props) {
+function AboutUs (props) {
 
     /**
     * The method will slide the side menu from the right side of the screen
@@ -159,8 +159,8 @@ const aboutUsStyle = {
         textAlign: "center",
         lineHeight: 30
     }
-}
+};
 
-export const styles = StyleSheet.create({ ...sideMenuStyle, ...aboutUsStyle});
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...aboutUsStyle });
 
 export default AboutUs;

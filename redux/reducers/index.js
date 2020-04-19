@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore } from "redux";
 
 /**
  * Quick explanation of Redux here

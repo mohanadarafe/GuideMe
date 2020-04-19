@@ -1,5 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import * as Google from 'expo-google-app-auth';
+import * as Google from "expo-google-app-auth";
 import PropTypes from "prop-types";
 import React, { useEffect } from "react";
 import { AsyncStorage, FlatList, StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
@@ -55,10 +55,10 @@ export function Settings(props) {
     const signInOrOut = async (val) => {
         if (val) {
             const respCalendars = await signInWithGoogleAsync();
-            if (respCalendars.error == true){
+            if (respCalendars.error == true) {
                 setSwitchVal2("false");
             }
-            else{
+            else {
                 getFilteredGoogleCalendarList(respCalendars);
             }
         }
@@ -71,16 +71,16 @@ export function Settings(props) {
                 });
             }
         }
-    }
+    };
 
-    async function signInWithGoogleAsync() {
+    async function signInWithGoogleAsync () {
         try {
             const result = await Google.logInAsync({
                 // androidClientId: YOUR_CLIENT_ID_HERE,
                 iosClientId: "128383090622-lgrk639fn4k6t99lhrldkh02441fcjgb.apps.googleusercontent.com",
-                scopes: ['profile', 'email', 'https://www.googleapis.com/auth/calendar.readonly'],
+                scopes: ["profile", "email", "https://www.googleapis.com/auth/calendar.readonly"],
             });
-            if (result.type === 'success') {
+            if (result.type === "success") {
                 AsyncStorage.setItem("accessToken", result.accessToken);
                 setAccessToken(result.accessToken);
                 return getUsersCalendarList(result.accessToken); //Here We are getting all the calendars in a json
@@ -100,14 +100,14 @@ export function Settings(props) {
     };
 
     const getUsersCalendarList = async (accessToken) => {
-        let calendarsList = await fetch('https://www.googleapis.com/calendar/v3/users/me/calendarList', {
+        let calendarsList = await fetch("https://www.googleapis.com/calendar/v3/users/me/calendarList", {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
         let resp = await calendarsList.json();
         return resp;
-    }
+    };
 
-    const press = (item) => { 
+    const press = (item) => {
         var { checked } = isConnected;
         // These ensures that multiple checkboxes don't all get affected when one is clicked
         if (!checked.includes(item) || checked.length == 1) {
@@ -174,8 +174,9 @@ export function Settings(props) {
                         data={calendarList}
                         keyExtractor={(item) => item.id}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => { press(item.id);
-                             }}>
+                            <TouchableOpacity onPress={() => {
+                                press(item.id);
+                            }}>
                                 <ListItem
                                     title={item.summary}
                                     titleStyle={{ color: "white" }}
@@ -277,9 +278,9 @@ const settingsStyle = {
         marginLeft: 20,
         flexDirection: "column",
     }
-}
+};
 
-export const styles = StyleSheet.create({...sideMenuStyle, ...settingsStyle});
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...settingsStyle });
 
 // export default Settings;
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

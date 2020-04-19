@@ -1,3 +1,7 @@
+/**
+ * Function that returns the coordinates of the different classes &
+ * points of interest on the 9th floor of the Hall building
+ */
 export function Hall9Coordinates () {
     const rooms = {
         "elevator": {

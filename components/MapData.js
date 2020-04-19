@@ -10,7 +10,7 @@ import { buildingData } from "../constants/buildingData";
  * @param {*} list is the list of buildings that we need to iterate through.
  */
 const retrieveMoreDetailsData = (value, list) => {
-    
+
     for (var key in list) {
         if (list[key].name.includes(value) || list[key].services.includes(value) || list[key].departments.includes(value) || list[key].fullName.includes(value)) {
             return appendInfoAndAccessibility(list[key]);
@@ -18,15 +18,15 @@ const retrieveMoreDetailsData = (value, list) => {
     }
     let classRoomsList = ClassRooms();
     for (var key in classRoomsList) {
-        if(classRoomsList[key].room.includes(value)) {
-        const building = list[key];
-        const isClassroom = {isClassRoom: value + " [ClassRoom]"};
-        const result = {...building, ...isClassroom};
-        return appendInfoAndAccessibility(result);
+        if (classRoomsList[key].room.includes(value)) {
+            const building = list[key];
+            const isClassroom = { isClassRoom: value + " [ClassRoom]" };
+            const result = { ...building, ...isClassroom };
+            return appendInfoAndAccessibility(result);
         }
     }
     return null;
-}
+};
 /**
  * Because accessibility values weren't written as arrays, I need to manually create an array and then merge the 
  * result to the building object passed in parameter.
@@ -34,29 +34,29 @@ const retrieveMoreDetailsData = (value, list) => {
  * @param {*} building is the building object in question.
  */
 const appendInfoAndAccessibility = (building) => {
-    let list  = {accessibilityItems: []};
+    let list = { accessibilityItems: [] };
     list.accessibilityItems.push(building.hasCredit ? "Credit Card: Yes" : "Credit Card: No");
     list.accessibilityItems.push(building.hasBicycle ? "Bicycle Parking: Yes" : "Bicycle Parking: No");
     list.accessibilityItems.push(building.hasHandicap ? "Handicap Accessibility: Yes" : "Handicap Accessibility: No");
     list.accessibilityItems.push(building.hasInfocenter ? "Info-Center: Yes" : "Info-Center: No");
     list.accessibilityItems.push(building.hasParking ? "Car Parking: Yes" : "Car Parking: No");
-    return ({...building, ...list});
-}
+    return ({ ...building, ...list });
+};
 /**
  * This method appends every element of an array with an index since SearchableDropDown requires 
  * an id in order to render the items.
  * @param {*} list is the list we want to append ids to.
  */
 const appendIdToList = (list) => {
-        
+
     const appendedList = list.map((element, index) => {
-            return ({
-                id: index + 1,
-                name: element
-            });
+        return ({
+            id: index + 1,
+            name: element
         });
+    });
     return appendedList;
-}
+};
 
 /**
  * This method will go through each element in the buildingData and classrooms constant files and 
@@ -100,16 +100,16 @@ export function RetrieveSearchItems (buildings, classrooms) {
  * @param {*} props 
  */
 export function MapData (props) {
-    var results= [];
+    var results = [];
     let buildingList = buildingData();
     let classrooms = ClassRooms();
-    switch(props.context) {
+    switch (props.context) {
         case "More Details":
-        results = retrieveMoreDetailsData(props.buildingToSearch, buildingList);
-        return results;
+            results = retrieveMoreDetailsData(props.buildingToSearch, buildingList);
+            return results;
         case "Search":
-        results = appendIdToList(RetrieveSearchItems(buildingList, classrooms));
-        return results
+            results = appendIdToList(RetrieveSearchItems(buildingList, classrooms));
+            return results;
     }
     return null;
 }

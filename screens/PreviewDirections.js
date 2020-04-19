@@ -85,8 +85,8 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                         },
                         htmlInstructions: instructionsHtmlStyle + atomicStep.html_instructions + "</div>",
                         travelMode: atomicStep.travel_mode
-                    })
-                })
+                    });
+                });
             } else {
                 directionObject.steps.push({
                     distance: transitStep.distance.text,
@@ -105,7 +105,7 @@ const getFilteredDetailedInstructions = (jsonLeg, transportType) => {
                     },
                     htmlInstructions: instructionsHtmlStyle + transitStep.html_instructions + "</div>",
                     travelMode: transitStep.travel_mode
-                })
+                });
             }
         });
     }
@@ -237,18 +237,18 @@ function PreviewDirections (props) {
         const unsubscribe = store.subscribe(() => {
             setTransportType(store.getState().transportType);
         });
-        return function cleanUp() {
+        return function cleanUp () {
             unsubscribe();
-        }
+        };
     });
 
     /**
      */
     useEffect(() => {
         fetchData();
-        return function cleanUp() {
+        return function cleanUp () {
 
-        }
+        };
     }, [transportType]);
 
     useLayoutEffect(() => {

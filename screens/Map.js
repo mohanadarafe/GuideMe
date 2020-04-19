@@ -2,28 +2,28 @@
 import React, {useLayoutEffect} from "react";
 import { StyleSheet, Keyboard  } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
-import BuildingHighlight  from "../components/BuildingHighlight";
+import BuildingHighlight from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
 import { BottomMenu } from "../components/BottomMenu";
-import CurrentBuildingLocation  from "../components/CurrentBuildingLocation";
-import CurrentLocationButton  from "../components/CurrentLocationButton";
+import CurrentBuildingLocation from "../components/CurrentBuildingLocation";
+import CurrentLocationButton from "../components/CurrentLocationButton";
 import { View } from "native-base";
-import Search  from "../components/Search";
+import Search from "../components/Search";
 import PropTypes from "prop-types";
 import { LocationMarker } from "../components/locationMarker";
-import {CampusRegion} from "../constants/buildingData";
+import { CampusRegion } from "../constants/buildingData";
 import { connect } from "react-redux";
 import { store } from "../redux/reducers/index";
 import {darkMode} from "../assets/styling/mapDarkMode";
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
     return {
         selectedBuildingName: state.selectedBuildingName
-    }
+    };
 }
 
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
         setSelectedBuildingName: (value, darkMode) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: {selectedBuilding: value, darkMode: darkMode} }),
     }
@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch) {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-export function Map (props) { 
+export function Map (props) {
 
     const [isMapClicked, setIsMapClicked] = React.useState(false);
     const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
@@ -81,18 +81,18 @@ export function Map (props) {
                 >
                     <BuildingHighlight />
                     <BuildingIdentification />
-                    <LocationMarker mapReference = {mapRef} />
+                    <LocationMarker mapReference={mapRef} />
                 </MapView>
-                <Search testID="searchBar" 
-                navigation = {props.navigation} 
-                mapReference = {mapRef} 
+                <Search testID="searchBar"
+                    navigation={props.navigation}
+                    mapReference={mapRef}
                 />
-                <View style = {styles.overlayButtons}>
-                        <CurrentBuildingLocation mapReference = {mapRef}/>
-                        <View style = {styles.spaceBetweenOverlayedButtons}></View>
-                        <CurrentLocationButton mapReference = {mapRef} />
+                <View style={styles.overlayButtons}>
+                    <CurrentBuildingLocation mapReference={mapRef} />
+                    <View style={styles.spaceBetweenOverlayedButtons}></View>
+                    <CurrentLocationButton mapReference={mapRef} />
                 </View>
-            <BottomMenu navigation={props.navigation} mapReference = {mapRef} />
+                <BottomMenu navigation={props.navigation} mapReference={mapRef} />
             </View>
         </View>
     );
@@ -108,15 +108,15 @@ export const styles = StyleSheet.create({
     map: {
         height: "100%"
     },
-   overlayButtons: {
-    position: "absolute", 
-    flexDirection: "column", 
-    top:"70%", 
-    left: "80%"
-   },
-   spaceBetweenOverlayedButtons: {
-       height: "5%"
-   }
+    overlayButtons: {
+        position: "absolute",
+        flexDirection: "column",
+        top: "70%",
+        left: "80%"
+    },
+    spaceBetweenOverlayedButtons: {
+        height: "5%"
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);
