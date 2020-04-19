@@ -105,7 +105,7 @@ function BottomMenu(props) {
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { (inDirections ? goToPreferenceMenu(true) : goToMoreDetails) }} />
                 <Text style={styles.mainLabel}>{building ? building : selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
-                <Button testID="IndoorMapView_ExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                <Button testID="BottomMenu_IndoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>
@@ -182,7 +182,7 @@ function BottomMenu(props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu">
+            <View testID="BottomMenu_initalView" style={styles.container} data-test="BottomMenu">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>

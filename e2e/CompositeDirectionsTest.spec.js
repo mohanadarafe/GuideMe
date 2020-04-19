@@ -42,9 +42,9 @@ describe("Composite Directions Feature", () => {
     await element(by.id("Map_searchBar")).typeText("H819");
     await element(by.id("Map_searchBar")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("BottomMenu_getDirectionsButton")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tap();
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).typeText("D Building");
-    await element(by.id("DoubleSearch_FromSearchBarViewFrom")).tapAtPoint({ x: 200, y: 80 });
+    await element(by.id("DoubleSearch_FromSearchBarView")).tap();
+    await element(by.id("DoubleSearch_FromSearchBarView")).typeText("D Building");
+    await element(by.id("DoubleSearch_FromSearchBarView")).tapAtPoint({ x: 200, y: 80 });
     await element(by.id("DoubleSearch_enabledViewRouteButton")).tap();
     await expect(element(by.id("PreviewDirections_MapView"))).toExist();
     await expect(element(by.id("BottomMenu_PreferenceStartButton"))).toBeVisible();

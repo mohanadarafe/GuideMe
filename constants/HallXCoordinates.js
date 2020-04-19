@@ -217,11 +217,11 @@ export function HallXCoordinates (floorNumber) {
         }
     },
     rooms["H832"] = {
-        x: "627",
+        x: "648",
         y: "717",
         nearestPoint: {
-            x: "559",
-            y: "716"
+            x: "648",
+            y: "802"
         }
     },
     rooms["H838"] = {
