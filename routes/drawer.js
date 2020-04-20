@@ -46,7 +46,7 @@ const Drawer = createDrawerNavigator({
         screen: shuttleBusStack,
         navigationOptions: {
             title: "Shuttle Bus",
-            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="bus-clock" size={22} color={tintColor} />,
+            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons testID="Shuttlebus_icon" name="bus-clock" size={22} color={tintColor} />,
         }
     },
 
@@ -54,7 +54,7 @@ const Drawer = createDrawerNavigator({
         screen: nearbyInterestStack,
         navigationOptions: {
             title: "Points of Interest",
-            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons name="food-fork-drink" size={22} color={tintColor} />,
+            drawerIcon: ({ tintColor }) => <MaterialCommunityIcons testID="Food_icon" name="food-fork-drink" size={22} color={tintColor} />,
 
         }
     },
