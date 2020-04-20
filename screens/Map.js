@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import { StyleSheet, Keyboard } from "react-native";
+import React, {useLayoutEffect} from "react";
+import { StyleSheet, Keyboard  } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import BuildingHighlight from "../components/BuildingHighlight";
 import { BuildingIdentification } from "../components/BuildingIdentification";
@@ -13,18 +13,19 @@ import PropTypes from "prop-types";
 import { LocationMarker } from "../components/locationMarker";
 import { CampusRegion } from "../constants/buildingData";
 import { connect } from "react-redux";
+import { store } from "../redux/reducers/index";
+import {darkMode} from "../assets/styling/mapDarkMode";
 
-
-function mapStateToProps(state) {
+function mapStateToProps (state) {
     return {
         selectedBuildingName: state.selectedBuildingName
-    }
+    };
 }
 
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
-        setSelectedBuildingName: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
+        setSelectedBuildingName: (value, darkMode) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: {selectedBuilding: value, darkMode: darkMode} }),
     }
 }
 
@@ -35,11 +36,21 @@ function mapDispatchToProps(dispatch) {
  * 
  * This is our main screen which includes all the components inside a map.
  */
-export function Map(props) {
+export function Map (props) {
 
     const [isMapClicked, setIsMapClicked] = React.useState(false);
+    const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
     const mapRef = React.useRef(null);
 
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setIsDarkMode(store.getState().isDarkMode)
+        });
+        return function cleanUp() {
+            unsubscribe();
+        }
+    });
+    
     return (
         <View testID="Map_mapView" data-test="MapComponent">
             <View>
@@ -54,15 +65,16 @@ export function Map(props) {
                     showsCompass={true}
                     showsBuildings={true}
                     showsIndoors={false}
-                    onPress={() => {
-                        if (isMapClicked) {
+                    customMapStyle = {isDarkedMode ? darkMode : []} 
+                    onPress = {() => { 
+                        if(isMapClicked) {
                             setIsMapClicked(false);
                             Keyboard.dismiss();
                         }
                         else {
                             setIsMapClicked(true);
                             Keyboard.dismiss();
-                            props.setSelectedBuildingName(null);
+                            props.setSelectedBuildingName(null, isDarkedMode);
                         }
                     }}
 
@@ -75,10 +87,9 @@ export function Map(props) {
                     navigation={props.navigation}
                     mapReference={mapRef}
                 />
-                <View style={styles.CurrentBuildingLocation}>
+                <View style={styles.overlayButtons}>
                     <CurrentBuildingLocation mapReference={mapRef} />
-                </View>
-                <View style={styles.CurrentLocationButton}>
+                    <View style={styles.spaceBetweenOverlayedButtons}></View>
                     <CurrentLocationButton mapReference={mapRef} />
                 </View>
                 <BottomMenu navigation={props.navigation} mapReference={mapRef} />
@@ -97,15 +108,14 @@ export const styles = StyleSheet.create({
     map: {
         height: "100%"
     },
-    CurrentBuildingLocation: {
+    overlayButtons: {
         position: "absolute",
-        top: "80%",
+        flexDirection: "column",
+        top: "70%",
         left: "80%"
     },
-    CurrentLocationButton: {
-        position: "absolute",
-        top: "72%",
-        left: "80%"
+    spaceBetweenOverlayedButtons: {
+        height: "5%"
     }
 });
 

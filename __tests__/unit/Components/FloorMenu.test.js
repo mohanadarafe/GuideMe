@@ -22,4 +22,5 @@ describe("FloorMenu component", () => {
         wrapper.find('#floor_select_none').props().onPress();
         expect(setState).toHaveBeenCalled();
     })
+
 });

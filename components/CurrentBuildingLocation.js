@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import coord from "../constants/buildingCoordinates";
 import { isPointInPolygon } from "geolib";
-import { StyleSheet, TouchableOpacity  } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
     return {
         selectedBuildingName: state.selectedBuildingName
-    }
+    };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
     return {
         setCurrentBuilding: (value) => dispatch({ type: "UPDATE_SELECTED_BUILDING", payload: value }),
-    }
+    };
 }
 
 /**
@@ -33,27 +33,13 @@ export function CurrentBuildingLocation (props) {
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
-    }
+    };
 
-    const GetCurrentLocation = () => {
-
-        getPosition().then(({ coords }) => {
-            setCurrentLocation({
-                latitude: coords.latitude,
-                longitude: coords.longitude,
-                altitude: coords.altitude
-            })
-        })
-            .catch((err) => {
-                alert(err.message);
-            });
-    }
-
-    const checkIfWithinPolygon = () => {
+    const checkIfWithinPolygon = (currentLocation) => {
 
         let withinBuilding = false;
         for (var key in coord) {
-            if (isPointInPolygon(currentLocation, coord[key].coordinates)){
+            if (isPointInPolygon(currentLocation, coord[key].coordinates)) {
                 withinBuilding = true;
                 props.setCurrentBuilding(coord[key].name);
                 break;
@@ -61,38 +47,35 @@ export function CurrentBuildingLocation (props) {
         }
         if (withinBuilding) {
             props.mapReference.current.animateToRegion({
-                latitude: dummyCurrentLocation.latitude,
-                longitude: dummyCurrentLocation.longitude,
+                latitude: currentLocation.latitude,
+                longitude: currentLocation.longitude,
                 latitudeDelta: 0.003,
                 longitudeDelta: 0.003
-              })
+            });
         }
         else {
-        alert("You have to be in a highlighted concordia building to use this feature.");
-        }  
-    }
+            alert("You have to be in a highlighted concordia building to use this feature.");
+        }
+    };
 
     //TODO: Uncomment this if you want to see how it works (This is GM Building)
     const dummyCurrentLocation = {
         altitude: 29.498906132077124,
         latitude: 45.495983,
         longitude: -73.578824
-    }
+    };
 
     const onPressHandler = () => {
-        if(currentLocation) {
-            checkIfWithinPolygon();
-        }
-    }
-    
-
-    useEffect(() => {
-        GetCurrentLocation();
-    }, []);
-
+        getPosition().then(({ coords }) => {
+            checkIfWithinPolygon(coords);
+        })
+            .catch(() => {
+                alert("Error while fetching your current location. Check if you have allowed this app to use your location.");
+            });
+    };
 
     return (
-        <TouchableOpacity style ={styles.layout} onPress={onPressHandler}>
+        <TouchableOpacity style={styles.layout} onPress={onPressHandler}>
             <MaterialIcons name="office-building" size={35} color="white"></MaterialIcons>
         </TouchableOpacity>
     );
@@ -101,22 +84,22 @@ export const styles = StyleSheet.create({
     layout: {
         width: 60,
         height: 60,
-        borderRadius: 100/2,
+        borderRadius: 100 / 2,
         backgroundColor: "#2A2E43",
         justifyContent: "center",
-        alignItems: "center"       
+        alignItems: "center"
     },
     modal: {
-        position:"absolute",
+        position: "absolute",
         right: "20%",
-        paddingTop:10,
-        borderRadius:10,
-        width:200,
+        paddingTop: 10,
+        borderRadius: 10,
+        width: 200,
         backgroundColor: "white",
     },
     modalText: {
-        fontSize:20,
-        textAlign: 'center'      
+        fontSize: 20,
+        textAlign: "center"
     },
 });
 

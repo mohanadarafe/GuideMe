@@ -1,11 +1,12 @@
 import { Icon, Text, View } from "native-base";
 import PropTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useLayoutEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { Polyline, PROVIDER_GOOGLE } from "react-native-maps";
 import HTML from "react-native-render-html";
 import CurrentLocationButton from "../components/CurrentLocationButton";
-
+import {darkMode} from "../assets/styling/mapDarkMode";
+import { store } from "../redux/reducers/index";
 
 /**
  * TODO: A) If we want to enabled a dark mode. https://github.com/react-native-community/react-native-maps#customizing-the-map-style
@@ -24,6 +25,7 @@ function Directions(props) {
     const [indoorScenario2, setIndoorScenario2] = React.useState(false);
     const [indoorScenario3, setIndoorScenario3] = React.useState(false);
     const [isFromAClassRoom, setIsFromAClassRoom] = React.useState(true);
+    const [isDarkedMode, setIsDarkMode] = React.useState(store.getState().isDarkMode);
     const mapRef = useRef(null);
 
     /* 2. Read the params from the navigation state */
@@ -52,7 +54,7 @@ function Directions(props) {
         if (destinationResponse.generalRouteInfo.isStartAddressClassRoom && !destinationResponse.generalRouteInfo.isEndAddressClassRoom) {
             setIndoorScenario1(true);
             if (isFromAClassRoom) {
-                props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress })
+                props.navigation.navigate("IndoorMapView", { From: destinationResponse.generalRouteInfo.isStartAddressClassRoom, To: destinationResponse.generalRouteInfo.endAddress });
                 setIsFromAClassRoom(false);
             }
         }
@@ -66,7 +68,7 @@ function Directions(props) {
                 setIsFromAClassRoom(false);
             }
         }
-    }
+    };
     /**
      * The useEffect is a hook that will set the state FirstInstruction and LastInstruction to true when the conditions are met.
      * Also, it calls the indoor scenario.
@@ -144,6 +146,15 @@ function Directions(props) {
         }
     };
 
+    useLayoutEffect(() => {
+        const unsubscribe = store.subscribe(() => {
+            setIsDarkMode(store.getState().isDarkMode)
+        });
+        return function cleanUp() {
+            unsubscribe();
+        }
+    });
+
     return (
         <View testID="Directions_ScreenView">
             <MapView testID="Directions_MapView"
@@ -155,7 +166,7 @@ function Directions(props) {
                 showsBuildings={true}
                 onLayout={initMapRegion}
                 showsIndoors={false}
-            // customMapStyle = {mapStyleJsonDownloaded} Refer to TODO: A)
+                customMapStyle = {isDarkedMode ? darkMode : []} 
             >
                 {destinationResponse ? destinationResponse.steps.map((step, index) => (
                     <Polyline key={index}

@@ -21,7 +21,7 @@ import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 /**Prop passed
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
-function NearbyInterest(props) {
+function NearbyInterest (props) {
 
     const [fromScreen, setFromScreen] = React.useState();
     const [jsonElementArray_SGW, setjsonElementArray_SGW] = React.useState(null);
@@ -83,9 +83,9 @@ function NearbyInterest(props) {
             let keyId = await AsyncStorage.getItem("apiKeyId");
             let SGW_COORDS = "45.496996, -73.578481";
             let RADIUS = 100;
-            let TYPE = `restaurant`;
-            let MAX_WIDTH = `500`;
-            let SENSOR = `false`;
+            let TYPE = "restaurant";
+            let MAX_WIDTH = "500";
+            let SENSOR = "false";
             let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${SGW_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
 
@@ -95,7 +95,7 @@ function NearbyInterest(props) {
 
             alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
-    }
+    };
 
     const getFilteredjsonElementArray_SGW = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
 
@@ -110,10 +110,10 @@ function NearbyInterest(props) {
                 longitude: element.geometry.location.lng,
                 reviews: element.user_ratings_total,
                 img: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${element.photos[0].photo_reference}&sensor=${SENSOR}&key=${keyId}`
-            }
-        })
+            };
+        });
         return filtering;
-    }
+    };
 
     const fetchData_LOY = async () => {
 
@@ -122,9 +122,9 @@ function NearbyInterest(props) {
             let LOY_COORDS = "45.458371,-73.638239";
 
             let RADIUS = 500;
-            let TYPE = `restaurant`;
-            let MAX_WIDTH = `500`;
-            let SENSOR = `false`;
+            let TYPE = "restaurant";
+            let MAX_WIDTH = "500";
+            let SENSOR = "false";
             let resp = await fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${LOY_COORDS}&radius=${RADIUS}&type=${TYPE}&key=${keyId}`);
             let jsonResp = await resp.json();
 
@@ -134,7 +134,7 @@ function NearbyInterest(props) {
 
             alert("An error occured while trying to retrive the information. Please leave this screen and come back again.");
         }
-    }
+    };
 
     const getFilteredjsonElementArray_LOY = (jsonResp, keyId, MAX_WIDTH, SENSOR, ) => {
 
@@ -149,10 +149,10 @@ function NearbyInterest(props) {
                 longitude: element.geometry.location.lng,
                 reviews: element.user_ratings_total,
                 img: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=${MAX_WIDTH}&photoreference=${element.photos[0].photo_reference}&sensor=${SENSOR}&key=${keyId}`
-            }
-        })
+            };
+        });
         return filtering;
-    }
+    };
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -228,7 +228,7 @@ function NearbyInterest(props) {
                         return item.key;
                     }}
                     renderItem={({ item, index }) => (
-                        < TouchableOpacity onPress={() => { goToNearbyInterestDetails(item) }}>
+                        < TouchableOpacity onPress={() => { goToNearbyInterestDetails(item); }}>
                             <View key={index}>
                                 <View style={styles.itemContainer}>
                                     <View style={styles.itemImageContainer}>
@@ -383,7 +383,7 @@ const nearbyInterestStyle = {
     itemImage: {
         height: "100%", width: "100%"
     }
-}
+};
 
 export const styles = StyleSheet.create({ ...sideMenuStyle, ...nearbyInterestStyle });
 

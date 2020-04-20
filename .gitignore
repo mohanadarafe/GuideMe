@@ -11,8 +11,16 @@ web-build/
 web-report/
 coverage/**/*
 __tests__/unit/__snapshots__
---tests__/__snapshots__
 __tests__/unit/Directions/__snapshots__
+__tests__/unit/Components/__snapshots__
+__tests__/unit/Screens/__snapshots__
+__tests__/unit/Screens/Directions/__snapshots__
+__tests__/unit/Screens/IndoorRenders/__snapshots__
+__tests__/unit/Screens/Main/__snapshots__
+__tests__/unit/Screens/MoreDetails/__snapshots__
+__tests__/unit/Screens/PreferenceMenu/__snapshots__
+__tests__/unit/Screens/Search/__snapshots__
+__tests__/unit/Screens/SideMenu/__snapshots__
 gmaps_api/apiKey.js
 bin
 .env

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView } from "react-native";
 import { Icon, Button } from "native-base";
 import StarRating from "react-native-star-rating";
-import { sideMenuStyle } from "../../assets/styling/sideMenuStyling"
+import { sideMenuStyle } from "../../assets/styling/sideMenuStyling";
 
 /**
  * US34 - As a user, I would like to see the nearest outdoor points of interest #14
@@ -20,7 +20,7 @@ import { sideMenuStyle } from "../../assets/styling/sideMenuStyling"
  * @param  {} navigation props.navigation is the name of the object from Navigator library
  */
 
-function NearbyInterestDetails(props) {
+function NearbyInterestDetails (props) {
     /**
      * navigation that serves to go back to previous screen
      * @param  {} =>{props.navigation.goBack(
@@ -28,13 +28,13 @@ function NearbyInterestDetails(props) {
 
     const goBack = () => {
         props.navigation.goBack();
-    }
+    };
 
     const item = props.navigation.getParam("item", null);
     const name = props.navigation.getParam("name", null);
     const photoref = item ? item.img : null;
     const rating = item ? item.rating : null;
-    const hours = item ? item.open_hours: null;
+    const hours = item ? item.open_hours : null;
     const address = item ? item.address : null;
     const phone = item ? item.phone : null;
     const web = item ? item.web : null;
@@ -58,7 +58,7 @@ function NearbyInterestDetails(props) {
             latitude_POI: latitude,
             longitude_POI: longitude,
         });
-    }
+    };
 
     const opening = (hours === true ? "Open Now" : "Closed Now");
 
@@ -80,7 +80,7 @@ function NearbyInterestDetails(props) {
                 </View>
 
                 {name.length > 19 &&
-                    <Text style={styles.mainLabel}>{item ?name.substring(0, 19) + "..." : "N/A"}</Text>
+                    <Text style={styles.mainLabel}>{item ? name.substring(0, 19) + "..." : "N/A"}</Text>
                 }
                 {name.length <= 19 &&
                     <Text style={styles.mainLabel}>{name}</Text>
@@ -99,18 +99,18 @@ function NearbyInterestDetails(props) {
                 </Button>
 
                 <Button transparent style={styles.reviewContainer}>
-                <View style={styles.iconContainer}>
+                    <View style={styles.iconContainer}>
                         <Icon type="Feather" name="users" style={styles.iconBtn}></Icon>
                     </View>
                     <View style={styles.separator}></View>
                     <View style={styles.buttonTextContainer}>
-                    <Text style={styles.btnLabel}>{reviews ? reviews +" Reviews": "N/A"}</Text>
+                        <Text style={styles.btnLabel}>{reviews ? reviews + " Reviews" : "N/A"}</Text>
                     </View>
                 </Button>
 
 
                 <Button transparent style={styles.hourButton}>
-                <View style={styles.iconContainer}>
+                    <View style={styles.iconContainer}>
                         <Icon type="Feather" name="clock" style={styles.iconBtn}></Icon>
                     </View>
                     <View style={styles.separator}></View>
@@ -158,7 +158,7 @@ function NearbyInterestDetails(props) {
         </View >
     );
 }
-const nearbyInterestDetailsStyle = { 
+const nearbyInterestDetailsStyle = {
     routeButton: {
         width: "90%",
         height: "8%",
@@ -193,7 +193,7 @@ const nearbyInterestDetailsStyle = {
         position: "absolute",
         opacity: 0.3,
         backgroundColor: "#000",
-        bottom:"78%"
+        bottom: "78%"
     },
     placeImage: {
         width: "100%",
@@ -207,7 +207,7 @@ const nearbyInterestDetailsStyle = {
         fontWeight: "bold",
         fontFamily: "encodeSansExpanded",
         bottom: "28%",
-        textAlign:"left"
+        textAlign: "left"
     },
     totalReviewLabel: {
         color: "#FFFFFF",
@@ -222,8 +222,8 @@ const nearbyInterestDetailsStyle = {
         fontSize: 20,
         fontFamily: "encodeSansExpanded",
         alignSelf: "center",
-        left:"20%",
-        bottom:"2%"
+        left: "20%",
+        bottom: "2%"
     },
     subLabel: {
         top: "24%",
@@ -308,7 +308,7 @@ const nearbyInterestDetailsStyle = {
         width: "60%",
         height: "40%",
     },
-}
-export const styles = StyleSheet.create({...sideMenuStyle,...nearbyInterestDetailsStyle});
+};
+export const styles = StyleSheet.create({ ...sideMenuStyle, ...nearbyInterestDetailsStyle });
 
 export default NearbyInterestDetails;

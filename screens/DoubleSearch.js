@@ -9,7 +9,7 @@ import { buildingData } from "../constants/buildingData";
 import { DoubleSearchSVG } from "../assets/DoubleSearchSVG.js";
 
 
-function fetchData() {
+function fetchData () {
     const searchInfo = MapData({ context: "Search" });
     return searchInfo;
 }
@@ -31,14 +31,14 @@ var destinationItems = fetchData(); //We do not want the second search bar to Cu
 originItems.unshift({ "id": 0, "name": "Current Location" });
 
 /**
-  * Algorithm to find the coordinates of a given building name or classroom name.
-  * returns longitude and latitude.
-  * In the case of a service or department, it will return the coordinates of the
-  * building it belongs to.
-  * 
-  * A.U
-  * @param {*} name 
-  */
+ * Algorithm to find the coordinates of a given building name or classroom name.
+ * returns longitude and latitude.
+ * In the case of a service or department, it will return the coordinates of the
+ * building it belongs to.
+ * 
+ * A.U
+ * @param {*} name 
+ */
 export const getCoordinates = (name) => {
 
     let buildingList = buildingData();
@@ -71,7 +71,7 @@ export const getCoordinates = (name) => {
  * @param {*} props 
  */
 
-function DoubleSearch(props) {
+function DoubleSearch (props) {
     const [to, setTo] = React.useState("");
     const [from, setFrom] = React.useState("");
     const [coordinatesFrom, setCoordinatesFrom] = React.useState(null);
@@ -90,7 +90,7 @@ function DoubleSearch(props) {
      */
     const addItem = () => {
         destinationItems.unshift({ id: 0, name: namePointOfInterest });
-    }
+    };
 
     const [placeholder, setPlaceholder] = React.useState("");
 
@@ -152,20 +152,20 @@ function DoubleSearch(props) {
         }
 
         else if (from.name.includes("Washroom") || from.name.includes("Water")) {
-            alert("Directions from indoor points of interests are not supported! Try going to the point of interest.")
+            alert("Directions from indoor points of interests are not supported! Try going to the point of interest.");
         }
 
         else if (!coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))) {
-            alert("Directions to indoor points of interests are only accepted from classrooms!")
+            alert("Directions to indoor points of interests are only accepted from classrooms!");
         }
 
         // class room to washroom or water fountain 
         else if (coordinatesFrom.isClassRoom && (to.name.includes("Washroom") || to.name.includes("Water"))) {
-            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name });
         }
         // classroom to classroom
         else if (coordinatesFrom.longitude == coordinatesTo.longitude && coordinatesFrom.latitude == coordinatesTo.latitude) {
-            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name })
+            props.navigation.navigate("IndoorMapView", { From: from.name, To: to.name });
         }
 
         // building to buildling 
@@ -180,6 +180,7 @@ function DoubleSearch(props) {
 
     const destinationName = props.navigation.getParam("destinationName", "Destination");
     const value = props.navigation.getParam("destinationIndex", "");
+
     /**
      * 
      */
@@ -189,52 +190,18 @@ function DoubleSearch(props) {
             setCurrentLocationCoords({
                 latitude: coords.latitude,
                 longitude: coords.longitude
-            })
+            });
         })
             .catch((err) => {
                 alert(err.message);
             });
-    }
-
-    /**
-     * Algorithm to find the coordinates of a given building name or classroom name.
-     * returns longitude and latitude.
-     * In the case of a service or department, it will return the coordinates of the
-     * building it belongs to.
-     * 
-     * A.U
-     * @param {*} name 
-     */
-    const getCoordinates = (name) => {
-
-        let buildingList = buildingData();
-        let classRoomsList = ClassRooms();
-        if (/\d/.test(name)) {
-            for (var key in classRoomsList) {
-                if (classRoomsList[key].room.includes(name)) {
-                    const buildingCoords = buildingList[key].coordinates;
-                    const isClassroom = { isClassRoom: name };
-                    const result = { ...buildingCoords, ...isClassroom };
-                    return result;
-                }
-            }
-        }
-        for (var key in buildingList) {
-            if (buildingList[key].name.includes(name) || buildingList[key].services.includes(name) || buildingList[key].departments.includes(name) || buildingList[key].fullName.includes(name)) {
-                return buildingList[key].coordinates;
-            }
-        }
-        if (name == "Current Location") {
-            fetchCurrentPosition();
-        }
-        return null;
     };
 
     var getPosition = function (options) {
         return new Promise(function (resolve, reject) {
             navigator.geolocation.getCurrentPosition(resolve, reject, options);
         });
-    }
+    };
 
     let fromName = from.name;
     let toName = to.name;
@@ -272,15 +239,15 @@ function DoubleSearch(props) {
             fetchCurrentPosition();
         }
 
-        setPointOfInterest(namePointOfInterest)
+        setPointOfInterest(namePointOfInterest);
         setCoordinatesPOI({
             latitude: latitudePointOfInterest,
             longitude: longitudePointOfInterest
-        })
+        });
 
         if (namePointOfInterest) {
-            addItem()
-            setPlaceholder(namePointOfInterest)
+            addItem();
+            setPlaceholder(namePointOfInterest);
         }
 
     }, []);
@@ -357,7 +324,7 @@ return (
         </View>
         {goToPreviewDirectionButton}
     </View >
-);
+    );
 }
 export const styles = StyleSheet.create({
     container: {

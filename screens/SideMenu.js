@@ -11,10 +11,10 @@ import { DrawerNavigatorItems } from "react-navigation-drawer";
  * Only accesible from the main map view.
  */
 
- /**Prop passed
- * @param  {} navigation props.navigation is the name of the object from Navigator library
- *  @param  {} props drawerNavigator is passed in the following prop
- */
+/**Prop passed
+* @param  {} navigation props.navigation is the name of the object from Navigator library
+*  @param  {} props drawerNavigator is passed in the following prop
+*/
 
 function SideMenu (props) {
     return (
@@ -23,7 +23,7 @@ function SideMenu (props) {
             <ImageBackground
                 source={require("../assets/Concordia_Darken.png")}
                 style={styles.backgroundImage}
-                >
+            >
                 <View style={styles.textContainer}>
                     <Text style={styles.nameLabel}>John Appleseed</Text>
                     <Text style={styles.emailLabel}>johnappleseed@gmail.com</Text>
