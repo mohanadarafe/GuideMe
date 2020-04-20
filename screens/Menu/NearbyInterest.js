@@ -178,7 +178,7 @@ function NearbyInterest (props) {
             <View style={styles.menuButtonContainer}>
                 {fromScreen !== "sideMenu" &&
                     <TouchableOpacity style={styles.backButton} onPress={goBack}>
-                        <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} />
+                        <Icon testID="NearbyInterest_bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} />
                     </TouchableOpacity>
                 }
                 {fromScreen === "sideMenu" &&

@@ -110,8 +110,6 @@ function DoubleSearch (props) {
         } else {
             props.navigation.goBack();
         }
-
-
     };
 
 
@@ -252,80 +250,78 @@ function DoubleSearch (props) {
 
     }, []);
 
-
     //Depending on the condition will return disabled button or not
     var goToPreviewDirectionButton;
     if (coordinatesTo != null || coordinatesFrom != null || pointOfInterest != null) {
-        goToPreviewDirectionButton = <Button transparent testID="enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        goToPreviewDirectionButton = <Button transparent testID="DoubleSearch_enabledViewRouteButton" style={styles.routeButton} onPress={goToPreviewDirectionScreen}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
     }
     else if (coordinatesFrom == null && !currentLocationCoords && (from.name == undefined || to.name == "")) {
-        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        goToPreviewDirectionButton = <Button transparent testID="DoubleSearch_disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
     }
     else {
-        goToPreviewDirectionButton = <Button transparent testID="disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
+        goToPreviewDirectionButton = <Button transparent testID="DoubleSeach_disabledViewRouteButton" style={styles.routeButtonDisabled} onPress={goToPreviewDirectionScreen} disabled={true}><Text style={{ color: "white", fontSize: 14 }}>View Route</Text></Button>;
         alert("Invalid Location! Please try to enter a valid classroom or building name");
     }
 
+return (
+    <View testID="DoubleSearch_ScreenView" style={styles.container} data-test="DoubleSearch">
+        <View style={styles.backArrowContainer}>
+            <TouchableOpacity onPress={goBack}>
+                <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
+            </TouchableOpacity>
+        </View>
+        <View style={styles.svgContainer}>
+            <DoubleSearchSVG />
+        </View>
+        <Text style={styles.titleLabel}>Starting Point & Destination</Text>
 
-
-    return (
-        <View style={styles.container} data-test="DoubleSearch">
-            <View style={styles.backArrowContainer}>
-                <TouchableOpacity onPress={goBack}>
-                    <Icon name="md-arrow-round-back" style={styles.icon}></Icon>
-                </TouchableOpacity>
+        <View style={styles.searchbarsContainer}>
+            <View testID="DoubleSearch_FromSearchBarView" style={styles.originSearchContainer}>
+                <Text style={styles.searchBarLabels}>From: </Text>
+                <SearchableDropdown
+                    testID="DoubleSearch_FromSearchBar"
+                    onTextChange={val => val}
+                    onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
+                    defaultIndex={"0"}
+                    textInputStyle={styles.textInputStyle}
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    items={originItems}
+                    placeholder={"Starting Position"}
+                    placeholderTextColor={"grey"}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
             </View>
-            <View style={styles.svgContainer}>
-                <DoubleSearchSVG />
+            <View testID="DoubleSearch_ToSearchBarView" style={styles.destinationSearchContainer}>
+                <Text style={styles.searchBarLabels}>To: </Text>
+                <SearchableDropdown testID="DoubleSearch_ToSearchBar"
+                    onTextChange={val => val}
+                    onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); (namePointOfInterest == item.name ? setPointOfInterest(namePointOfInterest) : setPointOfInterest(null));}}
+                    textInputStyle={styles.textInputStyle}
+                    defaultIndex={(String)(value)} 
+                    itemStyle={styles.itemStyle}
+                    containerStyle={styles.containerStyle}
+                    itemTextStyle={styles.itemTextStyle}
+                    itemsContainerStyle={styles.itemsContainerStyle}
+                    placeholderTextColor={"black"}
+                    items={destinationItems}
+                    placeholder={placeholder}
+                    textInputProps={{
+                        keyboardAppearance: "dark",
+                        clearButtonMode: "while-editing",
+                        clearTextOnFocus: false,
+                    }}
+                />
             </View>
-            <Text style={styles.titleLabel}>Starting Point & Destination</Text>
-
-            <View style={styles.searchbarsContainer}>
-                <View style={styles.originSearchContainer}>
-                    <Text style={styles.searchBarLabels}>From: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val}
-                        onItemSelect={item => { setFrom(item); setCoordinatesFrom(getCoordinates(item.name)); }}
-                        defaultIndex={"0"}
-                        textInputStyle={styles.textInputStyle}
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        items={originItems}
-                        placeholder={"Starting Position"}
-                        placeholderTextColor={"grey"}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
-                <View style={styles.destinationSearchContainer}>
-                    <Text style={styles.searchBarLabels}>To: </Text>
-                    <SearchableDropdown
-                        onTextChange={val => val}
-                        onItemSelect={item => { setTo(item); setCoordinatesTo(getCoordinates(item.name)); (namePointOfInterest == item.name ? setPointOfInterest(namePointOfInterest) : setPointOfInterest(null)); }}
-                        textInputStyle={styles.textInputStyle}
-                        defaultIndex={(String)(value)}
-                        itemStyle={styles.itemStyle}
-                        containerStyle={styles.containerStyle}
-                        itemTextStyle={styles.itemTextStyle}
-                        itemsContainerStyle={styles.itemsContainerStyle}
-                        placeholderTextColor={"black"}
-                        items={destinationItems}
-                        placeholder={placeholder}
-                        textInputProps={{
-                            keyboardAppearance: "dark",
-                            clearButtonMode: "while-editing",
-                            clearTextOnFocus: false,
-                        }}
-                    />
-                </View>
-            </View>
-            {goToPreviewDirectionButton}
-        </View >
+        </View>
+        {goToPreviewDirectionButton}
+    </View >
     );
 }
 export const styles = StyleSheet.create({

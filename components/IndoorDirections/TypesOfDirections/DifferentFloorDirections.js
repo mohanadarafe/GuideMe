@@ -52,9 +52,9 @@ export function DifferentFloorDirections (props) {
         rooms = floorFrom == 9 ? Hall9Coordinates() : props.rooms;
         var className = ConvertToHall8Floor(props.from.toString());
         const arrow = getArrowCoordinates(rooms[closestTransportationMethod].nearestPoint.x, rooms[closestTransportationMethod].nearestPoint.y, rooms[closestTransportationMethod].x, rooms[closestTransportationMethod].y);
-        return (
-            <G>
-                <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5" />
+        return(
+            <G testID="DifferentFloorDirections_GraphDirectionsFloorFrom">
+                <Line x1={rooms[className].x} y1={rooms[className].y} x2={rooms[className].nearestPoint.x} y2={rooms[className].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToElevator.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5" />)
                 }
@@ -69,9 +69,9 @@ export function DifferentFloorDirections (props) {
         rooms = floorTo == 9 ? Hall9Coordinates() : props.rooms;
         var className = ConvertToHall8Floor(props.to.toString());
         const arrow = getArrowCoordinates(rooms[className].nearestPoint.x, rooms[className].nearestPoint.y, rooms[className].x, rooms[className].y);
-        return (
-            <G>
-                <Line x1={rooms[closestTransportationMethod].x} y1={rooms[closestTransportationMethod].y} x2={rooms[closestTransportationMethod].nearestPoint.x} y2={rooms[closestTransportationMethod].nearestPoint.y} stroke="blue" strokeWidth="5" />
+        return(
+            <G testID="DifferentFloorDirections_GraphDirectionsFloorTo">
+                <Line x1={rooms[closestTransportationMethod].x} y1={rooms[closestTransportationMethod].y} x2={rooms[closestTransportationMethod].nearestPoint.x} y2={rooms[closestTransportationMethod].nearestPoint.y} stroke="blue" strokeWidth="5"/>
                 {
                     linesToClass.map(el => <Line key={el.id} x1={el.x1} y1={el.y1} x2={el.x2} y2={el.y2} stroke="blue" strokeWidth="5" />)
                 }

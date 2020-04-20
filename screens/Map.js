@@ -52,7 +52,7 @@ export function Map (props) {
     });
     
     return (
-        <View testID="mapView" data-test="MapComponent">
+        <View testID="Map_mapView" data-test="MapComponent">
             <View>
                 <MapView
                     id="mainMap"
@@ -83,9 +83,9 @@ export function Map (props) {
                     <BuildingIdentification />
                     <LocationMarker mapReference={mapRef} />
                 </MapView>
-                <Search testID="searchBar"
-                    navigation={props.navigation}
-                    mapReference={mapRef}
+                <Search testID="Map_searchBar" 
+                navigation = {props.navigation} 
+                mapReference = {mapRef} 
                 />
                 <View style={styles.overlayButtons}>
                     <CurrentBuildingLocation mapReference={mapRef} />

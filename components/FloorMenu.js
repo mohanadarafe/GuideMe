@@ -91,9 +91,9 @@ export function FloorMenu (props) {
   });
 
   return (
-    <View testID="floorBarMenu" >
+    <View testID="FloorMenu_floorBarMenuView">
       {selectedBuilding === "Hall Building" && (
-        <SwitchSelector
+        <SwitchSelector testID="FloorMenu_HallSwitchSelector"
           id = "floor_selected"
           style={styles.selector}
           options={hallFloors}

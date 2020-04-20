@@ -19,7 +19,7 @@ import { DrawerNavigatorItems } from "react-navigation-drawer";
 function SideMenu (props) {
     return (
 
-        <ScrollView>
+        <ScrollView testID="SideMenu_ScreenScrollView">
             <ImageBackground
                 source={require("../assets/Concordia_Darken.png")}
                 style={styles.backgroundImage}

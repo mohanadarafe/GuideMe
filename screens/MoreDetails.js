@@ -10,7 +10,7 @@ import { MapData } from "../components/MapData";
  * 
  * @param {*} buildingName Name of building to get data of
  */
-export function fetchData (buildingName) {
+export function fetchData(buildingName) {
   const buildingInfo = MapData({ buildingToSearch: buildingName, context: "More Details" });
   return buildingInfo;
 }
@@ -25,7 +25,7 @@ export function fetchData (buildingName) {
  * Props passed
  * @param {*} name props.name is the name of the building selected
  */
-function MoreDetails (props) {
+function MoreDetails(props) {
   const [data, setData] = React.useState(null);
 
   const goBack = () => {
@@ -41,7 +41,7 @@ function MoreDetails (props) {
   }, []);
 
   return (
-    <View style={styles.container} data-test="MoreDetailsComponent">
+    <View testID="MoreDetails_MoreDetailsScreenView" style={styles.container} data-test="MoreDetailsComponent">
       <SafeAreaView style={styles.buttonContainer}>
         <Button transparent style={styles.mapButton}>
           <View style={styles.iconContainer}>
@@ -61,7 +61,7 @@ function MoreDetails (props) {
             <Text style={styles.mapPinLabel}>{(data && data.phone) ? data.phone : "N/A"}</Text>
           </View>
         </Button>
-        <Button style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
+        <Button testID="MoreDetails_getDirectionsButton" style={styles.directionButton} onPress={goToDoubleSearchBar}><Text style={{ color: "white" }}>Get Directions</Text></Button>
       </SafeAreaView>
       <View style={styles.imageContainer}>
         <Image style={styles.buildingImage} source={require("./../assets/Hall_Building.png")} />
@@ -69,20 +69,20 @@ function MoreDetails (props) {
       <Text style={styles.mainLabel}>{name ? name : "N/A"}</Text>
       <Text style={styles.subLabel}>{data ? data.fullName : "N/A"}</Text>
       <Text style={styles.reviewLabel}>19 Reviews</Text>
-      <SafeAreaView testID="moreInfoScrollView" style={styles.scrollTextContainer}>
+      <SafeAreaView testID="MoreDetails_moreInfoScrollView" style={styles.scrollTextContainer}>
         <SectionList
           sections={[
-            { title: "Departments ", data: (data && data.departments.length > 0) ? data.departments : ["None"] },
+            { title: "Departments", data: (data && data.departments.length > 0) ? data.departments : ["None"] },
             { title: "Services", data: (data && data.services.length > 0) ? data.services : ["None"] },
             { title: "Accessibility", data: (data && data.accessibilityItems.length > 0) ? data.accessibilityItems : ["None"] },
           ]}
-          renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
-          renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          renderItem={({ item }) => <Text testID="MoreDetails_SectionListItems" style={styles.listItem}>{item}</Text>}
+          renderSectionHeader={({ section }) => <Text testID="MoreDetails_SectionListHeader" style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={() => <View style={styles.line} />}
         />
       </SafeAreaView>
-      <Icon testID="bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
+      <Icon testID="MoreDetails_bottomArrowIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={goBack} />
     </View>
   );
 }

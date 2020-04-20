@@ -104,7 +104,7 @@ function BottomMenu (props) {
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { (inDirections ? goToPreferenceMenu(true) : goToMoreDetails) }} />
                 <Text style={styles.mainLabel}>{building ? building : selectedBuilding}</Text>
                 <Text style={styles.shortLabel}>More info</Text>
-                <Button testID="indoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
+                <Button testID="BottomMenu_IndoorMapExitBuildingButton" style={styles.btnleave} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goBack}>
                     <Text style={styles.btnText}>Exit Building</Text>
                 </Button>
                 <View style={styles.changeFloor}>
@@ -117,7 +117,7 @@ function BottomMenu (props) {
     if (previewDirections) {
         return (
             <View style={styles.container}>
-                <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={() => { goToPreferenceMenu(false) }} />
+                <Icon testID="BottomMenu_arrowUpToPreferenceMenuIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={() => { goToPreferenceMenu(false) }} />
 
                 {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length > 12 &&
                     <Text style={styles.mainLabel}>{props.directionResponse.generalRouteInfo.totalDuration}</Text>
@@ -151,7 +151,7 @@ function BottomMenu (props) {
                 }
                 <Text style={styles.shortLabel}>More info</Text>
                 <View style={styles.btnGetDirection}>
-                    <Button testID="getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
+                    <Button testID="BottomMenu_getDirectionsButton" style={styles.btnGetDirection} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDoubleSearchBar}>
                         <Text style={styles.btnText}>Get Directions</Text>
                     </Button>
                 </View>
@@ -166,14 +166,14 @@ function BottomMenu (props) {
         }
         return (
             <View style={styles.container}>
-                <Icon testID="getInsideIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
+                <Icon testID="BottomMenu_arrowUpToMoreDetailsIcon" name="ios-arrow-up" style={styles.arrowUp} onPress={goToMoreDetails} />
                 <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 {selectedBuilding.length > 13
                     ? <Text style={styles.mainLabel}>{updatedSelectedBuilding}</Text>
                     : <Text style={styles.mainLabel}>{selectedBuilding}</Text>
                 }
                 <Text style={styles.shortLabel}>More info</Text>
-                <Button testID="getInsideButton" style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
+                <Button testID="BottomMenu_getInsideButton" style={styles.btn} color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToInsideBuilding}>
                     <Text style={styles.btnText}>Get Inside</Text>
                 </Button>
             </View>
@@ -181,11 +181,11 @@ function BottomMenu (props) {
     }
     else {
         return (
-            <View style={styles.container} data-test="BottomMenu">
+            <View testID="BottomMenu_initalView" style={styles.container} data-test="BottomMenu">
                 <Icon name="ios-arrow-up" style={styles.arrowUp} onPress={goToNearby} />
                 <Text style={styles.mainLabel}>Nearby</Text>
                 <Text style={styles.shortLabel}>Food, drinks & more</Text>
-                <View testID="intialBottomMenuToggleButton" style={styles.toggle}>
+                <View testID="BottomMenu_ToggleButton" style={styles.toggle}>
                     <Switch
                         value={swtichCampus}
                         onValueChange={(val) => { switchCampuses(val);}}>

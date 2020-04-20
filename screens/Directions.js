@@ -156,8 +156,8 @@ function Directions (props) {
     });
 
     return (
-        <View>
-            <MapView
+        <View testID="Directions_ScreenView">
+            <MapView testID="Directions_MapView"
                 ref={mapRef}
                 style={styles.map}
                 provider={PROVIDER_GOOGLE}
