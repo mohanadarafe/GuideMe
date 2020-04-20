@@ -5,7 +5,7 @@ import { Icon } from "native-base";
 import { Button } from "react-native-paper";
 import { store } from "../redux/reducers/index";
 import { FloorMenu } from "./FloorMenu";
-import {CampusRegion} from "../constants/buildingData";
+import { CampusRegion } from "../constants/buildingData";
 
 
 /**
@@ -14,7 +14,7 @@ import {CampusRegion} from "../constants/buildingData";
  * includes a toggle (US6) & an arrow icon leading to the More Details page.
  */
 
-function BottomMenu (props) {
+function BottomMenu(props) {
     const [selectedBuilding, setSelectedBuilding] = React.useState(null);
     const [swtichCampus, setSwitchCampus] = React.useState(true);
     const [destination, setDestination] = React.useState("");
@@ -69,12 +69,12 @@ function BottomMenu (props) {
     };
 
     const goToNearby = () => {
-        AsyncStorage.setItem("sideMenu", "mapView"); 
-        props.navigation.navigate("NearbyInterest", { campusBool: swtichCampus});
-    
+        AsyncStorage.setItem("sideMenu", "mapView");
+        props.navigation.navigate("NearbyInterest", { campusBool: swtichCampus });
+
     };
 
-    
+
     useLayoutEffect(() => {
         const unsubscribe = store.subscribe(() => {
             setSelectedBuilding(store.getState().selectedBuildingName);
@@ -92,7 +92,8 @@ function BottomMenu (props) {
     const switchCampuses = (value) => {
         setSwitchCampus(value);
         if (value) {
-            props.mapReference.current.animateToRegion(CampusRegion.sgwCoord);        }
+            props.mapReference.current.animateToRegion(CampusRegion.sgwCoord);
+        }
         else {
             props.mapReference.current.animateToRegion(CampusRegion.loyCoord);
         }
@@ -122,15 +123,15 @@ function BottomMenu (props) {
                 {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length > 12 &&
                     <Text style={styles.mainLabel}>{props.directionResponse.generalRouteInfo.totalDuration}</Text>
                 }
-                 {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length <= 12 &&
-                    <Text style={styles.mainLabel}>{props.directionResponse.generalRouteInfo.totalDuration } {props.directionResponse.generalRouteInfo.totalDistance}</Text>
+                {props.directionResponse && props.directionResponse.generalRouteInfo.totalDuration.length <= 12 &&
+                    <Text style={styles.mainLabel}>{props.directionResponse.generalRouteInfo.totalDuration} {props.directionResponse.generalRouteInfo.totalDistance}</Text>
                 }
-                 {!props.directionResponse &&
+                {!props.directionResponse &&
                     <Text style={styles.mainLabel}>N/A</Text>
                 }
                 <Text style={styles.shortLabel}>Main Travel Mode: {methodTravel}</Text>
                 <View style={styles.btnGetDirection}>
-                    <Button style={styles.btnGetDirectionPosition}
+                    <Button testID="BottomMenu_PreferenceStartButton" style={styles.btnGetDirectionPosition}
                         color={"#3ACCE1"} uppercase={false} mode="contained" onPress={goToDirections}>
                         <Text style={styles.btnText}>Start</Text>
                     </Button>
@@ -188,7 +189,7 @@ function BottomMenu (props) {
                 <View testID="BottomMenu_ToggleButton" style={styles.toggle}>
                     <Switch
                         value={swtichCampus}
-                        onValueChange={(val) => { switchCampuses(val);}}>
+                        onValueChange={(val) => { switchCampuses(val); }}>
                     </Switch>
                 </View>
             </View>

@@ -189,7 +189,7 @@ function NearbyInterest (props) {
 
             </View>
 
-            <Text style={styles.mainLabel}>Points of Interest</Text>
+            <Text testID="Title_text" style={styles.mainLabel}>Points of Interest</Text>
             <Text style={styles.radiusLabel}>Search radius: {radius} meters</Text>
 
 

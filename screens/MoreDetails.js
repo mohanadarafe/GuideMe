@@ -10,7 +10,7 @@ import { MapData } from "../components/MapData";
  * 
  * @param {*} buildingName Name of building to get data of
  */
-export function fetchData(buildingName) {
+export function fetchData (buildingName) {
   const buildingInfo = MapData({ buildingToSearch: buildingName, context: "More Details" });
   return buildingInfo;
 }

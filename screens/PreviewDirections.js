@@ -141,7 +141,7 @@ const decodedPolylinesAlgo = (hashedPolyline) => {
  * 
  * 
  */
-function PreviewDirections (props) {
+function PreviewDirections(props) {
     const [decodedPolylines, setDecodedPolylines] = React.useState([]);
     const [detailedInstructionsObject, setdetailedInstructionsObject] = React.useState(null);
     const [transportType, setTransportType] = React.useState(null);

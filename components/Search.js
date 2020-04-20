@@ -5,7 +5,7 @@ import { Icon } from "react-native-elements";
 import { MapData } from "./MapData";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {getCoordinates} from "../screens/DoubleSearch";
+import { getCoordinates } from "../screens/DoubleSearch";
 import { store } from "../redux/reducers/index";
 
 function mapStateToProps (state) {
@@ -16,10 +16,11 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    goToSearchedItemAction: (coords, name, darkMode) => dispatch({ 
-      type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER", 
-      payload: {coordinates: coords, name: name, darkMode: darkMode}})
-  }
+    goToSearchedItemAction: (coords, name, darkMode) => dispatch({
+      type: "UPDATE_SEARCH_BAR_VALUE_SEARCH_BAR_MARKER",
+      payload: { coordinates: coords, name: name, darkMode: darkMode }
+    })
+  };
 }
 
 /**
@@ -66,24 +67,24 @@ export function Search (props) {
         longitude: searchItem.coordinates.longitude
       }, searchItem.name, isDarkedMode);
     }
-  }
+  };
 
   useLayoutEffect(() => {
     const unsubscribe = store.subscribe(() => {
-        setIsDarkMode(store.getState().isDarkMode)
+      setIsDarkMode(store.getState().isDarkMode);
     });
-    return function cleanUp() {
-        unsubscribe();
-    }
-});
-  
+    return function cleanUp () {
+      unsubscribe();
+    };
+  });
+
 
   return (
     <View style={styles.container} testID={props.testID}>
       <View style={styles.buttonStyle}>
         <TouchableOpacity>
           <View>
-            <Icon name='menu' size={30} onPress={goToMenu}></Icon>
+            <Icon testID="Menu_icon" name='menu' size={30} onPress={goToMenu}></Icon>
           </View>
         </TouchableOpacity>
       </View>
