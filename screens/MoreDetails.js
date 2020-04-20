@@ -72,12 +72,12 @@ function MoreDetails(props) {
       <SafeAreaView testID="MoreDetails_moreInfoScrollView" style={styles.scrollTextContainer}>
         <SectionList
           sections={[
-            { title: "Departments ", data: (data && data.departments.length > 0) ? data.departments : ["None"] },
+            { title: "Departments", data: (data && data.departments.length > 0) ? data.departments : ["None"] },
             { title: "Services", data: (data && data.services.length > 0) ? data.services : ["None"] },
             { title: "Accessibility", data: (data && data.accessibilityItems.length > 0) ? data.accessibilityItems : ["None"] },
           ]}
-          renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
-          renderSectionHeader={({ section }) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          renderItem={({ item }) => <Text testID="MoreDetails_SectionListItems" style={styles.listItem}>{item}</Text>}
+          renderSectionHeader={({ section }) => <Text testID="MoreDetails_SectionListHeader" style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
           ItemSeparatorComponent={() => <View style={styles.line} />}
         />

@@ -97,7 +97,7 @@ export function PreferenceMenu (props) {
 
     return (
         <View testID="PreferenceMenu_ScreenView" style={styles.container}>
-            <Icon testID="PreferenceMenu_GoBackIcon"  id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={isIndoor ? goToIndoorMap : goToPreviewDirections } />
+            <Icon testID="PreferenceMenu_GoBackIcon" id="prefIcon" name="ios-arrow-down" style={styles.arrowDown} onPress={isIndoor ? goToIndoorMap : goToPreviewDirections } />
 
             <Text style={styles.mainLabel}>Preferences</Text>
 

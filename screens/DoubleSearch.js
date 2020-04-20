@@ -110,8 +110,6 @@ function DoubleSearch (props) {
         } else {
             props.navigation.goBack();
         }
-
-
     };
 
 

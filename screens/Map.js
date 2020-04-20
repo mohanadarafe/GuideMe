@@ -83,9 +83,9 @@ export function Map (props) {
                     <BuildingIdentification />
                     <LocationMarker mapReference={mapRef} />
                 </MapView>
-                <Search testID="Map_searchBar"
-                    navigation={props.navigation}
-                    mapReference={mapRef}
+                <Search testID="Map_searchBar" 
+                navigation = {props.navigation} 
+                mapReference = {mapRef} 
                 />
                 <View style={styles.overlayButtons}>
                     <CurrentBuildingLocation mapReference={mapRef} />
