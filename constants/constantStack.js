@@ -31,6 +31,5 @@ export const constantStacks = {
             ...TransitionPresets.ModalSlideFromBottomIOS
         }
     },
-    
-}
+};
 

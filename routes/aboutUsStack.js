@@ -2,10 +2,10 @@ import { createStackNavigator } from "react-navigation-stack";
 import AboutUs from "../screens/Menu/AboutUs";
 
 const screens = {
-    
-    AboutUs:{
+
+    AboutUs: {
         screen: AboutUs,
-        navigationOptions:{
+        navigationOptions: {
             headerShown: false,
         }
     }

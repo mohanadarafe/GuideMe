@@ -1,3 +1,7 @@
+/**
+ * Function that returns the coordinates of each specified room
+ * @param {*} floorNumber 
+ */
 export function LoyolaCoordinates (floorNumber) {
     var rooms = [];
     rooms["VL103"] = {
@@ -8,13 +12,13 @@ export function LoyolaCoordinates (floorNumber) {
             y: 497,
         }
     },
-    rooms["exit"] = {
-        x: 61,
-        y: 892,
-        nearestPoint: {
-            x: 135,
+        rooms["exit"] = {
+            x: 61,
             y: 892,
-        }
-    }
+            nearestPoint: {
+                x: 135,
+                y: 892,
+            }
+        };
     return rooms;
 }
